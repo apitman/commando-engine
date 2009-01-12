@@ -1,0 +1,46 @@
+#summary A list of stories to be completed during the semester.
+
+= List of user stories =
+
+Items listed here are subject to change.
+
+== Controls ==
+
+*User can control character using keyboard/mouse
+*User can control character using Xbox 360 gamepad
+*User can select to use either choice of controls
+*User can use the mouse to simulate joystick rotation
+
+== Gameplay and Animation ==
+
+*User can shoot
+*User can crouch
+*User can hide behind obstacles, and peek over/around them
+*User can hide next to walls, and peek over/around them
+*User can throw grenades
+*User can move between isolated regions
+*Non-playable characters can perform similar actions
+
+== Physics and Simulation ==
+
+*Objects will stop moving when contacting walls and objects
+*Non-playable characters will have ranges of vision / line of sight
+
+== Artificial Intelligence ==
+
+*Non-playable characters navigate around obstacles
+*Non-playable characters navigate between rooms and areas
+*Non-playable characters perform dynamically-planned sequences of actions
+*Non-playable characters transfer knowledge to one another
+*Non-playable characters coordinate their plans with one another
+
+== Game Content ==
+
+*User can play through a single level
+*User can move into different rooms
+*User can play against different enemy types including humanoid and flying
+*User can fight a boss enemy character
+
+== Miscellaneous ==
+
+*Port the game to Xbox 360
