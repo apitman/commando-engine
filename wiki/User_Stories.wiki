@@ -16,8 +16,8 @@ Items listed here are subject to change.
   * User can shoot
   * User can use supernatural abilities
   * User can crouch
-  * User can hide behind obstacles, and peek over/around them
-  * User can hide next to walls, and peek over/around them
+  * User can hide behind obstacles, and shoot over/around them
+  * User can hide next to walls, and shoot over/around them
   * User can throw grenades
   * User can move between isolated regions
   * Non-playable characters can perform similar actions
