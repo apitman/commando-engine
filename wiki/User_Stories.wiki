@@ -14,6 +14,7 @@ Items listed here are subject to change.
 == Gameplay and Animation ==
 
   * User can shoot
+  * User can use supernatural abilities
   * User can crouch
   * User can hide behind obstacles, and peek over/around them
   * User can hide next to walls, and peek over/around them
