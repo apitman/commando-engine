@@ -45,5 +45,5 @@ Items listed here are subject to change.
   * User can develop levels with level editor tool
 
 == Miscellaneous ==
-
+  * User can select level of difficulty
   * Port the game to Xbox 360
