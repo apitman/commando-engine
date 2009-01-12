@@ -21,6 +21,7 @@ Items listed here are subject to change.
   * User can throw grenades
   * User can move between isolated regions
   * Non-playable characters can perform similar actions
+  * Sound effects will accommodate various animations and events 
 
 == Physics and Simulation ==
 
