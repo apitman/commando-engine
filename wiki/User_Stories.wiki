@@ -40,6 +40,7 @@ Items listed here are subject to change.
   * User can move into different rooms
   * User can play against different enemy types including humanoid and flying
   * User can fight a boss enemy character
+  * User can develop levels with level editor tool
 
 == Miscellaneous ==
 
