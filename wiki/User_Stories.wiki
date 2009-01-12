@@ -34,7 +34,7 @@ Items listed here are subject to change.
   * Non-playable characters perform dynamically-planned sequences of actions
   * Non-playable characters transfer knowledge to one another
   * Non-playable characters coordinate their plans with one another
-
+  * Non-playable characters search for and attack player
 == Game Content ==
 
   * User can play through a single level
