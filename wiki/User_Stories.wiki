@@ -16,6 +16,7 @@ Items listed here are subject to change.
 
 == Gameplay and Animation ==
 
+  * User can view statistics, currently selected weapon, etc. via HUD
   * User can shoot
   * User can activate supernatural abilities
   * User can crouch
