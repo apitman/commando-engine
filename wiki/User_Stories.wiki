@@ -9,19 +9,23 @@ Items listed here are subject to change.
   * User can control character using keyboard/mouse
   * User can control character using Xbox 360 gamepad
   * User can select to use either choice of controls
-  * User can use the mouse to simulate joystick rotation
+  * User can move the mouse to simulate joystick rotation
+  * User can start the game from a main menu
+  * User can view a screen displaying the controls
+  * User can pause the game
 
 == Gameplay and Animation ==
 
   * User can shoot
-  * User can use supernatural abilities
+  * User can activate supernatural abilities
   * User can crouch
   * User can hide behind obstacles, and shoot over/around them
   * User can hide next to walls, and shoot over/around them
   * User can throw grenades
   * User can move between isolated regions
   * Non-playable characters can perform similar actions
-  * Sound effects will accommodate various animations and events 
+  * Sound effects will accommodate various animations and events
+  * Background music will accompany various gameplay sequences
 
 == Physics and Simulation ==
 
@@ -36,6 +40,7 @@ Items listed here are subject to change.
   * Non-playable characters transfer knowledge to one another
   * Non-playable characters coordinate their plans with one another
   * Non-playable characters search for and attack player
+
 == Game Content ==
 
   * User can play through a single level
@@ -45,5 +50,6 @@ Items listed here are subject to change.
   * User can develop levels with level editor tool
 
 == Miscellaneous ==
+
   * User can select level of difficulty
-  * Port the game to Xbox 360
+  * User can play the game on Xbox 360 in addition to PC
