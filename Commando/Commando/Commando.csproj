@@ -86,12 +86,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="controls\ControllerInputFactoryInterface.cs" />
     <Compile Include="controls\ControllerInputInterface.cs" />
-    <Compile Include="controls\PCControllerInputFactory.cs" />
-    <Compile Include="controls\PCGameplayControllerInput.cs" />
-    <Compile Include="controls\PCMenuControllerInput.cs" />
-    <Compile Include="controls\X360ControllerInputFactory.cs" />
+    <Compile Include="controls\PCControllerInput.cs" />
+    <Compile Include="controls\X360ControllerInput.cs" />
     <Compile Include="EngineStateGameplay.cs" />
     <Compile Include="EngineStateInterface.cs" />
     <Compile Include="EngineStateMenu.cs" />

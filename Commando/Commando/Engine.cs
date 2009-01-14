@@ -28,6 +28,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using Commando.controls;
 
 namespace Commando
 {
@@ -36,14 +37,28 @@ namespace Commando
     /// </summary>
     public class Engine : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager graphics_;
+        SpriteBatch spriteBatch_;
         EngineStateInterface engineState_;
+        ControllerInputInterface controls_;
 
         public Engine()
         {
-            graphics = new GraphicsDeviceManager(this);
+            graphics_ = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+#if XBOX
+            controls_ = new X360ControllerInput();
+#else
+            controls_ = new PCControllerInput();
+#endif
+
+            engineState_ = new EngineStateMenu(this);
+        }
+
+        public ControllerInputInterface getControls()
+        {
+            return controls_;
         }
 
         /// <summary>
@@ -57,6 +72,7 @@ namespace Commando
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
         }
 
         /// <summary>
@@ -66,7 +82,7 @@ namespace Commando
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch_ = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }
@@ -100,11 +116,12 @@ namespace Commando
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
 
             engineState_.draw();
+
+            //GraphicsDevice.Clear(Color.CornflowerBlue);
 
             base.Draw(gameTime);
         }
