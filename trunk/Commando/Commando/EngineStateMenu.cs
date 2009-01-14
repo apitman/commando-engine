@@ -43,7 +43,7 @@ namespace Commando
 
         #region EngineStateInterface Members
 
-        public EngineStateInterface update()
+        public EngineStateInterface update(GameTime gameTime)
         {
             InputSet inputs = engine_.getControls().getInputSet();
 

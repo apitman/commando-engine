@@ -21,13 +21,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Net;
+using Microsoft.Xna.Framework.Storage;
+using Commando.controls;
 
 namespace Commando
 {
-    interface EngineStateInterface
+    class EngineStatePause : EngineStateInterface
     {
-        EngineStateInterface update(GameTime gameTime);
 
-        void draw();
+        protected Engine engine_;
+        protected EngineStateInterface savedState_;
+
+        public EngineStatePause(Engine engine, EngineStateInterface savedState)
+        {
+            engine_ = engine;
+            savedState_ = savedState;
+        }
+
+        #region EngineStateInterface Members
+
+        public EngineStateInterface update(GameTime gameTime)
+        {
+            InputSet inputs = engine_.getControls().getInputSet();
+
+            if (inputs.confirmButton)
+            {
+                return savedState_;
+            }
+
+            return this;
+        }
+
+        public void draw()
+        {
+            engine_.GraphicsDevice.Clear(Color.DarkOliveGreen);
+        }
+
+        #endregion
     }
 }

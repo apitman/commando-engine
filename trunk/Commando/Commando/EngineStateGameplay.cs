@@ -45,9 +45,14 @@ namespace Commando
 
         #region EngineStateInterface Members
 
-        public EngineStateInterface update()
+        public EngineStateInterface update(GameTime gameTime)
         {
             InputSet inputs = engine_.getControls().getInputSet();
+
+            if (inputs.cancelButton)
+            {
+                return new EngineStatePause(engine_, this);
+            }
 
             return this;
         }
