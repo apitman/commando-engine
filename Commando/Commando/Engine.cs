@@ -56,9 +56,9 @@ namespace Commando
             engineState_ = new EngineStateMenu(this);
         }
 
-        public ControllerInputInterface getControls()
+        public InputSet getInputs()
         {
-            return controls_;
+            return controls_.getInputSet();
         }
 
         /// <summary>
