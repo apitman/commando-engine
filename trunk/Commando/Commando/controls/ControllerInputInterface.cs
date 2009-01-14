@@ -27,25 +27,4 @@ namespace Commando.controls
     {
         InputSet getInputSet();
     }
-
-    public struct InputSet
-    {
-        public int leftDirectionalX;
-        public int leftDirectionalY;
-
-        public int rightDirectionalX;
-        public int rightDirectionalY;
-
-        public bool confirmButton;
-        public bool cancelButton;
-
-        public bool button1;
-        public bool button2;
-        public bool button3;
-        public bool button4;
-
-        public bool leftTrigger;
-        public bool rightTrigger;
-
-    }
 }

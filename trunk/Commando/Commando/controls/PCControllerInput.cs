@@ -26,56 +26,66 @@ namespace Commando.controls
 {
     class PCControllerInput : ControllerInputInterface
     {
-
+        protected InputSet inputs_;
         protected int previousMouseX_;
         protected int previousMouseY_;
+
+        public PCControllerInput()
+        {
+            inputs_ = new InputSet();
+        }
 
         #region ControllerInputInterface Members
 
         public InputSet getInputSet()
         {
-            InputSet inputs = new InputSet();
 
-            inputs.leftDirectionalX = 0;
-            inputs.rightDirectionalX = 0;
-            inputs.leftDirectionalY = 0;
-            inputs.rightDirectionalY = 0;
+            KeyboardState ks = Keyboard.GetState();
+            MouseState ms = Mouse.GetState();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {
-                inputs.leftDirectionalY += -1;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                inputs.leftDirectionalY += 1;
-            }
+            inputs_.leftDirectionalX = 0;
+            inputs_.rightDirectionalX = 0;
+            inputs_.leftDirectionalY = 0;
+            inputs_.rightDirectionalY = 0;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (ks.IsKeyDown(Keys.W))
             {
-                inputs.leftDirectionalX += -1;
+                inputs_.leftDirectionalY += 1.0f;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            if (ks.IsKeyDown(Keys.S))
             {
-                inputs.leftDirectionalX += 1;
+                inputs_.leftDirectionalY += -1.0f;
             }
 
-            inputs.rightDirectionalX = Mouse.GetState().X - previousMouseX_;
-            inputs.rightDirectionalY = Mouse.GetState().Y + previousMouseY_;
-            previousMouseX_ = Mouse.GetState().X;
-            previousMouseY_ = Mouse.GetState().Y;
+            if (ks.IsKeyDown(Keys.D))
+            {
+                inputs_.leftDirectionalX += 1.0f;
+            }
+            if (ks.IsKeyDown(Keys.A))
+            {
+                inputs_.leftDirectionalX += -1.0f;
+            }
 
-            inputs.confirmButton = Keyboard.GetState().IsKeyDown(Keys.Enter);
-            inputs.cancelButton = Keyboard.GetState().IsKeyDown(Keys.Escape);
+            inputs_.rightDirectionalX = ms.X - previousMouseX_;
+            inputs_.rightDirectionalY = ms.Y + previousMouseY_;
+            previousMouseX_ = ms.X;
+            previousMouseY_ = ms.Y;
 
-            inputs.button1 = Keyboard.GetState().IsKeyDown(Keys.Space);
-            inputs.button2 = Keyboard.GetState().IsKeyDown(Keys.LeftShift);
-            inputs.button3 = Keyboard.GetState().IsKeyDown(Keys.X);
-            inputs.button4 = Keyboard.GetState().IsKeyDown(Keys.C);
+            inputs_.confirmButton = ks.IsKeyDown(Keys.Enter);
+            inputs_.cancelButton = ks.IsKeyDown(Keys.Escape);
 
-            inputs.leftTrigger = Mouse.GetState().LeftButton == ButtonState.Pressed;
-            inputs.rightTrigger = Mouse.GetState().RightButton == ButtonState.Pressed;
+            inputs_.setButton1(ks.IsKeyDown(Keys.Space));
+            inputs_.setButton2(ks.IsKeyDown(Keys.LeftShift));
+            inputs_.setButton3(ks.IsKeyDown(Keys.X));
+            inputs_.setButton4(ks.IsKeyDown(Keys.C));
 
-            return inputs;
+            inputs_.leftTrigger = ms.LeftButton == ButtonState.Pressed;
+            inputs_.rightTrigger = ms.RightButton == ButtonState.Pressed;
+
+            inputs_.leftBumper = ks.IsKeyDown(Keys.Z);
+            inputs_.rightBumper = ks.IsKeyDown(Keys.V);
+
+            return inputs_;
         }
 
         #endregion
