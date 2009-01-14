@@ -27,13 +27,59 @@ namespace Commando
     abstract class CharacterAbstract : AnimatedObjectAbstract
     {
 
-        protected CharacterHealth health;
+        protected CharacterHealth health_;
 
-        protected CharacterAmmo ammo;
+        protected CharacterAmmo ammo_;
 
-        protected CharacterWeapon weapon;
+        protected CharacterWeapon weapon_;
 
-        protected string name;
+        protected string name_;
+
+        public CharacterAbstract() :
+            base()
+        {
+        }
+
+        public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name) :
+            base()
+        {
+        }
+
+        public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(animations, frameLengthModifier, velocity, position, direction, depth)
+        {
+        }
+
+        protected CharacterHealth getHealth()
+        {
+            return health_;
+        }
+
+        protected CharacterAmmo getAmmo()
+        {
+            return ammo_;
+        }
+
+        protected CharacterWeapon getWeapon()
+        {
+            return weapon_;
+        }
+
+        protected void setHealth(CharacterHealth health)
+        {
+            health_ = health;
+        }
+
+        protected void setAmmo(CharacterAmmo ammo)
+        {
+            ammo_ = ammo;
+        }
+
+        protected void setWeapon(CharacterWeapon weapon)
+        {
+            weapon_ = weapon;
+        }
+
 
     }
 }
