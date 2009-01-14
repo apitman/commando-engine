@@ -57,7 +57,7 @@ namespace Commando
             return Vector2.Zero;
         }
 
-        public Vector2 getDepth()
+        public float getDepth()
         {
 
             return 0.0f;
