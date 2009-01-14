@@ -86,23 +86,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimatedObjectAbstract.cs" />
+    <Compile Include="objects\AnimatedObjectAbstract.cs" />
     <Compile Include="AnimationSet.cs" />
-    <Compile Include="CharacterAbstract.cs" />
+    <Compile Include="objects\CharacterAbstract.cs" />
     <Compile Include="CharacterAmmo.cs" />
     <Compile Include="CharacterHealth.cs" />
     <Compile Include="CharacterWeapon.cs" />
     <Compile Include="controls\ControllerInputInterface.cs" />
     <Compile Include="controls\PCControllerInput.cs" />
     <Compile Include="controls\X360ControllerInput.cs" />
-    <Compile Include="DrawableObjectAbstract.cs" />
+    <Compile Include="objects\DrawableObjectAbstract.cs" />
     <Compile Include="EngineStateGameplay.cs" />
     <Compile Include="EngineStateInterface.cs" />
     <Compile Include="EngineStateMenu.cs" />
     <Compile Include="GameTexture.cs" />
-    <Compile Include="MovableObjectAbstract.cs" />
-    <Compile Include="NonAnimatedMovableObjectAbstract.cs" />
-    <Compile Include="PipelineObjectAbstract.cs" />
+    <Compile Include="objects\MovableObjectAbstract.cs" />
+    <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />
+    <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Engine.cs" />
