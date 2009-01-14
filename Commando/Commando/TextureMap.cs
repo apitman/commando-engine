@@ -26,5 +26,26 @@ namespace Commando
 {
     class TextureMap
     {
+        Dictionary<string, GameTexture> textures_;
+
+        public TextureMap()
+        {
+            textures_ = new Dictionary<string, GameTexture>();
+        }
+
+        public void loadTextures(string filename)
+        {
+            //TODO: Eventually, create automatic scripted loading of textures
+            //      For now, just create the load for each texture in the function
+        }
+
+        public GameTexture getTexture(string textureName)
+        {
+            if(!textures_.ContainsKey(textureName))
+            {
+                return null;
+            }
+            return textures_[textureName];
+        }
     }
 }
