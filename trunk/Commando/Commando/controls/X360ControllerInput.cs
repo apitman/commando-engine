@@ -20,10 +20,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Input;
 
 namespace Commando.controls
 {
-    class X360ControllerInputFactory : ControllerInputFactoryInterface
+    class X360ControllerInput : ControllerInputInterface
     {
+        #region ControllerInputInterface Members
+
+        public InputSet getInputSet()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
