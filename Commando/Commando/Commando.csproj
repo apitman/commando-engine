@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EngineStatePause.cs" />
+    <Compile Include="controls\InputSet.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />
     <Compile Include="AnimationSet.cs" />
     <Compile Include="objects\CharacterAbstract.cs" />
