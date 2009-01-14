@@ -51,6 +51,8 @@ namespace Commando
 
         public Texture2D getTexture()
         {
+
+            return null;
         }
 
         public void setTexture(Texture2D tex)
@@ -59,6 +61,8 @@ namespace Commando
 
         public Vector4[] getImageDimensions()
         {
+
+            return new Vector4[1];
         }
 
         public void setImageDimensions(Vector4[] dims)
