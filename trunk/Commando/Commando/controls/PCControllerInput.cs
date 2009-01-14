@@ -41,32 +41,22 @@ namespace Commando.controls
             inputs.leftDirectionalY = 0;
             inputs.rightDirectionalY = 0;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) &&
-                Keyboard.GetState().IsKeyDown(Keys.S))
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                inputs.leftDirectionalY = 0;
+                inputs.leftDirectionalY += -1;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.W))
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                inputs.leftDirectionalY = -1;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                inputs.leftDirectionalY = 1;
+                inputs.leftDirectionalY += 1;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A) &&
-                Keyboard.GetState().IsKeyDown(Keys.D))
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                inputs.leftDirectionalX = 0;
+                inputs.leftDirectionalX += -1;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                inputs.leftDirectionalX = -1;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                inputs.leftDirectionalX = 1;
+                inputs.leftDirectionalX += 1;
             }
 
             inputs.rightDirectionalX = Mouse.GetState().X - previousMouseX_;
