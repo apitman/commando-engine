@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterStatusElementAbstract.cs" />
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />
@@ -97,11 +98,13 @@
     <Compile Include="controls\ControllerInputInterface.cs" />
     <Compile Include="controls\PCControllerInput.cs" />
     <Compile Include="controls\X360ControllerInput.cs" />
+    <Compile Include="objects\CharacterStatusObserverInterface.cs" />
     <Compile Include="objects\DrawableObjectAbstract.cs" />
     <Compile Include="EngineStateGameplay.cs" />
     <Compile Include="EngineStateInterface.cs" />
     <Compile Include="EngineStateMenu.cs" />
     <Compile Include="GameTexture.cs" />
+    <Compile Include="objects\HeadsUpDisplayObjectAbstract.cs" />
     <Compile Include="objects\MainPlayer.cs" />
     <Compile Include="objects\MovableObjectAbstract.cs" />
     <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />
