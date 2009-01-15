@@ -21,10 +21,47 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando
 {
     class AnimationSet
     {
+        
+        protected List<GameTexture> animations_;
+
+        protected uint nextFrame_;
+
+        protected uint curAnimation_;
+
+        public AnimationSet()
+        {
+        }
+
+        public void startAnimation(uint animationNumber)
+        {
+            curAnimation_ = animationNumber;
+            nextFrame_ = 0;
+        }
+
+        public void setNextFrame(uint nextFrame)
+        {
+            nextFrame_ = nextFrame;
+        }
+
+        public uint getNextFrame()
+        {
+            return nextFrame_;
+        }
+
+        public uint getCurrentAnimation()
+        {
+            return curAnimation_;
+        }
+
+        public void drawNextFrame(Vector2 position, float rotation, float depth)
+        {
+
+        }
     }
 }
