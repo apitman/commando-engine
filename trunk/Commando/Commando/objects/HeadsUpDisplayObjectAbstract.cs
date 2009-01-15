@@ -21,11 +21,58 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
-    abstract class HeadsUpDisplayObjectAbstract : DrawableObjectAbstract
+    abstract class HeadsUpDisplayObjectAbstract : DrawableObjectAbstract, CharacterStatusObserverInterface
     {
+        //public abstract void notifyOfChange(CharacterStatusElementInterface statusElement);
 
+        protected GameTexture texture_;
+
+        protected bool modified_;
+
+        protected int newValue_;
+
+        public HeadsUpDisplayObjectAbstract() :
+            base()
+        {
+            modified_ = false;
+            newValue_ = 0;
+            texture_ = TextureMap.getInstance().getTexture("No_Image");
+        }
+
+        public HeadsUpDisplayObjectAbstract(GameTexture texture) :
+            base()
+        {
+            modified_ = false;
+            newValue_ = 0;
+            texture_ = texture;
+        }
+
+        public HeadsUpDisplayObjectAbstract(GameTexture texture, Vector2 position, Vector2 direction, float depth) :
+            base(position, direction, depth)
+        {
+            modified_ = false;
+            newValue_ = 0;
+            texture_ = texture;
+        }
+        
+        public void notifyOfChange(int value)
+        {
+            newValue_ = value;
+            modified_ = true;
+        }
+
+        public override void update(Microsoft.Xna.Framework.GameTime gameTime)
+        {
+            if (modified_)
+            {
+                updateImage();
+            }
+        }
+
+        public abstract void updateImage();
     }
 }
