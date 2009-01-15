@@ -89,7 +89,7 @@ namespace Commando
             Array.Copy(dims, imageDimensions_, dims.GetLength(0));
         }
 
-        public uint getNumberOfImages()
+        public int getNumberOfImages()
         {
             return imageDimensions_.GetLength(0);
         }
@@ -107,19 +107,19 @@ namespace Commando
         //preconditions: texture_ and imageDimensions_ are not NULL
         //postconditions: the specified image is drawn to the screen at origin with the
         //  specified rotation and depth.
-        public void drawImage(uint imageNumber, Vector2 position, float rotation, float depth)
+        public void drawImage(int imageNumber, Vector2 position, float rotation, float depth)
         {
             Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
-            spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], Color.White, rotation, originOfImage, SpriteEffects.None, depth);
+            spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], Color.White, rotation, originOfImage, 1.0f, SpriteEffects.None, depth);
         }
 
-        public void drawImageWithDim(uint imageNumber, Rectangle destinationDims, float rotation, float depth)
+        public void drawImageWithDim(int imageNumber, Rectangle destinationDims, float rotation, float depth)
         {
             Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
             spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], Color.White, rotation, originOfImage, SpriteEffects.None, depth);
         }
 
-        public void drawImageWithDim(uint imageNumber, Rectangle destinationDims, float depth)
+        public void drawImageWithDim(int imageNumber, Rectangle destinationDims, float depth)
         {
             spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, depth);
         }

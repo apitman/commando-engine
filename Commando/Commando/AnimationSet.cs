@@ -30,9 +30,13 @@ namespace Commando
         
         protected List<GameTexture> animations_;
 
-        protected uint nextFrame_;
+        protected int nextFrame_;
 
-        protected uint curAnimation_;
+        protected int curAnimation_;
+
+        public AnimationSet()
+        {
+        }
 
         public AnimationSet(List<GameTexture> animations)
         {
@@ -41,23 +45,23 @@ namespace Commando
             curAnimation_ = 0;
         }
 
-        public void startAnimation(uint animationNumber)
+        public void startAnimation(int animationNumber)
         {
             curAnimation_ = animationNumber;
             nextFrame_ = 0;
         }
 
-        public void setNextFrame(uint nextFrame)
+        public void setNextFrame(int nextFrame)
         {
             nextFrame_ = nextFrame;
         }
 
-        public uint getNextFrame()
+        public int getNextFrame()
         {
             return nextFrame_;
         }
 
-        public uint getCurrentAnimation()
+        public int getCurrentAnimation()
         {
             return curAnimation_;
         }
@@ -65,7 +69,7 @@ namespace Commando
         public void drawNextFrame(Vector2 position, float rotation, float depth)
         {
             animations_[curAnimation_].drawImage(nextFrame_, position, rotation, depth);
-            nextFrame_ = (nextFrame_ + 1) % animations_[curAnimation_].getImageDimensions();
+            nextFrame_ = (nextFrame_ + 1) % animations_[curAnimation_].getNumberOfImages();
         }
     }
 }
