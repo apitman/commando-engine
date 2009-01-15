@@ -22,10 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Commando
+namespace Commando.objects
 {
-    abstract class PlayableCharacterAbstract : CharacterAbstract
+    class MainPlayer
     {
-
     }
 }
