@@ -85,6 +85,7 @@ namespace Commando
             spriteBatch_ = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            TextureMap.getInstance().loadTextures("", spriteBatch_, graphics_.GraphicsDevice);
         }
 
         /// <summary>
@@ -120,9 +121,9 @@ namespace Commando
         {
 
             // TODO: Add your drawing code here
-
+            spriteBatch_.Begin();
             engineState_.draw();
-
+            spriteBatch_.End();
             //GraphicsDevice.Clear(Color.CornflowerBlue);
 
             base.Draw(gameTime);

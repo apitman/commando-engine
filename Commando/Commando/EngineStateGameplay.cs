@@ -35,12 +35,20 @@ namespace Commando
 {
     class EngineStateGameplay : EngineStateInterface
     {
+        //Jared's test stuff
+        protected objects.MainPlayer player_;
+        //END Jared's test stuff
+
 
         protected Engine engine_;
 
         public EngineStateGameplay(Engine engine)
         {
             engine_ = engine;
+
+            //Jared's test stuff
+            player_ = new objects.MainPlayer();
+            //END Jared's test stuff
         }
 
         #region EngineStateInterface Members
@@ -54,12 +62,20 @@ namespace Commando
                 return new EngineStatePause(engine_, this);
             }
 
+            //Jared's test stuff
+            player_.update(gameTime);
+            //END Jared's test stuff
+
             return this;
         }
 
         public void draw()
         {
             engine_.GraphicsDevice.Clear(Color.Chocolate);
+
+            //Jared's test stuff
+            player_.draw(new GameTime());
+            //END Jared's test stuff
         }
 
         #endregion

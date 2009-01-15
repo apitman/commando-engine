@@ -83,7 +83,7 @@ namespace Commando
 
         protected float getRotationAngle()
         {
-            return (float)Math.Atan2((double)position_.Y, (double)direction_.X);
+            return (float)Math.Atan2((double)direction_.Y, (double)direction_.X);
         }
     }
 }
