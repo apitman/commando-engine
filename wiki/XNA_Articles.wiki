@@ -11,6 +11,9 @@ http://blogs.msdn.com/shawnhar/archive/2007/07/02/twin-paths-to-garbage-collecto
 How to tell if you are CPU or GPU bound
 http://blogs.msdn.com/shawnhar/archive/2008/04/07/how-to-tell-if-you-are-cpu-or-gpu-bound.aspx
 
+Understanding GameTime
+http://blogs.msdn.com/shawnhar/archive/2007/07/25/understanding-gametime.aspx
+
 Game timing in XNA Game Studio 2.0
 http://blogs.msdn.com/shawnhar/archive/2007/11/23/game-timing-in-xna-game-studio-2-0.aspx
 
