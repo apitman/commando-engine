@@ -85,7 +85,7 @@ namespace Commando
             spriteBatch_ = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            TextureMap.getInstance().loadTextures("", spriteBatch_, graphics_.GraphicsDevice);
+            //TextureMap.getInstance().loadTextures("", spriteBatch_, graphics_.GraphicsDevice);
         }
 
         /// <summary>
