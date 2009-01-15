@@ -59,6 +59,7 @@ namespace Commando
 
             if (inputs.getCancelButton())
             {
+                inputs.setToggle(InputsEnum.CANCEL_BUTTON, true);
                 return new EngineStatePause(engine_, this);
             }
 

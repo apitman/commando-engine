@@ -56,6 +56,12 @@ namespace Commando
                 return savedState_;
             }
 
+            if (inputs.getCancelButton())
+            {
+                inputs.setToggle(InputsEnum.CANCEL_BUTTON, true);
+                return savedState_;
+            }
+
             return this;
         }
 
