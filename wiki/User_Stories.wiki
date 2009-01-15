@@ -4,13 +4,14 @@
 
 == Build 1: Jan. 13 - Jan. 22 ==
 
-1. User can begin game and see a main menu - Eric
-2. User can highlight options on the main menu using the keyboard - Eric, Ken
-3. User can select the "Begin Game" option with the Enter key - Eric, Ken
-4. User can see a blank/plain level - Jared
-5. User has a "heads-up display" showing health, ammo, and current weapon - Andrew
-6. User can see his character in the level - Jared
-7. User can move his character around the screen using the WASD keys - Jared, Ken
+  # User can begin game and see a main menu - Eric
+  # User can highlight options on the main menu using the keyboard - Eric, Ken
+  # User can select the "Begin Game" option with the Enter key - Eric, Ken
+  # User can see a blank/plain level - Jared
+  # User has a "heads-up display" showing health, ammo, and current weapon - Andrew
+  # User can see his character in the level - Jared
+  # User can move his character around the screen using the WASD keys - Jared, Ken
+  # User can press a key to get to a Pause screen - Andrew, Ken
 
 = List of user stories =
 
