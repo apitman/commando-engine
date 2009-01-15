@@ -47,6 +47,11 @@ namespace Commando.controls
 
         public InputSet getInputSet()
         {
+            return inputs_;
+        }
+
+        public void updateInputSet()
+        {
             GamePadState gps = GamePad.GetState(player_);
 
             inputs_.leftDirectionalX = gps.ThumbSticks.Left.X;
@@ -54,20 +59,19 @@ namespace Commando.controls
             inputs_.rightDirectionalX = gps.ThumbSticks.Right.X;
             inputs_.rightDirectionalY = gps.ThumbSticks.Right.Y;
 
-            inputs_.confirmButton = gps.IsButtonDown(Buttons.Start);
-            inputs_.cancelButton = gps.IsButtonDown(Buttons.Back);
+            inputs_.setConfirmButton(gps.IsButtonDown(Buttons.Start));
+            inputs_.setCancelButton(gps.IsButtonDown(Buttons.Back));
 
             inputs_.setButton1(gps.IsButtonDown(Buttons.A));
             inputs_.setButton2(gps.IsButtonDown(Buttons.B));
             inputs_.setButton3(gps.IsButtonDown(Buttons.X));
             inputs_.setButton4(gps.IsButtonDown(Buttons.Y));
 
-            inputs_.leftTrigger = gps.IsButtonDown(Buttons.LeftTrigger);
-            inputs_.rightTrigger = gps.IsButtonDown(Buttons.RightTrigger);
-            inputs_.leftBumper = gps.IsButtonDown(Buttons.LeftShoulder);
-            inputs_.rightBumper = gps.IsButtonDown(Buttons.RightShoulder);
+            inputs_.setLeftTrigger(gps.IsButtonDown(Buttons.LeftTrigger));
+            inputs_.setRightTrigger(gps.IsButtonDown(Buttons.RightTrigger));
+            inputs_.setLeftBumper(gps.IsButtonDown(Buttons.LeftShoulder));
+            inputs_.setRightBumper(gps.IsButtonDown(Buttons.RightShoulder));
 
-            return inputs_;
         }
 
         #endregion

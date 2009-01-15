@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+ ***************************************************************************
+ * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
+ *                                                                         *
+ * Licensed under the Apache License, Version 2.0 (the "License");         *
+ * you may not use this file except in compliance with the License.        *
+ * You may obtain a copy of the License at                                 *
+ *                                                                         *
+ * http://www.apache.org/licenses/LICENSE-2.0                              *
+ *                                                                         *
+ * Unless required by applicable law or agreed to in writing, software     *
+ * distributed under the License is distributed on an "AS IS" BASIS,       *
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.*
+ * See the License for the specific language governing permissions and     *
+ * limitations under the License.                                          *
+ ***************************************************************************
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,19 +34,19 @@ namespace Commando.controls
         public float rightDirectionalX;
         public float rightDirectionalY;
 
-        public bool confirmButton;
-        public bool cancelButton;
+        protected bool confirmButton;
+        protected bool cancelButton;
 
         protected bool button1;
         protected bool button2;
         protected bool button3;
         protected bool button4;
 
-        public bool leftTrigger;
-        public bool rightTrigger;
+        protected bool leftTrigger;
+        protected bool rightTrigger;
 
-        public bool leftBumper;
-        public bool rightBumper;
+        protected bool leftBumper;
+        protected bool rightBumper;
 
         public InputSet()
         {
@@ -36,7 +54,17 @@ namespace Commando.controls
             toggleState_ = new bool[(int)InputsEnum.DUMMY_LAST];
         }
 
-        # region GETTERS AND SETTERS
+        # region GETTERS
+
+        public bool getConfirmButton()
+        {
+            return confirmButton;
+        }
+
+        public bool getCancelButton()
+        {
+            return cancelButton;
+        }
 
         public bool getButton1()
         {
@@ -58,9 +86,67 @@ namespace Commando.controls
             return button4;
         }
 
+        public bool getLeftTrigger()
+        {
+            return leftTrigger;
+        }
+
+        public bool getRightTrigger()
+        {
+            return rightTrigger;
+        }
+
+        public bool getLeftBumper()
+        {
+            return leftBumper;
+        }
+
+        public bool getRightBumper()
+        {
+            return rightBumper;
+        }
+
         #endregion
 
         #region SETTERS
+
+        public void setConfirmButton(bool value)
+        {
+            if (stickState_[(int)InputsEnum.CONFIRM_BUTTON] > 0 ||
+                toggleState_[(int)InputsEnum.CONFIRM_BUTTON])
+            {
+                if (stickState_[(int)InputsEnum.CONFIRM_BUTTON] > 0)
+                {
+                    stickState_[(int)InputsEnum.CONFIRM_BUTTON]--;
+                }
+                if (value == false)
+                {
+                    toggleState_[(int)InputsEnum.CONFIRM_BUTTON] = false;
+                }
+                confirmButton = false;
+                return;
+            }
+            confirmButton = value;
+        }
+
+        public void setCancelButton(bool value)
+        {
+            if (stickState_[(int)InputsEnum.CANCEL_BUTTON] > 0 ||
+                toggleState_[(int)InputsEnum.CANCEL_BUTTON])
+            {
+                if (stickState_[(int)InputsEnum.CANCEL_BUTTON] > 0)
+                {
+                    stickState_[(int)InputsEnum.CANCEL_BUTTON]--;
+                }
+                if (value == false)
+                {
+                    toggleState_[(int)InputsEnum.CANCEL_BUTTON] = false;
+                }
+                cancelButton = false;
+                return;
+            }
+            cancelButton = value;
+        }
 
         public void setButton1(bool value)
         {
@@ -71,7 +157,7 @@ namespace Commando.controls
                 {
                     stickState_[(int)InputsEnum.BUTTON_1]--;
                 }
-                if (button1 == false)
+                if (value == false)
                 {
                     toggleState_[(int)InputsEnum.BUTTON_1] = false;
                 }
@@ -90,7 +176,7 @@ namespace Commando.controls
                 {
                     stickState_[(int)InputsEnum.BUTTON_2]--;
                 }
-                if (button2 == false)
+                if (value == false)
                 {
                     toggleState_[(int)InputsEnum.BUTTON_2] = false;
                 }
@@ -109,7 +195,7 @@ namespace Commando.controls
                 {
                     stickState_[(int)InputsEnum.BUTTON_3]--;
                 }
-                if (button3 == false)
+                if (value == false)
                 {
                     toggleState_[(int)InputsEnum.BUTTON_3] = false;
                 }
@@ -128,7 +214,7 @@ namespace Commando.controls
                 {
                     stickState_[(int)InputsEnum.BUTTON_4]--;
                 }
-                if (button4 == false)
+                if (value == false)
                 {
                     toggleState_[(int)InputsEnum.BUTTON_4] = false;
                 }
@@ -136,6 +222,82 @@ namespace Commando.controls
                 return;
             }
             button4 = value;
+        }
+
+        public void setLeftTrigger(bool value)
+        {
+            if (stickState_[(int)InputsEnum.LEFT_TRIGGER] > 0 ||
+                toggleState_[(int)InputsEnum.LEFT_TRIGGER])
+            {
+                if (stickState_[(int)InputsEnum.LEFT_TRIGGER] > 0)
+                {
+                    stickState_[(int)InputsEnum.LEFT_TRIGGER]--;
+                }
+                if (value == false)
+                {
+                    toggleState_[(int)InputsEnum.LEFT_TRIGGER] = false;
+                }
+                leftTrigger = false;
+                return;
+            }
+            leftTrigger = value;
+        }
+
+        public void setRightTrigger(bool value)
+        {
+            if (stickState_[(int)InputsEnum.RIGHT_TRIGGER] > 0 ||
+                toggleState_[(int)InputsEnum.RIGHT_TRIGGER])
+            {
+                if (stickState_[(int)InputsEnum.RIGHT_TRIGGER] > 0)
+                {
+                    stickState_[(int)InputsEnum.RIGHT_TRIGGER]--;
+                }
+                if (value == false)
+                {
+                    toggleState_[(int)InputsEnum.RIGHT_TRIGGER] = false;
+                }
+                rightTrigger = false;
+                return;
+            }
+            rightTrigger = value;
+        }
+
+        public void setLeftBumper(bool value)
+        {
+            if (stickState_[(int)InputsEnum.LEFT_BUMPER] > 0 ||
+                toggleState_[(int)InputsEnum.LEFT_BUMPER])
+            {
+                if (stickState_[(int)InputsEnum.LEFT_BUMPER] > 0)
+                {
+                    stickState_[(int)InputsEnum.LEFT_BUMPER]--;
+                }
+                if (value == false)
+                {
+                    toggleState_[(int)InputsEnum.LEFT_BUMPER] = false;
+                }
+                leftBumper = false;
+                return;
+            }
+            leftBumper = value;
+        }
+
+        public void setRightBumper(bool value)
+        {
+            if (stickState_[(int)InputsEnum.RIGHT_BUMPER] > 0 ||
+                toggleState_[(int)InputsEnum.RIGHT_BUMPER])
+            {
+                if (stickState_[(int)InputsEnum.RIGHT_BUMPER] > 0)
+                {
+                    stickState_[(int)InputsEnum.RIGHT_BUMPER]--;
+                }
+                if (value == false)
+                {
+                    toggleState_[(int)InputsEnum.RIGHT_BUMPER] = false;
+                }
+                rightBumper = false;
+                return;
+            }
+            rightBumper = value;
         }
 
         #endregion

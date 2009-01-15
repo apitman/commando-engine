@@ -47,12 +47,12 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.cancelButton) // tenatively Escape / Back
+            if (inputs.getCancelButton()) // tenatively Escape / Back
             {
                 engine_.Exit();
             }
 
-            if (inputs.confirmButton) // tenatively Enter / Start
+            if (inputs.getConfirmButton()) // tenatively Enter / Start
             {
                 return new EngineStateGameplay(engine_);
             }

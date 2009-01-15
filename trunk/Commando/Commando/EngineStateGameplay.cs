@@ -49,7 +49,7 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.cancelButton)
+            if (inputs.getCancelButton())
             {
                 return new EngineStatePause(engine_, this);
             }
