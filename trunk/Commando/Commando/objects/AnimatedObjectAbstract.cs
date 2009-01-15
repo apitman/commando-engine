@@ -30,72 +30,90 @@ namespace Commando
 
         protected AnimationSet animations_;
 
-        protected uint currentAnimation_;
+        protected int currentAnimation_;
 
-        protected uint currentFrame_;
+        protected int currentFrame_;
 
         protected float frameLengthModifier_;
 
         protected Vector2 moved_;
 
         public AnimatedObjectAbstract() :
-            base()
+            this(new AnimationSet(), 1.0f)
         {
+            
         }
 
         public AnimatedObjectAbstract(AnimationSet animations, float frameLengthModifier) :
             base()
         {
+            animations_ = animations;
+            frameLengthModifier_ = frameLengthModifier;
+            currentAnimation_ = 0;
+            currentFrame_ = 0;
+            moved_ = Vector2.Zero;
         }
 
         public AnimatedObjectAbstract(AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(velocity, position, direction, depth)
         {
+            animations_ = animations;
+            frameLengthModifier_ = frameLengthModifier;
+            currentAnimation_ = 0;
+            currentFrame_ = 0;
+            moved_ = Vector2.Zero;
         }
 
-        public uint getCurrentFrame()
+        public int getCurrentFrame()
         {
-
-            return 0;
+            return currentFrame_;
         }
 
-        public uint getCurrentAnimation()
+        public int getCurrentAnimation()
         {
-
-            return 0;
+            return currentAnimation_;
         }
 
         public AnimationSet getAnimations()
         {
-
-            return null;
+            return animations_;
         }
 
         public float getFrameLengthModifier()
         {
-
-            return 0.0f;
+            return frameLengthModifier_;
         }
 
-        public void setCurrentFrame(uint currentFrame)
+        public void setCurrentFrame(int currentFrame)
         {
+            currentFrame_ = currentFrame;
         }
 
-        public void setCurrentAnimation(uint currentAnimation)
+        public void setCurrentAnimation(int currentAnimation)
         {
+            currentAnimation_ = currentAnimation;
         }
 
         public void setAnimations(AnimationSet animations)
         {
+            animations_ = animations;
         }
 
         public void setFrameLengthModifier(float frameLengthModifier)
         {
+            frameLengthModifier_ = frameLengthModifier;
         }
 
         //Uses the moved 
         protected void updateFrameNumber()
         {
+            float magnitude = (float)Math.Sqrt(Math.Pow((double)moved_.X, 2.0) + Math.Pow((double)moved_.Y, 2.0));
+            magnitude /= frameLengthModifier_;
+            if (magnitude > 0)
+            {
+                currentFrame_ += (int)magnitude;
+                moved_ = Vector2.Zero;
+            }
         }
     }
 }

@@ -26,11 +26,22 @@ namespace Commando
 {
     class TextureMap
     {
-        Dictionary<string, GameTexture> textures_;
+        protected Dictionary<string, GameTexture> textures_;
 
-        public TextureMap()
+        protected static TextureMap textureMapInstance_ = null;
+
+        private TextureMap()
         {
             textures_ = new Dictionary<string, GameTexture>();
+        }
+
+        public static TextureMap getInstance()
+        {
+            if (textureMapInstance_ == null)
+            {
+                textureMapInstance_ = new TextureMap();
+            }
+            return textureMapInstance_;
         }
 
         public void loadTextures(string filename)

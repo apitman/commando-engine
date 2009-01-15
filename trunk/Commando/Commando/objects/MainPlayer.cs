@@ -29,9 +29,11 @@ namespace Commando.objects
     {
 
         public MainPlayer() :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", new AnimationSet(), 5.0f, Vector2.Zero, Vector2.Zero, new Vector2(1.0f,0.0f), 0.5f)
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, Vector2.Zero, new Vector2(1.0f,0.0f), 0.5f)
         {
-            
+            List<GameTexture> anims = new List<GameTexture>();
+            anims.Add(TextureMap.getInstance().getTexture("Woger_Ru"));
+            animations_ = new AnimationSet(anims);
         }
 
         public override void draw(GameTime gameTime)
