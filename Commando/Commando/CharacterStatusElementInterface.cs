@@ -24,8 +24,8 @@ using System.Text;
 
 namespace Commando
 {
-    abstract class CharacterStatusElementAbstract
+    interface CharacterStatusElementInterface
     {
-        public abstract int getValue();
+        int getValue();
     }
 }
