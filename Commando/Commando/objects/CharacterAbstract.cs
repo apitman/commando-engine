@@ -37,50 +37,66 @@ namespace Commando
         protected string name_;
 
         public CharacterAbstract() :
-            base()
+            this(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "")
         {
         }
 
         public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name) :
             base()
         {
+            health_ = health;
+            ammo_ = ammo;
+            weapon_ = weapon;
+            name_ = name;
         }
 
         public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(animations, frameLengthModifier, velocity, position, direction, depth)
         {
+            health_ = health;
+            ammo_ = ammo;
+            weapon_ = weapon;
+            name_ = name;
         }
 
-        protected CharacterHealth getHealth()
+        public CharacterHealth getHealth()
         {
             return health_;
         }
 
-        protected CharacterAmmo getAmmo()
+        public CharacterAmmo getAmmo()
         {
             return ammo_;
         }
 
-        protected CharacterWeapon getWeapon()
+        public CharacterWeapon getWeapon()
         {
             return weapon_;
         }
 
-        protected void setHealth(CharacterHealth health)
+        public string getName()
+        {
+            return name_;
+        }
+
+        public void setHealth(CharacterHealth health)
         {
             health_ = health;
         }
 
-        protected void setAmmo(CharacterAmmo ammo)
+        public void setAmmo(CharacterAmmo ammo)
         {
             ammo_ = ammo;
         }
 
-        protected void setWeapon(CharacterWeapon weapon)
+        public void setWeapon(CharacterWeapon weapon)
         {
             weapon_ = weapon;
         }
 
-
+        public void setName(string name)
+        {
+            name_ = name;
+        }
     }
 }

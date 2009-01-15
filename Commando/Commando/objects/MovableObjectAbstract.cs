@@ -32,26 +32,30 @@ namespace Commando
         public MovableObjectAbstract() :
             base()
         {
+            velocity_ = Vector2.Zero;
         }
 
         public MovableObjectAbstract(Vector2 position, Vector2 direction, float depth) :
             base(position, direction, depth)
         {
+            velocity_ = Vector2.Zero;
         }
 
         public MovableObjectAbstract(Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(position, direction, depth)
         {
+            velocity_ = velocity;
         }
 
 
         public Vector2 getVelocity()
         {
-            return Vector2.Zero;
+            return velocity_;
         }
 
         public void setVelocity(Vector2 velocity)
         {
+            velocity_ = velocity;
         }
     }
 }

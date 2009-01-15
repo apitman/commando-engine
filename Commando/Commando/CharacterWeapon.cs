@@ -24,7 +24,12 @@ using System.Text;
 
 namespace Commando
 {
-    class CharacterWeapon
+    class CharacterWeapon : CharacterStatusElementAbstract
     {
+
+        public override int getValue()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

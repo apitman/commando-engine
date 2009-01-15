@@ -35,10 +35,16 @@ namespace Commando
 
         public DrawableObjectAbstract()
         {
+            position_ = Vector2.Zero;
+            position_ = new Vector2(1.0f, 0.0f);
+            depth_ = 0.5f;
         }
 
         public DrawableObjectAbstract(Vector2 position, Vector2 direction, float depth)
         {
+            position_ = position;
+            direction_ = direction;
+            depth_ = depth;
         }
 
         public abstract void update(GameTime gameTime);
@@ -47,38 +53,37 @@ namespace Commando
 
         public Vector2 getPosition()
         {
-
-            return Vector2.Zero;
+            return position_;
         }
 
         public Vector2 getDirection()
         {
-
-            return Vector2.Zero;
+            return direction_;
         }
 
         public float getDepth()
         {
-
-            return 0.0f;
+            return depth_;
         }
 
         public void setPosition(Vector2 pos)
         {
+            position_ = pos;
         }
 
         public void setDirection(Vector2 dir)
         {
+            direction_ = dir;
         }
 
         public void setDepth(float dep)
         {
+            depth_ = dep;
         }
 
         protected float getRotationAngle()
         {
-
-            return 0.0f;
+            return (float)Math.Atan2((double)position_.Y, (double)direction_.X);
         }
     }
 }
