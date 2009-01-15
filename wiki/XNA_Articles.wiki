@@ -17,6 +17,11 @@ http://blogs.msdn.com/shawnhar/archive/2007/07/25/understanding-gametime.aspx
 Game timing in XNA Game Studio 2.0
 http://blogs.msdn.com/shawnhar/archive/2007/11/23/game-timing-in-xna-game-studio-2-0.aspx
 
+Displaying Text
+http://msdn.microsoft.com/en-us/library/bb447673.aspx
+_Note:_ I am unsure what fonts will be available on Xbox360, but you can find which
+fonts you have on your PC through Control Panel -> Fonts.
+
 == PC Specific ==
 
 Pressing Multiple Keys at once on the Keyboard
