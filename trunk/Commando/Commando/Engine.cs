@@ -42,6 +42,9 @@ namespace Commando
         EngineStateInterface engineState_;
         ControllerInputInterface controls_;
 
+        const float GLOBALSPEEDMULTIPLIER = 2.5F;
+        const int FRAMERATE = 30;
+
         public Engine()
         {
             graphics_ = new GraphicsDeviceManager(this);
@@ -52,7 +55,8 @@ namespace Commando
 #else
             controls_ = new PCControllerInput();
 #endif
-
+            this.IsFixedTimeStep = true;
+            this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, (1000 / FRAMERATE));
             engineState_ = new EngineStateMenu(this);
         }
 
