@@ -26,6 +26,20 @@ namespace Commando
 {
     abstract class PlayableCharacterAbstract : CharacterAbstract
     {
+        
+        public PlayableCharacterAbstract() :
+            base()
+        {
+        }
 
+        public PlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name) :
+            base(health, ammo, weapon, name)
+        {
+        }
+
+        public PlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(health, ammo, weapon, name, animations, frameLengthModifier, velocity, position, direction, depth)
+        {
+        }
     }
 }
