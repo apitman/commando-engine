@@ -38,10 +38,13 @@ namespace Commando.objects
 
         public override void draw(GameTime gameTime)
         {
+            animations_.drawNextFrame(position_, getRotationAngle(), depth_);
         }
 
         public override void update(GameTime gameTime)
         {
+            position_.Y++;
+            position_.X++;
         }
     }
 }
