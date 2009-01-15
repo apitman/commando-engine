@@ -25,6 +25,6 @@ namespace Commando.objects
 {
     interface CharacterStatusObserverInterface
     {
-
+        void notifyOfChange(CharacterStatusElementInterface statusElement);
     }
 }

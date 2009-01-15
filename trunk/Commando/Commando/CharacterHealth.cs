@@ -24,10 +24,10 @@ using System.Text;
 
 namespace Commando
 {
-    class CharacterHealth : CharacterStatusElementAbstract
+    class CharacterHealth : CharacterStatusElementInterface
     {
 
-        public override int getValue()
+        public int getValue()
         {
             throw new NotImplementedException();
         }
