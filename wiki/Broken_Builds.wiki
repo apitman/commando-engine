@@ -1,0 +1,9 @@
+#summary Number of times each developer has broken the build.
+
+|| Name || Broken Builds ||
+|| Jared Segal || 3 ||
+|| Ken Hartsook || 0 ||
+|| Eric Barnes || 0 ||
+|| Andrew Pitman || 0 ||
+
+There will be consequences for whoever breaks the build the most at the end of the semester.
