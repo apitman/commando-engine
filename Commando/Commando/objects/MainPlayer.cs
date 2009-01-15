@@ -21,10 +21,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
-    class MainPlayer
+    class MainPlayer : PlayableCharacterAbstract
     {
+
+        public MainPlayer() :
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Roger", new AnimationSet(), 5.0, Vector2.Zero, Vector2.Zero, new Vector2(1.0f,0.0f), 0.5f)
+        {
+            
+        }
     }
 }
