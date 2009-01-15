@@ -29,9 +29,17 @@ namespace Commando.objects
     {
 
         public MainPlayer() :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Roger", new AnimationSet(), 5.0, Vector2.Zero, Vector2.Zero, new Vector2(1.0f,0.0f), 0.5f)
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Roger", new AnimationSet(), 5.0f, Vector2.Zero, Vector2.Zero, new Vector2(1.0f,0.0f), 0.5f)
         {
             
+        }
+
+        public override void draw(GameTime gameTime)
+        {
+        }
+
+        public override void update(GameTime gameTime)
+        {
         }
     }
 }
