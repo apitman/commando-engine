@@ -49,31 +49,31 @@ namespace Commando.controls
             KeyboardState ks = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
 
-            inputs_.leftDirectionalX = 0;
-            inputs_.rightDirectionalX = 0;
-            inputs_.leftDirectionalY = 0;
-            inputs_.rightDirectionalY = 0;
+            float leftX = 0;
+            float leftY = 0;
 
             if (ks.IsKeyDown(Keys.W))
             {
-                inputs_.leftDirectionalY += 1.0f;
+                leftY += 1.0f;
             }
             if (ks.IsKeyDown(Keys.S))
             {
-                inputs_.leftDirectionalY += -1.0f;
+                leftY += -1.0f;
             }
 
             if (ks.IsKeyDown(Keys.D))
             {
-                inputs_.leftDirectionalX += 1.0f;
+                leftX += 1.0f;
             }
             if (ks.IsKeyDown(Keys.A))
             {
-                inputs_.leftDirectionalX += -1.0f;
+                leftX += -1.0f;
             }
 
-            inputs_.rightDirectionalX = ms.X - previousMouseX_;
-            inputs_.rightDirectionalY = ms.Y + previousMouseY_;
+            inputs_.setLeftDirectional(leftX, leftY);
+
+            inputs_.setRightDirectional(ms.X - previousMouseX_,
+                                        ms.Y + previousMouseY_);
             previousMouseX_ = ms.X;
             previousMouseY_ = ms.Y;
 

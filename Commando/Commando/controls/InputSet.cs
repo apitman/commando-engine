@@ -25,14 +25,23 @@ namespace Commando.controls
 {
     public class InputSet
     {
-        protected int[] stickState_ = new int[(int)InputsEnum.DUMMY_LAST];
-        protected bool[] toggleState_ = new bool[(int)InputsEnum.DUMMY_LAST];
 
-        public float leftDirectionalX;
-        public float leftDirectionalY;
+        // stickState_ is an array of ints for each input device in InputsEnum
+        //  where each int represents the number of frames left for which that
+        //  particular device will pretend to be released regardless of its
+        //  actual state
+        protected int[] stickState_ = new int[(int)InputsEnum.LENGTH];
 
-        public float rightDirectionalX;
-        public float rightDirectionalY;
+        // toggleState_ is an array of bools for each input device in
+        //  InputsEnum where each bool represents whether that device must be
+        //  released before it can register normally again
+        protected bool[] toggleState_ = new bool[(int)InputsEnum.LENGTH];
+
+        protected float leftDirectionalX;
+        protected float leftDirectionalY;
+
+        protected float rightDirectionalX;
+        protected float rightDirectionalY;
 
         protected bool confirmButton;
         protected bool cancelButton;
@@ -50,11 +59,31 @@ namespace Commando.controls
 
         public InputSet()
         {
-            stickState_ = new int[(int)InputsEnum.DUMMY_LAST];
-            toggleState_ = new bool[(int)InputsEnum.DUMMY_LAST];
+            stickState_ = new int[(int)InputsEnum.LENGTH];
+            toggleState_ = new bool[(int)InputsEnum.LENGTH];
         }
 
         # region GETTERS
+
+        public float getLeftDirectionalX()
+        {
+            return leftDirectionalX;
+        }
+
+        public float getLeftDirectionalY()
+        {
+            return leftDirectionalY;
+        }
+
+        public float getRightDirectionalX()
+        {
+            return rightDirectionalX;
+        }
+
+        public float getRightDirectionalY()
+        {
+            return rightDirectionalY;
+        }
 
         public bool getConfirmButton()
         {
@@ -109,6 +138,48 @@ namespace Commando.controls
         #endregion
 
         #region SETTERS
+
+        public void setLeftDirectional(float x, float y)
+        {
+            if (stickState_[(int)InputsEnum.LEFT_DIRECTIONAL] > 0 ||
+                toggleState_[(int)InputsEnum.LEFT_DIRECTIONAL])
+            {
+                if (stickState_[(int)InputsEnum.LEFT_DIRECTIONAL] > 0)
+                {
+                    stickState_[(int)InputsEnum.LEFT_DIRECTIONAL]--;
+                }
+                if (x == 0 && y == 0)
+                {
+                    toggleState_[(int)InputsEnum.LEFT_DIRECTIONAL] = false;
+                }
+                leftDirectionalX = 0;
+                leftDirectionalY = 0;
+                return;
+            }
+            leftDirectionalX = x;
+            leftDirectionalY = y;
+        }
+
+        public void setRightDirectional(float x, float y)
+        {
+            if (stickState_[(int)InputsEnum.RIGHT_DIRECTIONAL] > 0 ||
+                toggleState_[(int)InputsEnum.RIGHT_DIRECTIONAL])
+            {
+                if (stickState_[(int)InputsEnum.RIGHT_DIRECTIONAL] > 0)
+                {
+                    stickState_[(int)InputsEnum.RIGHT_DIRECTIONAL]--;
+                }
+                if (x == 0 && y == 0)
+                {
+                    toggleState_[(int)InputsEnum.RIGHT_DIRECTIONAL] = false;
+                }
+                rightDirectionalX = 0;
+                rightDirectionalY = 0;
+                return;
+            }
+            rightDirectionalX = x;
+            rightDirectionalY = y;
+        }
 
         public void setConfirmButton(bool value)
         {
@@ -301,8 +372,97 @@ namespace Commando.controls
         }
 
         #endregion
+
+
+        // This function will cause the button 'toStick' to
+        // act released for 'numFrames' frames.
+        public void setStick(InputsEnum toStick, int numFrames)
+        {
+            if (numFrames >= 0)
+            {
+                stickState_[(int)toStick] = numFrames;
+            }
+            else
+            {
+                stickState_[(int)toStick] = 0;
+            }
+        }
+
+        // This function will cause the button 'toToggle' to
+        // act released until physically released and then used.
+        public void setToggle(InputsEnum toToggle, bool value)
+        {
+            toggleState_[(int)toToggle] = value;
+        }
+
+        // Causes all buttons to act as if they were in the
+        // released state for 'numFrames' frames
+        public void setAllSticks(int numFrames)
+        {
+            for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
+            {
+                stickState_[i] = numFrames;
+            }
+        }
+
+        // Causes all buttons to act as if they were released
+        // until they are actually released.  This could be
+        // useful for changing EngineStates and not having
+        // buttons being held down trigger in the next state.
+        public void setAllToggles()
+        {
+            for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
+            {
+                toggleState_[i] = true;
+            }
+        }
+
+        // Clears all buttons of their stick values so that
+        // there is no delay for their usage.
+        public void clearSticks()
+        {
+            for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
+            {
+                stickState_[i] = 0;
+            }
+        }
+
+        // Clears all buttons of their toggle values so that
+        // they do not have to be released before use.
+        public void clearToggles()
+        {
+            for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
+            {
+                toggleState_[i] = false;
+            }
+        }
+
+        // Sets all buttons to the released state
+        public void clearInputs()
+        {
+            leftDirectionalX = 0;
+            leftDirectionalY = 0;
+            rightDirectionalX = 0;
+            rightDirectionalY = 0;
+            confirmButton = false;
+            cancelButton = false;
+            button1 = false;
+            button2 = false;
+            button3 = false;
+            button4 = false;
+            leftTrigger = false;
+            rightTrigger = false;
+            leftBumper = false;
+            rightBumper = false;
+        }
+
     }
 
+    // This enumeration is used when setting and clearing toggles and sticks
+    // The last item, LENGTH, should never be used in these conditions, but
+    //  is a replacement since C# enumerations do not have a .length attrib,
+    //  and is useful for iterating over arrays which contain one element
+    //  for each item in the enumeration.  This item MUST remain last.
     public enum InputsEnum
     {
         LEFT_DIRECTIONAL,
@@ -318,6 +478,6 @@ namespace Commando.controls
         LEFT_BUMPER,
         RIGHT_BUMPER,
         
-        DUMMY_LAST
+        LENGTH
     }
 }
