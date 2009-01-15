@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
@@ -44,10 +45,11 @@ namespace Commando
             return textureMapInstance_;
         }
 
-        public void loadTextures(string filename)
+        public void loadTextures(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             //TODO: Eventually, create automatic scripted loading of textures
             //      For now, just create the load for each texture in the function
+            textures_.Add("Woger_Ru", new GameTexture(".//Content//Roger.png", spriteBatch, graphics));
         }
 
         public GameTexture getTexture(string textureName)
