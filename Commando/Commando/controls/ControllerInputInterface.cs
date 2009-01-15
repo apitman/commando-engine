@@ -26,5 +26,7 @@ namespace Commando.controls
     public interface ControllerInputInterface
     {
         InputSet getInputSet();
+
+        void updateInputSet();
     }
 }

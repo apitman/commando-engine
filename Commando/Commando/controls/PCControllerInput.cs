@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Commando.controls
@@ -38,6 +39,11 @@ namespace Commando.controls
         #region ControllerInputInterface Members
 
         public InputSet getInputSet()
+        {
+            return inputs_;
+        }
+
+        public void updateInputSet()
         {
 
             KeyboardState ks = Keyboard.GetState();
@@ -71,21 +77,19 @@ namespace Commando.controls
             previousMouseX_ = ms.X;
             previousMouseY_ = ms.Y;
 
-            inputs_.confirmButton = ks.IsKeyDown(Keys.Enter);
-            inputs_.cancelButton = ks.IsKeyDown(Keys.Escape);
+            inputs_.setConfirmButton(ks.IsKeyDown(Keys.Enter));
+            inputs_.setCancelButton(ks.IsKeyDown(Keys.Escape));
 
             inputs_.setButton1(ks.IsKeyDown(Keys.Space));
             inputs_.setButton2(ks.IsKeyDown(Keys.LeftShift));
             inputs_.setButton3(ks.IsKeyDown(Keys.X));
             inputs_.setButton4(ks.IsKeyDown(Keys.C));
 
-            inputs_.leftTrigger = ms.LeftButton == ButtonState.Pressed;
-            inputs_.rightTrigger = ms.RightButton == ButtonState.Pressed;
+            inputs_.setLeftTrigger(ms.LeftButton == ButtonState.Pressed);
+            inputs_.setRightTrigger(ms.RightButton == ButtonState.Pressed);
 
-            inputs_.leftBumper = ks.IsKeyDown(Keys.Z);
-            inputs_.rightBumper = ks.IsKeyDown(Keys.V);
-
-            return inputs_;
+            inputs_.setLeftBumper(ks.IsKeyDown(Keys.Z));
+            inputs_.setRightBumper(ks.IsKeyDown(Keys.V));
         }
 
         #endregion

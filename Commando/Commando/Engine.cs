@@ -105,6 +105,8 @@ namespace Commando
         {
             // TODO: Add your update logic here
 
+            controls_.updateInputSet();
+
             engineState_ = engineState_.update(gameTime);
 
             base.Update(gameTime);

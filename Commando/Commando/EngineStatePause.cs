@@ -51,7 +51,7 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.confirmButton)
+            if (inputs.getConfirmButton())
             {
                 return savedState_;
             }
