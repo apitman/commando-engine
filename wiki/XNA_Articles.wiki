@@ -1,0 +1,31 @@
+#summary Useful web articles about C# and/or XNA.
+
+== General ==
+
+Pixel perfect collision detection using GPU occlusion queries
+http://blogs.msdn.com/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
+
+Twin paths to garbage collector nirvana
+http://blogs.msdn.com/shawnhar/archive/2007/07/02/twin-paths-to-garbage-collector-nirvana.aspx
+
+How to tell if you are CPU or GPU bound
+http://blogs.msdn.com/shawnhar/archive/2008/04/07/how-to-tell-if-you-are-cpu-or-gpu-bound.aspx
+
+Game timing in XNA Game Studio 2.0
+http://blogs.msdn.com/shawnhar/archive/2007/11/23/game-timing-in-xna-game-studio-2-0.aspx
+
+== PC Specific ==
+
+Pressing Multiple Keys at once on the Keyboard
+http://blogs.msdn.com/shawnhar/archive/2007/03/28/keyboards-suck.aspx
+
+== Xbox Specific ==
+
+Making Windows XNA Compatible with the XBOX 360
+http://www.ziggyware.com/readarticle.php?article_id=107
+
+How to tell if your Xbox garbage collection is too slow
+http://blogs.msdn.com/shawnhar/archive/2007/06/29/how-to-tell-if-your-xbox-garbage-collection-is-too-slow.aspx
+
+Multi-threading for your XNA Game
+http://www.ziggyware.com/readarticle.php?article_id=221
