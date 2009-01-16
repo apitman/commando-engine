@@ -33,7 +33,7 @@ namespace Commando.controls
 
         public PCControllerInput()
         {
-            inputs_ = new InputSet();
+            inputs_ = InputSet.getInstance();
         }
 
         #region ControllerInputInterface Members
