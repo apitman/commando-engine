@@ -57,6 +57,7 @@ namespace Commando
                 return new EngineStateGameplay(engine_);
             }
 
+
             return this;
         }
 

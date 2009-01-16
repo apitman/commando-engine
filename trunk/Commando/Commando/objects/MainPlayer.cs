@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.controls;
 
 namespace Commando.objects
 {
@@ -43,8 +44,42 @@ namespace Commando.objects
 
         public override void update(GameTime gameTime)
         {
-            position_.Y++;
-            position_.X++;
+            int MaxX =640;
+            int MinX = 0;
+            int MaxY = 480;
+            int MinY = 0;
+
+            Vector2 moveVector = Vector2.Zero;
+            if (inputSet_.getLeftDirectionalX() < 0 && position_.X > MinX)
+            {
+                moveVector.X -= 1.0F;// *GLOBALSPEEDMULTIPLIER;
+            }
+            if (inputSet_.getLeftDirectionalX() > 0 && position_.X < MaxX)
+            {
+                moveVector.X += 1.0F;// *GLOBALSPEEDMULTIPLIER;
+            }
+            if (inputSet_.getLeftDirectionalY() > 0 && position_.Y > MinY)
+            {
+                moveVector.Y -= 1.0F;// *GLOBALSPEEDMULTIPLIER;
+            }
+            if (inputSet_.getLeftDirectionalY() < 0 && position_.Y < MaxY)
+            {
+                moveVector.Y += 1.0F;// *GLOBALSPEEDMULTIPLIER;
+            }
+            float magnitude = (float)Math.Sqrt(moveVector.X * moveVector.X + moveVector.Y * moveVector.Y);
+            if (magnitude > 0)
+            {
+                //System.Console.Out.WriteLine(moveVector);
+                moveVector.X /= magnitude;
+                moveVector.Y /= magnitude;
+                //moveVector.X = (float)Math.Round(moveVector.X * GLOBALSPEEDMULTIPLIER);
+                //moveVector.Y = (float)Math.Round(moveVector.Y * GLOBALSPEEDMULTIPLIER);
+                //moveVector.X = moveVector.X;// *GLOBALSPEEDMULTIPLIER;
+                //moveVector.Y = moveVector.Y;// *GLOBALSPEEDMULTIPLIER;
+                direction_.X = moveVector.X;
+                direction_.Y = moveVector.Y;
+            }
+            position_ += moveVector;
         }
     }
 }
