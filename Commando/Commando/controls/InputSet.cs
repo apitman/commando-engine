@@ -20,11 +20,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.controls
 {
     public class InputSet
     {
+
+        static protected InputSet[] instances_ = null;
 
         // stickState_ is an array of ints for each input device in InputsEnum
         //  where each int represents the number of frames left for which that
@@ -57,10 +60,41 @@ namespace Commando.controls
         protected bool leftBumper;
         protected bool rightBumper;
 
-        public InputSet()
+        // Static constructor - initializes static variables in C#
+        static InputSet()
+        {
+            instances_ = new InputSet[4];
+
+            // Not expensive to create 4 InputSets, so we aren't
+            // worried about lazy instantiation.  If we instantiate
+            // them now, and later we use multithreading, we won't
+            // have to use sync locks - just pull the InputSet and
+            // read from it.
+            for (int i = 0; i < 4; i++)
+            {
+                instances_[i] = new InputSet();
+            }
+        }
+
+        // Regular constructor - private for Singleton pattern
+        private InputSet()
         {
             stickState_ = new int[(int)InputsEnum.LENGTH];
             toggleState_ = new bool[(int)InputsEnum.LENGTH];
+        }
+
+        // Gets Player One's InputSet
+        static public InputSet getInstance()
+        {
+            return instances_[0];
+        }
+
+        // Gets the InputSet of the specified player
+        // NOT TESTED
+        static public InputSet getInstance(PlayerIndex index)
+        {
+            int i = (int)index;
+            return instances_[i];
         }
 
         # region GETTERS

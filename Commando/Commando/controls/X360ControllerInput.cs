@@ -34,13 +34,13 @@ namespace Commando.controls
         public X360ControllerInput()
         {
             player_ = PlayerIndex.One;
-            inputs_ = new InputSet();
+            inputs_ = InputSet.getInstance();
         }
 
         public X360ControllerInput(PlayerIndex player)
         {
             player_ = player;
-            inputs_ = new InputSet();
+            inputs_ = InputSet.getInstance(player);
         }
 
         #region ControllerInputInterface Members
