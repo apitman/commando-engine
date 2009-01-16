@@ -53,7 +53,14 @@ namespace Commando
 #if XBOX
             controls_ = new X360ControllerInput();
 #else
-            controls_ = new PCControllerInput();
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                controls_ = new X360ControllerInput();
+            }
+            else
+            {
+                controls_ = new PCControllerInput();
+            }
 #endif
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, (1000 / FRAMERATE));
