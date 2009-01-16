@@ -36,7 +36,7 @@ namespace Commando
     class EngineStateGameplay : EngineStateInterface
     {
         //Jared's test stuff
-        //protected objects.MainPlayer player_;
+        protected objects.MainPlayer player_;
         //END Jared's test stuff
 
 
@@ -47,7 +47,7 @@ namespace Commando
             engine_ = engine;
 
             //Jared's test stuff
-            //player_ = new objects.MainPlayer();
+            player_ = new objects.MainPlayer();
             //END Jared's test stuff
         }
 
@@ -64,7 +64,8 @@ namespace Commando
             }
 
             //Jared's test stuff
-            //player_.update(gameTime);
+            player_.setInputSet(inputs);
+            player_.update(gameTime);
             //END Jared's test stuff
 
             return this;
@@ -75,7 +76,7 @@ namespace Commando
             engine_.GraphicsDevice.Clear(Color.Chocolate);
 
             //Jared's test stuff
-            //player_.draw(new GameTime());
+            player_.draw(new GameTime());
             //END Jared's test stuff
         }
 

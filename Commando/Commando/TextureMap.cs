@@ -49,7 +49,7 @@ namespace Commando
         {
             //TODO: Eventually, create automatic scripted loading of textures
             //      For now, just create the load for each texture in the function
-            textures_.Add("Woger_Ru", new GameTexture(".//Content//Roger.png", spriteBatch, graphics));
+            textures_.Add("Woger_Ru", new GameTexture(".//Content//Giant_A.png", spriteBatch, graphics));
         }
 
         public GameTexture getTexture(string textureName)

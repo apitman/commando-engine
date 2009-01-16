@@ -27,6 +27,8 @@ namespace Commando
 {
     abstract class PlayableCharacterAbstract : CharacterAbstract
     {
+
+        protected controls.InputSet inputSet_;
         
         public PlayableCharacterAbstract() :
             base()
@@ -41,6 +43,11 @@ namespace Commando
         public PlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(health, ammo, weapon, name, animations, frameLengthModifier, velocity, position, direction, depth)
         {
+        }
+
+        public void setInputSet(controls.InputSet inputSet)
+        {
+            inputSet_ = inputSet;
         }
     }
 }
