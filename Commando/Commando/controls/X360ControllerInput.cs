@@ -27,18 +27,20 @@ namespace Commando.controls
 {
     class X360ControllerInput : ControllerInputInterface
     {
+        protected Engine engine_;
+        protected PlayerIndex player_;
         protected InputSet inputs_;
 
-        private PlayerIndex player_;
-
-        public X360ControllerInput()
+        public X360ControllerInput(Engine engine)
         {
+            engine_ = engine;
             player_ = PlayerIndex.One;
             inputs_ = InputSet.getInstance();
         }
 
-        public X360ControllerInput(PlayerIndex player)
+        public X360ControllerInput(Engine engine, PlayerIndex player)
         {
+            engine_ = engine;
             player_ = player;
             inputs_ = InputSet.getInstance(player);
         }
