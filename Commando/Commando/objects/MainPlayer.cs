@@ -43,7 +43,7 @@ namespace Commando.objects
         {
             animations_.drawNextFrame(position_, getRotationAngle(), depth_);
         }
-
+        
         public override void update(GameTime gameTime)
         {
             int MaxX =640;

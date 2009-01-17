@@ -35,16 +35,24 @@ namespace Commando
     class EngineStateMenu : EngineStateInterface
     {
         protected Engine engine_;
-
+        protected GameTexture menu_;
         public EngineStateMenu(Engine engine)
         {
             engine_ = engine;
+            
+            
         }
-
+     
+        //tracks position of cursor, should be either
+        //0 - start game
+        //1 - view controls
+        //2 - view credits
+       
         #region EngineStateInterface Members
 
         public EngineStateInterface update(GameTime gameTime)
         {
+           
             InputSet inputs = engine_.getInputs();
 
             if (inputs.getCancelButton()) // tenatively Escape / Back
@@ -63,7 +71,16 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.CornflowerBlue);
+            if (menu_ == null)
+            {
+                menu_ = TextureMap.getInstance().getTexture("testMenu");
+            }
+
+            engine_.GraphicsDevice.Clear(Color.Black);
+
+            menu_.drawImageWithDim(0, new Rectangle(0,0,engine_.GraphicsDevice.Viewport.Width, engine_.GraphicsDevice.Viewport.Height), 0.5f);
+            
+            
         }
 
         #endregion
