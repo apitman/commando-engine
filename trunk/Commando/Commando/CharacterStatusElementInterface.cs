@@ -27,5 +27,9 @@ namespace Commando
     interface CharacterStatusElementInterface
     {
         int getValue();
+
+        void update(int newVal);
+
+        void addObserver(objects.CharacterStatusObserverInterface obs);
     }
 }

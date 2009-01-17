@@ -29,6 +29,8 @@ namespace Commando.objects
     class MainPlayer : PlayableCharacterAbstract
     {
 
+        const float TURNSPEED = .40f;
+
         public MainPlayer() :
             base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, Vector2.Zero, new Vector2(1.0f,0.0f), 0.5f)
         {
@@ -52,19 +54,19 @@ namespace Commando.objects
             Vector2 moveVector = Vector2.Zero;
             if (inputSet_.getLeftDirectionalX() < 0 && position_.X > MinX)
             {
-                moveVector.X -= 1.0F;// *GLOBALSPEEDMULTIPLIER;
+                moveVector.X -= 2.0F;// *GLOBALSPEEDMULTIPLIER;
             }
             if (inputSet_.getLeftDirectionalX() > 0 && position_.X < MaxX)
             {
-                moveVector.X += 1.0F;// *GLOBALSPEEDMULTIPLIER;
+                moveVector.X += 2.0F;// *GLOBALSPEEDMULTIPLIER;
             }
             if (inputSet_.getLeftDirectionalY() > 0 && position_.Y > MinY)
             {
-                moveVector.Y -= 1.0F;// *GLOBALSPEEDMULTIPLIER;
+                moveVector.Y -= 2.0F;// *GLOBALSPEEDMULTIPLIER;
             }
             if (inputSet_.getLeftDirectionalY() < 0 && position_.Y < MaxY)
             {
-                moveVector.Y += 1.0F;// *GLOBALSPEEDMULTIPLIER;
+                moveVector.Y += 2.0F;// *GLOBALSPEEDMULTIPLIER;
             }
             float magnitude = (float)Math.Sqrt(moveVector.X * moveVector.X + moveVector.Y * moveVector.Y);
             if (magnitude > 0)
@@ -76,9 +78,28 @@ namespace Commando.objects
                 //moveVector.Y = (float)Math.Round(moveVector.Y * GLOBALSPEEDMULTIPLIER);
                 //moveVector.X = moveVector.X;// *GLOBALSPEEDMULTIPLIER;
                 //moveVector.Y = moveVector.Y;// *GLOBALSPEEDMULTIPLIER;
-                direction_.X = moveVector.X;
-                direction_.Y = moveVector.Y;
+                //direction_.X = moveVector.X;
+                //direction_.Y = moveVector.Y;
             }
+            Vector2 rightD = new Vector2(inputSet_.getRightDirectionalX(), inputSet_.getRightDirectionalY());
+            Console.Out.WriteLine(rightD);
+            float rotationDirectional = (float)Math.Atan2(rightD.Y, rightD.X);
+            float rotAngle = getRotationAngle();
+            float rotDiff = rotAngle - rotationDirectional;
+            if (Math.Abs(rotDiff) <= TURNSPEED)
+            {
+                direction_ = rightD;
+            }
+            else if (rotDiff < 0f)
+            {
+                rotAngle += TURNSPEED;
+            }
+            else
+            {
+                rotAngle -= TURNSPEED;
+            }
+            direction_.X = (float)Math.Cos((double)rotAngle);
+            direction_.Y = (float)Math.Sin((double)rotAngle);
             position_ += moveVector;
         }
     }
