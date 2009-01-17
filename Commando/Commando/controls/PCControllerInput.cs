@@ -79,7 +79,7 @@ namespace Commando.controls
             int screenCenterY = engine_.GraphicsDevice.Viewport.Height / 2;
 
             Vector2 rightDirectional =
-                new Vector2(ms.X - screenCenterX, -ms.Y + screenCenterY);
+                new Vector2(ms.X - screenCenterX, ms.Y - screenCenterY);
             rightDirectional.Normalize();
 
             inputs_.setRightDirectional(rightDirectional.X,

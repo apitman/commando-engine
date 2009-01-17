@@ -54,19 +54,19 @@ namespace Commando.objects
             Vector2 moveVector = Vector2.Zero;
             if (inputSet_.getLeftDirectionalX() < 0 && position_.X > MinX)
             {
-                moveVector.X -= 2.0F;// *GLOBALSPEEDMULTIPLIER;
+                moveVector.X -= 1.0F;// *GLOBALSPEEDMULTIPLIER;
             }
             if (inputSet_.getLeftDirectionalX() > 0 && position_.X < MaxX)
             {
-                moveVector.X += 2.0F;// *GLOBALSPEEDMULTIPLIER;
+                moveVector.X += 1.0F;// *GLOBALSPEEDMULTIPLIER;
             }
             if (inputSet_.getLeftDirectionalY() > 0 && position_.Y > MinY)
             {
-                moveVector.Y -= 2.0F;// *GLOBALSPEEDMULTIPLIER;
+                moveVector.Y -= 1.0F;// *GLOBALSPEEDMULTIPLIER;
             }
             if (inputSet_.getLeftDirectionalY() < 0 && position_.Y < MaxY)
             {
-                moveVector.Y += 2.0F;// *GLOBALSPEEDMULTIPLIER;
+                moveVector.Y += 1.0F;// *GLOBALSPEEDMULTIPLIER;
             }
             float magnitude = (float)Math.Sqrt(moveVector.X * moveVector.X + moveVector.Y * moveVector.Y);
             if (magnitude > 0)
@@ -74,6 +74,7 @@ namespace Commando.objects
                 //System.Console.Out.WriteLine(moveVector);
                 moveVector.X /= magnitude;
                 moveVector.Y /= magnitude;
+                moveVector *= 2.0f;
                 //moveVector.X = (float)Math.Round(moveVector.X * GLOBALSPEEDMULTIPLIER);
                 //moveVector.Y = (float)Math.Round(moveVector.Y * GLOBALSPEEDMULTIPLIER);
                 //moveVector.X = moveVector.X;// *GLOBALSPEEDMULTIPLIER;
@@ -82,24 +83,29 @@ namespace Commando.objects
                 //direction_.Y = moveVector.Y;
             }
             Vector2 rightD = new Vector2(inputSet_.getRightDirectionalX(), inputSet_.getRightDirectionalY());
-            Console.Out.WriteLine(rightD);
             float rotationDirectional = (float)Math.Atan2(rightD.Y, rightD.X);
             float rotAngle = getRotationAngle();
             float rotDiff = rotAngle - rotationDirectional;
-            if (Math.Abs(rotDiff) <= TURNSPEED)
+            if (Math.Abs(rotDiff) <= TURNSPEED || Math.Abs(rotDiff) >= MathHelper.TwoPi - TURNSPEED)
             {
                 direction_ = rightD;
             }
-            else if (rotDiff < 0f)
+            else if (rotDiff < 0f  && rotDiff > -MathHelper.Pi)
             {
                 rotAngle += TURNSPEED;
+                direction_.X = (float)Math.Cos((double)rotAngle);
+                direction_.Y = (float)Math.Sin((double)rotAngle);
             }
             else
             {
                 rotAngle -= TURNSPEED;
+                direction_.X = (float)Math.Cos((double)rotAngle);
+                direction_.Y = (float)Math.Sin((double)rotAngle);
             }
-            direction_.X = (float)Math.Cos((double)rotAngle);
-            direction_.Y = (float)Math.Sin((double)rotAngle);
+            
+            //Console.Out.Write(rightD);
+            //Console.Out.Write(rotDiff);
+            //Console.Out.WriteLine(direction_);
             position_ += moveVector;
         }
     }
