@@ -75,11 +75,11 @@ namespace Commando.controls
 
             inputs_.setLeftDirectional(leftX, leftY);
 
-            int screenCenterX = engine_.GraphicsDevice.Viewport.Height / 2;
-            int screenCenterY = engine_.GraphicsDevice.Viewport.Width / 2;
+            int screenCenterX = engine_.GraphicsDevice.Viewport.Width / 2;
+            int screenCenterY = engine_.GraphicsDevice.Viewport.Height / 2;
 
             Vector2 rightDirectional =
-                new Vector2(ms.X - screenCenterX, ms.Y - screenCenterY);
+                new Vector2(ms.X - screenCenterX, -ms.Y + screenCenterY);
             rightDirectional.Normalize();
 
             inputs_.setRightDirectional(rightDirectional.X,
