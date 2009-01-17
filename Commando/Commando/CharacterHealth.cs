@@ -21,15 +21,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
 namespace Commando
 {
     class CharacterHealth : CharacterStatusElementInterface
     {
+        protected List<CharacterStatusObserverInterface> observers_;
+
+        public void addObserver(CharacterStatusObserverInterface obs)
+        {
+            observers_.Add(obs);
+        }
+
+        public void update(int value)
+        {
+            foreach (CharacterStatusObserverInterface observer in observers_)
+            {
+                observer.notifyOfChange(value);
+            }
+        }
 
         public int getValue()
         {
-            throw new NotImplementedException();
+            return 62;
         }
     }
 }
