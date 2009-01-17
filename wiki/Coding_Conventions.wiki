@@ -57,11 +57,11 @@ Enums will have "Enum" in their name.
 
 == Organization of a Class's Contents ==
 
-Constants
-Protected Data Members
-Private Data Members
-Public Data Members
-Constructor
-Protected Methods
-Private Methods
-Public Methods
+  # Constants
+  # Protected Data Members
+  # Private Data Members
+  # Public Data Members
+  # Constructor
+  # Protected Methods
+  # Private Methods
+  # Public Methods
