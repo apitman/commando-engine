@@ -51,15 +51,15 @@ namespace Commando
             Content.RootDirectory = "Content";
 
 #if XBOX
-            controls_ = new X360ControllerInput();
+            controls_ = new X360ControllerInput(this);
 #else
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {
-                controls_ = new X360ControllerInput();
+                controls_ = new X360ControllerInput(this);
             }
             else
             {
-                controls_ = new PCControllerInput();
+                controls_ = new PCControllerInput(this);
             }
 #endif
             this.IsFixedTimeStep = true;

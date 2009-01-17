@@ -21,18 +21,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Commando.controls
 {
     class PCControllerInput : ControllerInputInterface
     {
+        protected Engine engine_;
         protected InputSet inputs_;
         protected int previousMouseX_;
         protected int previousMouseY_;
 
-        public PCControllerInput()
+        public PCControllerInput(Engine engine)
         {
+            engine_ = engine;
             inputs_ = InputSet.getInstance();
         }
 
@@ -72,8 +75,15 @@ namespace Commando.controls
 
             inputs_.setLeftDirectional(leftX, leftY);
 
-            inputs_.setRightDirectional(ms.X - previousMouseX_,
-                                        ms.Y + previousMouseY_);
+            int screenCenterX = engine_.GraphicsDevice.Viewport.Height / 2;
+            int screenCenterY = engine_.GraphicsDevice.Viewport.Width / 2;
+
+            Vector2 rightDirectional =
+                new Vector2(ms.X - screenCenterX, ms.Y - screenCenterY);
+            rightDirectional.Normalize();
+
+            inputs_.setRightDirectional(rightDirectional.X,
+                                        rightDirectional.Y);
             previousMouseX_ = ms.X;
             previousMouseY_ = ms.Y;
 
