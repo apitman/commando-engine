@@ -59,7 +59,7 @@ namespace Commando.controls
             inputs_.setLeftDirectional(gps.ThumbSticks.Left.X,
                                         gps.ThumbSticks.Left.Y);
             inputs_.setRightDirectional(gps.ThumbSticks.Right.X,
-                                        gps.ThumbSticks.Right.Y);
+                                        -gps.ThumbSticks.Right.Y);
 
             inputs_.setConfirmButton(gps.IsButtonDown(Buttons.Start));
             inputs_.setCancelButton(gps.IsButtonDown(Buttons.Back));
