@@ -3,51 +3,52 @@
 == C# ==
 
 Implementing the Singleton Pattern in C#
-http://www.yoda.arachsys.com/csharp/singleton.html
+  * http://www.yoda.arachsys.com/csharp/singleton.html
 
 C# and Keeping Your Lists Sorted
-http://allantech.blogspot.com/2007/02/c-and-keeping-your-lists-sorted.html
+  * http://allantech.blogspot.com/2007/02/c-and-keeping-your-lists-sorted.html
 
 == Algorithms ==
 
 Toward More Realistic Pathfinding
-http://www.gamasutra.com/features/20010314/pinter_pfv.htm
+  * http://www.gamasutra.com/features/20010314/pinter_pfv.htm
 
 == XNA General ==
 
 Pixel perfect collision detection using GPU occlusion queries
-http://blogs.msdn.com/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
+  * http://blogs.msdn.com/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
 
 Twin paths to garbage collector nirvana
-http://blogs.msdn.com/shawnhar/archive/2007/07/02/twin-paths-to-garbage-collector-nirvana.aspx
+  * http://blogs.msdn.com/shawnhar/archive/2007/07/02/twin-paths-to-garbage-collector-nirvana.aspx
 
 How to tell if you are CPU or GPU bound
-http://blogs.msdn.com/shawnhar/archive/2008/04/07/how-to-tell-if-you-are-cpu-or-gpu-bound.aspx
+  * http://blogs.msdn.com/shawnhar/archive/2008/04/07/how-to-tell-if-you-are-cpu-or-gpu-bound.aspx
 
 Understanding GameTime
-http://blogs.msdn.com/shawnhar/archive/2007/07/25/understanding-gametime.aspx
+  * http://blogs.msdn.com/shawnhar/archive/2007/07/25/understanding-gametime.aspx
 
 Game timing in XNA Game Studio 2.0
-http://blogs.msdn.com/shawnhar/archive/2007/11/23/game-timing-in-xna-game-studio-2-0.aspx
+  * http://blogs.msdn.com/shawnhar/archive/2007/11/23/game-timing-in-xna-game-studio-2-0.aspx
 
 Displaying Text
-http://msdn.microsoft.com/en-us/library/bb447673.aspx _Note:_ I am unsure what fonts will be available on Xbox360, but you can find which fonts you have on your PC through Control Panel -> Fonts.
+  * http://msdn.microsoft.com/en-us/library/bb447673.aspx
+  * _Note:_ I am unsure what fonts will be available on Xbox360, but you can find which fonts you have on your PC through Control Panel -> Fonts.
 
 Displaying Centered Text
-http://msmvps.com/blogs/mykre/archive/2007/11/28/xna-displaying-centred-text.aspx
+  * http://msmvps.com/blogs/mykre/archive/2007/11/28/xna-displaying-centred-text.aspx
 
 == PC Specific ==
 
 Pressing Multiple Keys at once on the Keyboard
-http://blogs.msdn.com/shawnhar/archive/2007/03/28/keyboards-suck.aspx
+  * http://blogs.msdn.com/shawnhar/archive/2007/03/28/keyboards-suck.aspx
 
 == Xbox Specific ==
 
 Making Windows XNA Compatible with the XBOX 360
-http://www.ziggyware.com/readarticle.php?article_id=107
+  * http://www.ziggyware.com/readarticle.php?article_id=107
 
 How to tell if your Xbox garbage collection is too slow
-http://blogs.msdn.com/shawnhar/archive/2007/06/29/how-to-tell-if-your-xbox-garbage-collection-is-too-slow.aspx
+  * http://blogs.msdn.com/shawnhar/archive/2007/06/29/how-to-tell-if-your-xbox-garbage-collection-is-too-slow.aspx
 
 Multi-threading for your XNA Game
-http://www.ziggyware.com/readarticle.php?article_id=221
+  * http://www.ziggyware.com/readarticle.php?article_id=221
