@@ -20,6 +20,9 @@ http://blogs.msdn.com/shawnhar/archive/2007/11/23/game-timing-in-xna-game-studio
 Displaying Text
 http://msdn.microsoft.com/en-us/library/bb447673.aspx _Note:_ I am unsure what fonts will be available on Xbox360, but you can find which fonts you have on your PC through Control Panel -> Fonts.
 
+Displaying Centered Text
+http://msmvps.com/blogs/mykre/archive/2007/11/28/xna-displaying-centred-text.aspx
+
 == PC Specific ==
 
 Pressing Multiple Keys at once on the Keyboard
