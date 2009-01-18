@@ -1,6 +1,19 @@
 #summary Useful web articles about C# and/or XNA.
 
-== General ==
+== C# ==
+
+Implementing the Singleton Pattern in C#
+http://www.yoda.arachsys.com/csharp/singleton.html
+
+C# and Keeping Your Lists Sorted
+http://allantech.blogspot.com/2007/02/c-and-keeping-your-lists-sorted.html
+
+== Algorithms ==
+
+Toward More Realistic Pathfinding
+http://www.gamasutra.com/features/20010314/pinter_pfv.htm
+
+== XNA General ==
 
 Pixel perfect collision detection using GPU occlusion queries
 http://blogs.msdn.com/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
