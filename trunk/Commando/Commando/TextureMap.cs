@@ -51,6 +51,8 @@ namespace Commando
             //      For now, just create the load for each texture in the function
             textures_.Add("Woger_Ru", new GameTexture(".//Content//Giant_A.png", spriteBatch, graphics));
             textures_.Add("testMenu", new GameTexture(".//Content//Sprites//testmenu.PNG", spriteBatch, graphics));
+            textures_.Add("MenuStartReg", new GameTexture(".//Content//Sprites//menuStartReg.png", spriteBatch, graphics));
+            textures_.Add("MenuStartSelected", new GameTexture(".//Content//Sprites//menuStartDown.png", spriteBatch, graphics));
         }
 
         public GameTexture getTexture(string textureName)

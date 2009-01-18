@@ -36,23 +36,29 @@ namespace Commando
     {
         protected Engine engine_;
         protected GameTexture menu_;
-        public EngineStateMenu(Engine engine)
-        {
-            engine_ = engine;
-            
-            
-        }
-     
+        protected GameTexture startSelected_;
+        protected GameTexture startReg_;
+
         //tracks position of cursor, should be either
         //0 - start game
         //1 - view controls
         //2 - view credits
-       
+        protected int cursorPos_;
+        public EngineStateMenu(Engine engine)
+        {
+            cursorPos_ = 0;
+            engine_ = engine;
+
+
+        }
+
+
+
         #region EngineStateInterface Members
 
         public EngineStateInterface update(GameTime gameTime)
         {
-           
+
             InputSet inputs = engine_.getInputs();
 
             if (inputs.getCancelButton()) // tenatively Escape / Back
@@ -60,11 +66,22 @@ namespace Commando
                 engine_.Exit();
             }
 
-            if (inputs.getConfirmButton()) // tenatively Enter / Start
+            if (inputs.getConfirmButton() && (cursorPos_ == 0)) // tenatively Enter / Start
             {
                 return new EngineStateGameplay(engine_);
             }
-
+            if (inputs.getLeftDirectionalY() > 0)
+            {
+                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL, true);
+                cursorPos_++;
+                cursorPos_ = cursorPos_ % 3;
+            }
+            if (inputs.getLeftDirectionalY() < 0)
+            {
+                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL, true);
+                cursorPos_--;
+                cursorPos_ = cursorPos_ % 3;
+            }
 
             return this;
         }
@@ -75,14 +92,33 @@ namespace Commando
             {
                 menu_ = TextureMap.getInstance().getTexture("testMenu");
             }
-
+            if (startSelected_ == null)
+            {
+                startSelected_ = TextureMap.getInstance().getTexture("MenuStartSelected");
+            }
+            if (startReg_ == null)
+            {
+                startReg_ = TextureMap.getInstance().getTexture("MenuStartReg");
+            }
             engine_.GraphicsDevice.Clear(Color.Black);
 
-            menu_.drawImageWithDim(0, new Rectangle(0,0,engine_.GraphicsDevice.Viewport.Width, engine_.GraphicsDevice.Viewport.Height), 0.5f);
-            
-            
+            menu_.drawImageWithDim(0, new Rectangle(0, 0, engine_.GraphicsDevice.Viewport.Width, engine_.GraphicsDevice.Viewport.Height), 0.5f);
+            if (cursorPos_ == 0)
+            {
+                Vector2 mypos;
+                mypos.X = 400;
+                mypos.Y = 300;
+                startSelected_.drawImage(0, mypos, 0.0f, 0.0f);
+            }
+            else
+            {
+                Vector2 mypos;
+                mypos.X = 400;
+                mypos.Y = 300;
+                startReg_.drawImage(0, mypos, 0.0f, 0.0f);
+            }
         }
-
         #endregion
+
     }
 }
