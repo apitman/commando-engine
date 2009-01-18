@@ -97,6 +97,7 @@ namespace Commando
 
             // TODO: use this.Content to load your game content here
             TextureMap.getInstance().loadTextures("", spriteBatch_, graphics_.GraphicsDevice);
+            FontMap.getInstance().loadFonts("", spriteBatch_, this);
         }
 
         /// <summary>

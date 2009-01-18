@@ -68,6 +68,19 @@ namespace Commando
         public void draw()
         {
             engine_.GraphicsDevice.Clear(Color.DarkOliveGreen);
+            string pauseText = "Game is paused";
+            GameFont pauseFont = FontMap.getInstance().getFont("Kootenay");
+            Vector2 origin = pauseFont.getFont().MeasureString(pauseText);
+            pauseFont.drawString(pauseText,
+                new Vector2(engine_.GraphicsDevice.Viewport.Width / 2,
+                    engine_.GraphicsDevice.Viewport.Height / 2),
+                Color.Black,
+                0.0f,
+                new Vector2(pauseFont.getFont().MeasureString(pauseText).X / 2,
+                    pauseFont.getFont().MeasureString(pauseText).Y / 2),
+                1.0f,
+                SpriteEffects.None,
+                1.0f);
         }
 
         #endregion
