@@ -21,10 +21,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
-    class TileObject
+    class TileObject : LevelObjectAbstract
     {
+
+
+        public TileObject() :
+            base()
+        {
+        }
+
+        public TileObject(GameTexture image) :
+            base(image)
+        {
+        }
+
+        public TileObject(GameTexture image, Vector2 position, Vector2 direction, float depth) :
+            base(image, position, direction, depth)
+        {
+        }
+
+        public override void draw(GameTime gameTime)
+        {
+            image_.drawImage(0, position_, depth_);
+        }
+
+        public override void update(GameTime gameTime)
+        {
+            
+        }
     }
 }
