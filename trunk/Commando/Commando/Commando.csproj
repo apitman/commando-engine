@@ -108,11 +108,13 @@
     <Compile Include="EngineStateMenu.cs" />
     <Compile Include="GameTexture.cs" />
     <Compile Include="objects\HeadsUpDisplayObjectAbstract.cs" />
+    <Compile Include="objects\LevelObjectAbstract.cs" />
     <Compile Include="objects\MainPlayer.cs" />
     <Compile Include="objects\MovableObjectAbstract.cs" />
     <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
+    <Compile Include="objects\TileObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Engine.cs" />
