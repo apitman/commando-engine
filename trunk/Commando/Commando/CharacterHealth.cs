@@ -27,7 +27,7 @@ namespace Commando
 {
     class CharacterHealth : CharacterStatusElementInterface
     {
-        protected List<CharacterStatusObserverInterface> observers_;
+        protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();
 
         public void addObserver(CharacterStatusObserverInterface obs)
         {
