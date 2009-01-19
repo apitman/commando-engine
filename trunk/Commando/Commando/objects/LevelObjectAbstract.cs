@@ -21,10 +21,42 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
-    class LevelObjectAbstract
+    abstract class LevelObjectAbstract : DrawableObjectAbstract
     {
+
+        protected GameTexture image_;
+
+        //Additional info to be added for passable/unpassable, rooms, level, etc.
+
+
+        public LevelObjectAbstract() :
+            base()
+        {
+        }
+
+        public LevelObjectAbstract(GameTexture image) :
+            base()
+        {
+            image_ = image;
+        }
+
+        public LevelObjectAbstract(GameTexture image, Vector2 position, Vector2 direction, float depth) :
+            base(position, direction, depth)
+        {
+        }
+
+        public GameTexture getImage()
+        {
+            return image_;
+        }
+
+        public void setImage(GameTexture image)
+        {
+            image_ = image;
+        }
     }
 }
