@@ -28,7 +28,7 @@ namespace Commando
     class CharacterWeapon : CharacterStatusElementInterface
     {
 
-        protected List<CharacterStatusObserverInterface> observers_;
+        protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();
 
         public void addObserver(CharacterStatusObserverInterface obs)
         {

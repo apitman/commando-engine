@@ -21,17 +21,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
     class HeadsUpDisplayObject : HeadsUpDisplayObjectAbstract
     {
+        public HeadsUpDisplayObject()
+            : base()
+        {
+        }
+
+        public HeadsUpDisplayObject(GameTexture tex)
+            : base(tex)
+        {
+        }
+
+        public HeadsUpDisplayObject(GameTexture tex, Vector2 pos, Vector2 dir, float depth)
+            : base(tex, pos, dir, depth)
+        {
+        }
+
         public override void updateImage()
         {
+            // TODO: This is where the code will go to alter the health bar
+            // image or the weapon image when the player character loses/gains
+            // health or switches weapons. For now, it will just display what
+            // it displays at the very start
         }
 
         public override void draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            texture_.drawImage(0, position_, 0.0f, 0.9f);
         }
     }
 }

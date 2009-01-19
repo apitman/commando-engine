@@ -53,6 +53,9 @@ namespace Commando
             textures_.Add("testMenu", new GameTexture(".//Content//Sprites//testmenu.PNG", spriteBatch, graphics));
             textures_.Add("MenuStartReg", new GameTexture(".//Content//Sprites//menuStartReg.png", spriteBatch, graphics));
             textures_.Add("MenuStartSelected", new GameTexture(".//Content//Sprites//menuStartDown.png", spriteBatch, graphics));
+            textures_.Add("healthBarOutline", new GameTexture(".//Content//healthBarOutline.png", spriteBatch, graphics));
+            textures_.Add("healthBarFiller", new GameTexture(".//Content//healthBarFiller.png", spriteBatch, graphics));
+            textures_.Add("pistol", new GameTexture(".//Content//pistol.png", spriteBatch, graphics));
         }
 
         public GameTexture getTexture(string textureName)

@@ -30,6 +30,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
+using Commando.objects;
 
 namespace Commando
 {
@@ -41,6 +42,10 @@ namespace Commando
 
 
         protected Engine engine_;
+        protected HeadsUpDisplayObject healthBar_;
+        protected HeadsUpDisplayObject weapon_;
+        protected Vector2 healthBarPos_;
+        protected Vector2 weaponPos_;
 
         public EngineStateGameplay(Engine engine)
         {
@@ -49,6 +54,13 @@ namespace Commando
             //Jared's test stuff
             player_ = new objects.MainPlayer();
             //END Jared's test stuff
+
+            healthBarPos_ = new Vector2(100.0f, 550.0f);
+            weaponPos_ = new Vector2(200.0f, 550.0f);
+            healthBar_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture("healthBarFiller"), healthBarPos_, new Vector2(0.0f), 0.8f);
+            weapon_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture("pistol"), weaponPos_, new Vector2(0.0f), 0.8f);
+            player_.getHealth().addObserver(healthBar_);
+            player_.getWeapon().addObserver(weapon_);
         }
 
         #region EngineStateInterface Members
@@ -78,6 +90,10 @@ namespace Commando
             //Jared's test stuff
             player_.draw(new GameTime());
             //END Jared's test stuff
+
+            healthBar_.draw(new GameTime());
+            TextureMap.getInstance().getTexture("healthBarOutline").drawImage(0, healthBarPos_, 0.0f, 0.8f);
+            weapon_.draw(new GameTime());
         }
 
         #endregion
