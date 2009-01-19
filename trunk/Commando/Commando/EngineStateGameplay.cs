@@ -94,6 +94,9 @@ namespace Commando
             healthBar_.draw(new GameTime());
             TextureMap.getInstance().getTexture("healthBarOutline").drawImage(0, healthBarPos_, 0.0f, 0.8f);
             weapon_.draw(new GameTime());
+
+            FontMap.getInstance().getFont("Kootenay").drawString("Health", new Vector2(healthBarPos_.X - 27.0f, healthBarPos_.Y - 12.0f), Color.Black);
+            FontMap.getInstance().getFont("Kootenay").drawString("20/20 bullets", new Vector2(weaponPos_.X + 50.0f, weaponPos_.Y - 14.0f), Color.Black);
         }
 
         #endregion
