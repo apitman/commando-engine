@@ -37,6 +37,9 @@ Displaying Text
 Displaying Centered Text
   * http://msmvps.com/blogs/mykre/archive/2007/11/28/xna-displaying-centred-text.aspx
 
+Sharing and Distributing a Game
+http://msdn.microsoft.com/en-us/library/bb417502.aspx
+
 == PC Specific ==
 
 Pressing Multiple Keys at once on the Keyboard
