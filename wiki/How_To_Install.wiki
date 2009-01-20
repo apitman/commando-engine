@@ -1,6 +1,6 @@
 #summary How to install the COMMANDO engine.
 
-_Note:_ Binaries have not been released yet, so users will have to compile the source code in order to use the engine until we have binaries ready for release. This page is expected to be updated frequently, so check back often to see if we have altered any of the installation requirements or steps if you are having any difficulties.
+_Note:_ This page is expected to be updated frequently, so check back often to see if any of the installation requirements or steps have been altered if you are having any difficulties.
 
 = Prerequisites =
 
@@ -11,4 +11,4 @@ _Note:_ Binaries have not been released yet, so users will have to compile the s
 
 = The COMMANDO engine =
 
-  * Download the compiled binary version of the engine from here http://code.google.com/p/commando-engine/downloads/list _Note:_ Binaries have not been released yet, so users will have to compile the source code in order to use the engine until we have binaries ready for release _Note 2:_ If you would like to compile the source code, then you will need Microsoft Visual Studio 2008 and XNA Game Studio 3.0, which can be found here http://www.microsoft.com/downloads/details.aspx?FamilyId=7D70D6ED-1EDD-4852-9883-9A33C0AD8FEE&displaylang=en
+  * Download COMMANDOreleasev0.1.zip from here http://code.google.com/p/commando-engine/downloads/list. Unzip it and run the .exe file to run the engine. _Note 2:_ If you would like to compile the source code, then you will need Microsoft Visual Studio 2008 and XNA Game Studio 3.0, which can be found here http://www.microsoft.com/downloads/details.aspx?FamilyId=7D70D6ED-1EDD-4852-9883-9A33C0AD8FEE&displaylang=en
