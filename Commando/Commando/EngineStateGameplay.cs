@@ -52,31 +52,36 @@ namespace Commando
         public EngineStateGameplay(Engine engine)
         {
             engine_ = engine;
-
+            engine_.setScreenSize(375, 375);
             //Jared's test stuff
             player_ = new objects.MainPlayer();
-            int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                        {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,10,11,12,10,11,12,1,1,1,1,1,4,0},
-                                        {0,2,1,1,13,14,15,13,14,15,1,1,1,1,1,4,0},
-                                        {0,2,1,1,16,17,18,16,17,18,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0},
-                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+            int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                        {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
+                                        {0,2,1,1,1,10,11,12,10,11,12,1,1,1,1,1,1,19,3,3,3,3,3,8,0},
+                                        {0,2,1,1,1,13,14,15,13,14,15,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,16,17,18,16,17,18,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,20,5,5,5,5,5,9,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
+                                        {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
+                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
             tiles_ = Tiler.getTiles(tiles);
             //END Jared's test stuff
 
-            healthBarPos_ = new Vector2(100.0f, 550.0f);
-            weaponPos_ = new Vector2(200.0f, 550.0f);
+            healthBarPos_ = new Vector2(100.0f, 350.0f);
+            weaponPos_ = new Vector2(200.0f, 350.0f);
             healthBar_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture("healthBarFiller"), healthBarPos_, new Vector2(0.0f), 0.8f);
             weapon_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture("pistol"), weaponPos_, new Vector2(0.0f), 0.8f);
             player_.getHealth().addObserver(healthBar_);
@@ -119,8 +124,8 @@ namespace Commando
             TextureMap.getInstance().getTexture("healthBarOutline").drawImage(0, healthBarPos_, 0.0f, 0.8f);
             weapon_.draw(new GameTime());
 
-            FontMap.getInstance().getFont("Kootenay").drawString("Health", new Vector2(healthBarPos_.X - 27.0f, healthBarPos_.Y - 12.0f), Color.Black);
-            FontMap.getInstance().getFont("Kootenay").drawString("20/20 bullets", new Vector2(weaponPos_.X + 50.0f, weaponPos_.Y - 14.0f), Color.Black);
+            FontMap.getInstance().getFont("Kootenay").drawString("Health", new Vector2(healthBarPos_.X - 27.0f, healthBarPos_.Y - 12.0f), Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.9f);
+            FontMap.getInstance().getFont("Kootenay").drawString("20/20 bullets", new Vector2(weaponPos_.X + 50.0f, weaponPos_.Y - 14.0f), Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.9f);
         }
 
         #endregion

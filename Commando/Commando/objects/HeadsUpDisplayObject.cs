@@ -52,7 +52,7 @@ namespace Commando.objects
 
         public override void draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            texture_.drawImage(0, position_, 0.0f, 0.9f);
+            texture_.drawImage(0, position_, 0.0f, depth_);
         }
     }
 }
