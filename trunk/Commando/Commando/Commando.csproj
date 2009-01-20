@@ -89,6 +89,7 @@
     <Compile Include="CharacterStatusElementInterface.cs" />
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />
+    <Compile Include="FontEnum.cs" />
     <Compile Include="FontMap.cs" />
     <Compile Include="GameFont.cs" />
     <Compile Include="levels\Level.cs" />
