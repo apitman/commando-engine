@@ -16,51 +16,60 @@
  ***************************************************************************
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace Commando.controls
 {
+    /// <summary>
+    /// Pseudo-singleton which contains a data structure of values of input
+    /// from a user device during a single frame.  Also contains some
+    /// functionality for controlling how often this input can change.
+    /// </summary>
     public class InputSet
     {
-
+        /// <summary>
+        /// An array of instances of InputSets, one for each possible player.
+        /// </summary>
         static protected InputSet[] instances_ = null;
 
-        // stickState_ is an array of ints for each input device in InputsEnum
-        //  where each int represents the number of frames left for which that
-        //  particular device will pretend to be released regardless of its
-        //  actual state
+        /// <summary>
+        /// An array of ints for each input device in InputsEnum;
+        ///  each int represents the number of frames left for which that
+        ///  particular device will pretend to be released regardless of its
+        ///  actual state.
+        /// </summary>
         protected int[] stickState_ = new int[(int)InputsEnum.LENGTH];
 
-        // toggleState_ is an array of bools for each input device in
-        //  InputsEnum where each bool represents whether that device must be
-        //  released before it can register normally again
+        /// <summary>
+        /// An array of booleans for each input device in InputsEnum; each
+        /// bool represents whether that device must be released before it can
+        /// register normally again.
+        /// </summary>
         protected bool[] toggleState_ = new bool[(int)InputsEnum.LENGTH];
 
-        protected float leftDirectionalX;
-        protected float leftDirectionalY;
+        protected float leftDirectionalX_;
+        protected float leftDirectionalY_;
 
-        protected float rightDirectionalX;
-        protected float rightDirectionalY;
+        protected float rightDirectionalX_;
+        protected float rightDirectionalY_;
 
-        protected bool confirmButton;
-        protected bool cancelButton;
+        protected bool confirmButton_;
+        protected bool cancelButton_;
 
-        protected bool button1;
-        protected bool button2;
-        protected bool button3;
-        protected bool button4;
+        protected bool button1_;
+        protected bool button2_;
+        protected bool button3_;
+        protected bool button4_;
 
-        protected bool leftTrigger;
-        protected bool rightTrigger;
+        protected bool leftTrigger_;
+        protected bool rightTrigger_;
 
-        protected bool leftBumper;
-        protected bool rightBumper;
+        protected bool leftBumper_;
+        protected bool rightBumper_;
 
-        // Static constructor - initializes static variables in C#
+        /// <summary>
+        /// Statically creates an InputSet for four different players.
+        /// </summary>
         static InputSet()
         {
             instances_ = new InputSet[4];
@@ -76,21 +85,30 @@ namespace Commando.controls
             }
         }
 
-        // Regular constructor - private for Singleton pattern
+        /// <summary>
+        /// Private constructor as per Singleton pattern.
+        /// Initializes empty arrays for Sticks and Toggles.
+        /// </summary>
         private InputSet()
         {
             stickState_ = new int[(int)InputsEnum.LENGTH];
             toggleState_ = new bool[(int)InputsEnum.LENGTH];
         }
 
-        // Gets Player One's InputSet
+        /// <summary>
+        /// Returns Player One's InputSet as per the Singleton pattern.
+        /// </summary>
+        /// <returns>The InputSet for Player One.</returns>
         static public InputSet getInstance()
         {
             return instances_[0];
         }
 
-        // Gets the InputSet of the specified player
-        // NOT TESTED
+        /// <summary>
+        /// Returns the InputSet of specific player.
+        /// </summary>
+        /// <param name="index">The player whose inputs are desired.</param>
+        /// <returns>The InputSet for the specified player.</returns>
         static public InputSet getInstance(PlayerIndex index)
         {
             int i = (int)index;
@@ -101,72 +119,72 @@ namespace Commando.controls
 
         public float getLeftDirectionalX()
         {
-            return leftDirectionalX;
+            return leftDirectionalX_;
         }
 
         public float getLeftDirectionalY()
         {
-            return leftDirectionalY;
+            return leftDirectionalY_;
         }
 
         public float getRightDirectionalX()
         {
-            return rightDirectionalX;
+            return rightDirectionalX_;
         }
 
         public float getRightDirectionalY()
         {
-            return rightDirectionalY;
+            return rightDirectionalY_;
         }
 
         public bool getConfirmButton()
         {
-            return confirmButton;
+            return confirmButton_;
         }
 
         public bool getCancelButton()
         {
-            return cancelButton;
+            return cancelButton_;
         }
 
         public bool getButton1()
         {
-            return button1;
+            return button1_;
         }
 
         public bool getButton2()
         {
-            return button2;
+            return button2_;
         }
 
         public bool getButton3()
         {
-            return button3;
+            return button3_;
         }
 
         public bool getButton4()
         {
-            return button4;
+            return button4_;
         }
 
         public bool getLeftTrigger()
         {
-            return leftTrigger;
+            return leftTrigger_;
         }
 
         public bool getRightTrigger()
         {
-            return rightTrigger;
+            return rightTrigger_;
         }
 
         public bool getLeftBumper()
         {
-            return leftBumper;
+            return leftBumper_;
         }
 
         public bool getRightBumper()
         {
-            return rightBumper;
+            return rightBumper_;
         }
 
         #endregion
@@ -186,12 +204,12 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.LEFT_DIRECTIONAL] = false;
                 }
-                leftDirectionalX = 0;
-                leftDirectionalY = 0;
+                leftDirectionalX_ = 0;
+                leftDirectionalY_ = 0;
                 return;
             }
-            leftDirectionalX = x;
-            leftDirectionalY = y;
+            leftDirectionalX_ = x;
+            leftDirectionalY_ = y;
         }
 
         public void setRightDirectional(float x, float y)
@@ -207,12 +225,12 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.RIGHT_DIRECTIONAL] = false;
                 }
-                rightDirectionalX = 0;
-                rightDirectionalY = 0;
+                rightDirectionalX_ = 0;
+                rightDirectionalY_ = 0;
                 return;
             }
-            rightDirectionalX = x;
-            rightDirectionalY = y;
+            rightDirectionalX_ = x;
+            rightDirectionalY_ = y;
         }
 
         public void setConfirmButton(bool value)
@@ -228,10 +246,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.CONFIRM_BUTTON] = false;
                 }
-                confirmButton = false;
+                confirmButton_ = false;
                 return;
             }
-            confirmButton = value;
+            confirmButton_ = value;
         }
 
         public void setCancelButton(bool value)
@@ -247,10 +265,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.CANCEL_BUTTON] = false;
                 }
-                cancelButton = false;
+                cancelButton_ = false;
                 return;
             }
-            cancelButton = value;
+            cancelButton_ = value;
         }
 
         public void setButton1(bool value)
@@ -266,10 +284,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.BUTTON_1] = false;
                 }
-                button1 = false;
+                button1_ = false;
                 return;
             }
-            button1 = value;
+            button1_ = value;
         }
 
         public void setButton2(bool value)
@@ -285,10 +303,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.BUTTON_2] = false;
                 }
-                button2 = false;
+                button2_ = false;
                 return;
             }
-            button2 = value;
+            button2_ = value;
         }
 
         public void setButton3(bool value)
@@ -304,10 +322,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.BUTTON_3] = false;
                 }
-                button3 = false;
+                button3_ = false;
                 return;
             }
-            button3 = value;
+            button3_ = value;
         }
 
         public void setButton4(bool value)
@@ -323,10 +341,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.BUTTON_4] = false;
                 }
-                button4 = false;
+                button4_ = false;
                 return;
             }
-            button4 = value;
+            button4_ = value;
         }
 
         public void setLeftTrigger(bool value)
@@ -342,10 +360,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.LEFT_TRIGGER] = false;
                 }
-                leftTrigger = false;
+                leftTrigger_ = false;
                 return;
             }
-            leftTrigger = value;
+            leftTrigger_ = value;
         }
 
         public void setRightTrigger(bool value)
@@ -361,10 +379,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.RIGHT_TRIGGER] = false;
                 }
-                rightTrigger = false;
+                rightTrigger_ = false;
                 return;
             }
-            rightTrigger = value;
+            rightTrigger_ = value;
         }
 
         public void setLeftBumper(bool value)
@@ -380,10 +398,10 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.LEFT_BUMPER] = false;
                 }
-                leftBumper = false;
+                leftBumper_ = false;
                 return;
             }
-            leftBumper = value;
+            leftBumper_ = value;
         }
 
         public void setRightBumper(bool value)
@@ -399,17 +417,20 @@ namespace Commando.controls
                 {
                     toggleState_[(int)InputsEnum.RIGHT_BUMPER] = false;
                 }
-                rightBumper = false;
+                rightBumper_ = false;
                 return;
             }
-            rightBumper = value;
+            rightBumper_ = value;
         }
 
         #endregion
 
 
-        // This function will cause the button 'toStick' to
-        // act released for 'numFrames' frames.
+        /// <summary>
+        /// Causes an input unit to act released for a set number of frames.
+        /// </summary>
+        /// <param name="toStick">The input unit which will act released.</param>
+        /// <param name="numFrames">Duration (in frames) before acting normal.</param>
         public void setStick(InputsEnum toStick, int numFrames)
         {
             if (numFrames >= 0)
@@ -422,15 +443,29 @@ namespace Commando.controls
             }
         }
 
-        // This function will cause the button 'toToggle' to
-        // act released until physically released and then used.
-        public void setToggle(InputsEnum toToggle, bool value)
+        /// <summary>
+        /// Causes an input unit to act released until being physically
+        /// released and then pressed/moved/clicked/etc again.
+        /// </summary>
+        /// <param name="toToggle">The input unit which will act released.</param>
+        public void setToggle(InputsEnum toToggle)
         {
-            toggleState_[(int)toToggle] = value;
+            toggleState_[(int)toToggle] = true;
         }
 
-        // Causes all buttons to act as if they were in the
-        // released state for 'numFrames' frames
+        /// <summary>
+        /// Clears the toggle requirement for an input unit.  See setToggle().
+        /// </summary>
+        /// <param name="toToggle">The input unit to no longer wait for a toggle.</param>
+        public void clearToggle(InputsEnum toToggle)
+        {
+            toggleState_[(int)toToggle] = false;
+        }
+
+        /// <summary>
+        /// Performs a setStick() on all input units.
+        /// </summary>
+        /// <param name="numFrames">Duration (in frames) before acting normal.</param>
         public void setAllSticks(int numFrames)
         {
             for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
@@ -439,10 +474,9 @@ namespace Commando.controls
             }
         }
 
-        // Causes all buttons to act as if they were released
-        // until they are actually released.  This could be
-        // useful for changing EngineStates and not having
-        // buttons being held down trigger in the next state.
+        /// <summary>
+        /// Performs a setToggle() on all input units.
+        /// </summary>
         public void setAllToggles()
         {
             for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
@@ -451,8 +485,11 @@ namespace Commando.controls
             }
         }
 
-        // Clears all buttons of their stick values so that
-        // there is no delay for their usage.
+        /// <summary>
+        /// Returns normal functionality to input units which were put into
+        /// a Stick state by setStick() or setAllSticks().  Does not affect
+        /// Toggle states.
+        /// </summary>
         public void clearSticks()
         {
             for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
@@ -461,8 +498,11 @@ namespace Commando.controls
             }
         }
 
-        // Clears all buttons of their toggle values so that
-        // they do not have to be released before use.
+        /// <summary>
+        /// Returns normal functionality to input units which were put into
+        /// a Toggle state by setToggle() or setAllToggles().  Does not affect
+        /// Stick states.
+        /// </summary>
         public void clearToggles()
         {
             for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
@@ -471,32 +511,36 @@ namespace Commando.controls
             }
         }
 
-        // Sets all buttons to the released state
+        /// <summary>
+        /// Sets all buttons to the released state.
+        /// </summary>
         public void clearInputs()
         {
-            leftDirectionalX = 0;
-            leftDirectionalY = 0;
-            rightDirectionalX = 0;
-            rightDirectionalY = 0;
-            confirmButton = false;
-            cancelButton = false;
-            button1 = false;
-            button2 = false;
-            button3 = false;
-            button4 = false;
-            leftTrigger = false;
-            rightTrigger = false;
-            leftBumper = false;
-            rightBumper = false;
+            leftDirectionalX_ = 0;
+            leftDirectionalY_ = 0;
+            rightDirectionalX_ = 0;
+            rightDirectionalY_ = 0;
+            confirmButton_ = false;
+            cancelButton_ = false;
+            button1_ = false;
+            button2_ = false;
+            button3_ = false;
+            button4_ = false;
+            leftTrigger_ = false;
+            rightTrigger_ = false;
+            leftBumper_ = false;
+            rightBumper_ = false;
         }
 
     }
 
-    // This enumeration is used when setting and clearing toggles and sticks
-    // The last item, LENGTH, should never be used in these conditions, but
-    //  is a replacement since C# enumerations do not have a .length attrib,
-    //  and is useful for iterating over arrays which contain one element
-    //  for each item in the enumeration.  This item MUST remain last.
+    /// <summary>
+    /// This enumeration is used when setting and clearing toggles and sticks
+    /// The last item, LENGTH, should never be used in these conditions, but
+    ///  is a replacement since C# enumerations do not have a .length attrib,
+    ///  and is useful for iterating over arrays which contain one element
+    ///  for each item in the enumeration.  This item MUST remain last.
+    /// </summary>
     public enum InputsEnum
     {
         LEFT_DIRECTIONAL,

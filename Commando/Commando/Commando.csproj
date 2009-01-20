@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ai\WorldState.cs" />
     <Compile Include="CharacterStatusElementInterface.cs" />
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />
@@ -162,9 +163,6 @@
       <ProductName>Microsoft XNA Framework Redistributable 3.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

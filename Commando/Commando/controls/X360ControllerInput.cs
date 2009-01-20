@@ -16,21 +16,39 @@
  ***************************************************************************
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Commando.controls;
 
 namespace Commando.controls
 {
+    /// <summary>
+    /// Implementation of a ControllerInputInterface for a user with an
+    /// Xbox 360 Gamepad, either connected to a PC or a console.
+    /// </summary>
     class X360ControllerInput : ControllerInputInterface
     {
         protected Engine engine_;
         protected PlayerIndex player_;
         protected InputSet inputs_;
 
+        // Key mapping
+        // ------------------
+        // Currently both directionals are hardcoded to the thumbsticks.
+        protected const Buttons CONFIRM = Buttons.Start;
+        protected const Buttons CANCEL = Buttons.Back;
+        protected const Buttons BUTTON_1 = Buttons.A;
+        protected const Buttons BUTTON_2 = Buttons.B;
+        protected const Buttons BUTTON_3 = Buttons.X;
+        protected const Buttons BUTTON_4 = Buttons.Y;
+        protected const Buttons LEFT_TRIGGER = Buttons.LeftTrigger;
+        protected const Buttons RIGHT_TRIGGER = Buttons.RightTrigger;
+        protected const Buttons LEFT_BUMPER = Buttons.LeftShoulder;
+        protected const Buttons RIGHT_BUMPER = Buttons.RightShoulder;
+
+        /// <summary>
+        /// Default constructor; assigns itself to Player One's input device.
+        /// </summary>
+        /// <param name="engine">The engine using the controller.</param>
         public X360ControllerInput(Engine engine)
         {
             engine_ = engine;
@@ -38,6 +56,11 @@ namespace Commando.controls
             inputs_ = InputSet.getInstance();
         }
 
+        /// <summary>
+        /// Constructor which allows specification of a player.
+        /// </summary>
+        /// <param name="engine">The engine using the controller.</param>
+        /// <param name="player">The player whose input should be read.</param>
         public X360ControllerInput(Engine engine, PlayerIndex player)
         {
             engine_ = engine;
@@ -47,11 +70,19 @@ namespace Commando.controls
 
         #region ControllerInputInterface Members
 
+        /// <summary>
+        /// Returns the InputSet which the device is populating.
+        /// </summary>
+        /// <returns>An InputSet with the current frame's input.</returns>
         public InputSet getInputSet()
         {
             return inputs_;
         }
 
+        /// <summary>
+        /// Should be called EXACTLY once per frame to read inputs from
+        /// the device and populate the InputSet accordingly.
+        /// </summary>
         public void updateInputSet()
         {
             GamePadState gps = GamePad.GetState(player_);
@@ -61,18 +92,18 @@ namespace Commando.controls
             inputs_.setRightDirectional(gps.ThumbSticks.Right.X,
                                         -gps.ThumbSticks.Right.Y);
 
-            inputs_.setConfirmButton(gps.IsButtonDown(Buttons.Start));
-            inputs_.setCancelButton(gps.IsButtonDown(Buttons.Back));
+            inputs_.setConfirmButton(gps.IsButtonDown(CONFIRM));
+            inputs_.setCancelButton(gps.IsButtonDown(CANCEL));
 
-            inputs_.setButton1(gps.IsButtonDown(Buttons.A));
-            inputs_.setButton2(gps.IsButtonDown(Buttons.B));
-            inputs_.setButton3(gps.IsButtonDown(Buttons.X));
-            inputs_.setButton4(gps.IsButtonDown(Buttons.Y));
+            inputs_.setButton1(gps.IsButtonDown(BUTTON_1));
+            inputs_.setButton2(gps.IsButtonDown(BUTTON_2));
+            inputs_.setButton3(gps.IsButtonDown(BUTTON_3));
+            inputs_.setButton4(gps.IsButtonDown(BUTTON_4));
 
-            inputs_.setLeftTrigger(gps.IsButtonDown(Buttons.LeftTrigger));
-            inputs_.setRightTrigger(gps.IsButtonDown(Buttons.RightTrigger));
-            inputs_.setLeftBumper(gps.IsButtonDown(Buttons.LeftShoulder));
-            inputs_.setRightBumper(gps.IsButtonDown(Buttons.RightShoulder));
+            inputs_.setLeftTrigger(gps.IsButtonDown(LEFT_TRIGGER));
+            inputs_.setRightTrigger(gps.IsButtonDown(RIGHT_TRIGGER));
+            inputs_.setLeftBumper(gps.IsButtonDown(LEFT_BUMPER));
+            inputs_.setRightBumper(gps.IsButtonDown(RIGHT_BUMPER));
 
         }
 
