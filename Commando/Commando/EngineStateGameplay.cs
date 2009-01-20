@@ -31,6 +31,7 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
 using Commando.objects;
+using Commando.levels;
 
 namespace Commando
 {
@@ -46,6 +47,7 @@ namespace Commando
         protected HeadsUpDisplayObject weapon_;
         protected Vector2 healthBarPos_;
         protected Vector2 weaponPos_;
+        protected List<TileObject> tiles_;
 
         public EngineStateGameplay(Engine engine)
         {
@@ -53,6 +55,24 @@ namespace Commando
 
             //Jared's test stuff
             player_ = new objects.MainPlayer();
+            int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                        {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,10,11,12,10,11,12,1,1,1,1,1,4,0},
+                                        {0,2,1,1,13,14,15,13,14,15,1,1,1,1,1,4,0},
+                                        {0,2,1,1,16,17,18,16,17,18,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
+                                        {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0},
+                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+            tiles_ = Tiler.getTiles(tiles);
             //END Jared's test stuff
 
             healthBarPos_ = new Vector2(100.0f, 550.0f);
@@ -89,6 +109,10 @@ namespace Commando
 
             //Jared's test stuff
             player_.draw(new GameTime());
+            foreach (TileObject tOb in tiles_)
+            {
+                tOb.draw(new GameTime());
+            }
             //END Jared's test stuff
 
             healthBar_.draw(new GameTime());

@@ -102,20 +102,20 @@ namespace Commando
             }
             engine_.GraphicsDevice.Clear(Color.Black);
 
-            menu_.drawImageWithDim(0, new Rectangle(0, 0, engine_.GraphicsDevice.Viewport.Width, engine_.GraphicsDevice.Viewport.Height), 0.5f);
+            menu_.drawImageWithDim(0, new Rectangle(0, 0, engine_.GraphicsDevice.Viewport.Width, engine_.GraphicsDevice.Viewport.Height), 0.0f);
             if (cursorPos_ == 0)
             {
                 Vector2 mypos;
                 mypos.X = 400;
                 mypos.Y = 300;
-                startSelected_.drawImage(0, mypos, 0.0f, 0.0f);
+                startSelected_.drawImage(0, mypos, 0.0f, 0.5f);
             }
             else
             {
                 Vector2 mypos;
                 mypos.X = 400;
                 mypos.Y = 300;
-                startReg_.drawImage(0, mypos, 0.0f, 0.0f);
+                startReg_.drawImage(0, mypos, 0.0f, 0.5f);
             }
         }
         #endregion
