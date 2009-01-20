@@ -1,6 +1,6 @@
 #summary How to install the COMMANDO engine.
 
-_Note:_ Binaries have not been released yet, so users will have to compile the source code in order to use the engine until we have binaries ready for release
+_Note:_ Binaries have not been released yet, so users will have to compile the source code in order to use the engine until we have binaries ready for release. This page is expected to be updated frequently, so check back often to see if we have altered any of the installation requirements or steps if you are having any difficulties.
 
 = Prerequisites =
 
