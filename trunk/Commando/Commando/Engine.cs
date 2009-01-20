@@ -72,6 +72,13 @@ namespace Commando
             return controls_.getInputSet();
         }
 
+        public void setScreenSize(int x, int y)
+        {
+            graphics_.PreferredBackBufferHeight = x;
+            graphics_.PreferredBackBufferWidth = y;
+            graphics_.ApplyChanges();
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic

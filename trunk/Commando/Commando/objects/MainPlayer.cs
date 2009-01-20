@@ -28,15 +28,15 @@ namespace Commando.objects
 {
     class MainPlayer : PlayableCharacterAbstract
     {
-        const bool CONTROLSTYLE = false;
+        const bool CONTROLSTYLE = true;
 
         const float TURNSPEED = .30f;
 
         public MainPlayer() :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, Vector2.Zero, new Vector2(1.0f,0.0f), 0.5f)
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, new Vector2(45.0f, 45.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
             List<GameTexture> anims = new List<GameTexture>();
-            anims.Add(TextureMap.getInstance().getTexture("SamplePlayer"));
+            anims.Add(TextureMap.getInstance().getTexture("SamplePlayer_Small"));
             animations_ = new AnimationSet(anims);
         }
 

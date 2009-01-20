@@ -51,6 +51,8 @@ namespace Commando
             //      For now, just create the load for each texture in the function
             textures_.Add("Woger_Ru", new GameTexture(".//Content//Giant_A.png", spriteBatch, graphics));
             textures_.Add("SamplePlayer", new GameTexture(".//Content//Sprites//SamplePlayer.png", spriteBatch, graphics));
+            textures_.Add("SamplePlayer_Small", new GameTexture(".//Content//Sprites//SamplePlayer_Small.png", spriteBatch, graphics));
+            textures_.Add("SamplePlayer_XSmall", new GameTexture(".//Content//Sprites//SamplePlayer_XSmall.png", spriteBatch, graphics));
             textures_.Add("testMenu", new GameTexture(".//Content//Sprites//testmenu.PNG", spriteBatch, graphics));
             textures_.Add("MenuStartReg", new GameTexture(".//Content//Sprites//menuStartReg.png", spriteBatch, graphics));
             textures_.Add("MenuStartSelected", new GameTexture(".//Content//Sprites//menuStartDown.png", spriteBatch, graphics));
@@ -76,6 +78,10 @@ namespace Commando
             textures_.Add("Tile_16", new GameTexture(".//Content//Tiles//Crate_2_0.bmp", spriteBatch, graphics));
             textures_.Add("Tile_17", new GameTexture(".//Content//Tiles//Crate_2_1.bmp", spriteBatch, graphics));
             textures_.Add("Tile_18", new GameTexture(".//Content//Tiles//Crate_2_2.bmp", spriteBatch, graphics));
+            textures_.Add("Tile_19", new GameTexture(".//Content//Tiles//Wall_Corner_I_Bottom_Left.bmp", spriteBatch, graphics));
+            textures_.Add("Tile_20", new GameTexture(".//Content//Tiles//Wall_Corner_I_Top_Left.bmp", spriteBatch, graphics));
+            textures_.Add("Tile_21", new GameTexture(".//Content//Tiles//Wall_Corner_I_Top_Right.bmp", spriteBatch, graphics));
+            textures_.Add("Tile_22", new GameTexture(".//Content//Tiles//Wall_Corner_I_Bottom_Right.bmp", spriteBatch, graphics));
 
         }
 
