@@ -27,13 +27,13 @@ namespace Commando
 {
     class FontMap
     {
-        protected Dictionary<string, GameFont> fonts_;
+        protected Dictionary<FontEnum, GameFont> fonts_;
 
         protected static FontMap fontMapInstance_ = null;
 
         private FontMap()
         {
-            fonts_ = new Dictionary<string, GameFont>();
+            fonts_ = new Dictionary<FontEnum, GameFont>();
         }
 
         public static FontMap getInstance()
@@ -49,10 +49,18 @@ namespace Commando
         {
             //TODO: Eventually, create automatic scripted loading of fonts
             //      For now, just create the load for each font in this function
-            fonts_.Add("Kootenay", new GameFont("SpriteFonts/Kootenay", spriteBatch, engine));
+            fonts_.Add(FontEnum.Kootenay, new GameFont("SpriteFonts/Kootenay", spriteBatch, engine));
+            fonts_.Add(FontEnum.Kootenay48, new GameFont("SpriteFonts/Kootenay48", spriteBatch, engine));
+            fonts_.Add(FontEnum.Lindsey, new GameFont("SpriteFonts/Lindsey", spriteBatch, engine));
+            fonts_.Add(FontEnum.Miramonte, new GameFont("SpriteFonts/Miramonte", spriteBatch, engine));
+            fonts_.Add(FontEnum.MiramonteBold, new GameFont("SpriteFonts/MiramonteBold", spriteBatch, engine));
+            fonts_.Add(FontEnum.Pericles, new GameFont("SpriteFonts/Pericles", spriteBatch, engine));
+            fonts_.Add(FontEnum.PericlesLight, new GameFont("SpriteFonts/PericlesLight", spriteBatch, engine));
+            fonts_.Add(FontEnum.Pescadero, new GameFont("SpriteFonts/Pescadero", spriteBatch, engine));
+            fonts_.Add(FontEnum.PescaderoBold, new GameFont("SpriteFonts/PescaderoBold", spriteBatch, engine));
         }
 
-        public GameFont getFont(string fontName)
+        public GameFont getFont(FontEnum fontName)
         {
             if (!fonts_.ContainsKey(fontName))
             {

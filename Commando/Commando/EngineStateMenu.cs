@@ -63,7 +63,7 @@ namespace Commando
 
         protected void drawStringList(List<string> stringList, Vector2 pos, Color color1, Color color2, int selected, float rotation,float scale, SpriteEffects effects, float layerDepth, float spacing)
         {
-            GameFont myFont = FontMap.getInstance().getFont("Kootenay");
+            GameFont myFont = FontMap.getInstance().getFont(FontEnum.Kootenay);
             int listLength = stringList.Count;
             Vector2 curPos = pos;
             Color myColor;
