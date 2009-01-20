@@ -47,6 +47,7 @@ namespace Commando.objects
         public LevelObjectAbstract(GameTexture image, Vector2 position, Vector2 direction, float depth) :
             base(position, direction, depth)
         {
+            image_ = image;
         }
 
         public GameTexture getImage()

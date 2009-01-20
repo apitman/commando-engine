@@ -133,7 +133,7 @@ namespace Commando
         {
 
             // TODO: Add your drawing code here
-            spriteBatch_.Begin();
+            spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
             engineState_.draw();
             spriteBatch_.End();
             //GraphicsDevice.Clear(Color.CornflowerBlue);
