@@ -90,9 +90,14 @@ namespace Commando
             spriteBatch_.DrawString(font_, text, pos, color, rotation, origin, scale, effects, layerDepth);
         }
 
-        public void drawString(string text, Vector2 pos, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
+        public void drawStringCentered(string text, Vector2 pos, Color color, float rotation, float layerDepth)
         {
-            spriteBatch_.DrawString(font_, text, pos, color, rotation, origin, scale, effects, layerDepth);
+            spriteBatch_.DrawString(font_, text, pos, color, rotation, font_.MeasureString(text), 1.0f, SpriteEffects.None, layerDepth);
+        }
+
+        public void drawStringCentered(string text, Vector2 pos, Color color, float rotation, float scale, SpriteEffects effects, float layerDepth)
+        {
+            spriteBatch_.DrawString(font_, text, pos, color, rotation, font_.MeasureString(text), scale, effects, layerDepth);
         }
     }
 }
