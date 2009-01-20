@@ -91,6 +91,9 @@
     <Compile Include="controls\InputSet.cs" />
     <Compile Include="FontMap.cs" />
     <Compile Include="GameFont.cs" />
+    <Compile Include="levels\Level.cs" />
+    <Compile Include="levels\LevelAbstract.cs" />
+    <Compile Include="levels\RoomAbstract.cs" />
     <Compile Include="levels\Tiler.cs" />
     <Compile Include="objects\HeadsUpDisplayObject.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />

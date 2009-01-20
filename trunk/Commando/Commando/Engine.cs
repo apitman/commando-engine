@@ -144,7 +144,6 @@ namespace Commando
             engineState_.draw();
             spriteBatch_.End();
             //GraphicsDevice.Clear(Color.CornflowerBlue);
-
             base.Draw(gameTime);
         }
     }
