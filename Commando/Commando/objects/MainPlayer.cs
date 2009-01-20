@@ -47,10 +47,10 @@ namespace Commando.objects
         
         public override void update(GameTime gameTime)
         {
-            int MaxX =640;
-            int MinX = 0;
-            int MaxY = 480;
-            int MinY = 0;
+            int MaxX = 345;
+            int MinX = 30;
+            int MaxY = 300;
+            int MinY = 30;
             if (CONTROLSTYLE)
             {
                 Vector2 moveVector = Vector2.Zero;
