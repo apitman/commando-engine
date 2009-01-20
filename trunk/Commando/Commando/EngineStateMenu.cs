@@ -109,7 +109,7 @@ namespace Commando
             }
             if (inputs.getLeftDirectionalY() > 0)
             {
-                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL, true);
+                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
                 cursorPos_--;
                 if (cursorPos_ < 0)
                 {
@@ -118,7 +118,7 @@ namespace Commando
             }
             if (inputs.getLeftDirectionalY() < 0)
             {
-                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL, true);
+                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
                 cursorPos_++;
                 cursorPos_ = cursorPos_ % 3;
             }

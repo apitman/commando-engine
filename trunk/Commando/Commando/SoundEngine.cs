@@ -16,11 +16,6 @@
  ***************************************************************************
 */
 
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework.Audio;
 
 // IMPORTANT NOTICE:
@@ -31,6 +26,10 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Commando
 {
+    /// <summary>
+    /// A simple class for pulling sounds from a compiled XACT project and
+    /// playing them.  Employs the Singleton pattern.
+    /// </summary>
     class SoundEngine
     {
         private static SoundEngine instance_;
@@ -39,6 +38,10 @@ namespace Commando
         private WaveBank waveBank_;
         private SoundBank soundBank_;
 
+        /// <summary>
+        /// Private constructor as per the Singleton pattern which reads the
+        /// compiled sound files into memory.
+        /// </summary>
         private SoundEngine()
         {
 #if !XBOX
@@ -50,6 +53,10 @@ namespace Commando
 #endif
         }
 
+        /// <summary>
+        /// Provides the instance of the class as per the Singleton pattern.
+        /// </summary>
+        /// <returns>The only instance of SoundEngine.</returns>
         public static SoundEngine getInstance()
         {
             if (instance_ == null)
@@ -59,6 +66,11 @@ namespace Commando
             return instance_;
         }
 
+        /// <summary>
+        /// Plays a sound based on a provided key.
+        /// </summary>
+        /// <param name="cueName">The cue key from the XACT project.</param>
+        /// <returns>Returns a handle to the sound.</returns>
         public Cue playCue(string cueName)
         {
             Cue cue = soundBank_.GetCue(cueName);
@@ -66,11 +78,18 @@ namespace Commando
             return cue;
         }
 
+        /// <summary>
+        /// Stops a sound immediately.
+        /// </summary>
+        /// <param name="cue">The handle of the sound to stop.</param>
         public static void stopCue(Cue cue)
         {
             cue.Stop(AudioStopOptions.Immediate);
         }
 
+        /// <summary>
+        /// Cleans up the instance's resources.
+        /// </summary>
         public static void cleanup()
         {
             if (instance_ != null)

@@ -16,16 +16,15 @@
  ***************************************************************************
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Commando.controls
 {
+    /// <summary>
+    /// Implementation of ControllerInputInterface for a regular PC user
+    /// with keyboard and mouse.
+    /// </summary>
     class PCControllerInput : ControllerInputInterface
     {
         protected Engine engine_;
@@ -33,6 +32,27 @@ namespace Commando.controls
         protected int previousMouseX_;
         protected int previousMouseY_;
 
+        // Key mapping
+        // ------------------
+        // Currently the Left and Right triggers are hardcoded to the mouse
+        // buttons, and the right directional is hardcoded to mouse movement.
+        protected const Keys LEFT_DIR_UP = Keys.W;
+        protected const Keys LEFT_DIR_DOWN = Keys.S;
+        protected const Keys LEFT_DIR_LEFT = Keys.A;
+        protected const Keys LEFT_DIR_RIGHT = Keys.D;
+        protected const Keys CONFIRM = Keys.Enter;
+        protected const Keys CANCEL = Keys.Escape;
+        protected const Keys BUTTON_1 = Keys.Space;
+        protected const Keys BUTTON_2 = Keys.LeftShift;
+        protected const Keys BUTTON_3 = Keys.X;
+        protected const Keys BUTTON_4 = Keys.C;
+        protected const Keys LEFT_BUMPER = Keys.Q;
+        protected const Keys RIGHT_BUMPER = Keys.E;
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="engine">The engine using the controller.</param>
         public PCControllerInput(Engine engine)
         {
             engine_ = engine;
@@ -41,11 +61,19 @@ namespace Commando.controls
 
         #region ControllerInputInterface Members
 
+        /// <summary>
+        /// Returns the InputSet which the device is populating.
+        /// </summary>
+        /// <returns>An InputSet with the current frame's input.</returns>
         public InputSet getInputSet()
         {
             return inputs_;
         }
 
+        /// <summary>
+        /// Should be called EXACTLY once per frame to read inputs from
+        /// the device and populate the InputSet accordingly.
+        /// </summary>
         public void updateInputSet()
         {
 
@@ -55,20 +83,20 @@ namespace Commando.controls
             float leftX = 0;
             float leftY = 0;
 
-            if (ks.IsKeyDown(Keys.W))
+            if (ks.IsKeyDown(LEFT_DIR_UP))
             {
                 leftY += 1.0f;
             }
-            if (ks.IsKeyDown(Keys.S))
+            if (ks.IsKeyDown(LEFT_DIR_DOWN))
             {
                 leftY += -1.0f;
             }
 
-            if (ks.IsKeyDown(Keys.D))
+            if (ks.IsKeyDown(LEFT_DIR_RIGHT))
             {
                 leftX += 1.0f;
             }
-            if (ks.IsKeyDown(Keys.A))
+            if (ks.IsKeyDown(LEFT_DIR_LEFT))
             {
                 leftX += -1.0f;
             }
@@ -87,19 +115,19 @@ namespace Commando.controls
             previousMouseX_ = ms.X;
             previousMouseY_ = ms.Y;
 
-            inputs_.setConfirmButton(ks.IsKeyDown(Keys.Enter));
-            inputs_.setCancelButton(ks.IsKeyDown(Keys.Escape));
+            inputs_.setConfirmButton(ks.IsKeyDown(CONFIRM));
+            inputs_.setCancelButton(ks.IsKeyDown(CANCEL));
 
-            inputs_.setButton1(ks.IsKeyDown(Keys.Space));
-            inputs_.setButton2(ks.IsKeyDown(Keys.LeftShift));
-            inputs_.setButton3(ks.IsKeyDown(Keys.X));
-            inputs_.setButton4(ks.IsKeyDown(Keys.C));
+            inputs_.setButton1(ks.IsKeyDown(BUTTON_1));
+            inputs_.setButton2(ks.IsKeyDown(BUTTON_2));
+            inputs_.setButton3(ks.IsKeyDown(BUTTON_3));
+            inputs_.setButton4(ks.IsKeyDown(BUTTON_4));
 
             inputs_.setLeftTrigger(ms.LeftButton == ButtonState.Pressed);
             inputs_.setRightTrigger(ms.RightButton == ButtonState.Pressed);
 
-            inputs_.setLeftBumper(ks.IsKeyDown(Keys.Z));
-            inputs_.setRightBumper(ks.IsKeyDown(Keys.V));
+            inputs_.setLeftBumper(ks.IsKeyDown(LEFT_BUMPER));
+            inputs_.setRightBumper(ks.IsKeyDown(RIGHT_BUMPER));
         }
 
         #endregion

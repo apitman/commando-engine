@@ -16,17 +16,26 @@
  ***************************************************************************
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Commando.controls
 {
+    /// <summary>
+    /// Interface for a wrapper of a device which receives inputs such as
+    /// button presses from the player.
+    /// </summary>
     public interface ControllerInputInterface
     {
+
+        /// <summary>
+        /// Returns the InputSet which the device is populating.
+        /// </summary>
+        /// <returns>An InputSet with the current frame's input.</returns>
         InputSet getInputSet();
 
+        /// <summary>
+        /// Should be called EXACTLY once per frame to read inputs from
+        /// the device and populate the InputSet accordingly.
+        /// </summary>
         void updateInputSet();
     }
 }
