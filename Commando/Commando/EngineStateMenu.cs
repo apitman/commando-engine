@@ -16,19 +16,10 @@
  ***************************************************************************
 */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
@@ -103,9 +94,19 @@ namespace Commando
                 engine_.Exit();
             }
 
-            if (inputs.getConfirmButton() && (cursorPos_ == 0)) // tenatively Enter / Start
+            if (inputs.getConfirmButton()) // tenatively Enter / Start
             {
-                return new EngineStateGameplay(engine_);
+                switch(cursorPos_)
+                {
+                    case 0:
+                        return new EngineStateGameplay(engine_);
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        engine_.Exit();
+                        break;
+                }
             }
             if (inputs.getLeftDirectionalY() > 0)
             {
@@ -142,7 +143,8 @@ namespace Commando
             }
             engine_.GraphicsDevice.Clear(Color.Black);
 
-            menu_.drawImageWithDim(0, new Rectangle(0, 0, engine_.GraphicsDevice.Viewport.Width, engine_.GraphicsDevice.Viewport.Height), 0.0f);
+            menu_.drawImage(0, new Vector2((engine_.GraphicsDevice.Viewport.Width - menu_.getImageDimensions()[0].Width) / 2, 0), 0.0f);
+
             /*if (cursorPos_ == 0)
             {
                 Vector2 mypos;
