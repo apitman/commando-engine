@@ -72,6 +72,11 @@ namespace Commando
             return controls_.getInputSet();
         }
 
+        public ContentManager getContent()
+        {
+            return Content;
+        }
+
         public void setScreenSize(int x, int y)
         {
             graphics_.PreferredBackBufferHeight = x;
@@ -103,8 +108,10 @@ namespace Commando
             spriteBatch_ = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            TextureMap.getInstance().setContent(Content);
             TextureMap.getInstance().loadTextures("", spriteBatch_, graphics_.GraphicsDevice);
             FontMap.getInstance().loadFonts("", spriteBatch_, this);
+
         }
 
         /// <summary>

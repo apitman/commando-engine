@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace Commando
 {
@@ -30,6 +31,8 @@ namespace Commando
         protected Dictionary<string, GameTexture> textures_;
 
         protected static TextureMap textureMapInstance_ = null;
+
+        protected ContentManager content_;
 
         private TextureMap()
         {
@@ -45,46 +48,54 @@ namespace Commando
             return textureMapInstance_;
         }
 
+        public ContentManager getContent()
+        {
+            return content_;
+        }
+
+        public void setContent(ContentManager content)
+        {
+            content_ = content;
+        }
+
         public void loadTextures(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             //TODO: Eventually, create automatic scripted loading of textures
             //      For now, just create the load for each texture in the function
-            textures_.Add("Woger_Ru", new GameTexture(".//Content//Giant_A.png", spriteBatch, graphics));
-            textures_.Add("TitleScreen", new GameTexture(".//Content//TitleScreen.png", spriteBatch, graphics));
-            textures_.Add("SamplePlayer", new GameTexture(".//Content//Sprites//SamplePlayer.png", spriteBatch, graphics));
-            textures_.Add("SamplePlayer_Small", new GameTexture(".//Content//Sprites//SamplePlayer_Small.png", spriteBatch, graphics));
-            textures_.Add("SamplePlayer_XSmall", new GameTexture(".//Content//Sprites//SamplePlayer_XSmall.png", spriteBatch, graphics));
-            textures_.Add("testMenu", new GameTexture(".//Content//Sprites//testmenu.PNG", spriteBatch, graphics));
-            textures_.Add("MenuStartReg", new GameTexture(".//Content//Sprites//menuStartReg.png", spriteBatch, graphics));
-            textures_.Add("MenuStartSelected", new GameTexture(".//Content//Sprites//menuStartDown.png", spriteBatch, graphics));
-            textures_.Add("healthBarOutline", new GameTexture(".//Content//healthBarOutline.png", spriteBatch, graphics));
-            textures_.Add("healthBarFiller", new GameTexture(".//Content//healthBarFiller.png", spriteBatch, graphics));
-            textures_.Add("pistol", new GameTexture(".//Content//pistol.png", spriteBatch, graphics));
-            textures_.Add("Tile_0", new GameTexture(".//Content//Tiles//Blank.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_1", new GameTexture(".//Content//Tiles//Floor_Tile.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_2", new GameTexture(".//Content//Tiles//Wall_Left.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_3", new GameTexture(".//Content//Tiles//Wall_Top.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_4", new GameTexture(".//Content//Tiles//Wall_Right.bmp", spriteBatch, graphics));
-            //textures_.Add("Tile_5", new GameTexture(".//Content//Tiles//Wall_Bottom.bmp", spriteBatch, graphics));
-            KeyValuePair<string, GameTexture> wall_bottom = GameTexture.loadTextureFromFile(".//Content//Tiles//Wall_Bottom.xml", spriteBatch, graphics);
-            textures_.Add(wall_bottom.Key, wall_bottom.Value);
-            textures_.Add("Tile_6", new GameTexture(".//Content//Tiles//Wall_Corner_Bottom_Left.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_7", new GameTexture(".//Content//Tiles//Wall_Corner_Top_Left.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_8", new GameTexture(".//Content//Tiles//Wall_Corner_Top_Right.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_9", new GameTexture(".//Content//Tiles//Wall_Corner_Bottom_Right.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_10", new GameTexture(".//Content//Tiles//Crate_0_0.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_11", new GameTexture(".//Content//Tiles//Crate_0_1.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_12", new GameTexture(".//Content//Tiles//Crate_0_2.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_13", new GameTexture(".//Content//Tiles//Crate_1_0.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_14", new GameTexture(".//Content//Tiles//Crate_1_1.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_15", new GameTexture(".//Content//Tiles//Crate_1_2.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_16", new GameTexture(".//Content//Tiles//Crate_2_0.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_17", new GameTexture(".//Content//Tiles//Crate_2_1.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_18", new GameTexture(".//Content//Tiles//Crate_2_2.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_19", new GameTexture(".//Content//Tiles//Wall_Corner_I_Bottom_Left.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_20", new GameTexture(".//Content//Tiles//Wall_Corner_I_Top_Left.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_21", new GameTexture(".//Content//Tiles//Wall_Corner_I_Top_Right.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_22", new GameTexture(".//Content//Tiles//Wall_Corner_I_Bottom_Right.bmp", spriteBatch, graphics));
+            textures_.Add("Woger_Ru", new GameTexture("Giant_A", spriteBatch, graphics));
+            textures_.Add("TitleScreen", new GameTexture("TitleScreen", spriteBatch, graphics));
+            textures_.Add("SamplePlayer", new GameTexture("Sprites\\SamplePlayer", spriteBatch, graphics));
+            textures_.Add("SamplePlayer_Small", new GameTexture("Sprites\\SamplePlayer_Small", spriteBatch, graphics));
+            textures_.Add("SamplePlayer_XSmall", new GameTexture("Sprites\\SamplePlayer_XSmall", spriteBatch, graphics));
+            textures_.Add("testMenu", new GameTexture("Sprites\\testmenu", spriteBatch, graphics));
+            textures_.Add("MenuStartReg", new GameTexture("Sprites\\menuStartReg", spriteBatch, graphics));
+            textures_.Add("MenuStartSelected", new GameTexture("Sprites\\menuStartDown", spriteBatch, graphics));
+            textures_.Add("healthBarOutline", new GameTexture("healthBarOutline", spriteBatch, graphics));
+            textures_.Add("healthBarFiller", new GameTexture("healthBarFiller", spriteBatch, graphics));
+            textures_.Add("pistol", new GameTexture("pistol", spriteBatch, graphics));
+            textures_.Add("Tile_0", new GameTexture("Tiles\\Blank", spriteBatch, graphics));
+            textures_.Add("Tile_1", new GameTexture("Tiles\\Floor_Tile", spriteBatch, graphics));
+            textures_.Add("Tile_2", new GameTexture("Tiles\\Wall_Left", spriteBatch, graphics));
+            textures_.Add("Tile_3", new GameTexture("Tiles\\Wall_Top", spriteBatch, graphics));
+            textures_.Add("Tile_4", new GameTexture("Tiles\\Wall_Right", spriteBatch, graphics));
+            textures_.Add("Tile_5", new GameTexture("Tiles\\Wall_Bottom", spriteBatch, graphics));
+            textures_.Add("Tile_6", new GameTexture("Tiles\\Wall_Corner_Bottom_Left", spriteBatch, graphics));
+            textures_.Add("Tile_7", new GameTexture("Tiles\\Wall_Corner_Top_Left", spriteBatch, graphics));
+            textures_.Add("Tile_8", new GameTexture("Tiles\\Wall_Corner_Top_Right", spriteBatch, graphics));
+            textures_.Add("Tile_9", new GameTexture("Tiles\\Wall_Corner_Bottom_Right", spriteBatch, graphics));
+            textures_.Add("Tile_10", new GameTexture("Tiles\\Crate_0_0", spriteBatch, graphics));
+            textures_.Add("Tile_11", new GameTexture("Tiles\\Crate_0_1", spriteBatch, graphics));
+            textures_.Add("Tile_12", new GameTexture("Tiles\\Crate_0_2", spriteBatch, graphics));
+            textures_.Add("Tile_13", new GameTexture("Tiles\\Crate_1_0", spriteBatch, graphics));
+            textures_.Add("Tile_14", new GameTexture("Tiles\\Crate_1_1", spriteBatch, graphics));
+            textures_.Add("Tile_15", new GameTexture("Tiles\\Crate_1_2", spriteBatch, graphics));
+            textures_.Add("Tile_16", new GameTexture("Tiles\\Crate_2_0", spriteBatch, graphics));
+            textures_.Add("Tile_17", new GameTexture("Tiles\\Crate_2_1", spriteBatch, graphics));
+            textures_.Add("Tile_18", new GameTexture("Tiles\\Crate_2_2", spriteBatch, graphics));
+            textures_.Add("Tile_19", new GameTexture("Tiles\\Wall_Corner_I_Bottom_Left", spriteBatch, graphics));
+            textures_.Add("Tile_20", new GameTexture("Tiles\\Wall_Corner_I_Top_Left", spriteBatch, graphics));
+            textures_.Add("Tile_21", new GameTexture("Tiles\\Wall_Corner_I_Top_Right", spriteBatch, graphics));
+            textures_.Add("Tile_22", new GameTexture("Tiles\\Wall_Corner_I_Bottom_Right", spriteBatch, graphics));
         }
 
         public GameTexture getTexture(string textureName)

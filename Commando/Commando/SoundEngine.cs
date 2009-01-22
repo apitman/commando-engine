@@ -49,7 +49,7 @@ namespace Commando
             waveBank_ = new WaveBank(audio_,@"Content\sounds\Win\MainMenuWaveBank.xwb");
             soundBank_ = new SoundBank(audio_,@"Content\sounds\Win\MainMenuSoundBank.xsb");
 #else
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 #endif
         }
 
