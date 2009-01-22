@@ -55,7 +55,7 @@ namespace Commando
 
             spriteBatch_ = spriteBatch;
 
-            texture_ = Texture2D.FromFile(graphics, filename);
+            texture_ = TextureMap.getInstance().getContent().Load<Texture2D>(filename);
 
             imageDimensions_ = new Rectangle[1];
             imageDimensions_[0] = new Rectangle(0, 0, texture_.Width, texture_.Height);
@@ -67,7 +67,7 @@ namespace Commando
 
             spriteBatch_ = spriteBatch;
 
-            texture_ = Texture2D.FromFile(graphics, filename);
+            texture_ = TextureMap.getInstance().getContent().Load<Texture2D>(filename);
 
             imageDimensions_ = imageDimensions;
         }
