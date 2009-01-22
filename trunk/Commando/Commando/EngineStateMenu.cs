@@ -130,7 +130,7 @@ namespace Commando
         {
             if (menu_ == null)
             {
-                menu_ = TextureMap.getInstance().getTexture("testMenu");
+                menu_ = TextureMap.getInstance().getTexture("TitleScreen");
             }
             if (startSelected_ == null)
             {
@@ -160,7 +160,7 @@ namespace Commando
 
             drawStringList(menuList_,
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2,
-                        engine_.GraphicsDevice.Viewport.Height / 2),
+                        engine_.GraphicsDevice.Viewport.Height / 2 + 50),
                         Color.Green,
                         Color.White,
                         cursorPos_,

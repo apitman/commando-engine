@@ -24,7 +24,16 @@ using System.Text;
 
 namespace Commando.levels
 {
-    class RoomAbstract
+    abstract class RoomAbstract
     {
+        #region Members
+
+        protected LevelAbstract parent_;
+
+        protected Dictionary<string, string> properties_;
+
+        protected string name_;
+
+        #endregion
     }
 }

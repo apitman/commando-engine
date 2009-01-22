@@ -29,6 +29,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using System.Xml;
 
 namespace Commando
 {
@@ -60,6 +61,17 @@ namespace Commando
             imageDimensions_[0] = new Rectangle(0, 0, texture_.Width, texture_.Height);
         }
 
+        public GameTexture(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics, Rectangle[] imageDimensions)
+        {
+            //TODO: add functionality to read from a file to get imageDims
+
+            spriteBatch_ = spriteBatch;
+
+            texture_ = Texture2D.FromFile(graphics, filename);
+
+            imageDimensions_ = imageDimensions;
+        }
+
         public GameTexture(GameTexture gTexture)
         {
             spriteBatch_ = gTexture.spriteBatch_;
@@ -67,6 +79,36 @@ namespace Commando
             texture_ = gTexture.texture_;
 
             Array.Copy(gTexture.imageDimensions_, imageDimensions_, gTexture.imageDimensions_.GetLength(0));
+        }
+
+        public static KeyValuePair<string, GameTexture> loadTextureFromFile(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            XmlTextReader reader = new XmlTextReader(filename);
+            reader.ReadToFollowing("Key");
+            string key = reader.ReadElementString();
+            reader.ReadToFollowing("ImageFilename");
+            string imageFilename = reader.ReadElementString();
+            reader.ReadToFollowing("ImageDimensions");
+            XmlReader dimReader = reader.ReadSubtree();
+            dimReader.ReadToFollowing("NumberOfImages");
+            int numberOfImages = dimReader.ReadElementContentAsInt();
+            Rectangle[] imageDimensions = new Rectangle[numberOfImages];
+            for (int i = 0; i < numberOfImages; i++)
+            {
+                dimReader.ReadToFollowing("Image");
+                int x, y, w, h;
+                XmlReader imReader = dimReader.ReadSubtree();
+                imReader.ReadToFollowing("x");
+                x = imReader.ReadElementContentAsInt();
+                imReader.ReadToFollowing("y");
+                y = imReader.ReadElementContentAsInt();
+                imReader.ReadToFollowing("w");
+                w = imReader.ReadElementContentAsInt();
+                imReader.ReadToFollowing("h");
+                h = imReader.ReadElementContentAsInt();
+                imageDimensions[i] = new Rectangle(x, y, w, h);
+            }
+            return new KeyValuePair<string, GameTexture>(key, new GameTexture(imageFilename, spriteBatch, graphics, imageDimensions));
         }
 
         public Texture2D getTexture()

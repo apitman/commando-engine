@@ -28,7 +28,7 @@ namespace Commando.objects
 {
     class MainPlayer : PlayableCharacterAbstract
     {
-        const bool CONTROLSTYLE = true;
+        const bool CONTROLSTYLE = false;
 
         const float TURNSPEED = .30f;
 
