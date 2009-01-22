@@ -106,6 +106,9 @@
     <Compile Include="..\Commando\EngineStateMenu.cs">
       <Link>EngineStateMenu.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateOutofFocus.cs">
+      <Link>EngineStateOutofFocus.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\EngineStatePause.cs">
       <Link>EngineStatePause.cs</Link>
     </Compile>

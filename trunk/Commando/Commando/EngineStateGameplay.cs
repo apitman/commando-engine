@@ -16,25 +16,19 @@
  ***************************************************************************
 */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
-using Commando.objects;
 using Commando.levels;
+using Commando.objects;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
+    /// <summary>
+    /// The state of the engine when the player is moving around
+    /// in levels, fighting enemies, etc.
+    /// </summary>
     class EngineStateGameplay : EngineStateInterface
     {
         //Jared's test stuff
@@ -49,6 +43,10 @@ namespace Commando
         protected Vector2 weaponPos_;
         protected List<TileObject> tiles_;
 
+        /// <summary>
+        /// Constructs a state of gameplay
+        /// </summary>
+        /// <param name="engine">Reference to the engine running the state</param>
         public EngineStateGameplay(Engine engine)
         {
             engine_ = engine;
@@ -90,6 +88,12 @@ namespace Commando
 
         #region EngineStateInterface Members
 
+        /// <summary>
+        /// Handles input and moves all characters and objects forward one
+        /// frame in time
+        /// </summary>
+        /// <param name="gameTime">GameTime parameter</param>
+        /// <returns>The state of the game for the next frame</returns>
         public EngineStateInterface update(GameTime gameTime)
         {
             InputSet inputs = engine_.getInputs();
@@ -108,6 +112,9 @@ namespace Commando
             return this;
         }
 
+        /// <summary>
+        /// Draws the character, levels, etc.
+        /// </summary>
         public void draw()
         {
             engine_.GraphicsDevice.Clear(Color.Chocolate);
