@@ -131,6 +131,10 @@ namespace Commando
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
+            if (!IsActive && !(engineState_ is EngineStateOutofFocus))
+            {
+                engineState_ = new EngineStateOutofFocus(this, engineState_);
+            }
 
             controls_.updateInputSet();
 
