@@ -16,18 +16,27 @@
  ***************************************************************************
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace Commando
 {
+    /// <summary>
+    /// Implemented by all the different major states of the game, such as
+    /// the main menu, playing through levels, pausing, credits, cutscenes,
+    /// etc.
+    /// </summary>
     interface EngineStateInterface
     {
+        /// <summary>
+        /// Perform one frame of update as designated by the state
+        /// </summary>
+        /// <param name="gameTime">Gametime Parameter</param>
+        /// <returns>The state of the game for the next frame</returns>
         EngineStateInterface update(GameTime gameTime);
 
+        /// <summary>
+        /// Draw the current state of the frame
+        /// </summary>
         void draw();
     }
 }

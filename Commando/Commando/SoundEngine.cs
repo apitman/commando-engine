@@ -45,9 +45,9 @@ namespace Commando
         private SoundEngine()
         {
 #if !XBOX
-            audio_ = new AudioEngine(@"Content\sounds\Win\sounds.xgs");
-            waveBank_ = new WaveBank(audio_,@"Content\sounds\Win\MainMenuWaveBank.xwb");
-            soundBank_ = new SoundBank(audio_,@"Content\sounds\Win\MainMenuSoundBank.xsb");
+            audio_ = new AudioEngine(@"Content\Audio\Win\sounds.xgs");
+            waveBank_ = new WaveBank(audio_,@"Content\Audio\Win\MainMenuWaveBank.xwb");
+            soundBank_ = new SoundBank(audio_,@"Content\Audio\Win\MainMenuSoundBank.xsb");
 #else
             //throw new NotImplementedException();
 #endif

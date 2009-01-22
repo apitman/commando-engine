@@ -23,6 +23,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
+    /// <summary>
+    /// State of being at the main game menu
+    /// </summary>
     class EngineStateMenu : EngineStateInterface
     {
         protected Engine engine_;
@@ -35,6 +38,11 @@ namespace Commando
         //1 - view controls
         //2 - view credits
         protected int cursorPos_;
+
+        /// <summary>
+        /// Creates a main menu state
+        /// </summary>
+        /// <param name="engine">A reference to the engine running the state</param>
         public EngineStateMenu(Engine engine)
         {
             cursorPos_ = 0;
@@ -47,10 +55,6 @@ namespace Commando
 
 
         }
-
-
-
-        #region EngineStateInterface Members
 
         protected void drawStringList(List<string> stringList, Vector2 pos, Color color1, Color color2, int selected, float rotation,float scale, SpriteEffects effects, float layerDepth, float spacing)
         {
@@ -81,9 +85,15 @@ namespace Commando
                 curPos.Y = curPos.Y + spacing;
             }
         }
-            //string text, Vector2 pos, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth
-        
+        //string text, Vector2 pos, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth
 
+        #region EngineStateInterface Members
+
+        /// <summary>
+        /// Update the menu by one frame, handle user input
+        /// </summary>
+        /// <param name="gameTime">GameTime parameter</param>
+        /// <returns>A handle to the state of play to be run next frame</returns>
         public EngineStateInterface update(GameTime gameTime)
         {
 
@@ -127,6 +137,9 @@ namespace Commando
             return this;
         }
 
+        /// <summary>
+        /// Draw the menu to the screen
+        /// </summary>
         public void draw()
         {
             if (menu_ == null)
@@ -172,6 +185,7 @@ namespace Commando
                         1.0f,
                         40.0f);
         }
+
         #endregion
 
     }

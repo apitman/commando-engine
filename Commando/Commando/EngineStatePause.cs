@@ -22,12 +22,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
+    /// <summary>
+    /// A state of play which waits for the user to return playing;
+    /// might implement a menu in later functionality
+    /// </summary>
     class EngineStatePause : EngineStateInterface
     {
 
         protected Engine engine_;
         protected EngineStateInterface savedState_;
 
+        /// <summary>
+        /// Creates a pause state which waits for the user to resume play
+        /// </summary>
+        /// <param name="engine">Reference to the engine running the state</param>
+        /// <param name="savedState">The state of play to return to once the user unpauses</param>
         public EngineStatePause(Engine engine, EngineStateInterface savedState)
         {
             engine_ = engine;
@@ -36,6 +45,11 @@ namespace Commando
 
         #region EngineStateInterface Members
 
+        /// <summary>
+        /// Handles user input to determine whether to switch out of pause
+        /// </summary>
+        /// <param name="gameTime">GameTime parameter</param>
+        /// <returns>The engine state to be in next frame</returns>
         public EngineStateInterface update(GameTime gameTime)
         {
             InputSet inputs = engine_.getInputs();
@@ -54,6 +68,9 @@ namespace Commando
             return this;
         }
 
+        /// <summary>
+        /// Draws the pause screen
+        /// </summary>
         public void draw()
         {
             engine_.GraphicsDevice.Clear(Color.Black);
