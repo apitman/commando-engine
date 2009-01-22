@@ -16,20 +16,9 @@
  ***************************************************************************
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
@@ -53,13 +42,13 @@ namespace Commando
 
             if (inputs.getConfirmButton())
             {
+                inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 return savedState_;
             }
 
             if (inputs.getCancelButton())
             {
-                inputs.setToggle(InputsEnum.CANCEL_BUTTON);
-                return savedState_;
+                engine_.Exit();
             }
 
             return this;
@@ -67,14 +56,14 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.DarkOliveGreen);
-            string pauseText = "Game is paused";
-            GameFont pauseFont = FontMap.getInstance().getFont(FontEnum.Kootenay);
+            engine_.GraphicsDevice.Clear(Color.Black);
+            string pauseText = "Press Enter to Continue\nor Escape to Quit";
+            GameFont pauseFont = FontMap.getInstance().getFont(FontEnum.Pericles);
             Vector2 origin = pauseFont.getFont().MeasureString(pauseText);
             pauseFont.drawString(pauseText,
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2,
                     engine_.GraphicsDevice.Viewport.Height / 2),
-                Color.Black,
+                Color.White,
                 0.0f,
                 new Vector2(pauseFont.getFont().MeasureString(pauseText).X / 2,
                     pauseFont.getFont().MeasureString(pauseText).Y / 2),
