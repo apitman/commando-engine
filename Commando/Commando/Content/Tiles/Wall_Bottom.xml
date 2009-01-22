@@ -1,0 +1,13 @@
+<Image>
+	<Key>Tile_5</Key>
+	<ImageFilename>./Content/Tiles/Wall_Bottom.bmp</ImageFilename>
+	<ImageDimensions>
+		<NumberOfImages>1</NumberOfImages>
+		<Image>
+			<x>0</x>
+			<y>0</y>
+			<w>15</w>
+			<h>15</h>
+		</Image>
+	</ImageDimensions>
+</Image>

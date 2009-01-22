@@ -50,6 +50,7 @@ namespace Commando
             //TODO: Eventually, create automatic scripted loading of textures
             //      For now, just create the load for each texture in the function
             textures_.Add("Woger_Ru", new GameTexture(".//Content//Giant_A.png", spriteBatch, graphics));
+            textures_.Add("TitleScreen", new GameTexture(".//Content//TitleScreen.png", spriteBatch, graphics));
             textures_.Add("SamplePlayer", new GameTexture(".//Content//Sprites//SamplePlayer.png", spriteBatch, graphics));
             textures_.Add("SamplePlayer_Small", new GameTexture(".//Content//Sprites//SamplePlayer_Small.png", spriteBatch, graphics));
             textures_.Add("SamplePlayer_XSmall", new GameTexture(".//Content//Sprites//SamplePlayer_XSmall.png", spriteBatch, graphics));
@@ -64,7 +65,9 @@ namespace Commando
             textures_.Add("Tile_2", new GameTexture(".//Content//Tiles//Wall_Left.bmp", spriteBatch, graphics));
             textures_.Add("Tile_3", new GameTexture(".//Content//Tiles//Wall_Top.bmp", spriteBatch, graphics));
             textures_.Add("Tile_4", new GameTexture(".//Content//Tiles//Wall_Right.bmp", spriteBatch, graphics));
-            textures_.Add("Tile_5", new GameTexture(".//Content//Tiles//Wall_Bottom.bmp", spriteBatch, graphics));
+            //textures_.Add("Tile_5", new GameTexture(".//Content//Tiles//Wall_Bottom.bmp", spriteBatch, graphics));
+            KeyValuePair<string, GameTexture> wall_bottom = GameTexture.loadTextureFromFile(".//Content//Tiles//Wall_Bottom.xml", spriteBatch, graphics);
+            textures_.Add(wall_bottom.Key, wall_bottom.Value);
             textures_.Add("Tile_6", new GameTexture(".//Content//Tiles//Wall_Corner_Bottom_Left.bmp", spriteBatch, graphics));
             textures_.Add("Tile_7", new GameTexture(".//Content//Tiles//Wall_Corner_Top_Left.bmp", spriteBatch, graphics));
             textures_.Add("Tile_8", new GameTexture(".//Content//Tiles//Wall_Corner_Top_Right.bmp", spriteBatch, graphics));
@@ -82,7 +85,6 @@ namespace Commando
             textures_.Add("Tile_20", new GameTexture(".//Content//Tiles//Wall_Corner_I_Top_Left.bmp", spriteBatch, graphics));
             textures_.Add("Tile_21", new GameTexture(".//Content//Tiles//Wall_Corner_I_Top_Right.bmp", spriteBatch, graphics));
             textures_.Add("Tile_22", new GameTexture(".//Content//Tiles//Wall_Corner_I_Bottom_Right.bmp", spriteBatch, graphics));
-
         }
 
         public GameTexture getTexture(string textureName)
