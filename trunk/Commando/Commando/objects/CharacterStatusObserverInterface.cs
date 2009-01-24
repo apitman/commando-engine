@@ -23,9 +23,15 @@ using System.Text;
 
 namespace Commando.objects
 {
+    /// <summary>
+    /// Interface for the observer of CharcterStatusElements.
+    /// </summary>
     interface CharacterStatusObserverInterface
     {
-        //void notifyOfChange(CharacterStatusElementInterface statusElement);
+        /// <summary>
+        /// Notify this observer of a change of value in a CharacterStatusElement.
+        /// </summary>
+        /// <param name="value">The new value of the CharacterStatusElement.</param>
         void notifyOfChange(int value);
     }
 }

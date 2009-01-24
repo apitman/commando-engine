@@ -26,12 +26,18 @@ using Commando.controls;
 
 namespace Commando.objects
 {
+    /// <summary>
+    /// The main player in the game.
+    /// </summary>
     class MainPlayer : PlayableCharacterAbstract
     {
         const bool CONTROLSTYLE = false;
 
         const float TURNSPEED = .30f;
 
+        /// <summary>
+        /// Create the main player of the game.
+        /// </summary>
         public MainPlayer() :
             base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, new Vector2(45.0f, 45.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
@@ -39,12 +45,20 @@ namespace Commando.objects
             anims.Add(TextureMap.getInstance().getTexture("SamplePlayer_Small"));
             animations_ = new AnimationSet(anims);
         }
-
+        /// <summary>
+        /// Draw the main player at his current position.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void draw(GameTime gameTime)
         {
             animations_.drawNextFrame(position_, getRotationAngle(), depth_);
         }
         
+        /// <summary>
+        /// Update the player's current position, animation, and action based on the 
+        /// user input.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void update(GameTime gameTime)
         {
             int MaxX = 345;

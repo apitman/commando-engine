@@ -25,43 +25,44 @@ using Microsoft.Xna.Framework;
 
 namespace Commando
 {
+    /// <summary>
+    /// All objects which move, but are not animated inherit from this abstract class.
+    /// </summary>
     abstract class NonAnimatedMovableObjectAbstract : MovableObjectAbstract
     {
         protected GameTexture texture_;
 
-        protected uint curImage_;
+        protected int curImage_;
 
+        /// <summary>
+        /// Create a default NonAnimatedMovableObject.
+        /// </summary>
         public NonAnimatedMovableObjectAbstract() :
             base()
         {
         }
 
-        public NonAnimatedMovableObjectAbstract(GameTexture texture) :
+        /// <summary>
+        /// Create a NonAnimatedMovableObject with the specified texture and current image.
+        /// </summary>
+        /// <param name="texture">GameTexture of this object</param>
+        /// <param name="curImage">The number of the current image</param>
+        public NonAnimatedMovableObjectAbstract(GameTexture texture, int curImage) :
             base()
         {
         }
 
-        public NonAnimatedMovableObjectAbstract(GameTexture texture, uint curImage) :
-            base()
-        {
-        }
-
-        public NonAnimatedMovableObjectAbstract(GameTexture texture, Vector2 position, Vector2 direction, float depth) :
-            base(position, direction, depth)
-        {
-        }
-
-        public NonAnimatedMovableObjectAbstract(GameTexture texture, Vector2 position, Vector2 direction, float depth, uint curImage) :
-            base(position, direction, depth)
-        {
-        }
-
-        public NonAnimatedMovableObjectAbstract(GameTexture texture, Vector2 position, Vector2 direction, float depth, Vector2 velocity) :
-            base(velocity, position, direction, depth)
-        {
-        }
-
-        public NonAnimatedMovableObjectAbstract(GameTexture texture, Vector2 position, Vector2 direction, float depth, Vector2 velocity, uint curImage) :
+        /// <summary>
+        /// Create a NonAnimatedMovableObject with the specified texture, current image,
+        /// position, direction, and depth with the specified velocity.
+        /// </summary>
+        /// <param name="texture">GameTexture of this object</param>
+        /// <param name="curImage">The number of the current image</param>
+        /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>
+        /// <param name="position">Position of object relative to the top left corner</param>
+        /// <param name="direction">Vector representing the direction of the object</param>
+        /// <param name="depth">Depth the object is to be drawn to</param>
+        public NonAnimatedMovableObjectAbstract(GameTexture texture, int curImage, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(velocity, position, direction, depth)
         {
         }

@@ -25,34 +25,62 @@ using Microsoft.Xna.Framework;
 
 namespace Commando
 {
+    /// <summary>
+    /// MovableObjects are DrawableObjects which also have the capability of moving across
+    /// the screen.  The object keeps track of their velocity.
+    /// </summary>
     abstract class MovableObjectAbstract : DrawableObjectAbstract
     {
         protected Vector2 velocity_;
 
+        /// <summary>
+        /// Create a default MovableObject
+        /// </summary>
         public MovableObjectAbstract() :
             base()
         {
             velocity_ = Vector2.Zero;
         }
 
+        /// <summary>
+        /// Create a MovableObject at the specifed position, direction, and depth.
+        /// </summary>
+        /// <param name="position">Position of object relative to the top left corner</param>
+        /// <param name="direction">Vector representing the direction of the object</param>
+        /// <param name="depth">Depth the object is to be drawn to</param>
         public MovableObjectAbstract(Vector2 position, Vector2 direction, float depth) :
             base(position, direction, depth)
         {
             velocity_ = Vector2.Zero;
         }
 
+        /// <summary>
+        /// Create a MovableObject at the specifed position, direction, and depth with the 
+        /// specified velocity.
+        /// </summary>
+        /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>
+        /// <param name="position">Position of object relative to the top left corner</param>
+        /// <param name="direction">Vector representing the direction of the object</param>
+        /// <param name="depth">Depth the object is to be drawn to</param>
         public MovableObjectAbstract(Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(position, direction, depth)
         {
             velocity_ = velocity;
         }
 
-
+        /// <summary>
+        /// Get the object's current velocity.
+        /// </summary>
+        /// <returns>Vector of velocity, representing both direction of movement and magnitude</returns>
         public Vector2 getVelocity()
         {
             return velocity_;
         }
 
+        /// <summary>
+        /// Set the object's current velocity.
+        /// </summary>
+        /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>
         public void setVelocity(Vector2 velocity)
         {
             velocity_ = velocity;

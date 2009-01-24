@@ -25,6 +25,9 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
+    /// <summary>
+    /// All objects drawn on the level inherit from this class.
+    /// </summary>
     abstract class LevelObjectAbstract : DrawableObjectAbstract
     {
 
@@ -32,18 +35,31 @@ namespace Commando.objects
 
         //Additional info to be added for passable/unpassable, rooms, level, etc.
 
-
+        /// <summary>
+        /// Create a base LevelObject.
+        /// </summary>
         public LevelObjectAbstract() :
             base()
         {
         }
 
+        /// <summary>
+        /// Create a LevelObject with the specified texture.
+        /// </summary>
+        /// <param name="image">GameTexture for this object</param>
         public LevelObjectAbstract(GameTexture image) :
             base()
         {
             image_ = image;
         }
 
+        /// <summary>
+        /// Create a LevelObject with the specified image, position, direction, and depth.
+        /// </summary>
+        /// <param name="image">GameTexture for this object.</param>
+        /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
+        /// <param name="direction">Direction of the object as a Vector</param>
+        /// <param name="depth">Drawing depth of the object</param>
         public LevelObjectAbstract(GameTexture image, Vector2 position, Vector2 direction, float depth) :
             base(position, direction, depth)
         {
