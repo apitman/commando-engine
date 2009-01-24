@@ -136,6 +136,9 @@
     <Compile Include="..\Commando\levels\Tiler.cs">
       <Link>levels\Tiler.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\MenuList.cs">
+      <Link>MenuList.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\AnimatedObjectAbstract.cs">
       <Link>objects\AnimatedObjectAbstract.cs</Link>
     </Compile>

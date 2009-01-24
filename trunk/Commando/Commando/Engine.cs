@@ -64,7 +64,7 @@ namespace Commando
 #endif
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, (1000 / FRAMERATE));
-            engineState_ = new EngineStateMenu(this);
+           
         }
 
         public InputSet getInputs()
@@ -95,6 +95,7 @@ namespace Commando
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            engineState_ = new EngineStateMenu(this);
 
         }
 
