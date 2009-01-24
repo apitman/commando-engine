@@ -24,6 +24,12 @@ using Microsoft.Xna.Framework;
 
 namespace Commando
 {
+    /// <summary>
+    /// DrawableObjects are any object which can be drawn to the screen and requires both
+    /// an update and a draw function.  This class keeps track of the position, direction,
+    /// and drawing depth of the object.  Almost all things drawn to the screen inherit from
+    /// this class, except for those that are completely static (i.e. menu backgrounds).
+    /// </summary>
     abstract class DrawableObjectAbstract
     {
 
@@ -33,13 +39,22 @@ namespace Commando
 
         protected float depth_;
 
+        /// <summary>
+        /// Creates a default DrawableObject with default values for position_, direction_, and depth_
+        /// </summary>
         public DrawableObjectAbstract()
         {
             position_ = Vector2.Zero;
-            position_ = new Vector2(1.0f, 0.0f);
+            direction_ = new Vector2(1.0f, 0.0f);
             depth_ = 0.5f;
         }
 
+        /// <summary>
+        /// Creates a DrawableObject with the specified position, direction, and depth
+        /// </summary>
+        /// <param name="position">Position of object relative to the top left corner</param>
+        /// <param name="direction">Vector representing the direction of the object</param>
+        /// <param name="depth">Depth the object is to be drawn to</param>
         public DrawableObjectAbstract(Vector2 position, Vector2 direction, float depth)
         {
             position_ = position;
@@ -47,40 +62,80 @@ namespace Commando
             depth_ = depth;
         }
 
+        /// <summary>
+        /// Function which causes an object to update its status for the current frame
+        /// </summary>
+        /// <param name="gameTime">The time since the last update</param>
         public abstract void update(GameTime gameTime);
 
+        /// <summary>
+        /// Draws the current object to the screen based on its current status
+        /// </summary>
+        /// <param name="gameTime"></param>
         public abstract void draw(GameTime gameTime);
 
+        /// <summary>
+        /// Get the object's current position
+        /// </summary>
+        /// <returns>Position of object relative to top left corner of the screen</returns>
         public Vector2 getPosition()
         {
             return position_;
         }
 
+        /// <summary>
+        /// Get the object's current direction
+        /// </summary>
+        /// <returns>Direction of the object in Vector form</returns>
         public Vector2 getDirection()
         {
             return direction_;
         }
 
+        /// <summary>
+        /// Get the object's current depth
+        /// </summary>
+        /// <returns>Object's current drawing depth (between 0 and 1)</returns>
         public float getDepth()
         {
             return depth_;
         }
 
+        /// <summary>
+        /// Set the object's current postion
+        /// </summary>
+        /// <param name="pos">Object's position relative to the top left corner of the screen</param>
         public void setPosition(Vector2 pos)
         {
             position_ = pos;
         }
 
+        /// <summary>
+        /// Set the object's current direction
+        /// </summary>
+        /// <param name="dir">Direction of the object in Vector form</param>
         public void setDirection(Vector2 dir)
         {
             direction_ = dir;
         }
 
+        /// <summary>
+        /// Set the object's current depth.  It is floored at 0 and has a ceiling at 1
+        /// </summary>
+        /// <param name="dep">Object's current drawing depth (between 0 and 1)</param>
         public void setDepth(float dep)
         {
+            if (dep < 0.0f)
+                dep = 0.0f;
+            if (dep > 1.0f)
+                dep = 1.0f;
             depth_ = dep;
         }
 
+        /// <summary>
+        /// Convert the direction vector into a float representing the angle
+        /// </summary>
+        /// <returns>Angle of the rotation in radians</returns>
         protected float getRotationAngle()
         {
             return (float)Math.Atan2((double)direction_.Y, (double)direction_.X);

@@ -25,30 +25,54 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
+    /// <summary>
+    /// Object representing a tile on the ground.
+    /// </summary>
     class TileObject : LevelObjectAbstract
     {
 
-
+        /// <summary>
+        /// Create a default TileObject.
+        /// </summary>
         public TileObject() :
             base()
         {
         }
 
+        /// <summary>
+        /// Create a TileObject with the specified image.
+        /// </summary>
+        /// <param name="image">Image of the TileObject</param>
         public TileObject(GameTexture image) :
             base(image)
         {
         }
 
+        /// <summary>
+        /// Create a TileObject with the specified image, position, direction, and depth.
+        /// </summary>
+        /// <param name="image">GameTexture for this object.</param>
+        /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
+        /// <param name="direction">Direction of the object as a Vector</param>
+        /// <param name="depth">Drawing depth of the object</param>
         public TileObject(GameTexture image, Vector2 position, Vector2 direction, float depth) :
             base(image, position, direction, depth)
         {
         }
 
+        /// <summary>
+        /// Draw the tile on the ground.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void draw(GameTime gameTime)
         {
             image_.drawImage(0, position_, depth_);
         }
 
+        /// <summary>
+        /// Update does nothing, because tiles don't change.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void update(GameTime gameTime)
         {
             

@@ -25,6 +25,10 @@ using Microsoft.Xna.Framework;
 
 namespace Commando
 {
+    /// <summary>
+    /// CharacterAbstract inherits from AnimatedObjectAbstract and is an ancestor of all 
+    /// playable and non-playable characters.
+    /// </summary>
     abstract class CharacterAbstract : AnimatedObjectAbstract
     {
 
@@ -36,11 +40,21 @@ namespace Commando
 
         protected string name_;
 
+        /// <summary>
+        /// Create a default Character
+        /// </summary>
         public CharacterAbstract() :
             this(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "")
         {
         }
 
+        /// <summary>
+        /// Create a Character with the specified health, ammo, and weapon objects, plus the given name
+        /// </summary>
+        /// <param name="health">CharacterStatusElement for health</param>
+        /// <param name="ammo">CharacterStatusElement for ammo</param>
+        /// <param name="weapon">CharacterStatusElement for the current weapon</param>
+        /// <param name="name">The character's name</param>
         public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name) :
             base()
         {
@@ -50,6 +64,21 @@ namespace Commando
             name_ = name;
         }
 
+        /// <summary>
+        /// Create a Character with the specified health, ammo, and weapon objects, plus the given name.
+        /// Also, specify the AnimationSet, frameLengthModifier, velocity, position, direction,
+        /// and depth of the character.
+        /// </summary>
+        /// <param name="health">CharacterStatusElement for health</param>
+        /// <param name="ammo">CharacterStatusElement for ammo</param>
+        /// <param name="weapon">CharacterStatusElement for the current weapon</param>
+        /// <param name="name">The character's name</param>
+        /// <param name="animations">AnimationSet containing all animations for this object</param>
+        /// <param name="frameLengthModifier">Float representing the ratio of frames in an animation to movement along the screen</param>
+        /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>
+        /// <param name="position">Position of object relative to the top left corner</param>
+        /// <param name="direction">Vector representing the direction of the object</param>
+        /// <param name="depth">Depth the object is to be drawn to</param>
         public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(animations, frameLengthModifier, velocity, position, direction, depth)
         {

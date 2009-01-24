@@ -30,21 +30,50 @@ namespace Commando
 
         protected controls.InputSet inputSet_;
         
+        /// <summary>
+        /// Create a default PlayableCharacter
+        /// </summary>
         public PlayableCharacterAbstract() :
             base()
         {
         }
 
+        /// <summary>
+        /// Create a PlayableCharacter with the specified health, ammo, and weapon objects, plus the given name
+        /// </summary>
+        /// <param name="health">CharacterStatusElement for health</param>
+        /// <param name="ammo">CharacterStatusElement for ammo</param>
+        /// <param name="weapon">CharacterStatusElement for the current weapon</param>
+        /// <param name="name">The character's name</param>
         public PlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name) :
             base(health, ammo, weapon, name)
         {
         }
 
+        /// <summary>
+        /// Create a PlayableCharacter with the specified health, ammo, and weapon objects, plus the given name.
+        /// Also, specify the AnimationSet, frameLengthModifier, velocity, position, direction,
+        /// and depth of the character.
+        /// </summary>
+        /// <param name="health">CharacterStatusElement for health</param>
+        /// <param name="ammo">CharacterStatusElement for ammo</param>
+        /// <param name="weapon">CharacterStatusElement for the current weapon</param>
+        /// <param name="name">The character's name</param>
+        /// <param name="animations">AnimationSet containing all animations for this object</param>
+        /// <param name="frameLengthModifier">Float representing the ratio of frames in an animation to movement along the screen</param>
+        /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>
+        /// <param name="position">Position of object relative to the top left corner</param>
+        /// <param name="direction">Vector representing the direction of the object</param>
+        /// <param name="depth">Depth the object is to be drawn to</param>
         public PlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(health, ammo, weapon, name, animations, frameLengthModifier, velocity, position, direction, depth)
         {
         }
 
+        /// <summary>
+        /// Set the current InputSet to use for controlling the character.
+        /// </summary>
+        /// <param name="inputSet">The InputSet associated with the current control scheme.</param>
         public void setInputSet(controls.InputSet inputSet)
         {
             inputSet_ = inputSet;

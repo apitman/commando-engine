@@ -25,6 +25,10 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
+    /// <summary>
+    /// HeadsUpDisplayObjectAbstract is an abstract class which all objects of the 
+    /// Heads Up Display inherit.
+    /// </summary>
     abstract class HeadsUpDisplayObjectAbstract : DrawableObjectAbstract, CharacterStatusObserverInterface
     {
         //public abstract void notifyOfChange(CharacterStatusElementInterface statusElement);
@@ -35,6 +39,9 @@ namespace Commando.objects
 
         protected int newValue_;
 
+        /// <summary>
+        /// Create a default HeadsUpDisplayObject.
+        /// </summary>
         public HeadsUpDisplayObjectAbstract() :
             base()
         {
@@ -43,6 +50,10 @@ namespace Commando.objects
             texture_ = TextureMap.getInstance().getTexture("No_Image");
         }
 
+        /// <summary>
+        /// Create a HeadsUpDisplayObject with the specified texture
+        /// </summary>
+        /// <param name="texture">GameTexture for this HeadsUpDisplayObject</param>
         public HeadsUpDisplayObjectAbstract(GameTexture texture) :
             base()
         {
@@ -51,6 +62,13 @@ namespace Commando.objects
             texture_ = texture;
         }
 
+        /// <summary>
+        /// Create a HeadsUpDisplayObject with the specified texture, position, direction, and depth.
+        /// </summary>
+        /// <param name="texture">GameTexture for this HeadsUpDisplayObject</param>
+        /// <param name="position">Position as a Vector relative to the top left corner</param>
+        /// <param name="direction">Direction of the HeadsUpDisplayObject as a Vector</param>
+        /// <param name="depth">Drawing depth of the object</param>
         public HeadsUpDisplayObjectAbstract(GameTexture texture, Vector2 position, Vector2 direction, float depth) :
             base(position, direction, depth)
         {
@@ -59,12 +77,20 @@ namespace Commando.objects
             texture_ = texture;
         }
         
-        public void notifyOfChange(int value)
+        /// <summary>
+        /// HeadsUpDisplayObject's notify function.
+        /// </summary>
+        /// <param name="value">New value of the CharacterStatusElement</param>
+        public virtual void notifyOfChange(int value)
         {
             newValue_ = value;
             modified_ = true;
         }
 
+        /// <summary>
+        /// Update the object's image if the Element has been modified
+        /// </summary>
+        /// <param name="gameTime">Game time from the parent update function</param>
         public override void update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             if (modified_)
@@ -73,6 +99,9 @@ namespace Commando.objects
             }
         }
 
+        /// <summary>
+        /// Function to update the image based off the concrete HeadsUpDisplayObject.
+        /// </summary>
         public abstract void updateImage();
     }
 }

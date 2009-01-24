@@ -25,18 +25,35 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
+    /// <summary>
+    /// Concrete version of the HeadsUpDisplayObjectAbstract.
+    /// </summary>
     class HeadsUpDisplayObject : HeadsUpDisplayObjectAbstract
     {
+        /// <summary>
+        /// Create a default HeadsUpDisplayObject.
+        /// </summary>
         public HeadsUpDisplayObject()
             : base()
         {
         }
 
+        /// <summary>
+        /// Create a HeadsUpDisplayObject with the specified texture
+        /// </summary>
+        /// <param name="texture">GameTexture for this HeadsUpDisplayObject</param>
         public HeadsUpDisplayObject(GameTexture tex)
             : base(tex)
         {
         }
 
+        /// <summary>
+        /// Create a HeadsUpDisplayObject with the specified texture, position, direction, and depth.
+        /// </summary>
+        /// <param name="tex">GameTexture for this HeadsUpDisplayObject</param>
+        /// <param name="pos">Position as a Vector relative to the top left corner</param>
+        /// <param name="dir">Direction of the HeadsUpDisplayObject as a Vector</param>
+        /// <param name="depth">Drawing depth of the object</param>
         public HeadsUpDisplayObject(GameTexture tex, Vector2 pos, Vector2 dir, float depth)
             : base(tex, pos, dir, depth)
         {
@@ -50,6 +67,10 @@ namespace Commando.objects
             // it displays at the very start
         }
 
+        /// <summary>
+        /// Actually draw the object to the screen
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             texture_.drawImage(0, position_, 0.0f, depth_);
