@@ -95,11 +95,13 @@ namespace Commando
         {
             cursorPos_ = newPos;
         }
+        //increments cursor position with wraparound
         public void incrementCursorPos()
         {
             cursorPos_++;
             cursorPos_ = cursorPos_ % stringList_.Count;
         }
+        //decrements cursor position with wraparount
         public void decremnentCursorPos()
         {
             cursorPos_--;

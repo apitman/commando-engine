@@ -30,16 +30,9 @@ namespace Commando
     {
         protected Engine engine_;
         protected GameTexture menu_;
-        protected GameTexture startSelected_;
-        protected GameTexture startReg_;
-        //protected List<string> menuList_;
         protected MenuList mainMenuList_;
-        //tracks position of cursor, should be either
-        //0 - start game
-        //1 - view controls
-        //2 - view credits
         protected int cursorPos_;
-
+        protected string controlTips_;
         /// <summary>
         /// Creates a main menu state
         /// </summary>
@@ -48,11 +41,13 @@ namespace Commando
         {
             cursorPos_ = 0;
             engine_ = engine;
-            List<string> menuList = new List<string>();
-            menuList.Add("Start Game");
-            menuList.Add("Controls");
-            menuList.Add("Exit");
-            mainMenuList_ = new MenuList(menuList,
+            List<string> menuString = new List<string>();
+            menuString.Add("Start Game");
+            menuString.Add("Controls");
+            menuString.Add("Exit");
+            
+            controlTips_ = "W = scroll up | S = scroll down | Enter = Select";
+            mainMenuList_ = new MenuList(menuString,
                                                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                                                 engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f),
                                                 Color.Green,
@@ -68,7 +63,7 @@ namespace Commando
         }
 
 
-        //string text, Vector2 pos, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth
+        
 
         #region EngineStateInterface Members
 
@@ -126,21 +121,20 @@ namespace Commando
             {
                 menu_ = TextureMap.getInstance().getTexture("TitleScreen");
             }
-            if (startSelected_ == null)
-            {
-                startSelected_ = TextureMap.getInstance().getTexture("MenuStartSelected");
-            }
-            if (startReg_ == null)
-            {
-                startReg_ = TextureMap.getInstance().getTexture("MenuStartReg");
-            }
+         
             engine_.GraphicsDevice.Clear(Color.Black);
 
             menu_.drawImage(0, new Vector2((engine_.GraphicsDevice.Viewport.Width - menu_.getImageDimensions()[0].Width) / 2, 0), 0.0f);
-
-
-
-
+            
+            GameFont myFont = FontMap.getInstance().getFont(FontEnum.Kootenay);
+           myFont.drawStringCentered(controlTips_,
+                                          new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f + 180.0f,
+                                          engine_.GraphicsDevice.Viewport.Height / 2.0f -10.0f),
+                                          Color.White,
+                                          0.0f,
+                                          1.0f,
+                                          SpriteEffects.None,
+                                          1.0f);
             mainMenuList_.draw();
         }
 
