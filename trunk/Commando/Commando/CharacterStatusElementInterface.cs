@@ -24,12 +24,28 @@ using System.Text;
 
 namespace Commando
 {
+    /// <summary>
+    /// Interface for CharacterStatusElements which requires them to notify a set of 
+    /// CharacterStatusObservers when the Element is updated.
+    /// </summary>
     interface CharacterStatusElementInterface
     {
+        /// <summary>
+        /// Get the current value of this element.
+        /// </summary>
+        /// <returns>The value of this element as an integer</returns>
         int getValue();
 
+        /// <summary>
+        /// Update this element to a new value and notify all the observers.
+        /// </summary>
+        /// <param name="newVal">New value of the element</param>
         void update(int newVal);
 
+        /// <summary>
+        /// Add a new observer to this element.
+        /// </summary>
+        /// <param name="obs">Observer to be added</param>
         void addObserver(objects.CharacterStatusObserverInterface obs);
     }
 }

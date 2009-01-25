@@ -133,7 +133,7 @@ namespace Commando
         }
 
         /// <summary>
-        /// Convert the direction vector into a float representing the angle
+        /// Convert the direction vector into a float representing the angle of the object
         /// </summary>
         /// <returns>Angle of the rotation in radians</returns>
         protected float getRotationAngle()

@@ -25,15 +25,26 @@ using Commando.objects;
 
 namespace Commando
 {
+    /// <summary>
+    /// Keeps track of a characters current ammo supply.
+    /// </summary>
     class CharacterAmmo : CharacterStatusElementInterface
     {
         protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();
 
+        /// <summary>
+        /// Add an observer to this CharacterAmmo.
+        /// </summary>
+        /// <param name="obs">Observer to be added</param>
         public void addObserver(CharacterStatusObserverInterface obs)
         {
             observers_.Add(obs);
         }
 
+        /// <summary>
+        /// Update the value of this CharacterAmmo.  Notifies all observers.
+        /// </summary>
+        /// <param name="value">New value of this CharacterAmmo</param>
         public void update(int value)
         {
             foreach (CharacterStatusObserverInterface observer in observers_)
