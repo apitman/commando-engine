@@ -25,15 +25,27 @@ using Commando.objects;
 
 namespace Commando
 {
+    /// <summary>
+    /// Keeps track of the characters health
+    /// </summary>
     class CharacterHealth : CharacterStatusElementInterface
     {
+
         protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();
 
+        /// <summary>
+        /// Add an observer to this CharacterHealth.
+        /// </summary>
+        /// <param name="obs">Observer to be added</param>
         public void addObserver(CharacterStatusObserverInterface obs)
         {
             observers_.Add(obs);
         }
 
+        /// <summary>
+        /// Update the value of this CharacterHealth.  Notifies all observers.
+        /// </summary>
+        /// <param name="value">New value of this CharacterHealth</param>
         public void update(int value)
         {
             foreach (CharacterStatusObserverInterface observer in observers_)

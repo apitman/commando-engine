@@ -25,11 +25,18 @@ using Commando.objects;
 
 namespace Commando
 {
+    /// <summary>
+    /// Keeps track of the character's current weapon.
+    /// </summary>
     class CharacterWeapon : CharacterStatusElementInterface
     {
 
         protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();
 
+        /// <summary>
+        /// Add an observer to this CharacterWeapon.
+        /// </summary>
+        /// <param name="obs">Observer to be added</param>
         public void addObserver(CharacterStatusObserverInterface obs)
         {
             observers_.Add(obs);
@@ -40,6 +47,10 @@ namespace Commando
             return 1;
         }
 
+        /// <summary>
+        /// Update the value of this CharacterWeapon.  Notifies all observers.
+        /// </summary>
+        /// <param name="value">New value of this CharacterWeapon</param>
         public void update(int value)
         {
             foreach (CharacterStatusObserverInterface observer in observers_)
