@@ -26,10 +26,19 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.levels
 {
+    /// <summary>
+    /// Class for generating a list of Tiles from an array of ints.
+    /// </summary>
     static class Tiler
     {
         public const int tileSideLength_ = 15;
 
+        /// <summary>
+        /// Generate a list of TileObjects from a two dimensional array of ints, where each 
+        /// number in the array represents the type of tile to use at that cooridinate.
+        /// </summary>
+        /// <param name="tiles">Array of ints representing types of tiles</param>
+        /// <returns>List of TileObjects</returns>
         public static List<TileObject> getTiles(int[,] tiles)
         {
             List<TileObject> retList = new List<TileObject>();
