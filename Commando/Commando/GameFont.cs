@@ -32,18 +32,31 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace Commando
 {
+    /// <summary>
+    /// Encapsulates SpriteFonts to make them easier to use
+    /// </summary>
     class GameFont
     {
-        //Texture image for this GameTexture
+        // The low-level font object
         protected SpriteFont font_;
 
+        // A SpriteBatch is necessary to draw the font
         protected SpriteBatch spriteBatch_;
 
-        public GameFont()
+        /// <summary>
+        /// The private constructor prevents anyone from using the default constructor
+        /// </summary>
+        private GameFont()
         {
 
         }
 
+        /// <summary>
+        /// This is the constructor that should almost always be used
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="spriteBatch"></param>
+        /// <param name="engine"></param>
         public GameFont(string filename, SpriteBatch spriteBatch, Engine engine)
         {
             //TODO: add functionality to read from a file to get imageDims
@@ -92,12 +105,14 @@ namespace Commando
 
         public void drawStringCentered(string text, Vector2 pos, Color color, float rotation, float layerDepth)
         {
-            spriteBatch_.DrawString(font_, text, pos, color, rotation, font_.MeasureString(text), 1.0f, SpriteEffects.None, layerDepth);
+            Vector2 origin = font_.MeasureString(text);
+            spriteBatch_.DrawString(font_, text, pos, color, rotation, new Vector2(origin.X / 2, origin.Y / 2), 1.0f, SpriteEffects.None, layerDepth);
         }
 
         public void drawStringCentered(string text, Vector2 pos, Color color, float rotation, float scale, SpriteEffects effects, float layerDepth)
         {
-            spriteBatch_.DrawString(font_, text, pos, color, rotation, font_.MeasureString(text), scale, effects, layerDepth);
+            Vector2 origin = font_.MeasureString(text);
+            spriteBatch_.DrawString(font_, text, pos, color, rotation, new Vector2(origin.X / 2, origin.Y / 2), scale, effects, layerDepth);
         }
     }
 }
