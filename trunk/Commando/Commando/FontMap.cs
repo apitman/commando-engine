@@ -25,17 +25,33 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
+    /// <summary>
+    /// Singleton that stores GameFonts and allows text to be drawn to the screen
+    /// </summary>
     class FontMap
     {
+        /// <summary>
+        /// The Dictionary (or Map) of FontEnums to GameFonts
+        /// </summary>
         protected Dictionary<FontEnum, GameFont> fonts_;
 
+        /// <summary>
+        /// The instance data member to implement a Singleton class
+        /// </summary>
         protected static FontMap fontMapInstance_ = null;
 
+        /// <summary>
+        /// The constructor
+        /// </summary>
         private FontMap()
         {
             fonts_ = new Dictionary<FontEnum, GameFont>();
         }
 
+        /// <summary>
+        /// Gets an instance of the Singleton FontMap
+        /// </summary>
+        /// <returns>Returns the instance to use</returns>
         public static FontMap getInstance()
         {
             if (fontMapInstance_ == null)
@@ -45,6 +61,12 @@ namespace Commando
             return fontMapInstance_;
         }
 
+        /// <summary>
+        /// Loads SpriteFont information from file
+        /// </summary>
+        /// <param name="filename">The .spritefont file to load from</param>
+        /// <param name="spriteBatch">The spriteBatch that will be used to draw text</param>
+        /// <param name="engine">The main Engine class</param>
         public void loadFonts(string filename, SpriteBatch spriteBatch, Engine engine)
         {
             //TODO: Eventually, create automatic scripted loading of fonts
@@ -60,6 +82,11 @@ namespace Commando
             fonts_.Add(FontEnum.PescaderoBold, new GameFont("SpriteFonts/PescaderoBold", spriteBatch, engine));
         }
 
+        /// <summary>
+        /// Gets the GameFont used for drawing text
+        /// </summary>
+        /// <param name="fontName">The font you want to draw</param>
+        /// <returns>The GameFont used for actually drawing the text</returns>
         public GameFont getFont(FontEnum fontName)
         {
             if (!fonts_.ContainsKey(fontName))
