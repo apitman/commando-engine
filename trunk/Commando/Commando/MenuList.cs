@@ -28,24 +28,49 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
+    /// <summary>
+    /// Creates a Menu made of different items, 
+    /// holds a cursor position for item selection
+    /// highlights a selected item
+    /// </summary>
     public class MenuList
-    {
+    {    
+        //list of strings used to make each menu item
+        //each string in the list makes up a different line
         protected List<string> stringList_;
-
+        //position of the first menu item
         protected Vector2 listPos_;
+        //color of an unselected menu item
         protected Color baseColor_;
+        //color of a selected menu item
         protected Color selectedColor_;
+        //position of the selected menu item
         protected int cursorPos_;
+        //rotation value of individual items
         protected float rotation_;
+        //scale of printed font with respect to original font
         protected float scale_;
+        //any sprite effects for the menu
         protected SpriteEffects spriteEffects_;
+        //layer depth of menu
         protected float layerDepth_;
+        //space between each line in the menu
         protected float spacing_;
-      
+        /// <summary>
+        /// Creates a menuList object 
+        /// </summary>
+        /// <param name="stringList">list of menu items</param>
+        /// <param name="pos">position of </param>
+        /// <param name="baseColor">color of unselected item</param>
+        /// <param name="selectedColor">color of selected item</param>
+        /// <param name="cursorPos">initial cursor position</param>
+        /// <param name="rotation">//rotation value of individual items</param>
+        /// <param name="scale">scale of printed font with respect to original font</param>
+        /// <param name="effects">any sprite effects for the menu</param>
+        /// <param name="layerDepth">layer depth of menu</param>
+        /// <param name="spacing">space between each line in the menu</param>
         public MenuList(List<string> stringList, Vector2 pos, Color baseColor, Color selectedColor, int cursorPos, float rotation, float scale, SpriteEffects effects, float layerDepth, float spacing)
         {
-
-            stringList_ = new List<string>();
             stringList_ = stringList;
             listPos_ = pos;
             baseColor_ = baseColor;
@@ -58,7 +83,11 @@ namespace Commando
             spacing_ = spacing;
         }
         #region FontList Members
-
+        /// <summary>
+        /// draws each item in the menu spacing_ points apart from each other
+        /// currently center justifies each item in the menu
+        /// if the current menu item is selected, it will be drawn with selectedColor_
+        /// </summary>
         public void draw()
         {
             GameFont myFont = FontMap.getInstance().getFont(FontEnum.Kootenay);
@@ -95,13 +124,17 @@ namespace Commando
         {
             cursorPos_ = newPos;
         }
-        //increments cursor position with wraparound
+        /// <summary>
+        /// increments cursor position with wraparound
+        /// </summary>
         public void incrementCursorPos()
         {
             cursorPos_++;
             cursorPos_ = cursorPos_ % stringList_.Count;
         }
-        //decrements cursor position with wraparount
+        /// <summary>
+        /// decrements cursor position with wraparound
+        /// </summary>
         public void decremnentCursorPos()
         {
             cursorPos_--;

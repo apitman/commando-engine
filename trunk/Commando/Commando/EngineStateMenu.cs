@@ -46,7 +46,7 @@ namespace Commando
             menuString.Add("Controls");
             menuString.Add("Exit");
             
-            controlTips_ = "W = scroll up | S = scroll down | Enter = Select";
+            controlTips_ = "W = scroll up | S = scroll down | Enter = Select | Esc = Exit";
             mainMenuList_ = new MenuList(menuString,
                                                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                                                 engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f),
@@ -83,7 +83,8 @@ namespace Commando
             }
 
             if (inputs.getConfirmButton()) // tenatively Enter / Start
-            {
+            { 
+                //get position of cursor from mainMenuList_
                 int myCursorPos_ = mainMenuList_.getCursorPos();
                 switch(myCursorPos_)
                 {
@@ -100,7 +101,6 @@ namespace Commando
             if (inputs.getLeftDirectionalY() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                cursorPos_--;
                 mainMenuList_.decremnentCursorPos();
             }
             if (inputs.getLeftDirectionalY() < 0)
@@ -127,8 +127,9 @@ namespace Commando
             menu_.drawImage(0, new Vector2((engine_.GraphicsDevice.Viewport.Width - menu_.getImageDimensions()[0].Width) / 2, 0), 0.0f);
             
             GameFont myFont = FontMap.getInstance().getFont(FontEnum.Kootenay);
+            //print control Tips for main menu
            myFont.drawStringCentered(controlTips_,
-                                          new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f + 180.0f,
+                                          new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                                           engine_.GraphicsDevice.Viewport.Height / 2.0f -10.0f),
                                           Color.White,
                                           0.0f,
