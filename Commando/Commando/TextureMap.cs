@@ -26,6 +26,10 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Commando
 {
+    /// <summary>
+    /// A Singleton class which holds all the textures for the game and maps them with their
+    /// names.
+    /// </summary>
     class TextureMap
     {
         protected Dictionary<string, GameTexture> textures_;
@@ -34,11 +38,18 @@ namespace Commando
 
         protected ContentManager content_;
 
+        /// <summary>
+        /// Private constructor so that only one can be created.
+        /// </summary>
         private TextureMap()
         {
             textures_ = new Dictionary<string, GameTexture>();
         }
 
+        /// <summary>
+        /// Get the Singleton instance of this class.
+        /// </summary>
+        /// <returns></returns>
         public static TextureMap getInstance()
         {
             if (textureMapInstance_ == null)
@@ -48,16 +59,30 @@ namespace Commando
             return textureMapInstance_;
         }
 
+        /// <summary>
+        /// Get the ContentManager.
+        /// </summary>
+        /// <returns>The ContentManager for the game.</returns>
         public ContentManager getContent()
         {
             return content_;
         }
 
+        /// <summary>
+        /// Set the ContentManager.
+        /// </summary>
+        /// <param name="content">The ContentManager for the game.</param>
         public void setContent(ContentManager content)
         {
             content_ = content;
         }
 
+        /// <summary>
+        /// Load all the textures for the game.
+        /// </summary>
+        /// <param name="filename">Filename of the texture document</param>
+        /// <param name="spriteBatch">SpriteBatch for the game</param>
+        /// <param name="graphics">GraphicsDevice for the game</param>
         public void loadTextures(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             //TODO: Eventually, create automatic scripted loading of textures
@@ -98,6 +123,11 @@ namespace Commando
             textures_.Add("Tile_22", new GameTexture("Tiles\\Wall_Corner_I_Bottom_Right", spriteBatch, graphics));
         }
 
+        /// <summary>
+        /// Get a texture from the map.
+        /// </summary>
+        /// <param name="textureName">Name of the texture</param>
+        /// <returns>GameTexture with the name textureName</returns>
         public GameTexture getTexture(string textureName)
         {
             if(!textures_.ContainsKey(textureName))
