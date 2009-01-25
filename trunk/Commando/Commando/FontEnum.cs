@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Commando
 {
+    /// <summary>
+    /// Allows autocomplete to pick up on installed fonts
+    /// </summary>
     enum FontEnum
 	{
         Kootenay,
