@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="CharacterHealthTest.cs" />
     <Compile Include="InputSetTest.cs" />
+    <Compile Include="MenuListTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
