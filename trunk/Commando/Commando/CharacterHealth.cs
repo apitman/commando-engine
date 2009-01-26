@@ -28,11 +28,18 @@ namespace Commando
     /// <summary>
     /// Keeps track of the characters health
     /// </summary>
-    class CharacterHealth : CharacterStatusElementInterface
+    public class CharacterHealth : CharacterStatusElementInterface
     {
 
-        protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();
+        protected List<CharacterStatusObserverInterface> observers_;
 
+        protected int health_value_;
+
+        public CharacterHealth()
+        {
+            observers_ = new List<CharacterStatusObserverInterface>();
+            health_value_ = 100;
+        }
         /// <summary>
         /// Add an observer to this CharacterHealth.
         /// </summary>
@@ -48,6 +55,7 @@ namespace Commando
         /// <param name="value">New value of this CharacterHealth</param>
         public void update(int value)
         {
+            health_value_ = value;
             foreach (CharacterStatusObserverInterface observer in observers_)
             {
                 observer.notifyOfChange(value);
@@ -56,7 +64,7 @@ namespace Commando
 
         public int getValue()
         {
-            return 62;
+            return health_value_;
         }
     }
 }
