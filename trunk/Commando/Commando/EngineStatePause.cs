@@ -28,8 +28,24 @@ namespace Commando
     /// </summary>
     public class EngineStatePause : EngineStateInterface
     {
+        /// <summary>
+        /// The text displayed on the pause screen
+        /// </summary>
+        const string PAUSE_TEXT = "Press Enter to Continue\nor Escape to Quit";
 
+        /// <summary>
+        /// The font to use when displaying text on the pause screen
+        /// </summary>
+        const FontEnum PAUSE_FONT = FontEnum.Pericles;
+
+        /// <summary>
+        /// The main engine class
+        /// </summary>
         protected Engine engine_;
+
+        /// <summary>
+        /// The EngineState to be saved - typically an EngineStateGameplay
+        /// </summary>
         protected EngineStateInterface savedState_;
 
         /// <summary>
@@ -74,19 +90,14 @@ namespace Commando
         public void draw()
         {
             engine_.GraphicsDevice.Clear(Color.Black);
-            string pauseText = "Press Enter to Continue\nor Escape to Quit";
-            GameFont pauseFont = FontMap.getInstance().getFont(FontEnum.Pericles);
-            Vector2 origin = pauseFont.getFont().MeasureString(pauseText);
-            pauseFont.drawString(pauseText,
+            FontMap.getInstance().getFont(PAUSE_FONT).drawStringCentered(PAUSE_TEXT,
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2,
                     engine_.GraphicsDevice.Viewport.Height / 2),
-                Color.White,
-                0.0f,
-                new Vector2(origin.X / 2,
-                    origin.Y / 2),
-                1.0f,
-                SpriteEffects.None,
-                1.0f);
+                    Color.White,
+                    0.0f,
+                    1.0f,
+                    SpriteEffects.None,
+                    1.0f);
         }
 
         #endregion
