@@ -25,7 +25,7 @@ namespace Commando
     /// the main menu, playing through levels, pausing, credits, cutscenes,
     /// etc.
     /// </summary>
-    interface EngineStateInterface
+    public interface EngineStateInterface
     {
         /// <summary>
         /// Perform one frame of update as designated by the state

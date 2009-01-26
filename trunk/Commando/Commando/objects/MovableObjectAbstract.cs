@@ -29,7 +29,7 @@ namespace Commando
     /// MovableObjects are DrawableObjects which also have the capability of moving across
     /// the screen.  The object keeps track of their velocity.
     /// </summary>
-    abstract class MovableObjectAbstract : DrawableObjectAbstract
+    public abstract class MovableObjectAbstract : DrawableObjectAbstract
     {
         protected Vector2 velocity_;
 

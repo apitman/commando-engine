@@ -30,7 +30,7 @@ namespace Commando
     /// and drawing depth of the object.  Almost all things drawn to the screen inherit from
     /// this class, except for those that are completely static (i.e. menu backgrounds).
     /// </summary>
-    abstract class DrawableObjectAbstract
+    public abstract class DrawableObjectAbstract
     {
 
         protected Vector2 position_;

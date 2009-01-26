@@ -28,7 +28,7 @@ namespace Commando.objects
     /// <summary>
     /// All objects drawn on the level inherit from this class.
     /// </summary>
-    abstract class LevelObjectAbstract : DrawableObjectAbstract
+    public abstract class LevelObjectAbstract : DrawableObjectAbstract
     {
 
         protected GameTexture image_;

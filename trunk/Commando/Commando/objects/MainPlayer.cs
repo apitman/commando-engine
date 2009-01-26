@@ -29,7 +29,7 @@ namespace Commando.objects
     /// <summary>
     /// The main player in the game.
     /// </summary>
-    class MainPlayer : PlayableCharacterAbstract
+    public class MainPlayer : PlayableCharacterAbstract
     {
         const bool CONTROLSTYLE = false;
 

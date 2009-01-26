@@ -29,7 +29,7 @@ namespace Commando
     /// The state of the engine when the player is moving around
     /// in levels, fighting enemies, etc.
     /// </summary>
-    class EngineStateGameplay : EngineStateInterface
+    public class EngineStateGameplay : EngineStateInterface
     {
         //Jared's test stuff
         protected objects.MainPlayer player_;

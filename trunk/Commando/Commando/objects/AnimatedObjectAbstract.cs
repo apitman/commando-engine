@@ -30,7 +30,7 @@ namespace Commando
     /// which consists of all the animations for this object.  They provide a system for 
     /// updating the current animation based on the movement of the object.
     /// </summary>
-    abstract class AnimatedObjectAbstract : MovableObjectAbstract
+    public abstract class AnimatedObjectAbstract : MovableObjectAbstract
     {
 
         protected AnimationSet animations_;
