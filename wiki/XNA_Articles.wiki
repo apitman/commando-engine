@@ -38,7 +38,10 @@ Displaying Centered Text
   * http://msmvps.com/blogs/mykre/archive/2007/11/28/xna-displaying-centred-text.aspx
 
 Sharing and Distributing a Game
-http://msdn.microsoft.com/en-us/library/bb417502.aspx
+  * http://msdn.microsoft.com/en-us/library/bb417502.aspx
+
+Creators Club Peer Review Process
+  * http://creators.xna.com/en-US/community_spotlight_peer_review
 
 == PC Specific ==
 
