@@ -16,12 +16,9 @@
  ***************************************************************************
 */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Commando.controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Xna.Framework;
 
 namespace CommandoTest
 {
@@ -82,6 +79,7 @@ namespace CommandoTest
         public void TestSetters()
         {
             InputSet instance = InputSet.getInstance();
+            instance.reset(); // Reset the singleton
 
             instance.setButton1(true);
             instance.setButton2(true);
@@ -145,6 +143,7 @@ namespace CommandoTest
         public void TestToggles()
         {
             InputSet instance = InputSet.getInstance();
+            instance.reset(); // Reset the singleton
 
             // Set all items to being pushed
             instance.setButton1(true);
@@ -160,9 +159,14 @@ namespace CommandoTest
             instance.setLeftDirectional(1.0f, 1.0f);
             instance.setRightDirectional(1.0f, 1.0f);
 
-            // Now, set Toggles on, so that if they are set
+            // Now, set Toggles on, so that if they are pressed
             // again they will act released until actually being released
             instance.setAllToggles();
+
+            // White box testing - using setAllToggles() and checking each
+            // individual device will work fine unless two devices were
+            // perfectly crossed (by the pigeonhole principle), which is
+            // not very likely (and would be readily apparent during playtesting).
 
             // Set them again, as if the buttons were still held down
             instance.setButton1(true);
@@ -209,6 +213,22 @@ namespace CommandoTest
             instance.setLeftDirectional(0.0f, 0.0f);
             instance.setRightDirectional(0.0f, 0.0f);
 
+            // Verify the release worked correctly
+            Assert.AreEqual(false, instance.getButton1());
+            Assert.AreEqual(false, instance.getButton2());
+            Assert.AreEqual(false, instance.getButton3());
+            Assert.AreEqual(false, instance.getButton4());
+            Assert.AreEqual(false, instance.getConfirmButton());
+            Assert.AreEqual(false, instance.getCancelButton());
+            Assert.AreEqual(false, instance.getLeftTrigger());
+            Assert.AreEqual(false, instance.getRightTrigger());
+            Assert.AreEqual(false, instance.getLeftBumper());
+            Assert.AreEqual(false, instance.getRightBumper());
+            Assert.AreEqual(0.0f, instance.getLeftDirectionalX());
+            Assert.AreEqual(0.0f, instance.getLeftDirectionalY());
+            Assert.AreEqual(0.0f, instance.getRightDirectionalX());
+            Assert.AreEqual(0.0f, instance.getRightDirectionalY());
+
             // Now the toggles should be cleared, so set all buttons
             instance.setButton1(true);
             instance.setButton2(true);
@@ -223,7 +243,30 @@ namespace CommandoTest
             instance.setLeftDirectional(1.0f, 1.0f);
             instance.setRightDirectional(1.0f, 1.0f);
 
-            // Now make sure everything works normally
+            // And make sure everything works normally
+            Assert.AreEqual(true, instance.getButton1());
+            Assert.AreEqual(true, instance.getButton2());
+            Assert.AreEqual(true, instance.getButton3());
+            Assert.AreEqual(true, instance.getButton4());
+            Assert.AreEqual(true, instance.getConfirmButton());
+            Assert.AreEqual(true, instance.getCancelButton());
+            Assert.AreEqual(true, instance.getLeftTrigger());
+            Assert.AreEqual(true, instance.getRightTrigger());
+            Assert.AreEqual(true, instance.getLeftBumper());
+            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
+            Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
+            Assert.AreEqual(1.0f, instance.getRightDirectionalX());
+            Assert.AreEqual(1.0f, instance.getRightDirectionalY());
+
+            // Now, set Toggles on, so that if they are set
+            // again they will act released until actually being released
+            instance.setAllToggles();
+
+            // And now clear all the Toggles
+            instance.clearToggles();
+
+            // Now the toggles should be cleared, so set all buttons
             instance.setButton1(true);
             instance.setButton2(true);
             instance.setButton3(true);
@@ -237,7 +280,187 @@ namespace CommandoTest
             instance.setLeftDirectional(1.0f, 1.0f);
             instance.setRightDirectional(1.0f, 1.0f);
 
-            // instance.clearToggles();
+            // And make sure everything works correctly
+            Assert.AreEqual(true, instance.getButton1());
+            Assert.AreEqual(true, instance.getButton2());
+            Assert.AreEqual(true, instance.getButton3());
+            Assert.AreEqual(true, instance.getButton4());
+            Assert.AreEqual(true, instance.getConfirmButton());
+            Assert.AreEqual(true, instance.getCancelButton());
+            Assert.AreEqual(true, instance.getLeftTrigger());
+            Assert.AreEqual(true, instance.getRightTrigger());
+            Assert.AreEqual(true, instance.getLeftBumper());
+            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
+            Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
+            Assert.AreEqual(1.0f, instance.getRightDirectionalX());
+            Assert.AreEqual(1.0f, instance.getRightDirectionalY());
+        }
+
+        [TestMethod]
+        public void TestSticks()
+        {
+            InputSet instance = InputSet.getInstance();
+            instance.reset(); // Reset the singleton
+
+            // Force everything to stick released for two updates
+            instance.setAllSticks(2);
+
+            // White box testing - using setAllSticks() and checking each
+            // individual device will work fine unless two devices were
+            // perfectly crossed (by the pigeonhole principle), which is
+            // not very likely (and would be readily apparent during playtesting).
+
+            // Now try to tell it that everything is still held down
+            instance.setButton1(true);
+            instance.setButton2(true);
+            instance.setButton3(true);
+            instance.setButton4(true);
+            instance.setConfirmButton(true);
+            instance.setCancelButton(true);
+            instance.setLeftBumper(true);
+            instance.setRightBumper(true);
+            instance.setLeftTrigger(true);
+            instance.setRightTrigger(true);
+            instance.setLeftDirectional(1.0f, 1.0f);
+            instance.setRightDirectional(1.0f, 1.0f);
+
+            // Make sure the Stick is working and devices act released
+            Assert.AreEqual(false, instance.getButton1());
+            Assert.AreEqual(false, instance.getButton2());
+            Assert.AreEqual(false, instance.getButton3());
+            Assert.AreEqual(false, instance.getButton4());
+            Assert.AreEqual(false, instance.getConfirmButton());
+            Assert.AreEqual(false, instance.getCancelButton());
+            Assert.AreEqual(false, instance.getLeftTrigger());
+            Assert.AreEqual(false, instance.getRightTrigger());
+            Assert.AreEqual(false, instance.getLeftBumper());
+            Assert.AreEqual(false, instance.getRightBumper());
+            Assert.AreEqual(0.0f, instance.getLeftDirectionalX());
+            Assert.AreEqual(0.0f, instance.getLeftDirectionalY());
+            Assert.AreEqual(0.0f, instance.getRightDirectionalX());
+            Assert.AreEqual(0.0f, instance.getRightDirectionalY());
+
+            // Try again for update #2
+            instance.setButton1(true);
+            instance.setButton2(true);
+            instance.setButton3(true);
+            instance.setButton4(true);
+            instance.setConfirmButton(true);
+            instance.setCancelButton(true);
+            instance.setLeftBumper(true);
+            instance.setRightBumper(true);
+            instance.setLeftTrigger(true);
+            instance.setRightTrigger(true);
+            instance.setLeftDirectional(1.0f, 1.0f);
+            instance.setRightDirectional(1.0f, 1.0f);
+
+            // Make sure the Stick is working and devices act released
+            Assert.AreEqual(false, instance.getButton1());
+            Assert.AreEqual(false, instance.getButton2());
+            Assert.AreEqual(false, instance.getButton3());
+            Assert.AreEqual(false, instance.getButton4());
+            Assert.AreEqual(false, instance.getConfirmButton());
+            Assert.AreEqual(false, instance.getCancelButton());
+            Assert.AreEqual(false, instance.getLeftTrigger());
+            Assert.AreEqual(false, instance.getRightTrigger());
+            Assert.AreEqual(false, instance.getLeftBumper());
+            Assert.AreEqual(false, instance.getRightBumper());
+            Assert.AreEqual(0.0f, instance.getLeftDirectionalX());
+            Assert.AreEqual(0.0f, instance.getLeftDirectionalY());
+            Assert.AreEqual(0.0f, instance.getRightDirectionalX());
+            Assert.AreEqual(0.0f, instance.getRightDirectionalY());
+
+            // Now, the stick should have worn off
+            instance.setButton1(true);
+            instance.setButton2(true);
+            instance.setButton3(true);
+            instance.setButton4(true);
+            instance.setConfirmButton(true);
+            instance.setCancelButton(true);
+            instance.setLeftBumper(true);
+            instance.setRightBumper(true);
+            instance.setLeftTrigger(true);
+            instance.setRightTrigger(true);
+            instance.setLeftDirectional(1.0f, 1.0f);
+            instance.setRightDirectional(1.0f, 1.0f);
+
+            // Verify it wore off correctly
+            Assert.AreEqual(true, instance.getButton1());
+            Assert.AreEqual(true, instance.getButton2());
+            Assert.AreEqual(true, instance.getButton3());
+            Assert.AreEqual(true, instance.getButton4());
+            Assert.AreEqual(true, instance.getConfirmButton());
+            Assert.AreEqual(true, instance.getCancelButton());
+            Assert.AreEqual(true, instance.getLeftTrigger());
+            Assert.AreEqual(true, instance.getRightTrigger());
+            Assert.AreEqual(true, instance.getLeftBumper());
+            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
+            Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
+            Assert.AreEqual(1.0f, instance.getRightDirectionalX());
+            Assert.AreEqual(1.0f, instance.getRightDirectionalY());
+
+            // Force everything to stick released for two updates
+            instance.setAllSticks(2);
+
+            // And then we can test that clearing them works
+            instance.clearSticks();
+
+            // The stick should be cleared, so we can set everything
+            instance.setButton1(true);
+            instance.setButton2(true);
+            instance.setButton3(true);
+            instance.setButton4(true);
+            instance.setConfirmButton(true);
+            instance.setCancelButton(true);
+            instance.setLeftBumper(true);
+            instance.setRightBumper(true);
+            instance.setLeftTrigger(true);
+            instance.setRightTrigger(true);
+            instance.setLeftDirectional(1.0f, 1.0f);
+            instance.setRightDirectional(1.0f, 1.0f);
+
+            // And now verify that the sticks cleared correctly
+            Assert.AreEqual(true, instance.getButton1());
+            Assert.AreEqual(true, instance.getButton2());
+            Assert.AreEqual(true, instance.getButton3());
+            Assert.AreEqual(true, instance.getButton4());
+            Assert.AreEqual(true, instance.getConfirmButton());
+            Assert.AreEqual(true, instance.getCancelButton());
+            Assert.AreEqual(true, instance.getLeftTrigger());
+            Assert.AreEqual(true, instance.getRightTrigger());
+            Assert.AreEqual(true, instance.getLeftBumper());
+            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
+            Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
+            Assert.AreEqual(1.0f, instance.getRightDirectionalX());
+            Assert.AreEqual(1.0f, instance.getRightDirectionalY());
+        }
+
+        [TestMethod]
+        public void TestInstances()
+        {
+            InputSet inst = InputSet.getInstance();
+            InputSet p1 = InputSet.getInstance(PlayerIndex.One);
+            InputSet p2 = InputSet.getInstance(PlayerIndex.Two);
+            InputSet p3 = InputSet.getInstance(PlayerIndex.Three);
+            InputSet p4 = InputSet.getInstance(PlayerIndex.Four);
+
+            // Verify getInstance() returns player 1
+            Assert.AreSame(inst, p1);
+
+            // And now set each player to different values to make
+            // sure they all work independently
+            p1.setLeftDirectional(-1.0f, -1.0f);
+            p2.setLeftDirectional(0.0f, 0.0f);
+            p3.setLeftDirectional(1.0f, 1.0f);
+            p4.setLeftDirectional(0.5f, 0.5f);
+
+            Assert.AreEqual(p1.getLeftDirectionalX(), -1.0f);
+            Assert.AreEqual(p2.getLeftDirectionalX(), 0.0f);
+            Assert.AreEqual(p3.getLeftDirectionalX(), 1.0f);
+            Assert.AreEqual(p4.getLeftDirectionalX(), 0.5f);
         }
 
     }

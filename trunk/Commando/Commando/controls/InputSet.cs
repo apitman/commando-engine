@@ -532,6 +532,16 @@ namespace Commando.controls
             rightBumper_ = false;
         }
 
+        /// <summary>
+        /// Completely reinitializes an InputSet
+        /// </summary>
+        public void reset()
+        {
+            clearSticks();
+            clearToggles();
+            clearInputs();
+        }
+
     }
 
     /// <summary>
