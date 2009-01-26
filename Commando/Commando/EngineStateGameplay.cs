@@ -31,17 +31,36 @@ namespace Commando
     /// </summary>
     public class EngineStateGameplay : EngineStateInterface
     {
+        const int SCREEN_SIZE_X = 375;
+        const int SCREEN_SIZE_Y = 375;
+        const float HEALTH_BAR_POS_X = 100.0f;
+        const float HEALTH_BAR_POS_Y = 350.0f;
+        const float WEAPON_ICON_POS_X = 200.0f;
+        const float WEAPON_ICON_POS_Y = 350.0f;
+        const float HEALTH_TEXT_OFFSET_X = -27.0f;
+        const float HEALTH_TEXT_OFFSET_Y = -12.0f;
+        const float AMMO_TEXT_OFFSET_X = 50.0f;
+        const float AMMO_TEXT_OFFSET_Y = -14.0f;
+        const float HUD_DRAW_DEPTH = 0.8f;
+        const string HEALTH_BAR_OUTLINE_TEX_NAME = "healthBarOutline";
+        const string HEALTH_BAR_FILL_TEX_NAME = "healthBarFiller";
+        const string WEAPON_TEX_NAME = "pistol";
+        const string HEALTH_TEXT = "Health";
+        const string AMMO_TEXT = "20/20 bullets";
+        const float FONT_DRAW_DEPTH = 0.9f;
+
         //Jared's test stuff
         protected objects.MainPlayer player_;
         //END Jared's test stuff
 
-
         protected Engine engine_;
         protected HeadsUpDisplayObject healthBar_;
         protected HeadsUpDisplayObject weapon_;
-        protected Vector2 healthBarPos_;
-        protected Vector2 weaponPos_;
         protected List<TileObject> tiles_;
+        protected Vector2 healthBarPos_;
+        protected Vector2 weaponIconPos_;
+        protected Vector2 healthTextPos_;
+        protected Vector2 ammoTextPos_;
 
         /// <summary>
         /// Constructs a state of gameplay
@@ -50,7 +69,7 @@ namespace Commando
         public EngineStateGameplay(Engine engine)
         {
             engine_ = engine;
-            engine_.setScreenSize(375, 375);
+            engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             //Jared's test stuff
             player_ = new objects.MainPlayer();
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -78,10 +97,12 @@ namespace Commando
             tiles_ = Tiler.getTiles(tiles);
             //END Jared's test stuff
 
-            healthBarPos_ = new Vector2(100.0f, 350.0f);
-            weaponPos_ = new Vector2(200.0f, 350.0f);
-            healthBar_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture("healthBarFiller"), healthBarPos_, new Vector2(0.0f), 0.8f);
-            weapon_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture("pistol"), weaponPos_, new Vector2(0.0f), 0.8f);
+            healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);
+            weaponIconPos_ = new Vector2(WEAPON_ICON_POS_X, WEAPON_ICON_POS_Y);
+            healthTextPos_ = new Vector2(HEALTH_BAR_POS_X + HEALTH_TEXT_OFFSET_X, HEALTH_BAR_POS_Y + HEALTH_TEXT_OFFSET_Y);
+            ammoTextPos_ = new Vector2(WEAPON_ICON_POS_X + AMMO_TEXT_OFFSET_X, WEAPON_ICON_POS_Y + AMMO_TEXT_OFFSET_Y);
+            healthBar_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, new Vector2(0.0f), HUD_DRAW_DEPTH);
+            weapon_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, new Vector2(0.0f), HUD_DRAW_DEPTH);
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
         }
@@ -128,11 +149,11 @@ namespace Commando
             //END Jared's test stuff
 
             healthBar_.draw(new GameTime());
-            TextureMap.getInstance().getTexture("healthBarOutline").drawImage(0, healthBarPos_, 0.0f, 0.8f);
+            TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImage(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
             weapon_.draw(new GameTime());
 
-            FontMap.getInstance().getFont(FontEnum.Kootenay).drawString("Health", new Vector2(healthBarPos_.X - 27.0f, healthBarPos_.Y - 12.0f), Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.9f);
-            FontMap.getInstance().getFont(FontEnum.Kootenay).drawString("20/20 bullets", new Vector2(weaponPos_.X + 50.0f, weaponPos_.Y - 14.0f), Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.9f);
+            FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
+            FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
         }
 
         #endregion

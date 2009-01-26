@@ -13,13 +13,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{766538A9-6134-4431-A604-ECA59696825E}"
 	ProjectSection(SolutionItems) = preProject
 		Commando.vsmdi = Commando.vsmdi
-		Commando1.vsmdi = Commando1.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Commando1.vsmdi
+		CategoryFile = Commando.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

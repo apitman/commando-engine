@@ -64,12 +64,12 @@ namespace Commando
         /// <summary>
         /// Loads SpriteFont information from file
         /// </summary>
-        /// <param name="filename">The .spritefont file to load from</param>
+        /// <param name="filename">The .xml file that contains all the Font information</param>
         /// <param name="spriteBatch">The spriteBatch that will be used to draw text</param>
         /// <param name="engine">The main Engine class</param>
         public void loadFonts(string filename, SpriteBatch spriteBatch, Engine engine)
         {
-            //TODO: Eventually, create automatic scripted loading of fonts
+            //TODO: Eventually, create automatic loading of fonts based on an xml file.
             //      For now, just create the load for each font in this function
             fonts_.Add(FontEnum.Kootenay, new GameFont("SpriteFonts/Kootenay", spriteBatch, engine));
             fonts_.Add(FontEnum.Kootenay48, new GameFont("SpriteFonts/Kootenay48", spriteBatch, engine));
