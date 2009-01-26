@@ -26,7 +26,7 @@ namespace Commando.objects
     /// <summary>
     /// Interface for the observer of CharcterStatusElements.
     /// </summary>
-    interface CharacterStatusObserverInterface
+    public interface CharacterStatusObserverInterface
     {
         /// <summary>
         /// Notify this observer of a change of value in a CharacterStatusElement.
