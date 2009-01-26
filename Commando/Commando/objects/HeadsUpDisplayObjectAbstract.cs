@@ -29,7 +29,7 @@ namespace Commando.objects
     /// HeadsUpDisplayObjectAbstract is an abstract class which all objects of the 
     /// Heads Up Display inherit.
     /// </summary>
-    abstract class HeadsUpDisplayObjectAbstract : DrawableObjectAbstract, CharacterStatusObserverInterface
+    public abstract class HeadsUpDisplayObjectAbstract : DrawableObjectAbstract, CharacterStatusObserverInterface
     {
         //public abstract void notifyOfChange(CharacterStatusElementInterface statusElement);
 

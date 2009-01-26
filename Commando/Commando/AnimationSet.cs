@@ -29,7 +29,7 @@ namespace Commando
     /// AnimationSets is used to encapsulate all the animations of a single entity into one
     /// object.  It provides the ability to choose and run an animation at will.
     /// </summary>
-    class AnimationSet
+    public class AnimationSet
     {
         
         protected List<GameTexture> animations_;

@@ -28,7 +28,7 @@ namespace Commando
     /// <summary>
     /// Keeps track of the character's current weapon.
     /// </summary>
-    class CharacterWeapon : CharacterStatusElementInterface
+    public class CharacterWeapon : CharacterStatusElementInterface
     {
 
         protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();

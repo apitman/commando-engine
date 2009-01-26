@@ -26,7 +26,7 @@ namespace Commando
     /// A state of play which waits for the user to return playing;
     /// might implement a menu in later functionality
     /// </summary>
-    class EngineStatePause : EngineStateInterface
+    public class EngineStatePause : EngineStateInterface
     {
 
         protected Engine engine_;

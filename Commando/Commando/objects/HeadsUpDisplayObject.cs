@@ -28,7 +28,7 @@ namespace Commando.objects
     /// <summary>
     /// Concrete version of the HeadsUpDisplayObjectAbstract.
     /// </summary>
-    class HeadsUpDisplayObject : HeadsUpDisplayObjectAbstract
+    public class HeadsUpDisplayObject : HeadsUpDisplayObjectAbstract
     {
         /// <summary>
         /// Create a default HeadsUpDisplayObject.

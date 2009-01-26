@@ -33,7 +33,7 @@ using System.Xml;
 
 namespace Commando
 {
-    class GameTexture
+    public class GameTexture
     {
         //Texture image for this GameTexture
         protected Texture2D texture_;

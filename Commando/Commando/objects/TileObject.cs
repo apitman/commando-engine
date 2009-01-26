@@ -28,7 +28,7 @@ namespace Commando.objects
     /// <summary>
     /// Object representing a tile on the ground.
     /// </summary>
-    class TileObject : LevelObjectAbstract
+    public class TileObject : LevelObjectAbstract
     {
 
         /// <summary>

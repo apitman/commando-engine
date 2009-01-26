@@ -29,7 +29,7 @@ namespace Commando
     /// CharacterAbstract inherits from AnimatedObjectAbstract and is an ancestor of all 
     /// playable and non-playable characters.
     /// </summary>
-    abstract class CharacterAbstract : AnimatedObjectAbstract
+    public abstract class CharacterAbstract : AnimatedObjectAbstract
     {
 
         protected CharacterHealth health_;
