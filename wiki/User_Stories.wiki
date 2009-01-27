@@ -2,6 +2,16 @@
 
 = Stories by Build =
 
+== Build 2: Jan. 27 - Feb. 5 ==
+
+  # User can see the character sprite change while moving (simple animation) - Jared
+  # User's character will be stopped by walls - Jared
+  # User can see mouse cursor in game window - Andrew
+  # User's character will rotate based on mouse position relative to the character - Ken
+  # From the main menu, user can enter a simple page showing the controls for PC - Eric
+  # User can boot a simple level editor with a palette and a grid - Andrew, Eric
+  # User can see an enemy who attempts to move toward the player character - Ken
+
 == Build 1: Jan. 13 - Jan. 22 ==
 
   # User can begin game and see a main menu - Eric
