@@ -94,6 +94,10 @@
   <ItemGroup>
     <Compile Include="ai\WorldState.cs" />
     <Compile Include="CharacterStatusElementInterface.cs" />
+    <Compile Include="collisiondetection\CollisionDetectionGrid.cs" />
+    <Compile Include="collisiondetection\CollisionDetector.cs" />
+    <Compile Include="collisiondetection\CollisionDetectorInterface.cs" />
+    <Compile Include="collisiondetection\CollisionObjectAbstract.cs" />
     <Compile Include="EngineStateOutofFocus.cs" />
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="objects\MainPlayer.cs" />
     <Compile Include="objects\MovableObjectAbstract.cs" />
     <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />
+    <Compile Include="objects\NonPlayableCharacterAbstract.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
     <Compile Include="objects\TileObject.cs" />
