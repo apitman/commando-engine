@@ -24,22 +24,28 @@ using System.Text;
 namespace Commando.ai
 {
     /// <summary>
-    /// Lists of Stimulus'es (sic) which describe the state of the world, to
-    /// be picked up by sensors.
+    /// An encapsulation of an NPC's intelligence.
     /// </summary>
-    class WorldState
+    class AI
     {
-        static public List<Stimulus> visual;
+        Memory memory_;
 
-        static public List<Stimulus> audial;
+        List<Sensor> sensors_;
 
-        static WorldState()
+        public AI()
         {
-            visual = new List<Stimulus>();
-            audial = new List<Stimulus>();
+            memory_ = new Memory();
+            sensors_ = new List<Sensor>();
+            sensors_.Add(new SensorEars(memory_));
+            sensors_.Add(new SensorEyes(memory_));
         }
 
-        private WorldState() {}
+        void update()
+        {
+            for (int i = 0; i < sensors_.Count; i++)
+            {
+                sensors_[i].collect();
+            }
+        }
     }
-
 }

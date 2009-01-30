@@ -24,22 +24,15 @@ using System.Text;
 namespace Commando.ai
 {
     /// <summary>
-    /// Lists of Stimulus'es (sic) which describe the state of the world, to
-    /// be picked up by sensors.
+    /// Storage location for an NPC's beliefs about the world.
     /// </summary>
-    class WorldState
+    class Memory
     {
-        static public List<Stimulus> visual;
+        public List<Belief> beliefs_;
 
-        static public List<Stimulus> audial;
-
-        static WorldState()
+        public Memory()
         {
-            visual = new List<Stimulus>();
-            audial = new List<Stimulus>();
+            beliefs_ = new List<Belief>();
         }
-
-        private WorldState() {}
     }
-
 }

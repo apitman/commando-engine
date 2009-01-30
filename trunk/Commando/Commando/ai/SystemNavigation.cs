@@ -24,22 +24,10 @@ using System.Text;
 namespace Commando.ai
 {
     /// <summary>
-    /// Lists of Stimulus'es (sic) which describe the state of the world, to
-    /// be picked up by sensors.
+    /// System responsible for finding paths around obstacles to get
+    /// to a specific destination.
     /// </summary>
-    class WorldState
+    class SystemNavigation
     {
-        static public List<Stimulus> visual;
-
-        static public List<Stimulus> audial;
-
-        static WorldState()
-        {
-            visual = new List<Stimulus>();
-            audial = new List<Stimulus>();
-        }
-
-        private WorldState() {}
     }
-
 }

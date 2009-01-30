@@ -24,22 +24,18 @@ using System.Text;
 namespace Commando.ai
 {
     /// <summary>
-    /// Lists of Stimulus'es (sic) which describe the state of the world, to
-    /// be picked up by sensors.
+    /// Collects Stimuluses (sic) from the world and converts them
+    /// into Beliefs in the character's Memory.
     /// </summary>
-    class WorldState
+    abstract class Sensor
     {
-        static public List<Stimulus> visual;
+        protected Memory memory_;
 
-        static public List<Stimulus> audial;
-
-        static WorldState()
+        public Sensor(Memory memory)
         {
-            visual = new List<Stimulus>();
-            audial = new List<Stimulus>();
+            memory_ = memory;
         }
 
-        private WorldState() {}
+        public abstract void collect();
     }
-
 }

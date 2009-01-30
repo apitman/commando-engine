@@ -23,23 +23,22 @@ using System.Text;
 
 namespace Commando.ai
 {
-    /// <summary>
-    /// Lists of Stimulus'es (sic) which describe the state of the world, to
-    /// be picked up by sensors.
-    /// </summary>
-    class WorldState
+    class SensorEars : Sensor
     {
-        static public List<Stimulus> visual;
+        public SensorEars(Memory memory_) : base(memory_) { }
 
-        static public List<Stimulus> audial;
-
-        static WorldState()
+        public override void collect()
         {
-            visual = new List<Stimulus>();
-            audial = new List<Stimulus>();
+            for (int i = 0; i < WorldState.audial.Count; i++)
+            {
+                filter(WorldState.audial[i]);
+            }
         }
 
-        private WorldState() {}
-    }
+        private void filter(Stimulus stim)
+        {
+            // TODO
+        }
 
+    }
 }

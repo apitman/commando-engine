@@ -20,26 +20,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai
 {
     /// <summary>
-    /// Lists of Stimulus'es (sic) which describe the state of the world, to
-    /// be picked up by sensors.
+    /// A particular piece of information that an NPC believes about the
+    /// current state of the world.
     /// </summary>
-    class WorldState
+    struct Belief
     {
-        static public List<Stimulus> visual;
+        public BeliefType type_;
+        public float confidence_;
+        public Vector2 position_;
 
-        static public List<Stimulus> audial;
-
-        static WorldState()
+        public Belief(BeliefType type, float conf, float x, float y)
         {
-            visual = new List<Stimulus>();
-            audial = new List<Stimulus>();
+            type_ = type;
+            confidence_ = conf;
+            position_ = new Vector2(x, y);
         }
-
-        private WorldState() {}
     }
 
+    enum BeliefType
+    {
+        EnemyLoc
+    }
 }
