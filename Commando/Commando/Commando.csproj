@@ -92,6 +92,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ai\AI.cs" />
+    <Compile Include="ai\Belief.cs" />
+    <Compile Include="ai\Memory.cs" />
+    <Compile Include="ai\Sensor.cs" />
+    <Compile Include="ai\SensorEars.cs" />
+    <Compile Include="ai\SensorEyes.cs" />
+    <Compile Include="ai\Stimulus.cs" />
+    <Compile Include="ai\SystemBehavior.cs" />
+    <Compile Include="ai\SystemNavigation.cs" />
+    <Compile Include="ai\SystemPlanning.cs" />
+    <Compile Include="ai\SystemTactics.cs" />
     <Compile Include="ai\WorldState.cs" />
     <Compile Include="CharacterStatusElementInterface.cs" />
     <Compile Include="collisiondetection\CollisionDetectionGrid.cs" />

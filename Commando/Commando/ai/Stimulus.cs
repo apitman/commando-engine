@@ -20,26 +20,45 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai
 {
     /// <summary>
-    /// Lists of Stimulus'es (sic) which describe the state of the world, to
-    /// be picked up by sensors.
+    /// A piece of information about the world to be picked up by Sensors.
     /// </summary>
-    class WorldState
+    struct Stimulus
     {
-        static public List<Stimulus> visual;
-
-        static public List<Stimulus> audial;
-
-        static WorldState()
-        {
-            visual = new List<Stimulus>();
-            audial = new List<Stimulus>();
-        }
-
-        private WorldState() {}
+        public int id_; // key so that objects can update the stimuli they produce
+                        //  without searching for them - remember, this is a struct,
+                        //  so they can't simply hold a reference to it (it copies)
+        public StimulusSourceType type_;
+        public float radius_;
+        public Vector2 position_;
     }
 
+    enum StimulusSourceType
+    {
+        CharacterAbstract
+    }
+
+    enum StimulusType
+    {
+        Position
+    }
+
+    class StimulusIDGenerator
+    {
+        static int id = 0;
+
+        static int getNext()
+        {
+            return id++;
+        }
+
+        private StimulusIDGenerator()
+        {
+            // do nothing
+        }
+    }
 }

@@ -64,9 +64,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Commando\ai\WorldState.cs">
-      <Link>ai\WorldState.cs</Link>
-    </Compile>
     <Compile Include="..\Commando\AnimationSet.cs">
       <Link>AnimationSet.cs</Link>
     </Compile>
@@ -194,6 +191,9 @@
       <Project>b87b80b3-4b26-44e4-b537-86d63f0e053f</Project>
       <Visible>False</Visible>
     </NestedContentProject>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ai\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
