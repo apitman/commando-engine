@@ -70,9 +70,10 @@ namespace Commando
         /// Set the frame which will be drawn next.
         /// </summary>
         /// <param name="nextFrame">The number of the frame</param>
-        public void setNextFrame(int nextFrame)
+        /// <returns>The actual frame (modded by number of frames)</returns>
+        public int setNextFrame(int nextFrame)
         {
-            nextFrame_ = nextFrame;
+            return nextFrame_ = nextFrame % animations_[curAnimation_].getNumberOfImages();
         }
 
         /// <summary>

@@ -164,12 +164,14 @@ namespace Commando
         /// </summary>
         protected void updateFrameNumber()
         {
-            float magnitude = (float)Math.Sqrt(Math.Pow((double)moved_.X, 2.0) + Math.Pow((double)moved_.Y, 2.0));
+            float magnitude = moved_.Length();
             magnitude /= frameLengthModifier_;
-            if (magnitude > 0)
+            if (magnitude >= 1.0f)
             {
                 currentFrame_ += (int)magnitude;
-                moved_ = Vector2.Zero;
+                Vector2 temp = moved_;
+                temp.Normalize();
+                moved_ -= temp * frameLengthModifier_;
             }
         }
     }
