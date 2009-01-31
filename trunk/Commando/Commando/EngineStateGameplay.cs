@@ -50,7 +50,8 @@ namespace Commando
         const float FONT_DRAW_DEPTH = 0.9f;
 
         //Jared's test stuff
-        protected objects.MainPlayer player_;
+        protected MainPlayer player_;
+        protected DummyEnemy enemy_;
         //END Jared's test stuff
 
         protected Engine engine_;
@@ -71,7 +72,8 @@ namespace Commando
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             //Jared's test stuff
-            player_ = new objects.MainPlayer();
+            player_ = new MainPlayer();
+            enemy_ = new DummyEnemy();
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
                                         {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
@@ -128,6 +130,7 @@ namespace Commando
             //Jared's test stuff
             player_.setInputSet(inputs);
             player_.update(gameTime);
+            enemy_.update(gameTime);
             //END Jared's test stuff
 
             return this;
@@ -142,6 +145,7 @@ namespace Commando
 
             //Jared's test stuff
             player_.draw(new GameTime());
+            enemy_.draw(new GameTime());
             foreach (TileObject tOb in tiles_)
             {
                 tOb.draw(new GameTime());

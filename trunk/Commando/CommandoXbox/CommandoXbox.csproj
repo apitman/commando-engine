@@ -148,6 +148,9 @@
     <Compile Include="..\Commando\objects\DrawableObjectAbstract.cs">
       <Link>objects\DrawableObjectAbstract.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\DummyEnemy.cs">
+      <Link>objects\DummyEnemy.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\HeadsUpDisplayObject.cs">
       <Link>objects\HeadsUpDisplayObject.cs</Link>
     </Compile>
@@ -165,6 +168,9 @@
     </Compile>
     <Compile Include="..\Commando\objects\NonAnimatedMovableObjectAbstract.cs">
       <Link>objects\NonAnimatedMovableObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\NonPlayableCharacterAbstract.cs">
+      <Link>objects\NonPlayableCharacterAbstract.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\PipelineObjectAbstract.cs">
       <Link>objects\PipelineObjectAbstract.cs</Link>

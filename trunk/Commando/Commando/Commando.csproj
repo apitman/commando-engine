@@ -120,6 +120,7 @@
     <Compile Include="levels\LevelAbstract.cs" />
     <Compile Include="levels\RoomAbstract.cs" />
     <Compile Include="levels\Tiler.cs" />
+    <Compile Include="objects\DummyEnemy.cs" />
     <Compile Include="objects\HeadsUpDisplayObject.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />
     <Compile Include="AnimationSet.cs" />
