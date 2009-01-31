@@ -109,6 +109,7 @@
     <Compile Include="collisiondetection\CollisionDetector.cs" />
     <Compile Include="collisiondetection\CollisionDetectorInterface.cs" />
     <Compile Include="collisiondetection\CollisionObjectAbstract.cs" />
+    <Compile Include="EngineStateControls.cs" />
     <Compile Include="EngineStateOutofFocus.cs" />
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />

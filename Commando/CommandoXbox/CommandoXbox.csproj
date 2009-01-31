@@ -94,6 +94,9 @@
     <Compile Include="..\Commando\Engine.cs">
       <Link>Engine.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateControls.cs">
+      <Link>EngineStateControls.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\EngineStateGameplay.cs">
       <Link>EngineStateGameplay.cs</Link>
     </Compile>

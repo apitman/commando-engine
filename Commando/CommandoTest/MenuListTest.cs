@@ -104,6 +104,8 @@ namespace CommandoTest
             testMenuList_.incrementCursorPos();
             Assert.AreEqual(2, testMenuList_.getCursorPos());
             testMenuList_.incrementCursorPos();
+            //this is a three item menu, so the cursor should wrap
+            //back to the first item
             Assert.AreEqual(0, testMenuList_.getCursorPos());
             for (int i = 0; i < 90; i++)
             {
@@ -119,6 +121,8 @@ namespace CommandoTest
             testMenuList_.decremnentCursorPos();
             Assert.AreEqual(1, testMenuList_.getCursorPos());
             testMenuList_.decremnentCursorPos();
+            //this is a three item menu, so the cursor should wrap
+            //back to the first item
             Assert.AreEqual(0, testMenuList_.getCursorPos());
             for (int i = 0; i < 90; i++)
             {

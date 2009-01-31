@@ -83,7 +83,8 @@ namespace Commando
             }
 
             if (inputs.getConfirmButton()) // tenatively Enter / Start
-            { 
+            {
+                inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 //get position of cursor from mainMenuList_
                 int myCursorPos_ = mainMenuList_.getCursorPos();
                 switch(myCursorPos_)
@@ -92,6 +93,7 @@ namespace Commando
                         return new EngineStateGameplay(engine_);
                         break;
                     case 1:
+                        return new EngineStateControls(engine_);
                         break;
                     case 2:
                         engine_.Exit();
