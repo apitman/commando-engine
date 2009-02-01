@@ -25,7 +25,7 @@ using Microsoft.Xna.Framework;
 
 namespace Commando
 {
-    public abstrack class PlayableCharacterAbstract : CharacterAbstract
+    public abstract class PlayableCharacterAbstract : CharacterAbstract
     {
 
         protected controls.InputSet inputSet_;
