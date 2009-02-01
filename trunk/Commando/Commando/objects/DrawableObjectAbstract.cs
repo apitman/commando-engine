@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.ai;
 
 namespace Commando
 {
@@ -39,6 +40,13 @@ namespace Commando
 
         protected float depth_;
 
+        // TODO Temporary block?
+        /// <summary>
+        /// Contains the ID for the visual stimulus this object owns
+        /// in the WorldState
+        /// </summary>
+        protected int visualStimulusId_;
+
         /// <summary>
         /// Creates a default DrawableObject with default values for position_, direction_, and depth_
         /// </summary>
@@ -47,6 +55,8 @@ namespace Commando
             position_ = Vector2.Zero;
             direction_ = new Vector2(1.0f, 0.0f);
             depth_ = 0.5f;
+
+            visualStimulusId_ = StimulusIDGenerator.getNext();
         }
 
         /// <summary>

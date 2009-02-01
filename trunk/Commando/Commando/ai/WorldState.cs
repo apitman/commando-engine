@@ -29,14 +29,14 @@ namespace Commando.ai
     /// </summary>
     class WorldState
     {
-        static public List<Stimulus> visual;
+        static public Dictionary<int, Stimulus> Visual_ {get; private set;}
 
-        static public List<Stimulus> audial;
+        static public Dictionary<int, Stimulus> Audial_ {get; private set;}
 
         static WorldState()
         {
-            visual = new List<Stimulus>();
-            audial = new List<Stimulus>();
+            Visual_ = new Dictionary<int, Stimulus>();
+            Audial_ = new Dictionary<int, Stimulus>();
         }
 
         private WorldState() {}

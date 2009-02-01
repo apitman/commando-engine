@@ -24,16 +24,18 @@ using System.Text;
 namespace Commando.ai
 {
     /// <summary>
-    /// Collects Stimuluses (sic) from the world and converts them
-    /// into Beliefs in the character's Memory.
+    /// Collects Stimuluses (sic) from the world and filters them
+    /// based upon visibility and confidence.  Probably should pass
+    /// these to Stimuluses to some sort of inference system, which
+    /// will then store a Belief in the character's Memory.
     /// </summary>
-    abstract class Sensor
+    public abstract class Sensor
     {
-        protected Memory memory_;
+        protected Memory Memory_ {get; set;}
 
         public Sensor(Memory memory)
         {
-            memory_ = memory;
+            Memory_ = memory;
         }
 
         public abstract void collect();

@@ -29,15 +29,21 @@ namespace Commando.ai
     /// </summary>
     struct Stimulus
     {
-        public int id_; // key so that objects can update the stimuli they produce
-                        //  without searching for them - remember, this is a struct,
-                        //  so they can't simply hold a reference to it (it copies)
-        public StimulusSourceType type_;
+        public StimulusSource source_;
+        public StimulusType type_;
         public float radius_;
         public Vector2 position_;
+
+        public Stimulus(StimulusSource source, StimulusType type, float radius, Vector2 pos)
+        {
+            source_ = source;
+            type_ = type;
+            radius_ = radius;
+            position_ = pos;
+        }
     }
 
-    enum StimulusSourceType
+    enum StimulusSource
     {
         CharacterAbstract
     }
@@ -47,11 +53,19 @@ namespace Commando.ai
         Position
     }
 
-    class StimulusIDGenerator
+    // key so that objects can update the stimuli they produce
+    //  without searching for them - remember, this is a struct,
+    //  so they can't simply hold a reference to it (it copies)
+
+    // using this same key for beliefs generated from a stimulus
+    // should also more easily allow creatures to modify existing
+    // beliefs instead of creating new ones and trying to remove
+    // the old ones
+    public class StimulusIDGenerator
     {
         static int id = 0;
 
-        static int getNext()
+        public static int getNext()
         {
             return id++;
         }
