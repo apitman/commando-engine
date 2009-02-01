@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 { 
@@ -39,5 +40,14 @@ namespace Commando.objects
              return components_[(int)componentType];
         }
 
+        public void update(GameTime gameTime)
+        {
+
+        }
+
+        public void draw()
+        {
+
+        }
     }
 }

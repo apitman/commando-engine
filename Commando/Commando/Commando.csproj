@@ -121,6 +121,7 @@
     <Compile Include="levels\LevelAbstract.cs" />
     <Compile Include="levels\RoomAbstract.cs" />
     <Compile Include="levels\Tiler.cs" />
+    <Compile Include="objects\AnimationInterface.cs" />
     <Compile Include="objects\ComponentInterface.cs" />
     <Compile Include="objects\DummyEnemy.cs" />
     <Compile Include="objects\GameObject.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="objects\NonPlayableCharacterAbstract.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
+    <Compile Include="objects\PositionInterface.cs" />
     <Compile Include="objects\TileObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
