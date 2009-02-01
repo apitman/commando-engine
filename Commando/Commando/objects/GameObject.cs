@@ -23,9 +23,21 @@ using System.Linq;
 using System.Text;
 
 namespace Commando.objects
-{
+{ 
+
     class GameObject
     {
+        protected ComponentInterface[] components_;
+
+        public GameObject()
+        {
+            components_ = new ComponentInterface[(int)ComponentEnum.LENGTH];
+        }
+
+        public ComponentInterface getComponent(ComponentEnum componentType)
+        {
+             return components_[(int)componentType];
+        }
 
     }
 }

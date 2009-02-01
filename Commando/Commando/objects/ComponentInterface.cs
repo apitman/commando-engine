@@ -25,5 +25,22 @@ namespace Commando.objects
 {
     interface ComponentInterface
     {
+        void update();
+    }
+
+    enum ComponentEnum
+    {
+        Position,
+        Physics,
+        Collision,
+        Actuators,
+        AI,
+        Health,
+        Status,
+        Weapon,
+        Inventory,
+        Animation,
+
+        LENGTH
     }
 }
