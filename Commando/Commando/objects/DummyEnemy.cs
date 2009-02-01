@@ -49,7 +49,7 @@ namespace Commando.objects
 
         public override void update(GameTime gameTime)
         {
-            AI_.update();
+            //AI_.update();
 
             // TODO Change/fix how this is done, modularize it, etc.
             // This enemy should add a stimulus to the world, but right now

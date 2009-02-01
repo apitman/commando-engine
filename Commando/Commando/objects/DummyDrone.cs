@@ -20,18 +20,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.ai;
 using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
-    interface PositionInterface : ComponentInterface
+    public class DummyDrone : GameObject
     {
-        Vector2 getPosition();
+        const int radius = 5;
 
-        void setPosition(Vector2 position);
-
-        int getRadius();
-
-        void setRadius(int radius);
+        public DummyDrone(Vector2 position, Vector2 direction)
+        {
+            //this.setComponent(ComponentEnum.Actuators, new BasicActuator());
+            this.setComponent(ComponentEnum.AI, new DummyAI(this));
+        }
     }
 }

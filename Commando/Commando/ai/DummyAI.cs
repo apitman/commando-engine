@@ -63,7 +63,10 @@ namespace Commando.ai
                 {
                     ActuatorInterface act =
                         (ActuatorInterface)Character_.getComponent(ComponentEnum.Actuators);
-                    act.moveTo(b.position_);
+                    if (act != null)
+                    {
+                        act.moveTo(b.position_);
+                    }
                 }
             }
             // End test block

@@ -73,6 +73,7 @@ namespace Commando
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             //Jared's test stuff
             player_ = new MainPlayer();
+            //PlayerHelper.Player_ = player_;
             enemy_ = new DummyEnemy();
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},

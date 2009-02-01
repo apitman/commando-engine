@@ -32,7 +32,6 @@ namespace Commando.objects
 
     public enum ComponentEnum
     {
-        Position,
         Physics,
         Collision,
         Actuators,
