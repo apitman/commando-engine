@@ -26,13 +26,13 @@ namespace Commando.ai
     /// <summary>
     /// Storage location for an NPC's beliefs about the world.
     /// </summary>
-    class Memory
+    public class Memory
     {
-        public List<Belief> beliefs_;
+        public Dictionary<int, Belief> Beliefs_ { get; private set; }
 
         public Memory()
         {
-            beliefs_ = new List<Belief>();
+            Beliefs_ = new Dictionary<int, Belief>();
         }
     }
 }

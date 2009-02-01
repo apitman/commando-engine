@@ -28,7 +28,7 @@ namespace Commando.ai
     /// A particular piece of information that an NPC believes about the
     /// current state of the world.
     /// </summary>
-    struct Belief
+    public struct Belief
     {
         public BeliefType type_;
         public float confidence_;
@@ -42,7 +42,7 @@ namespace Commando.ai
         }
     }
 
-    enum BeliefType
+    public enum BeliefType
     {
         EnemyLoc
     }

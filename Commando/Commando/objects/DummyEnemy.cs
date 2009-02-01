@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.ai;
 
 namespace Commando.objects
 {
@@ -48,6 +49,18 @@ namespace Commando.objects
 
         public override void update(GameTime gameTime)
         {
+            AI_.update();
+
+            // TODO Change/fix how this is done, modularize it, etc.
+            // This enemy should add a stimulus to the world, but right now
+            //  there is no way to identify its stimulus from the player's
+            // Possibly use an allegiance tag, or a reference to an owner?
+            /*WorldState.Visual_.Add(
+                visualStimulusId_,
+                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition())
+            );*/
+
+
             if (!atLocation_)
             {
                 Vector2 move = movingToward_ - position_;

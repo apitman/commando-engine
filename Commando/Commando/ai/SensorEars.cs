@@ -29,10 +29,7 @@ namespace Commando.ai
 
         public override void collect()
         {
-            for (int i = 0; i < WorldState.audial.Count; i++)
-            {
-                filter(WorldState.audial[i]);
-            }
+            // TODO
         }
 
         private void filter(Stimulus stim)

@@ -20,32 +20,49 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
 namespace Commando.ai
 {
     /// <summary>
     /// An encapsulation of an NPC's intelligence.
     /// </summary>
-    class AI
+    public class AI
     {
-        Memory memory_;
+        public NonPlayableCharacterAbstract Character_ { get; private set; }
 
-        List<Sensor> sensors_;
+        public Memory Memory_ { get; private set; }
 
-        public AI()
+        protected List<Sensor> sensors_;
+
+        public AI(NonPlayableCharacterAbstract npc)
         {
-            memory_ = new Memory();
+            Character_ = npc;
+            Memory_ = new Memory();
             sensors_ = new List<Sensor>();
-            sensors_.Add(new SensorEars(memory_));
-            sensors_.Add(new SensorEyes(memory_));
+            sensors_.Add(new SensorEars(Memory_));
+            sensors_.Add(new SensorEyes(Memory_));
         }
 
-        void update()
+        public void update()
         {
             for (int i = 0; i < sensors_.Count; i++)
             {
                 sensors_[i].collect();
             }
+
+            // TODO Temporary block
+            // Tells the AI to proceed to the location of a known enemy
+            IEnumerator<Belief> cur = Memory_.Beliefs_.Values.GetEnumerator();
+            while (cur.MoveNext())
+            {
+                Belief b = cur.Current;
+                if (b.type_ == BeliefType.EnemyLoc)
+                {
+                    Character_.moveTo(b.position_);
+                }
+            }
+            // End test block
         }
     }
 }
