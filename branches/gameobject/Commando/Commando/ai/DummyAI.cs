@@ -24,24 +24,26 @@ using Commando.objects;
 
 namespace Commando.ai
 {
-    /// <summary>
-    /// An encapsulation of an NPC's intelligence.
-    /// </summary>
-    public class AI
+    class DummyAI : AIInterface
     {
-        public NonPlayableCharacterAbstract Character_ { get; private set; }
+        public GameObject Character_ { get; private set; }
 
         public Memory Memory_ { get; private set; }
 
         protected List<Sensor> sensors_;
 
-        public AI(NonPlayableCharacterAbstract npc)
+        public DummyAI(GameObject npc)
         {
             Character_ = npc;
             Memory_ = new Memory();
             sensors_ = new List<Sensor>();
             sensors_.Add(new SensorEars(Memory_));
             sensors_.Add(new SensorEyes(Memory_));
+        }
+
+        public GameObject getOwner()
+        {
+            return Character_;
         }
 
         public void update()
@@ -59,7 +61,9 @@ namespace Commando.ai
                 Belief b = cur.Current;
                 if (b.type_ == BeliefType.EnemyLoc)
                 {
-                    Character_.moveTo(b.position_);
+                    ActuatorInterface act =
+                        (ActuatorInterface)Character_.getComponent(ComponentEnum.Actuators);
+                    act.moveTo(b.position_);
                 }
             }
             // End test block

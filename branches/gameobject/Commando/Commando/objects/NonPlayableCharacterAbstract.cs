@@ -28,7 +28,7 @@ namespace Commando.objects
 {
     public abstract class NonPlayableCharacterAbstract : CharacterAbstract
     {
-        protected AI AI_ { get; private set; }
+        protected AIInterface AI_ { get; private set; }
         
         /// <summary>
         /// Create a default NonPlayableCharacter
@@ -36,7 +36,7 @@ namespace Commando.objects
         public NonPlayableCharacterAbstract() :
             base()
         {
-            AI_ = new AI(this);
+            //AI_ = new DummyAI(this);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Commando.objects
         public NonPlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name) :
             base(health, ammo, weapon, name)
         {
-            AI_ = new AI(this);
+            //AI_ = new AI(this);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Commando.objects
         public NonPlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(health, ammo, weapon, name, animations, frameLengthModifier, velocity, position, direction, depth)
         {
-            AI_ = new AI(this);
+            //AI_ = new AI(this);
         }
 
         public abstract void moveTo(Vector2 position);

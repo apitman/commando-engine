@@ -48,6 +48,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>false</XnaCompressContent>
     <DocumentationFile>bin\x86\Debug\Commando.XML</DocumentationFile>
+    <NoWarn>
+    </NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -92,8 +94,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ai\AI.cs" />
+    <Compile Include="ai\AIInterface.cs" />
     <Compile Include="ai\Belief.cs" />
+    <Compile Include="ai\DummyAI.cs" />
     <Compile Include="ai\Memory.cs" />
     <Compile Include="ai\Sensor.cs" />
     <Compile Include="ai\SensorEars.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="levels\LevelAbstract.cs" />
     <Compile Include="levels\RoomAbstract.cs" />
     <Compile Include="levels\Tiler.cs" />
+    <Compile Include="objects\ActuatorInterface.cs" />
     <Compile Include="objects\AnimationInterface.cs" />
     <Compile Include="objects\ComponentInterface.cs" />
     <Compile Include="objects\DummyEnemy.cs" />
