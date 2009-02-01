@@ -23,26 +23,8 @@ using System.Text;
 
 namespace Commando.objects
 {
-    interface ComponentInterface
+    interface AnimationInterface : ComponentInterface
     {
-        void update();
 
-        GameObject getOwner();
-    }
-
-    enum ComponentEnum
-    {
-        Position,
-        Physics,
-        Collision,
-        Actuators,
-        AI,
-        Health,
-        Status,
-        Weapon,
-        Inventory,
-        Animation,
-
-        LENGTH
     }
 }

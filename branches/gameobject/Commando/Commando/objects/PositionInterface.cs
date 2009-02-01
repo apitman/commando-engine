@@ -20,29 +20,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
-    interface ComponentInterface
+    interface PositionInterface : ComponentInterface
     {
-        void update();
+        Vector2 getPosition();
 
-        GameObject getOwner();
-    }
+        void setPosition(Vector2 position);
 
-    enum ComponentEnum
-    {
-        Position,
-        Physics,
-        Collision,
-        Actuators,
-        AI,
-        Health,
-        Status,
-        Weapon,
-        Inventory,
-        Animation,
+        int getRadius();
 
-        LENGTH
+        void setRadius(int radius);
     }
 }
