@@ -139,6 +139,9 @@
     <Compile Include="..\Commando\EngineStateInterface.cs">
       <Link>EngineStateInterface.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateLevelEditor.cs">
+      <Link>EngineStateLevelEditor.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\EngineStateMenu.cs">
       <Link>EngineStateMenu.cs</Link>
     </Compile>
