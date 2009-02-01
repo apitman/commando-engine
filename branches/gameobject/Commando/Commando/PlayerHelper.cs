@@ -20,45 +20,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using Commando.objects;
 
-namespace Commando.objects
-{ 
-
-    public class GameObject
+namespace Commando
+{
+    public class PlayerHelper
     {
+        public static GameObject Player_ {get; set;}
 
-        public Vector2 Position_ { get; set; }
-
-        public Vector2 Heading_ { get; set; }
-
-        public int Radius_ { get; set; }
-
-        protected ComponentInterface[] components_;
-
-        public GameObject()
+        private PlayerHelper()
         {
-            components_ = new ComponentInterface[(int)ComponentEnum.LENGTH];
-        }
-
-        public ComponentInterface getComponent(ComponentEnum componentType)
-        {
-             return components_[(int)componentType];
-        }
-
-        public void setComponent(ComponentEnum componentType, ComponentInterface component)
-        {
-            components_[(int)componentType] = component;
-        }
-
-        public void update(GameTime gameTime)
-        {
-
-        }
-
-        public void draw()
-        {
-
+            // static class
         }
     }
 }

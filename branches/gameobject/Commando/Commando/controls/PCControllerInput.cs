@@ -19,6 +19,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+using Commando.objects;
+
 namespace Commando.controls
 {
     /// <summary>
@@ -29,8 +31,6 @@ namespace Commando.controls
     {
         protected Engine engine_;
         protected InputSet inputs_;
-        protected int previousMouseX_;
-        protected int previousMouseY_;
 
         // Key mapping
         // ------------------
@@ -103,17 +103,23 @@ namespace Commando.controls
 
             inputs_.setLeftDirectional(leftX, leftY);
 
-            int screenCenterX = engine_.GraphicsDevice.Viewport.Width / 2;
-            int screenCenterY = engine_.GraphicsDevice.Viewport.Height / 2;
+            GameObject player = PlayerHelper.Player_;
+            if (player != null)
+            {
+                float playerCenterX = PlayerHelper.Player_.Position_.X;
+                float playerCenterY = PlayerHelper.Player_.Position_.Y;
 
-            Vector2 rightDirectional =
-                new Vector2(ms.X - screenCenterX, ms.Y - screenCenterY);
-            rightDirectional.Normalize();
+                Vector2 rightDirectional =
+                    new Vector2(ms.X - playerCenterX, ms.Y - playerCenterY);
+                rightDirectional.Normalize();
 
-            inputs_.setRightDirectional(rightDirectional.X,
-                                        rightDirectional.Y);
-            previousMouseX_ = ms.X;
-            previousMouseY_ = ms.Y;
+                inputs_.setRightDirectional(rightDirectional.X,
+                                            rightDirectional.Y);
+            }
+            else
+            {
+                inputs_.setRightDirectional(ms.X, ms.Y);
+            }
 
             inputs_.setConfirmButton(ks.IsKeyDown(CONFIRM));
             inputs_.setCancelButton(ks.IsKeyDown(CANCEL));
