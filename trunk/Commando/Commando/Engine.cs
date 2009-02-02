@@ -79,8 +79,8 @@ namespace Commando
 
         public void setScreenSize(int x, int y)
         {
-            graphics_.PreferredBackBufferHeight = x;
-            graphics_.PreferredBackBufferWidth = y;
+            graphics_.PreferredBackBufferHeight = y;
+            graphics_.PreferredBackBufferWidth = x;
             graphics_.ApplyChanges();
         }
 

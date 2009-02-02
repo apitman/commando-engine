@@ -28,6 +28,9 @@ namespace Commando
     /// </summary>
     class EngineStateMenu : EngineStateInterface
     {
+        const int SCREEN_SIZE_X = 800;
+        const int SCREEN_SIZE_Y = 600;
+
         protected Engine engine_;
         protected GameTexture menu_;
         protected MenuList mainMenuList_;
@@ -74,8 +77,13 @@ namespace Commando
         /// <returns>A handle to the state of play to be run next frame</returns>
         public EngineStateInterface update(GameTime gameTime)
         {
-
             InputSet inputs = engine_.getInputs();
+
+            // Temporary for Andrew's test purposes
+            if (inputs.getButton1())
+            {
+                return new EngineStateLevelEditor(engine_, this, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            }
 
             if (inputs.getCancelButton()) // tenatively Escape / Back
             {

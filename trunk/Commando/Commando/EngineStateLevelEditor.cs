@@ -36,8 +36,11 @@ namespace Commando
         const int SCREEN_SIZE_X = 375;
         const int SCREEN_SIZE_Y = 375;
         const int NUM_TILES = 23;
+        const int NUM_TILES_PER_ROW = 25;
+        const int NUM_TILES_PER_COL = 22;
+        const float DISP_TILE_DEPTH = 0.1f;
 
-        protected int[,] intTiles_ = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        protected int[,] defaultTiles_ = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
                                         {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
                                         {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
@@ -60,6 +63,8 @@ namespace Commando
                                         {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
                                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
         protected EngineStateInterface returnState_;
+        protected int returnScreenSizeX_;
+        protected int returnScreenSizeY_;
         protected List<TileObject> tiles_;
         protected Engine engine_;
         protected int cursorPosX_;
@@ -70,15 +75,18 @@ namespace Commando
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
         /// </summary>
-        public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState)
+        public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState, int returnScreenSizeX, int returnScreenSizeY)
         {
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             returnState_ = returnState;
-            tiles_ = Tiler.getTiles(intTiles_);
+            returnScreenSizeX_ = returnScreenSizeX;
+            returnScreenSizeY_ = returnScreenSizeY;
+            tiles_ = Tiler.getTiles(defaultTiles_);
             cursorPosX_ = 0;
             cursorPosY_ = 0;
             curTileIndex_ = 0;
+            displayTile_ = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
         }
 
         /// <summary>
@@ -93,36 +101,67 @@ namespace Commando
             if (inputs.getCancelButton())
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
+                engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
                 return returnState_;
             }
 
             if (inputs.getLeftDirectionalX() < 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                cursorPosX_--;
+                if (cursorPosX_ > 0)
+                {
+                    cursorPosX_--;
+                }
             }
             else if (inputs.getLeftDirectionalX() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                cursorPosX_++;
+                if (cursorPosX_ < NUM_TILES_PER_ROW - 1)
+                {
+                    cursorPosX_++;
+                }
             }
 
             if (inputs.getLeftDirectionalY() < 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                cursorPosY_--;
+                if (cursorPosY_ < NUM_TILES_PER_COL - 1)
+                {
+                    cursorPosY_++;
+                }
             }
             else if (inputs.getLeftDirectionalY() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                cursorPosY_++;
+                if (cursorPosY_ > 0)
+                {
+                    cursorPosY_--;
+                }
+            }
+
+            if (inputs.getConfirmButton())
+            {
+                inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
+                tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
             }
 
             if (inputs.getButton1())
             {
                 inputs.setToggle(InputsEnum.BUTTON_1);
-                displayTile_ = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                curTileIndex_ = (curTileIndex_ + 1) % NUM_TILES;
             }
+
+            if (inputs.getButton2())
+            {
+                inputs.setToggle(InputsEnum.BUTTON_2);
+                if (curTileIndex_ == 0)
+                {
+                    curTileIndex_ = NUM_TILES;
+                }
+                curTileIndex_ = curTileIndex_ - 1;
+            }
+
+            displayTile_ = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
 
             return this;
         }
@@ -132,7 +171,7 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.BurlyWood);
+            engine_.GraphicsDevice.Clear(Color.Firebrick);
 
             foreach (TileObject tO in tiles_)
             {
