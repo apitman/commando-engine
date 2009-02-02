@@ -71,6 +71,7 @@ namespace Commando
         {
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            engine_.IsMouseVisible = true;
             //Jared's test stuff
             player_ = new MainPlayer();
             enemy_ = new DummyEnemy();
