@@ -108,6 +108,8 @@
     <Compile Include="ai\SystemTactics.cs" />
     <Compile Include="ai\WorldState.cs" />
     <Compile Include="CharacterStatusElementInterface.cs" />
+    <Compile Include="collisiondetection\BoundingLine.cs" />
+    <Compile Include="collisiondetection\BoundingPolygon.cs" />
     <Compile Include="collisiondetection\CollisionDetectionGrid.cs" />
     <Compile Include="collisiondetection\CollisionDetector.cs" />
     <Compile Include="collisiondetection\CollisionDetectorInterface.cs" />
@@ -126,6 +128,8 @@
     <Compile Include="levels\Tiler.cs" />
     <Compile Include="objects\ActuatorInterface.cs" />
     <Compile Include="objects\AnimationInterface.cs" />
+    <Compile Include="objects\BasicActuator.cs" />
+    <Compile Include="objects\BasicLoopAnimation.cs" />
     <Compile Include="objects\ComponentInterface.cs" />
     <Compile Include="objects\DummyDrone.cs" />
     <Compile Include="objects\DummyEnemy.cs" />
@@ -153,8 +157,10 @@
     <Compile Include="objects\MovableObjectAbstract.cs" />
     <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />
     <Compile Include="objects\NonPlayableCharacterAbstract.cs" />
+    <Compile Include="objects\PhysicsInterface.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
+    <Compile Include="objects\PlayerActuator.cs" />
     <Compile Include="objects\TileObject.cs" />
     <Compile Include="PlayerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

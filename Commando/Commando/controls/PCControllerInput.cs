@@ -108,8 +108,8 @@ namespace Commando.controls
             GameObject player = PlayerHelper.Player_;
             if (player != null)
             {
-                float playerCenterX = PlayerHelper.Player_.Position_.X;
-                float playerCenterY = PlayerHelper.Player_.Position_.Y;
+                float playerCenterX = PlayerHelper.Player_.getPosition().X;
+                float playerCenterY = PlayerHelper.Player_.getPosition().Y;
 
                 Vector2 rightDirectional =
                     new Vector2(ms.X - playerCenterX, ms.Y - playerCenterY);

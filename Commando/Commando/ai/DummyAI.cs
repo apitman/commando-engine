@@ -24,7 +24,7 @@ using Commando.objects;
 
 namespace Commando.ai
 {
-    class DummyAI : AIInterface
+    public class DummyAI : AIInterface
     {
         public GameObject Character_ { get; private set; }
 

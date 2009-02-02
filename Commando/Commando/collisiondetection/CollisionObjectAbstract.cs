@@ -29,6 +29,6 @@ namespace Commando.collisiondetection
     {
         public abstract Vector2 getPosition();
 
-        public abstract int getRadius();
+        public abstract float getRadius();
     }
 }
