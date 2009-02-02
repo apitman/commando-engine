@@ -29,5 +29,8 @@ namespace Commando.objects
         void moveTo(Vector2 position);
 
         void lookAt(Vector2 position);
+
+        void push(Vector2 force);
+
     }
 }

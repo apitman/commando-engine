@@ -147,6 +147,7 @@
     <Compile Include="EngineStateMenu.cs" />
     <Compile Include="GameTexture.cs" />
     <Compile Include="objects\HeadsUpDisplayObjectAbstract.cs" />
+    <Compile Include="objects\HumanActuator.cs" />
     <Compile Include="objects\LevelObjectAbstract.cs" />
     <Compile Include="objects\MainPlayer.cs" />
     <Compile Include="objects\MovableObjectAbstract.cs" />

@@ -27,7 +27,6 @@ namespace Commando.objects
 {
     public class DummyDrone : GameObject
     {
-        const int radius = 5;
 
         public DummyDrone(Vector2 position, Vector2 direction)
         {
