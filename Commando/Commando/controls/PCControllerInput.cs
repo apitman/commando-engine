@@ -103,6 +103,8 @@ namespace Commando.controls
 
             inputs_.setLeftDirectional(leftX, leftY);
 
+            // Calculate RightDirectional from the mouse, which in gameplay is relative
+            //  to the player's character
             GameObject player = PlayerHelper.Player_;
             if (player != null)
             {
