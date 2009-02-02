@@ -31,6 +31,5 @@ namespace Commando.objects
         void lookAt(Vector2 position);
 
         void push(Vector2 force);
-
     }
 }

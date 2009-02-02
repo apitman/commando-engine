@@ -21,24 +21,70 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.collisiondetection
 {
     class CollisionDetector : CollisionDetectorInterface
     {
+        protected List<BoundingPolygon> bounds_;
+        protected List<CollisionObjectAbstract> objects_;
+
+        public CollisionDetector(List<BoundingPolygon> bounds)
+        {
+            bounds_ = bounds;
+        }
 
         #region CollisionDetectorInterface Members
 
         public void register(CollisionObjectAbstract obj)
         {
-            throw new NotImplementedException();
+            if (!objects_.Contains(obj))
+            {
+                objects_.Add(obj);
+            }
         }
 
-        public Microsoft.Xna.Framework.Vector2 checkCollisions(CollisionObjectAbstract obj, Microsoft.Xna.Framework.Vector2 newPosition)
+        public Vector2 checkCollisions(CollisionObjectAbstract obj, Vector2 newPosition)
         {
-            throw new NotImplementedException();
+            if (checkBoundsCollisions(obj, newPosition) || checkObjectCollisions(obj, newPosition))
+            {
+                return obj.getPosition();
+            }
+            return newPosition;
         }
 
         #endregion
+
+        protected bool checkBoundsCollisions(CollisionObjectAbstract obj, Vector2 newPosition)
+        {
+            Point position = new Point((int)newPosition.X, (int)newPosition.Y);
+            float radius = obj.getRadius();
+            for (int i = 0; i < bounds_.Count; i++)
+            {
+                if (bounds_[i].checkCollision(position, radius))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected bool checkObjectCollisions(CollisionObjectAbstract obj, Vector2 newPosition)
+        {
+            for (int i = 0; i < objects_.Count; i++)
+            {
+                if (obj != objects_[i] && distance(newPosition, objects_[i].getPosition()) < (obj.getRadius() + objects_[i].getRadius()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        protected float distance(Vector2 p1, Vector2 p2)
+        {
+            return (float)(Math.Sqrt(Math.Pow((double)(p1.X - p2.X), 2.0) + Math.Pow((double)(p1.Y - p2.Y), 2.0)));
+        }
     }
 }

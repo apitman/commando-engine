@@ -46,14 +46,14 @@ namespace Commando.objects
         {
             if (!atLocation_)
             {
-                Vector2 move = moveTarget_ - getOwner().Position_;
+                Vector2 move = moveTarget_ - getOwner().getPosition();
                 if (move.Length() > MAX_VEL)
                 {
                     move.Normalize();
                     move *= MAX_VEL;
                 }
-                getOwner().Position_ += move;
-                if (getOwner().Position_.Equals(moveTarget_))
+                getOwner().setPosition(getOwner().getPosition() + move);
+                if (getOwner().getPosition().Equals(moveTarget_))
                 {
                     atLocation_ = true;
                 }

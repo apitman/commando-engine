@@ -23,8 +23,10 @@ using System.Text;
 
 namespace Commando.objects
 {
-    interface AnimationInterface : ComponentInterface
+    public interface AnimationInterface : ComponentInterface
     {
+        void draw();
 
+        void setCurrentAnimation(int animation);
     }
 }
