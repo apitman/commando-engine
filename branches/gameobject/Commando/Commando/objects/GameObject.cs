@@ -27,18 +27,24 @@ namespace Commando.objects
 
     public class GameObject
     {
+        protected Vector2 position_;
 
-        public Vector2 Position_ { get; set; }
+        protected Vector2 newPostion_;
 
-        public Vector2 Heading_ { get; set; }
-
-        public int Radius_ { get; set; }
+        protected Vector2 direction_;
 
         protected ComponentInterface[] components_;
 
         public GameObject()
         {
             components_ = new ComponentInterface[(int)ComponentEnum.LENGTH];
+            for (int i = 0; i < components_.Length; i++)
+            {
+                components_[i] = null;
+            }
+            position_ = Vector2.Zero;
+            newPostion_ = Vector2.Zero;
+            direction_ = new Vector2(1.0f, 0.0f);
         }
 
         public ComponentInterface getComponent(ComponentEnum componentType)
@@ -53,12 +59,44 @@ namespace Commando.objects
 
         public void update(GameTime gameTime)
         {
-
+            for (int i = 0; i < components_.Length; i++)
+            {
+                if (components_[i] != null)
+                {
+                    components_[i].update();
+                }
+            }
+            position_ = newPostion_;
         }
 
         public void draw()
         {
 
+        }
+
+        public Vector2 getPosition()
+        {
+            return position_;
+        }
+
+        public void setPosition(Vector2 position)
+        {
+            position_ = position;
+        }
+
+        public Vector2 getDirection()
+        {
+            return direction_;
+        }
+
+        public void setDirection(Vector2 direction)
+        {
+            direction_ = direction;
+        }
+
+        public void setNewPosition(Vector2 position)
+        {
+            newPostion_ = position;
         }
     }
 }
