@@ -23,10 +23,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.ai;
+using Commando.collisiondetection;
 
 namespace Commando.objects
 {
-    public class DummyEnemy : NonPlayableCharacterAbstract
+    public class DummyEnemy : NonPlayableCharacterAbstract, CollisionObjectInterface
     {
         private const float FRAMELENGTHMODIFIER = 4.0f;
 
@@ -35,6 +36,12 @@ namespace Commando.objects
         protected bool atLocation_;
 
         protected Vector2 lookingAt_;
+
+        protected CollisionDetector collisionDetector_;
+
+        protected  const float RADIUS = 16.0f;
+
+        protected float radius_;
 
         public DummyEnemy() :
             base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, FRAMELENGTHMODIFIER, Vector2.Zero, new Vector2(30.0f, 30.0f), new Vector2(1.0f, 0.0f), 0.5f)
@@ -45,6 +52,19 @@ namespace Commando.objects
             movingToward_ = new Vector2(150.0f, 260.0f);
             lookingAt_ = new Vector2(250.0f, 60.0f);
             atLocation_ = false;
+            collisionDetector_ = null;
+            radius_ = RADIUS;
+        }
+
+        public void setCollisionDetector(CollisionDetector collisionDetector)
+        {
+            collisionDetector_ = collisionDetector;
+            collisionDetector_.register(this);
+        }
+
+        public float getRadius()
+        {
+            return radius_;
         }
 
         public override void update(GameTime gameTime)
@@ -69,8 +89,12 @@ namespace Commando.objects
                     move.Normalize();
                     move *= 2.0f;
                 }
-                position_ += move;
-                moved_ += move;
+                Vector2 newPosition = position_ + move;
+                Console.Out.Write(newPosition);
+                newPosition = collisionDetector_.checkCollisions(this, newPosition);
+                Console.Out.WriteLine(newPosition);
+                moved_ += (newPosition - position_);
+                position_ = newPosition;
                 if (position_.Equals(movingToward_))
                 {
                     atLocation_ = true;
