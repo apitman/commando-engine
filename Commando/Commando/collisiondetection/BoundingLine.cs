@@ -25,65 +25,65 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.collisiondetection
 {
-    public class CollisionDetector : CollisionDetectorInterface
+    public class BoundingLine
     {
-        protected List<BoundingPolygon> bounds_;
-        protected List<CollisionObjectInterface> objects_;
+        protected Point begin_;
+        protected Point end_;
 
-        public CollisionDetector(List<BoundingPolygon> bounds)
+        public BoundingLine(Point p1, Point p2)
         {
-            bounds_ = bounds;
-            objects_ = new List<CollisionObjectInterface>();
-        }
-
-        #region CollisionDetectorInterface Members
-
-        public void register(CollisionObjectInterface obj)
-        {
-            if (!objects_.Contains(obj))
+            if (p1.X == p2.X)
             {
-                objects_.Add(obj);
+                if (p1.Y > p2.Y)
+                {
+                    begin_ = p1;
+                    end_ = p2;
+                }
+                else
+                {
+                    begin_ = p2;
+                    end_ = p1;
+                }
+            }
+            else
+            {
+                if (p1.X > p2.X)
+                {
+                    begin_ = p1;
+                    end_ = p2;
+                }
+                else
+                {
+                    begin_ = p2;
+                    end_ = p1;
+                }
             }
         }
 
-        public Vector2 checkCollisions(CollisionObjectInterface obj, Vector2 newPosition)
+        public bool intersect(Point center, float radius)
         {
-            if (checkBoundsCollisions(obj, newPosition) || checkObjectCollisions(obj, newPosition))
+            if (center.X <= begin_.X && center.X >= end_.X)
             {
-                return obj.getPosition();
-            }
-            return newPosition;
-        }
-
-        #endregion
-
-        protected bool checkBoundsCollisions(CollisionObjectInterface obj, Vector2 newPosition)
-        {
-            Point position = new Point((int)newPosition.X, (int)newPosition.Y);
-            float radius = obj.getRadius();
-            for (int i = 0; i < bounds_.Count; i++)
-            {
-                if (bounds_[i].checkCollision(position, radius))
+                if (Math.Min(Math.Abs(center.Y - begin_.Y), Math.Abs(center.Y - end_.Y)) < radius)
                 {
                     return true;
                 }
             }
-            return false;
-        }
-
-        protected bool checkObjectCollisions(CollisionObjectInterface obj, Vector2 newPosition)
-        {
-            for (int i = 0; i < objects_.Count; i++)
+            else if (center.Y <= begin_.Y && center.Y >= end_.Y)
             {
-                if (obj != objects_[i] && distance(newPosition, objects_[i].getPosition()) < (obj.getRadius() + objects_[i].getRadius()))
+                if (Math.Min(Math.Abs(center.X - begin_.X), Math.Abs(center.X - end_.X)) < radius)
                 {
                     return true;
                 }
             }
+            else if (distance(begin_, center) < radius || distance(end_, center) < radius)
+            {
+                return true;
+            }
             return false;
         }
 
-        protected float distance(Vector2 p1, Vector2 p2)
+        protected float distance(Point p1, Point p2)
         {
             return (float)(Math.Sqrt(Math.Pow((double)(p1.X - p2.X), 2.0) + Math.Pow((double)(p1.Y - p2.Y), 2.0)));
         }

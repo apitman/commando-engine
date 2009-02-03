@@ -22,6 +22,7 @@ using Commando.levels;
 using Commando.objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.collisiondetection;
 
 namespace Commando
 {
@@ -52,6 +53,7 @@ namespace Commando
         //Jared's test stuff
         protected MainPlayer player_;
         protected DummyEnemy enemy_;
+        protected CollisionDetector collisionDetector_;
         //END Jared's test stuff
 
         protected Engine engine_;
@@ -98,6 +100,26 @@ namespace Commando
                                         {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
                                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
             tiles_ = Tiler.getTiles(tiles);
+            List<Point> boundsPoints = new List<Point>();
+            boundsPoints.Add(new Point(30, 30));
+            boundsPoints.Add(new Point(225, 30));
+            boundsPoints.Add(new Point(225, 90));
+            boundsPoints.Add(new Point(315, 90));
+            boundsPoints.Add(new Point(315, 240));
+            boundsPoints.Add(new Point(225, 240));
+            boundsPoints.Add(new Point(225, 300));
+            boundsPoints.Add(new Point(30, 300));
+            BoundingPolygon walls = new BoundingPolygon(boundsPoints);
+            List<Point> boxBoundsPoints = new List<Point>();
+            boxBoundsPoints.Add(new Point(75, 75));
+            boxBoundsPoints.Add(new Point(165, 75));
+            boxBoundsPoints.Add(new Point(165, 150));
+            boxBoundsPoints.Add(new Point(75, 150));
+            BoundingPolygon boxes = new BoundingPolygon(boxBoundsPoints);
+            List<BoundingPolygon> polygons = new List<BoundingPolygon>();
+            polygons.Add(walls);
+            polygons.Add(boxes);
+            collisionDetector_ = new CollisionDetector(polygons);
             //END Jared's test stuff
 
             healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);
@@ -108,6 +130,7 @@ namespace Commando
             weapon_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, new Vector2(0.0f), HUD_DRAW_DEPTH);
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
+            player_.setCollisionDetector(collisionDetector_);
         }
 
         #region EngineStateInterface Members

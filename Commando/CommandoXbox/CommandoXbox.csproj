@@ -115,6 +115,24 @@
     <Compile Include="..\Commando\CharacterWeapon.cs">
       <Link>CharacterWeapon.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\collisiondetection\BoundingLine.cs">
+      <Link>collisiondetection\BoundingLine.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\BoundingPolygon.cs">
+      <Link>collisiondetection\BoundingPolygon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CollisionDetectionGrid.cs">
+      <Link>collisiondetection\CollisionDetectionGrid.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CollisionDetector.cs">
+      <Link>collisiondetection\CollisionDetector.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CollisionDetectorInterface.cs">
+      <Link>collisiondetection\CollisionDetectorInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CollisionObjectInterface.cs">
+      <Link>collisiondetection\CollisionObjectInterface.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\controls\ControllerInputInterface.cs">
       <Link>controls\ControllerInputInterface.cs</Link>
     </Compile>

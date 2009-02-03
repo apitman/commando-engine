@@ -21,35 +21,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.collisiondetection
 {
-    public class CollisionDetectionGrid
+    public class BoundingPolygon
     {
-        protected static int INITIALLISTCAPACITY = 40;
-        protected List<CollisionObjectInterface>[,] grid_;
+        protected List<BoundingLine> lines_;
 
-        public CollisionDetectionGrid(int dim_x, int dim_y)
+        public BoundingPolygon(List<Point> points)
         {
-            grid_ = new List<CollisionObjectInterface>[dim_x, dim_y];
-
-            for (int i = 0; i < dim_x; i++)
+            lines_ = new List<BoundingLine>();
+            if (points.Count > 2)
             {
-                for (int j = 0; j < dim_y; j++)
-                {
-                    grid_[i, j] = new List<CollisionObjectInterface>(INITIALLISTCAPACITY);
-                }
+                lines_.Add(new BoundingLine(points[0], points[points.Count - 1]));
+            }
+            for (int i = 1; i < points.Count; i++)
+            {
+                lines_.Add(new BoundingLine(points[i - 1], points[i]));
             }
         }
 
-        public void addElement(int x, int y, CollisionObjectInterface obj)
+        public bool checkCollision(Point center, float radius)
         {
-
-        }
-
-        public List<CollisionObjectInterface> getElementsAt(int x, int y)
-        {
-            return grid_[x, y];
+            for (int i = 0; i < lines_.Count; i++)
+            {
+                if (lines_[i].intersect(center, radius))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

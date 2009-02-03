@@ -105,10 +105,12 @@
     <Compile Include="ai\SystemTactics.cs" />
     <Compile Include="ai\WorldState.cs" />
     <Compile Include="CharacterStatusElementInterface.cs" />
+    <Compile Include="collisiondetection\BoundingLine.cs" />
+    <Compile Include="collisiondetection\BoundingPolygon.cs" />
     <Compile Include="collisiondetection\CollisionDetectionGrid.cs" />
     <Compile Include="collisiondetection\CollisionDetector.cs" />
     <Compile Include="collisiondetection\CollisionDetectorInterface.cs" />
-    <Compile Include="collisiondetection\CollisionObjectAbstract.cs" />
+    <Compile Include="collisiondetection\CollisionObjectInterface.cs" />
     <Compile Include="EngineStateControls.cs" />
     <Compile Include="EngineStateLevelEditor.cs" />
     <Compile Include="EngineStateOutofFocus.cs" />
