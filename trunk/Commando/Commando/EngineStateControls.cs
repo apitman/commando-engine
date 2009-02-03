@@ -64,7 +64,7 @@ namespace Commando
                                                engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f),
                                                Color.Green,
                                                Color.White,
-                                               7,
+                                               8,
                                                0.0f,
                                                1.0f,
                                                SpriteEffects.None,
