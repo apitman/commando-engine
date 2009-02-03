@@ -42,6 +42,8 @@ namespace Commando.objects
         public MainPlayer() :
             base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, new Vector2(45.0f, 45.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
+            PlayerHelper.Player_ = this;
+
             List<GameTexture> anims = new List<GameTexture>();
             anims.Add(TextureMap.getInstance().getTexture("SamplePlayer_Small"));
             animations_ = new AnimationSet(anims);

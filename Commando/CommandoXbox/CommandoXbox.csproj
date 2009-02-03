@@ -223,6 +223,9 @@
     <Compile Include="..\Commando\objects\TileObject.cs">
       <Link>objects\TileObject.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\PlayerHelper.cs">
+      <Link>PlayerHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\Program.cs">
       <Link>Program.cs</Link>
     </Compile>
