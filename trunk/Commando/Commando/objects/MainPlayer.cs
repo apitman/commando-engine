@@ -24,30 +24,46 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.controls;
 using Commando.ai;
+using Commando.collisiondetection;
 
 namespace Commando.objects
 {
     /// <summary>
     /// The main player in the game.
     /// </summary>
-    public class MainPlayer : PlayableCharacterAbstract
+    public class MainPlayer : PlayableCharacterAbstract, CollisionObjectInterface
     {
         const bool CONTROLSTYLE = false;
 
         const float TURNSPEED = .30f;
 
+        const float RADIUS = 15.0f;
+
+        protected float radius_;
+
+        protected CollisionDetectorInterface collisionDetector_;
+
         /// <summary>
         /// Create the main player of the game.
         /// </summary>
         public MainPlayer() :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, new Vector2(45.0f, 45.0f), new Vector2(1.0f,0.0f), 0.5f)
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
             PlayerHelper.Player_ = this;
 
             List<GameTexture> anims = new List<GameTexture>();
             anims.Add(TextureMap.getInstance().getTexture("SamplePlayer_Small"));
             animations_ = new AnimationSet(anims);
+            radius_ = RADIUS;
+            collisionDetector_ = new CollisionDetector(null);
         }
+
+        public void setCollisionDetector(CollisionDetectorInterface detector)
+        {
+            collisionDetector_ = detector;
+            collisionDetector_.register(this);
+        }
+
         /// <summary>
         /// Draw the main player at his current position.
         /// </summary>
@@ -69,6 +85,7 @@ namespace Commando.objects
             int MinX = 30;
             int MaxY = 300;
             int MinY = 30;
+            Vector2 newPosition;
             if (CONTROLSTYLE)
             {
                 Vector2 moveVector = Vector2.Zero;
@@ -130,7 +147,7 @@ namespace Commando.objects
                 float moveDiff = (float)Math.Atan2(moveVector.Y, moveVector.X) - getRotationAngle();
                 moveDiff = MathHelper.WrapAngle(moveDiff);
                 moveVector *= (MathHelper.TwoPi - Math.Abs(moveDiff)) / MathHelper.Pi;
-                position_ += moveVector;
+                newPosition = position_ + moveVector;
             }
             else
             {
@@ -169,24 +186,26 @@ namespace Commando.objects
                 moveVector.X = (float)Math.Cos((double)rotAngle) * X - (float)Math.Sin((double)rotAngle) * Y;
                 moveVector.Y = (float)Math.Sin((double)rotAngle) * X + (float)Math.Cos((double)rotAngle) * Y;
                 moveVector *= 2.0f;
-                position_ += moveVector;
-                if (position_.X < MinX)
+                newPosition = position_ + moveVector;
+                if (newPosition.X < MinX)
                 {
-                    position_.X = MinX;
+                    newPosition.X = MinX;
                 }
-                else if (position_.X > MaxX)
+                else if (newPosition.X > MaxX)
                 {
-                    position_.X = MaxX;
+                    newPosition.X = MaxX;
                 }
-                if (position_.Y < MinY)
+                if (newPosition.Y < MinY)
                 {
-                    position_.Y = MinY;
+                    newPosition.Y = MinY;
                 }
-                else if (position_.Y > MaxY)
+                else if (newPosition.Y > MaxY)
                 {
-                    position_.Y = MaxY;
+                    newPosition.Y = MaxY;
                 }
             }
+
+            position_ = collisionDetector_.checkCollisions(this, newPosition);
 
             // TODO Change/fix how this is done, modularize it, etc.
             // Essentially, the player updates his visual location in the WorldState
@@ -199,6 +218,11 @@ namespace Commando.objects
                 visualStimulusId_,
                 new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition())
             );
+        }
+
+        public float getRadius()
+        {
+            return radius_;
         }
     }
 }

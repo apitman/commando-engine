@@ -25,10 +25,10 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.collisiondetection
 {
-    interface CollisionDetectorInterface
+    public interface CollisionDetectorInterface
     {
-        void register(CollisionObjectAbstract obj);
+        void register(CollisionObjectInterface obj);
 
-        Vector2 checkCollisions(CollisionObjectAbstract obj, Vector2 newPosition);
+        Vector2 checkCollisions(CollisionObjectInterface obj, Vector2 newPosition);
     }
 }
