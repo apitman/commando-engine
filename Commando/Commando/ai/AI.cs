@@ -60,6 +60,7 @@ namespace Commando.ai
                 if (b.type_ == BeliefType.EnemyLoc)
                 {
                     Character_.moveTo(b.position_);
+                    Character_.lookAt(b.position_);
                 }
             }
             // End test block
