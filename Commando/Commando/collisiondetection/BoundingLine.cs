@@ -29,6 +29,7 @@ namespace Commando.collisiondetection
     {
         protected Point begin_;
         protected Point end_;
+        protected bool vertical_;
 
         public BoundingLine(Point p1, Point p2)
         {
@@ -44,6 +45,7 @@ namespace Commando.collisiondetection
                     begin_ = p2;
                     end_ = p1;
                 }
+                vertical_ = true;
             }
             else
             {
@@ -57,6 +59,7 @@ namespace Commando.collisiondetection
                     begin_ = p2;
                     end_ = p1;
                 }
+                vertical_ = false;
             }
         }
 
@@ -81,6 +84,63 @@ namespace Commando.collisiondetection
                 return true;
             }
             return false;
+        }
+        
+        public Point checkCollision(Point center, float radius)
+        {
+            if (center.X <= begin_.X && center.X >= end_.X)
+            {
+                if (Math.Abs(center.Y - begin_.Y) < radius)
+                {
+                    center.Y = begin_.Y + (int)Math.Round((float)Math.Sign(center.Y - begin_.Y) * radius);
+                    return center;
+                }
+                if (Math.Abs(center.Y - end_.Y) < radius)
+                {
+                    center.Y = end_.Y + (int)Math.Round((float)Math.Sign(center.Y - end_.Y) * radius);
+                    return center;
+                }
+            }
+            else if (center.Y <= begin_.Y && center.Y >= end_.Y)
+            {
+                if (Math.Abs(center.X - begin_.X) < radius)
+                {
+                    center.X = begin_.X + (int)Math.Round((float)Math.Sign(center.X - begin_.X) * radius);
+                    return center;
+                }
+                if (Math.Abs(center.X - end_.X) < radius)
+                {
+                    center.X = end_.X + (int)Math.Round((float)Math.Sign(center.X - end_.X) * radius);
+                    return center;
+                }
+            }
+            else if (distance(begin_, center) < radius)
+            {
+                if (vertical_)
+                {
+                    center.Y = begin_.Y + (int)Math.Round(Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(begin_.X - center.X, 2.0)));
+                    return center;
+                }
+                else
+                {
+                    center.X = begin_.X + (int)Math.Round(Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(begin_.Y - center.Y, 2.0)));
+                    return center;
+                }
+            }
+            else if (distance(end_, center) < radius)
+            {
+                if (vertical_)
+                {
+                    center.Y = end_.Y - (int)Math.Round(Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(end_.X - center.X, 2.0)));
+                    return center;
+                }
+                else
+                {
+                    center.X = end_.X - (int)Math.Round(Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(end_.Y - center.Y, 2.0)));
+                    return center;
+                }
+            }
+            return center;
         }
 
         protected float distance(Point p1, Point p2)

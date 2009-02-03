@@ -46,6 +46,7 @@ namespace Commando.collisiondetection
             }
         }
 
+        /*
         public Vector2 checkCollisions(CollisionObjectInterface obj, Vector2 newPosition)
         {
             if (checkBoundsCollisions(obj, newPosition) || checkObjectCollisions(obj, newPosition))
@@ -54,9 +55,20 @@ namespace Commando.collisiondetection
             }
             return newPosition;
         }
+        */
+
+        public Vector2 checkCollisions(CollisionObjectInterface obj, Vector2 newPosition)
+        {
+            if(checkObjectCollisions(obj, newPosition))
+            {
+                return obj.getPosition();
+            }
+            return checkBoundsCollisions(obj, newPosition);
+        }
 
         #endregion
 
+        /*
         protected bool checkBoundsCollisions(CollisionObjectInterface obj, Vector2 newPosition)
         {
             Point position = new Point((int)newPosition.X, (int)newPosition.Y);
@@ -70,7 +82,18 @@ namespace Commando.collisiondetection
             }
             return false;
         }
+        */
 
+        protected Vector2 checkBoundsCollisions(CollisionObjectInterface obj, Vector2 newPosition)
+        {
+            Point position = new Point((int)Math.Round(newPosition.X), (int)Math.Round(newPosition.Y));
+            float radius = obj.getRadius();
+            for (int i = 0; i < bounds_.Count; i++)
+            {
+                position = bounds_[i].checkCollision(position, radius);
+            }
+            return new Vector2(position.X, position.Y);
+        }
         protected bool checkObjectCollisions(CollisionObjectInterface obj, Vector2 newPosition)
         {
             for (int i = 0; i < objects_.Count; i++)

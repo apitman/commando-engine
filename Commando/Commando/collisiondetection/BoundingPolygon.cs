@@ -42,6 +42,7 @@ namespace Commando.collisiondetection
             }
         }
 
+        /*
         public bool checkCollision(Point center, float radius)
         {
             for (int i = 0; i < lines_.Count; i++)
@@ -52,6 +53,15 @@ namespace Commando.collisiondetection
                 }
             }
             return false;
+        }
+        */
+        public Point checkCollision(Point center, float radius)
+        {
+            for (int i = 0; i < lines_.Count; i++)
+            {
+                center = lines_[i].checkCollision(center, radius);
+            }
+            return center;
         }
     }
 }

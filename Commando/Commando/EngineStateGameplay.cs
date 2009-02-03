@@ -102,19 +102,19 @@ namespace Commando
             tiles_ = Tiler.getTiles(tiles);
             List<Point> boundsPoints = new List<Point>();
             boundsPoints.Add(new Point(30, 30));
-            boundsPoints.Add(new Point(225, 30));
-            boundsPoints.Add(new Point(225, 90));
-            boundsPoints.Add(new Point(315, 90));
-            boundsPoints.Add(new Point(315, 240));
-            boundsPoints.Add(new Point(225, 240));
-            boundsPoints.Add(new Point(225, 300));
+            boundsPoints.Add(new Point(255, 30));
+            boundsPoints.Add(new Point(255, 90));
+            boundsPoints.Add(new Point(345, 90));
+            boundsPoints.Add(new Point(345, 240));
+            boundsPoints.Add(new Point(255, 240));
+            boundsPoints.Add(new Point(255, 300));
             boundsPoints.Add(new Point(30, 300));
             BoundingPolygon walls = new BoundingPolygon(boundsPoints);
             List<Point> boxBoundsPoints = new List<Point>();
             boxBoundsPoints.Add(new Point(75, 75));
             boxBoundsPoints.Add(new Point(165, 75));
-            boxBoundsPoints.Add(new Point(165, 150));
-            boxBoundsPoints.Add(new Point(75, 150));
+            boxBoundsPoints.Add(new Point(165, 120));
+            boxBoundsPoints.Add(new Point(75, 120));
             BoundingPolygon boxes = new BoundingPolygon(boxBoundsPoints);
             List<BoundingPolygon> polygons = new List<BoundingPolygon>();
             polygons.Add(walls);
@@ -131,6 +131,7 @@ namespace Commando
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
             player_.setCollisionDetector(collisionDetector_);
+            enemy_.setCollisionDetector(collisionDetector_);
         }
 
         #region EngineStateInterface Members
