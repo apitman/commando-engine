@@ -179,6 +179,12 @@ namespace Commando
             }
 
             displayTile_.draw(new GameTime());
+
+            // Draw the palette
+            for (int i = 0; i < NUM_TILES; i++)
+			{
+                TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), 0.2f);
+			}
         }
     }
 }
