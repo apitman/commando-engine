@@ -30,24 +30,37 @@ namespace Commando
     class EngineStateControls : EngineStateInterface
     {
         protected Engine engine_;
-        protected MenuList controlsMenuList_;
+        protected MenuList gameControlsMenuList_;
+        protected MenuList editorControlsMenuList_;
         protected string controlTitle_;
 
         public EngineStateControls(Engine engine)
         {
             controlTitle_ = "PC CONTROLS";
             engine_ = engine;
-            List<string> menuString = new List<string>();
-            menuString.Add("W - move foreward");
-            menuString.Add("S - move backward");
-            menuString.Add("A - sidestep left");
-            menuString.Add("D - sidestep right");
-            menuString.Add("Esc - pause");
-            menuString.Add("Mouse - turn");
-            menuString.Add("Esc - pause");
-            menuString.Add("Press Enter to return to main menu");
-            controlsMenuList_ = new MenuList(menuString,
-                                               new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
+            List<string> gameControlsString = new List<string>();
+            gameControlsString.Add("GAMEPLAY CONTROLS");
+            gameControlsString.Add("W - move foreward");
+            gameControlsString.Add("S - move backward");
+            gameControlsString.Add("A - sidestep left");
+            gameControlsString.Add("D - sidestep right");
+            gameControlsString.Add("Esc - pause");
+            gameControlsString.Add("Mouse - turn");
+            gameControlsString.Add("Esc - pause");
+            gameControlsString.Add("Press Enter to return to main menu");
+
+            List<string> editorControlsString = new List<string>();
+            editorControlsString.Add("EDITOR CONTROLS");
+            editorControlsString.Add("W - move curor up");
+            editorControlsString.Add("S - move cursor down");
+            editorControlsString.Add("A - move cursor left");
+            editorControlsString.Add("D - move cursor right");
+            editorControlsString.Add("Left Shift - Change Tile +");
+            editorControlsString.Add("Spacebar - Change Tile -");
+            editorControlsString.Add("Enter - place tile");
+            editorControlsString.Add("Esc - return to main menu");
+            gameControlsMenuList_ = new MenuList(gameControlsString,
+                                               new Vector2(200.0f,
                                                engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f),
                                                Color.Green,
                                                Color.White,
@@ -57,6 +70,17 @@ namespace Commando
                                                SpriteEffects.None,
                                                1.0f,
                                                40.0f);
+            editorControlsMenuList_ = new MenuList(editorControlsString,
+                                   new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f + 200.0f,
+                                   engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f),
+                                   Color.Green,
+                                   Color.Green,
+                                   7,
+                                   0.0f,
+                                   1.0f,
+                                   SpriteEffects.None,
+                                   1.0f,
+                                   40.0f);
         }
 
         #region EngineStateInterface Members
@@ -94,7 +118,8 @@ namespace Commando
                                            4.0f,
                                            SpriteEffects.None,
                                            1.0f);
-            controlsMenuList_.draw();
+            gameControlsMenuList_.draw();
+            editorControlsMenuList_.draw();
         }
         #endregion
 
