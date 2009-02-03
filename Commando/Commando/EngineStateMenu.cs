@@ -47,6 +47,7 @@ namespace Commando
             List<string> menuString = new List<string>();
             menuString.Add("Start Game");
             menuString.Add("Controls");
+            menuString.Add("Level Editor");
             menuString.Add("Exit");
             
             controlTips_ = "W = scroll up | S = scroll down | Enter = Select | Esc = Exit";
@@ -104,6 +105,9 @@ namespace Commando
                         return new EngineStateControls(engine_);
                         break;
                     case 2:
+                        return new EngineStateLevelEditor(engine_, this , 800, 600);
+                        break;
+                    case 3:
                         engine_.Exit();
                         break;
                 }
