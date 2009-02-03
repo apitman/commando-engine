@@ -11,6 +11,15 @@ C# and Keeping Your Lists Sorted
 Avoiding int.ToString() GC garbage
   * http://forums.xna.com/forums/t/16395.aspx?PageIndex=1
 
+Type casting impact over execution performance in C#
+  * http://www.codeproject.com/KB/cs/csharpcasts.aspx
+
+The C5 Generic Collection Library for C# and CLI
+  * http://www.itu.dk/research/c5/
+
+Implementing a Multimap in C#
+  * http://www.gamedev.net/community/forums/topic.asp?topic_id=321248
+
 == Algorithms ==
 
 Toward More Realistic Pathfinding
