@@ -25,6 +25,11 @@ using Commando.objects;
 
 namespace Commando
 {
+    /// <summary>
+    /// Provides global access to the main player.
+    /// Used by PCControllerInput to get the position of the mouse relative to
+    /// the player for better mouse control.
+    /// </summary>
     public class PlayerHelper
     {
         public static MainPlayer Player_ { get; set; }
