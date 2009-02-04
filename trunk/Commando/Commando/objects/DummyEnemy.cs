@@ -90,9 +90,7 @@ namespace Commando.objects
                     move *= 2.0f;
                 }
                 Vector2 newPosition = position_ + move;
-                Console.Out.Write(newPosition);
                 newPosition = collisionDetector_.checkCollisions(this, newPosition);
-                Console.Out.WriteLine(newPosition);
                 moved_ += (newPosition - position_);
                 position_ = newPosition;
                 if (position_.Equals(movingToward_))
