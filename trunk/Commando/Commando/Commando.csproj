@@ -48,6 +48,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>false</XnaCompressContent>
     <DocumentationFile>bin\x86\Debug\Commando.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -93,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ai\AI.cs" />
+    <Compile Include="ai\AStarPathfinder.cs" />
     <Compile Include="ai\Belief.cs" />
     <Compile Include="ai\Memory.cs" />
     <Compile Include="ai\Sensor.cs" />

@@ -16,8 +16,8 @@ Global Settings
     Header File = sounds.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 1025070180;
-    Last Modified High = 29980920;
+    Last Modified Low = 29980920;
+    Last Modified High = 1025070180;
 
     Category
     {
@@ -278,8 +278,6 @@ Sound Bank
     Windows File = Win\MainMenuSoundBank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 1025226430;
-    Bank Last Modified High = 29980920;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -335,7 +333,7 @@ Sound Bank
 
         Variation
         {
-            Variation Type = 3;
+            Variation Type = 2;
             Variation Table Type = 1;
             New Variation on Loop = 0;
         }
@@ -351,12 +349,12 @@ Sound Bank
         Instance Limit
         {
             Max Instances = 1;
-            Behavior = 0;
+            Behavior = 4;
 
             Crossfade
             {
-                Fade In = 0;
-                Fade Out = 0;
+                Fade In = 5000;
+                Fade Out = 5000;
                 Crossfade Type = 0;
             }
         }
