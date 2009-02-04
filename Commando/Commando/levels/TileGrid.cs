@@ -21,20 +21,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.levels
 {
     public class TileGrid
     {
-        const int TILEWIDTH = 15;
+        public const int TILEWIDTH = 15;
 
-        const int TILEHEIGHT = 15;
+        public const int TILEHEIGHT = 15;
 
         protected Tile[,] tiles_;
 
         public Tile[,] getTiles()
         {
             return tiles_;
+        }
+
+        public static TileIndex getTileIndex(Vector2 position)
+        {
+            return new TileIndex((int)position.X % TILEWIDTH, (int)position.Y % TILEHEIGHT);
         }
     }
 
@@ -48,5 +54,22 @@ namespace Commando.levels
         GROUND,
         LOW,
         HIGH
+    }
+
+    public struct TileIndex
+    {
+        public int x_;
+        public int y_;
+
+        public TileIndex(int x, int y)
+        {
+            x_ = x;
+            y_ = y;
+        }
+
+        public static bool equals(TileIndex lhs, TileIndex rhs)
+        {
+            return lhs.x_ == rhs.x_ && lhs.y_ == rhs.y_;
+        }
     }
 }
