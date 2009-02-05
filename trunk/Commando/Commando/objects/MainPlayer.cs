@@ -47,12 +47,12 @@ namespace Commando.objects
         /// Create the main player of the game.
         /// </summary>
         public MainPlayer() :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 5.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
             PlayerHelper.Player_ = this;
 
             List<GameTexture> anims = new List<GameTexture>();
-            anims.Add(TextureMap.getInstance().getTexture("SamplePlayer_Small"));
+            anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
             animations_ = new AnimationSet(anims);
             radius_ = RADIUS;
             collisionDetector_ = new CollisionDetector(null);
@@ -86,7 +86,7 @@ namespace Commando.objects
             int MaxY = 300;
             int MinY = 30;
             Vector2 newPosition;
-            if (CONTROLSTYLE)
+            if (Settings.getInstance().getMovementType() == MovementType.ABSOLUTE)
             {
                 Vector2 moveVector = Vector2.Zero;
                 if (inputSet_.getLeftDirectionalX() < 0 && position_.X > MinX)
@@ -205,7 +205,11 @@ namespace Commando.objects
                 }
             }
 
-            position_ = collisionDetector_.checkCollisions(this, newPosition);
+            Vector2 newPos = collisionDetector_.checkCollisions(this, newPosition);
+            moved_ += newPos - position_;
+            position_ = newPos;
+            updateFrameNumber();
+            currentFrame_ = animations_.setNextFrame(currentFrame_);
 
             // TODO Change/fix how this is done, modularize it, etc.
             // Essentially, the player updates his visual location in the WorldState
