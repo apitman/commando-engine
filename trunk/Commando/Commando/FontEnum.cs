@@ -26,7 +26,7 @@ namespace Commando
     /// <summary>
     /// Allows autocomplete to pick up on installed fonts
     /// </summary>
-    enum FontEnum
+    public enum FontEnum
 	{
         Kootenay,
         Kootenay48,

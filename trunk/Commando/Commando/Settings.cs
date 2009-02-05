@@ -45,7 +45,7 @@ namespace Commando
             // Singleton
         }
 
-        public Settings getInstance()
+        public static Settings getInstance()
         {
             return instance_;
         }
@@ -78,7 +78,7 @@ namespace Commando
 
     public enum MovementType
     {
-        ABSOLUTE,
-        RELATIVE
+        RELATIVE,
+        ABSOLUTE
     }
 }

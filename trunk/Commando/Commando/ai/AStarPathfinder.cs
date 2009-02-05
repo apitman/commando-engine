@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Commando.levels;
 using Microsoft.Xna.Framework;
@@ -57,6 +58,10 @@ namespace Commando.ai
         // i.e., true = reached in current search, false = garbage data
         protected static bool[,] touched_ =
             new bool[SEARCH_SPACE_WIDTH, SEARCH_SPACE_HEIGHT];
+
+        // TODO Currently being tested, an alternate implementation of touched_
+        protected static BitArray touched2_ =
+            new BitArray(SEARCH_SPACE_WIDTH * SEARCH_SPACE_HEIGHT);
 
         // List of nodes which have been touched but not expanded
         protected static List<TileIndex> openlist_ =
