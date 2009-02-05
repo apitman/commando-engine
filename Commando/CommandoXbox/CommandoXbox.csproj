@@ -247,6 +247,9 @@
     <Compile Include="..\Commando\Program.cs">
       <Link>Program.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\SoundEngine.cs">
       <Link>SoundEngine.cs</Link>
     </Compile>

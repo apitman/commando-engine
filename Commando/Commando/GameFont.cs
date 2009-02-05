@@ -35,7 +35,7 @@ namespace Commando
     /// <summary>
     /// Encapsulates SpriteFonts to make them easier to use
     /// </summary>
-    class GameFont
+    public class GameFont
     {
         /// <summary>
         /// The low-level font object

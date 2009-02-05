@@ -44,7 +44,6 @@ namespace Commando
             gameControlsString.Add("S - move backward");
             gameControlsString.Add("A - sidestep left");
             gameControlsString.Add("D - sidestep right");
-            gameControlsString.Add("Esc - pause");
             gameControlsString.Add("Mouse - turn");
             gameControlsString.Add("Esc - pause");
             gameControlsString.Add("Press Enter to return to main menu");
