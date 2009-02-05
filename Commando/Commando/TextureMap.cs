@@ -123,6 +123,8 @@ namespace Commando
             textures_.Add("Tile_22", new GameTexture("Tiles\\Wall_Corner_I_Bottom_Right", spriteBatch, graphics));
             KeyValuePair<string, GameTexture> basicEnemyWalk = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\basic_enemy_walk.xml", spriteBatch, graphics);
             textures_.Add(basicEnemyWalk.Key, basicEnemyWalk.Value);
+            KeyValuePair<string, GameTexture> playerWalk = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\PlayerWalk.xml", spriteBatch, graphics);
+            textures_.Add(playerWalk.Key, playerWalk.Value);
         }
 
         /// <summary>
