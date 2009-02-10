@@ -81,57 +81,57 @@ namespace CommandoTest
             InputSet instance = InputSet.getInstance();
             instance.reset(); // Reset the singleton
 
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
-            Assert.AreEqual(true, instance.getButton1());
-            Assert.AreEqual(true, instance.getButton2());
-            Assert.AreEqual(true, instance.getButton3());
-            Assert.AreEqual(true, instance.getButton4());
-            Assert.AreEqual(true, instance.getConfirmButton());
-            Assert.AreEqual(true, instance.getCancelButton());
-            Assert.AreEqual(true, instance.getLeftTrigger());
-            Assert.AreEqual(true, instance.getRightTrigger());
-            Assert.AreEqual(true, instance.getLeftBumper());
-            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(1.0f, instance.getRightDirectionalX());
             Assert.AreEqual(1.0f, instance.getRightDirectionalY());
 
-            instance.setButton1(false);
-            instance.setButton2(false);
-            instance.setButton3(false);
-            instance.setButton4(false);
-            instance.setConfirmButton(false);
-            instance.setCancelButton(false);
-            instance.setLeftBumper(false);
-            instance.setRightBumper(false);
-            instance.setLeftTrigger(false);
-            instance.setRightTrigger(false);
-            instance.setLeftDirectional(-1.0f, -1.0f);
-            instance.setRightDirectional(-1.0f, -1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, false);
+            instance.setButton(InputsEnum.BUTTON_2, false);
+            instance.setButton(InputsEnum.BUTTON_3, false);
+            instance.setButton(InputsEnum.BUTTON_4, false);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, false);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, false);
+            instance.setButton(InputsEnum.LEFT_BUMPER, false);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, false);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, false);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, false);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, -1.0f, -1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, -1.0f, -1.0f);
 
-            Assert.AreEqual(false, instance.getButton1());
-            Assert.AreEqual(false, instance.getButton2());
-            Assert.AreEqual(false, instance.getButton3());
-            Assert.AreEqual(false, instance.getButton4());
-            Assert.AreEqual(false, instance.getConfirmButton());
-            Assert.AreEqual(false, instance.getCancelButton());
-            Assert.AreEqual(false, instance.getLeftTrigger());
-            Assert.AreEqual(false, instance.getRightTrigger());
-            Assert.AreEqual(false, instance.getLeftBumper());
-            Assert.AreEqual(false, instance.getRightBumper());
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(-1.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(-1.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(-1.0f, instance.getRightDirectionalX());
@@ -146,18 +146,18 @@ namespace CommandoTest
             instance.reset(); // Reset the singleton
 
             // Set all items to being pushed
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
             // Now, set Toggles on, so that if they are pressed
             // again they will act released until actually being released
@@ -169,30 +169,30 @@ namespace CommandoTest
             // not very likely (and would be readily apparent during playtesting).
 
             // Set them again, as if the buttons were still held down
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
             // Now assert that they act released because of the toggle
-            Assert.AreEqual(false, instance.getButton1());
-            Assert.AreEqual(false, instance.getButton2());
-            Assert.AreEqual(false, instance.getButton3());
-            Assert.AreEqual(false, instance.getButton4());
-            Assert.AreEqual(false, instance.getConfirmButton());
-            Assert.AreEqual(false, instance.getCancelButton());
-            Assert.AreEqual(false, instance.getLeftTrigger());
-            Assert.AreEqual(false, instance.getRightTrigger());
-            Assert.AreEqual(false, instance.getLeftBumper());
-            Assert.AreEqual(false, instance.getRightBumper());
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(0.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(0.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(0.0f, instance.getRightDirectionalX());
@@ -200,60 +200,60 @@ namespace CommandoTest
 
             // Now, act like the user released all buttons, which
             // should clear the toggles
-            instance.setButton1(false);
-            instance.setButton2(false);
-            instance.setButton3(false);
-            instance.setButton4(false);
-            instance.setConfirmButton(false);
-            instance.setCancelButton(false);
-            instance.setLeftBumper(false);
-            instance.setRightBumper(false);
-            instance.setLeftTrigger(false);
-            instance.setRightTrigger(false);
-            instance.setLeftDirectional(0.0f, 0.0f);
-            instance.setRightDirectional(0.0f, 0.0f);
+            instance.setButton(InputsEnum.BUTTON_1, false);
+            instance.setButton(InputsEnum.BUTTON_2, false);
+            instance.setButton(InputsEnum.BUTTON_3, false);
+            instance.setButton(InputsEnum.BUTTON_4, false);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, false);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, false);
+            instance.setButton(InputsEnum.LEFT_BUMPER, false);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, false);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, false);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, false);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 0.0f, 0.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 0.0f, 0.0f);
 
             // Verify the release worked correctly
-            Assert.AreEqual(false, instance.getButton1());
-            Assert.AreEqual(false, instance.getButton2());
-            Assert.AreEqual(false, instance.getButton3());
-            Assert.AreEqual(false, instance.getButton4());
-            Assert.AreEqual(false, instance.getConfirmButton());
-            Assert.AreEqual(false, instance.getCancelButton());
-            Assert.AreEqual(false, instance.getLeftTrigger());
-            Assert.AreEqual(false, instance.getRightTrigger());
-            Assert.AreEqual(false, instance.getLeftBumper());
-            Assert.AreEqual(false, instance.getRightBumper());
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(0.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(0.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(0.0f, instance.getRightDirectionalX());
             Assert.AreEqual(0.0f, instance.getRightDirectionalY());
 
             // Now the toggles should be cleared, so set all buttons
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
             // And make sure everything works normally
-            Assert.AreEqual(true, instance.getButton1());
-            Assert.AreEqual(true, instance.getButton2());
-            Assert.AreEqual(true, instance.getButton3());
-            Assert.AreEqual(true, instance.getButton4());
-            Assert.AreEqual(true, instance.getConfirmButton());
-            Assert.AreEqual(true, instance.getCancelButton());
-            Assert.AreEqual(true, instance.getLeftTrigger());
-            Assert.AreEqual(true, instance.getRightTrigger());
-            Assert.AreEqual(true, instance.getLeftBumper());
-            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(1.0f, instance.getRightDirectionalX());
@@ -267,30 +267,30 @@ namespace CommandoTest
             instance.clearToggles();
 
             // Now the toggles should be cleared, so set all buttons
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
             // And make sure everything works correctly
-            Assert.AreEqual(true, instance.getButton1());
-            Assert.AreEqual(true, instance.getButton2());
-            Assert.AreEqual(true, instance.getButton3());
-            Assert.AreEqual(true, instance.getButton4());
-            Assert.AreEqual(true, instance.getConfirmButton());
-            Assert.AreEqual(true, instance.getCancelButton());
-            Assert.AreEqual(true, instance.getLeftTrigger());
-            Assert.AreEqual(true, instance.getRightTrigger());
-            Assert.AreEqual(true, instance.getLeftBumper());
-            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(1.0f, instance.getRightDirectionalX());
@@ -312,90 +312,90 @@ namespace CommandoTest
             // not very likely (and would be readily apparent during playtesting).
 
             // Now try to tell it that everything is still held down
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
             // Make sure the Stick is working and devices act released
-            Assert.AreEqual(false, instance.getButton1());
-            Assert.AreEqual(false, instance.getButton2());
-            Assert.AreEqual(false, instance.getButton3());
-            Assert.AreEqual(false, instance.getButton4());
-            Assert.AreEqual(false, instance.getConfirmButton());
-            Assert.AreEqual(false, instance.getCancelButton());
-            Assert.AreEqual(false, instance.getLeftTrigger());
-            Assert.AreEqual(false, instance.getRightTrigger());
-            Assert.AreEqual(false, instance.getLeftBumper());
-            Assert.AreEqual(false, instance.getRightBumper());
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(0.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(0.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(0.0f, instance.getRightDirectionalX());
             Assert.AreEqual(0.0f, instance.getRightDirectionalY());
 
             // Try again for update #2
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
             // Make sure the Stick is working and devices act released
-            Assert.AreEqual(false, instance.getButton1());
-            Assert.AreEqual(false, instance.getButton2());
-            Assert.AreEqual(false, instance.getButton3());
-            Assert.AreEqual(false, instance.getButton4());
-            Assert.AreEqual(false, instance.getConfirmButton());
-            Assert.AreEqual(false, instance.getCancelButton());
-            Assert.AreEqual(false, instance.getLeftTrigger());
-            Assert.AreEqual(false, instance.getRightTrigger());
-            Assert.AreEqual(false, instance.getLeftBumper());
-            Assert.AreEqual(false, instance.getRightBumper());
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(false, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(0.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(0.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(0.0f, instance.getRightDirectionalX());
             Assert.AreEqual(0.0f, instance.getRightDirectionalY());
 
             // Now, the stick should have worn off
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
             // Verify it wore off correctly
-            Assert.AreEqual(true, instance.getButton1());
-            Assert.AreEqual(true, instance.getButton2());
-            Assert.AreEqual(true, instance.getButton3());
-            Assert.AreEqual(true, instance.getButton4());
-            Assert.AreEqual(true, instance.getConfirmButton());
-            Assert.AreEqual(true, instance.getCancelButton());
-            Assert.AreEqual(true, instance.getLeftTrigger());
-            Assert.AreEqual(true, instance.getRightTrigger());
-            Assert.AreEqual(true, instance.getLeftBumper());
-            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(1.0f, instance.getRightDirectionalX());
@@ -408,30 +408,30 @@ namespace CommandoTest
             instance.clearSticks();
 
             // The stick should be cleared, so we can set everything
-            instance.setButton1(true);
-            instance.setButton2(true);
-            instance.setButton3(true);
-            instance.setButton4(true);
-            instance.setConfirmButton(true);
-            instance.setCancelButton(true);
-            instance.setLeftBumper(true);
-            instance.setRightBumper(true);
-            instance.setLeftTrigger(true);
-            instance.setRightTrigger(true);
-            instance.setLeftDirectional(1.0f, 1.0f);
-            instance.setRightDirectional(1.0f, 1.0f);
+            instance.setButton(InputsEnum.BUTTON_1, true);
+            instance.setButton(InputsEnum.BUTTON_2, true);
+            instance.setButton(InputsEnum.BUTTON_3, true);
+            instance.setButton(InputsEnum.BUTTON_4, true);
+            instance.setButton(InputsEnum.CONFIRM_BUTTON, true);
+            instance.setButton(InputsEnum.CANCEL_BUTTON, true);
+            instance.setButton(InputsEnum.LEFT_BUMPER, true);
+            instance.setButton(InputsEnum.RIGHT_BUMPER, true);
+            instance.setButton(InputsEnum.LEFT_TRIGGER, true);
+            instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
+            instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
 
             // And now verify that the sticks cleared correctly
-            Assert.AreEqual(true, instance.getButton1());
-            Assert.AreEqual(true, instance.getButton2());
-            Assert.AreEqual(true, instance.getButton3());
-            Assert.AreEqual(true, instance.getButton4());
-            Assert.AreEqual(true, instance.getConfirmButton());
-            Assert.AreEqual(true, instance.getCancelButton());
-            Assert.AreEqual(true, instance.getLeftTrigger());
-            Assert.AreEqual(true, instance.getRightTrigger());
-            Assert.AreEqual(true, instance.getLeftBumper());
-            Assert.AreEqual(true, instance.getRightBumper());
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_1));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_2));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_3));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_4));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CONFIRM_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.CANCEL_BUTTON));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_TRIGGER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.LEFT_BUMPER));
+            Assert.AreEqual(true, instance.getButton(InputsEnum.RIGHT_BUMPER));
             Assert.AreEqual(1.0f, instance.getLeftDirectionalX());
             Assert.AreEqual(1.0f, instance.getLeftDirectionalY());
             Assert.AreEqual(1.0f, instance.getRightDirectionalX());
@@ -452,10 +452,10 @@ namespace CommandoTest
 
             // And now set each player to different values to make
             // sure they all work independently
-            p1.setLeftDirectional(-1.0f, -1.0f);
-            p2.setLeftDirectional(0.0f, 0.0f);
-            p3.setLeftDirectional(1.0f, 1.0f);
-            p4.setLeftDirectional(0.5f, 0.5f);
+            p1.setDirectional(InputsEnum.LEFT_DIRECTIONAL, -1.0f, -1.0f);
+            p2.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 0.0f, 0.0f);
+            p3.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
+            p4.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 0.5f, 0.5f);
 
             Assert.AreEqual(p1.getLeftDirectionalX(), -1.0f);
             Assert.AreEqual(p2.getLeftDirectionalX(), 0.0f);

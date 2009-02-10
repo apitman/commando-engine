@@ -22,6 +22,15 @@ using System.Collections.Generic;
 using Commando.levels;
 using Microsoft.Xna.Framework;
 
+// TODO
+//
+// Change the implementation of the bool array to a bitset?
+//
+// Change the List openlist to a linked list stored inside of the
+//  SearchSpace data structure by adding "next" and "previous" pointers
+//  inside of AStarPathfinderNode
+//
+
 namespace Commando.ai
 {
     /// <summary>
@@ -163,16 +172,13 @@ namespace Commando.ai
                 return;
             }
             
-            // If we haven't been here yet or our new f-value is better, update it
+            // If we haven't been here yet or our cost is better, update it
             // and add to the openlist
-            float h = heuristicDistance(x, y);
-            float f = g + h;
             if (!touched_[x, y] || (searchSpace_[x, y].open && g < searchSpace_[x, y].g))
             {
-
                 searchSpace_[x, y].parent = parent;
                 searchSpace_[x, y].g = g;
-                searchSpace_[x, y].f = f;
+                searchSpace_[x, y].f = g + heuristicDistance(x, y);
 
                 // Hasn't been found before, so add it to openlist
                 if (!touched_[x, y])

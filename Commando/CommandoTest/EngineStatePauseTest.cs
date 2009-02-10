@@ -68,7 +68,7 @@ namespace CommandoTest
             Engine engine = new Engine();
             EngineStateGameplay gameplayState = new EngineStateGameplay(engine);
             EngineStatePause pauseState = new EngineStatePause(engine, gameplayState);
-            InputSet.getInstance().setConfirmButton(true);
+            InputSet.getInstance().setButton(InputsEnum.CONFIRM_BUTTON, true);
             EngineStateGameplay returnedState = (EngineStateGameplay)pauseState.update(new GameTime());
 
             Assert.AreSame(gameplayState, returnedState);

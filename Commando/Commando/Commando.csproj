@@ -153,6 +153,7 @@
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
     <Compile Include="objects\TileObject.cs" />
     <Compile Include="PlayerHelper.cs" />
+    <Compile Include="Pool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Engine.cs" />

@@ -17,6 +17,12 @@
 */
 
 using Microsoft.Xna.Framework;
+using System;
+
+// TODO
+//
+// Refactor this to have a single set function for values
+//
 
 namespace Commando.controls
 {
@@ -27,6 +33,7 @@ namespace Commando.controls
     /// </summary>
     public class InputSet
     {
+
         /// <summary>
         /// An array of instances of InputSets, one for each possible player.
         /// </summary>
@@ -47,25 +54,9 @@ namespace Commando.controls
         /// </summary>
         protected bool[] toggleState_ = new bool[(int)InputsEnum.LENGTH];
 
-        protected float leftDirectionalX_;
-        protected float leftDirectionalY_;
-
-        protected float rightDirectionalX_;
-        protected float rightDirectionalY_;
-
-        protected bool confirmButton_;
-        protected bool cancelButton_;
-
-        protected bool button1_;
-        protected bool button2_;
-        protected bool button3_;
-        protected bool button4_;
-
-        protected bool leftTrigger_;
-        protected bool rightTrigger_;
-
-        protected bool leftBumper_;
-        protected bool rightBumper_;
+        private const int ARRAY_OFFSET = 2;
+        protected Vector2[] directionals_ = new Vector2[ARRAY_OFFSET];
+        protected bool[] buttons_ = new bool[(int)InputsEnum.LENGTH - ARRAY_OFFSET];
 
         /// <summary>
         /// Statically creates an InputSet for four different players.
@@ -115,316 +106,104 @@ namespace Commando.controls
             return instances_[i];
         }
 
-        # region GETTERS
-
         public float getLeftDirectionalX()
         {
-            return leftDirectionalX_;
+            return directionals_[0].X;
         }
 
         public float getLeftDirectionalY()
         {
-            return leftDirectionalY_;
+            return directionals_[0].Y;
         }
 
         public float getRightDirectionalX()
         {
-            return rightDirectionalX_;
+            return directionals_[1].X;
         }
 
         public float getRightDirectionalY()
         {
-            return rightDirectionalY_;
+            return directionals_[1].Y;
         }
 
-        public bool getConfirmButton()
+        /// <summary>
+        /// Retrieves the value of a button-type device.
+        /// </summary>
+        /// <param name="button">Button value to retrieve</param>
+        /// <returns>Returns true if pressed, false if depressed</returns>
+        public bool getButton(InputsEnum button)
         {
-            return confirmButton_;
-        }
-
-        public bool getCancelButton()
-        {
-            return cancelButton_;
-        }
-
-        public bool getButton1()
-        {
-            return button1_;
-        }
-
-        public bool getButton2()
-        {
-            return button2_;
-        }
-
-        public bool getButton3()
-        {
-            return button3_;
-        }
-
-        public bool getButton4()
-        {
-            return button4_;
-        }
-
-        public bool getLeftTrigger()
-        {
-            return leftTrigger_;
-        }
-
-        public bool getRightTrigger()
-        {
-            return rightTrigger_;
-        }
-
-        public bool getLeftBumper()
-        {
-            return leftBumper_;
-        }
-
-        public bool getRightBumper()
-        {
-            return rightBumper_;
-        }
-
-        #endregion
-
-        #region SETTERS
-
-        public void setLeftDirectional(float x, float y)
-        {
-            if (stickState_[(int)InputsEnum.LEFT_DIRECTIONAL] > 0 ||
-                toggleState_[(int)InputsEnum.LEFT_DIRECTIONAL])
+            int index = (int)button;
+            if (index < ARRAY_OFFSET || index >= (int)InputsEnum.LENGTH)
             {
-                if (stickState_[(int)InputsEnum.LEFT_DIRECTIONAL] > 0)
+                throw new InvalidInputSetException();
+            }
+            index -= ARRAY_OFFSET; // normalize to the buttons_ array
+            return buttons_[index];
+        }
+
+        /// <summary>
+        /// Sets a directional-type device to a specific value.
+        /// </summary>
+        /// <param name="device">Directional device to be set</param>
+        /// <param name="x">Cartesian X</param>
+        /// <param name="y">Cartesian Y</param>
+        public void setDirectional(InputsEnum device, float x, float y)
+        {
+            int index = (int)device;
+            if (index < 0 || index > ARRAY_OFFSET)
+            {
+                throw new InvalidInputSetException();
+            }
+            if (stickState_[index] > 0 ||
+                toggleState_[index])
+            {
+                if (stickState_[index] > 0)
                 {
-                    stickState_[(int)InputsEnum.LEFT_DIRECTIONAL]--;
+                    stickState_[index]--;
                 }
                 if (x == 0 && y == 0)
                 {
-                    toggleState_[(int)InputsEnum.LEFT_DIRECTIONAL] = false;
+                    toggleState_[index] = false;
                 }
-                leftDirectionalX_ = 0;
-                leftDirectionalY_ = 0;
+                directionals_[index].X = 0;
+                directionals_[index].Y = 0;
                 return;
             }
-            leftDirectionalX_ = x;
-            leftDirectionalY_ = y;
+            directionals_[index].X = x;
+            directionals_[index].Y = y;
         }
 
-        public void setRightDirectional(float x, float y)
+        /// <summary>
+        /// Sets a button-type device to a specific value.
+        /// </summary>
+        /// <param name="device">Button to set</param>
+        /// <param name="value">True = pressed, False = depressed</param>
+        public void setButton(InputsEnum device, bool value)
         {
-            if (stickState_[(int)InputsEnum.RIGHT_DIRECTIONAL] > 0 ||
-                toggleState_[(int)InputsEnum.RIGHT_DIRECTIONAL])
+            int index = (int)device;
+            if (index < ARRAY_OFFSET || index >= (int)InputsEnum.LENGTH)
             {
-                if (stickState_[(int)InputsEnum.RIGHT_DIRECTIONAL] > 0)
+                throw new InvalidInputSetException();
+            }
+            if (stickState_[index] > 0 ||
+                toggleState_[index])
+            {
+                if (stickState_[index] > 0)
                 {
-                    stickState_[(int)InputsEnum.RIGHT_DIRECTIONAL]--;
+                    stickState_[index]--;
                 }
-                if (x == 0 && y == 0)
+                if (!value)
                 {
-                    toggleState_[(int)InputsEnum.RIGHT_DIRECTIONAL] = false;
+                    toggleState_[index] = false;
                 }
-                rightDirectionalX_ = 0;
-                rightDirectionalY_ = 0;
+                index -= ARRAY_OFFSET; // normalize to the buttons_ array
+                buttons_[index] = false;
                 return;
             }
-            rightDirectionalX_ = x;
-            rightDirectionalY_ = y;
+            index -= ARRAY_OFFSET; // normalize to the buttons_ array
+            buttons_[index] = value;
         }
-
-        public void setConfirmButton(bool value)
-        {
-            if (stickState_[(int)InputsEnum.CONFIRM_BUTTON] > 0 ||
-                toggleState_[(int)InputsEnum.CONFIRM_BUTTON])
-            {
-                if (stickState_[(int)InputsEnum.CONFIRM_BUTTON] > 0)
-                {
-                    stickState_[(int)InputsEnum.CONFIRM_BUTTON]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.CONFIRM_BUTTON] = false;
-                }
-                confirmButton_ = false;
-                return;
-            }
-            confirmButton_ = value;
-        }
-
-        public void setCancelButton(bool value)
-        {
-            if (stickState_[(int)InputsEnum.CANCEL_BUTTON] > 0 ||
-                toggleState_[(int)InputsEnum.CANCEL_BUTTON])
-            {
-                if (stickState_[(int)InputsEnum.CANCEL_BUTTON] > 0)
-                {
-                    stickState_[(int)InputsEnum.CANCEL_BUTTON]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.CANCEL_BUTTON] = false;
-                }
-                cancelButton_ = false;
-                return;
-            }
-            cancelButton_ = value;
-        }
-
-        public void setButton1(bool value)
-        {
-            if (stickState_[(int)InputsEnum.BUTTON_1] > 0 ||
-                toggleState_[(int)InputsEnum.BUTTON_1])
-            {
-                if (stickState_[(int)InputsEnum.BUTTON_1] > 0)
-                {
-                    stickState_[(int)InputsEnum.BUTTON_1]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.BUTTON_1] = false;
-                }
-                button1_ = false;
-                return;
-            }
-            button1_ = value;
-        }
-
-        public void setButton2(bool value)
-        {
-            if (stickState_[(int)InputsEnum.BUTTON_2] > 0 ||
-                    toggleState_[(int)InputsEnum.BUTTON_2])
-            {
-                if (stickState_[(int)InputsEnum.BUTTON_2] > 0)
-                {
-                    stickState_[(int)InputsEnum.BUTTON_2]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.BUTTON_2] = false;
-                }
-                button2_ = false;
-                return;
-            }
-            button2_ = value;
-        }
-
-        public void setButton3(bool value)
-        {
-            if (stickState_[(int)InputsEnum.BUTTON_3] > 0 ||
-                    toggleState_[(int)InputsEnum.BUTTON_3])
-            {
-                if (stickState_[(int)InputsEnum.BUTTON_3] > 0)
-                {
-                    stickState_[(int)InputsEnum.BUTTON_3]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.BUTTON_3] = false;
-                }
-                button3_ = false;
-                return;
-            }
-            button3_ = value;
-        }
-
-        public void setButton4(bool value)
-        {
-            if (stickState_[(int)InputsEnum.BUTTON_4] > 0 ||
-                    toggleState_[(int)InputsEnum.BUTTON_4])
-            {
-                if (stickState_[(int)InputsEnum.BUTTON_4] > 0)
-                {
-                    stickState_[(int)InputsEnum.BUTTON_4]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.BUTTON_4] = false;
-                }
-                button4_ = false;
-                return;
-            }
-            button4_ = value;
-        }
-
-        public void setLeftTrigger(bool value)
-        {
-            if (stickState_[(int)InputsEnum.LEFT_TRIGGER] > 0 ||
-                toggleState_[(int)InputsEnum.LEFT_TRIGGER])
-            {
-                if (stickState_[(int)InputsEnum.LEFT_TRIGGER] > 0)
-                {
-                    stickState_[(int)InputsEnum.LEFT_TRIGGER]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.LEFT_TRIGGER] = false;
-                }
-                leftTrigger_ = false;
-                return;
-            }
-            leftTrigger_ = value;
-        }
-
-        public void setRightTrigger(bool value)
-        {
-            if (stickState_[(int)InputsEnum.RIGHT_TRIGGER] > 0 ||
-                toggleState_[(int)InputsEnum.RIGHT_TRIGGER])
-            {
-                if (stickState_[(int)InputsEnum.RIGHT_TRIGGER] > 0)
-                {
-                    stickState_[(int)InputsEnum.RIGHT_TRIGGER]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.RIGHT_TRIGGER] = false;
-                }
-                rightTrigger_ = false;
-                return;
-            }
-            rightTrigger_ = value;
-        }
-
-        public void setLeftBumper(bool value)
-        {
-            if (stickState_[(int)InputsEnum.LEFT_BUMPER] > 0 ||
-                toggleState_[(int)InputsEnum.LEFT_BUMPER])
-            {
-                if (stickState_[(int)InputsEnum.LEFT_BUMPER] > 0)
-                {
-                    stickState_[(int)InputsEnum.LEFT_BUMPER]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.LEFT_BUMPER] = false;
-                }
-                leftBumper_ = false;
-                return;
-            }
-            leftBumper_ = value;
-        }
-
-        public void setRightBumper(bool value)
-        {
-            if (stickState_[(int)InputsEnum.RIGHT_BUMPER] > 0 ||
-                toggleState_[(int)InputsEnum.RIGHT_BUMPER])
-            {
-                if (stickState_[(int)InputsEnum.RIGHT_BUMPER] > 0)
-                {
-                    stickState_[(int)InputsEnum.RIGHT_BUMPER]--;
-                }
-                if (value == false)
-                {
-                    toggleState_[(int)InputsEnum.RIGHT_BUMPER] = false;
-                }
-                rightBumper_ = false;
-                return;
-            }
-            rightBumper_ = value;
-        }
-
-        #endregion
-
 
         /// <summary>
         /// Causes an input unit to act released for a set number of frames.
@@ -516,20 +295,15 @@ namespace Commando.controls
         /// </summary>
         public void clearInputs()
         {
-            leftDirectionalX_ = 0;
-            leftDirectionalY_ = 0;
-            rightDirectionalX_ = 0;
-            rightDirectionalY_ = 0;
-            confirmButton_ = false;
-            cancelButton_ = false;
-            button1_ = false;
-            button2_ = false;
-            button3_ = false;
-            button4_ = false;
-            leftTrigger_ = false;
-            rightTrigger_ = false;
-            leftBumper_ = false;
-            rightBumper_ = false;
+            for (int i = 0; i < ARRAY_OFFSET; i++)
+            {
+                directionals_[i].X = 0;
+                directionals_[i].Y = 0;
+            }
+            for (int i = 0; i < (int)InputsEnum.LENGTH - ARRAY_OFFSET; i++)
+            {
+                buttons_[i] = false;
+            }
         }
 
         /// <summary>
@@ -567,5 +341,14 @@ namespace Commando.controls
         RIGHT_BUMPER,
         
         LENGTH
+    }
+
+    /// <summary>
+    /// Represents an error because a caller tried to set a particular
+    /// device with the wrong type of inputs for that device.
+    /// </summary>
+    internal class InvalidInputSetException : Exception
+    {
+
     }
 }

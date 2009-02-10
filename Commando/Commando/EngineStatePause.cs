@@ -107,7 +107,7 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.getConfirmButton())
+            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 switch (pauseMenu_.getCursorPos())
@@ -133,7 +133,7 @@ namespace Commando
                 }
             }
 
-            if (inputs.getCancelButton())
+            if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
                 return savedState_;
