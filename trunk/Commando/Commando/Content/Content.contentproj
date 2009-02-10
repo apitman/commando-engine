@@ -373,6 +373,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tiles\TileHighlight.png">
+      <Name>TileHighlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\Xbox\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

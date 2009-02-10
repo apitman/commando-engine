@@ -180,6 +180,9 @@ namespace Commando
 
             displayTile_.draw(new GameTime());
 
+            // Draw the highlight
+            TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((float)cursorPosX_ * Tiler.tileSideLength_ - 1.0f, (float)cursorPosY_ * Tiler.tileSideLength_ - 1.0f), 0.15f);
+
             // Draw the palette
             for (int i = 0; i < NUM_TILES; i++)
 			{
