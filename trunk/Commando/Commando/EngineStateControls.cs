@@ -94,7 +94,7 @@ namespace Commando
 
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.getConfirmButton()) // tenatively Enter / Start
+            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON)) // tenatively Enter / Start
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 return new EngineStateMenu(engine_);

@@ -81,17 +81,17 @@ namespace Commando
             InputSet inputs = engine_.getInputs();
 
             // Temporary for Andrew's test purposes
-            if (inputs.getButton1())
+            if (inputs.getButton(InputsEnum.BUTTON_1))
             {
                 return new EngineStateLevelEditor(engine_, this, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             }
 
-            if (inputs.getCancelButton()) // tenatively Escape / Back
+            if (inputs.getButton(InputsEnum.CANCEL_BUTTON)) // tenatively Escape / Back
             {
                 engine_.Exit();
             }
 
-            if (inputs.getConfirmButton()) // tenatively Enter / Start
+            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON)) // tenatively Enter / Start
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 //get position of cursor from mainMenuList_

@@ -99,8 +99,7 @@ namespace Commando.controls
                 leftX += -1.0f;
             }
 
-            inputs_.setLeftDirectional(leftX, leftY);
-
+            inputs_.setDirectional(InputsEnum.LEFT_DIRECTIONAL, leftX, leftY);
 
             if (PlayerHelper.Player_ != null)
             {
@@ -109,27 +108,33 @@ namespace Commando.controls
                 Vector2 rightDirectional =
                     new Vector2(ms.X - playerCenter.X, ms.Y - playerCenter.Y);
                 rightDirectional.Normalize();
-                inputs_.setRightDirectional(rightDirectional.X,
-                                        rightDirectional.Y);
+                inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL,
+                                    rightDirectional.X, rightDirectional.Y);
             }
             else
             {
-                inputs_.setRightDirectional(-1, -1);
+                inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, -1, -1);
             }
 
-            inputs_.setConfirmButton(ks.IsKeyDown(CONFIRM));
-            inputs_.setCancelButton(ks.IsKeyDown(CANCEL));
+            inputs_.setButton(InputsEnum.CONFIRM_BUTTON,
+                                ks.IsKeyDown(CONFIRM));
+            inputs_.setButton(InputsEnum.CANCEL_BUTTON,
+                                ks.IsKeyDown(CANCEL));
 
-            inputs_.setButton1(ks.IsKeyDown(BUTTON_1));
-            inputs_.setButton2(ks.IsKeyDown(BUTTON_2));
-            inputs_.setButton3(ks.IsKeyDown(BUTTON_3));
-            inputs_.setButton4(ks.IsKeyDown(BUTTON_4));
+            inputs_.setButton(InputsEnum.BUTTON_1, ks.IsKeyDown(BUTTON_1));
+            inputs_.setButton(InputsEnum.BUTTON_2, ks.IsKeyDown(BUTTON_2));
+            inputs_.setButton(InputsEnum.BUTTON_3, ks.IsKeyDown(BUTTON_3));
+            inputs_.setButton(InputsEnum.BUTTON_4, ks.IsKeyDown(BUTTON_4));
 
-            inputs_.setLeftTrigger(ms.LeftButton == ButtonState.Pressed);
-            inputs_.setRightTrigger(ms.RightButton == ButtonState.Pressed);
+            inputs_.setButton(InputsEnum.LEFT_TRIGGER,
+                                ms.LeftButton == ButtonState.Pressed);
+            inputs_.setButton(InputsEnum.RIGHT_TRIGGER,
+                                ms.RightButton == ButtonState.Pressed);
 
-            inputs_.setLeftBumper(ks.IsKeyDown(LEFT_BUMPER));
-            inputs_.setRightBumper(ks.IsKeyDown(RIGHT_BUMPER));
+            inputs_.setButton(InputsEnum.LEFT_BUMPER,
+                                ks.IsKeyDown(LEFT_BUMPER));
+            inputs_.setButton(InputsEnum.RIGHT_BUMPER,
+                                ks.IsKeyDown(RIGHT_BUMPER));
         }
 
         #endregion

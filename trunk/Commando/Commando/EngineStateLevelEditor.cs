@@ -98,7 +98,7 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.getCancelButton())
+            if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
                 engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
@@ -139,19 +139,19 @@ namespace Commando
                 }
             }
 
-            if (inputs.getConfirmButton())
+            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
             }
 
-            if (inputs.getButton1())
+            if (inputs.getButton(InputsEnum.BUTTON_1))
             {
                 inputs.setToggle(InputsEnum.BUTTON_1);
                 curTileIndex_ = (curTileIndex_ + 1) % NUM_TILES;
             }
 
-            if (inputs.getButton2())
+            if (inputs.getButton(InputsEnum.BUTTON_2))
             {
                 inputs.setToggle(InputsEnum.BUTTON_2);
                 if (curTileIndex_ == 0)

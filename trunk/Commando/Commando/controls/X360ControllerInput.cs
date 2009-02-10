@@ -87,23 +87,25 @@ namespace Commando.controls
         {
             GamePadState gps = GamePad.GetState(player_);
 
-            inputs_.setLeftDirectional(gps.ThumbSticks.Left.X,
+            inputs_.setDirectional(InputsEnum.LEFT_DIRECTIONAL,
+                                        gps.ThumbSticks.Left.X,
                                         gps.ThumbSticks.Left.Y);
-            inputs_.setRightDirectional(gps.ThumbSticks.Right.X,
+            inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL,
+                                        gps.ThumbSticks.Right.X,
                                         -gps.ThumbSticks.Right.Y);
 
-            inputs_.setConfirmButton(gps.IsButtonDown(CONFIRM));
-            inputs_.setCancelButton(gps.IsButtonDown(CANCEL));
+            inputs_.setButton(InputsEnum.CONFIRM_BUTTON, gps.IsButtonDown(CONFIRM));
+            inputs_.setButton(InputsEnum.CANCEL_BUTTON, gps.IsButtonDown(CANCEL));
 
-            inputs_.setButton1(gps.IsButtonDown(BUTTON_1));
-            inputs_.setButton2(gps.IsButtonDown(BUTTON_2));
-            inputs_.setButton3(gps.IsButtonDown(BUTTON_3));
-            inputs_.setButton4(gps.IsButtonDown(BUTTON_4));
+            inputs_.setButton(InputsEnum.BUTTON_1, gps.IsButtonDown(BUTTON_1));
+            inputs_.setButton(InputsEnum.BUTTON_2, gps.IsButtonDown(BUTTON_2));
+            inputs_.setButton(InputsEnum.BUTTON_3, gps.IsButtonDown(BUTTON_3));
+            inputs_.setButton(InputsEnum.BUTTON_4, gps.IsButtonDown(BUTTON_4));
 
-            inputs_.setLeftTrigger(gps.IsButtonDown(LEFT_TRIGGER));
-            inputs_.setRightTrigger(gps.IsButtonDown(RIGHT_TRIGGER));
-            inputs_.setLeftBumper(gps.IsButtonDown(LEFT_BUMPER));
-            inputs_.setRightBumper(gps.IsButtonDown(RIGHT_BUMPER));
+            inputs_.setButton(InputsEnum.LEFT_TRIGGER, gps.IsButtonDown(LEFT_TRIGGER));
+            inputs_.setButton(InputsEnum.RIGHT_TRIGGER, gps.IsButtonDown(RIGHT_TRIGGER));
+            inputs_.setButton(InputsEnum.LEFT_BUMPER, gps.IsButtonDown(LEFT_BUMPER));
+            inputs_.setButton(InputsEnum.RIGHT_BUMPER, gps.IsButtonDown(RIGHT_BUMPER));
 
         }
 
