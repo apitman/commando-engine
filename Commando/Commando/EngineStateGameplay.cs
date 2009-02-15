@@ -51,9 +51,10 @@ namespace Commando
         const float FONT_DRAW_DEPTH = 0.9f;
 
         //Jared's test stuff
-        protected MainPlayer player_;
+        //protected MainPlayer player_;
+        protected ActuatedMainPlayer player_;
         protected DummyEnemy enemy_;
-        protected CollisionDetector collisionDetector_;
+        protected CollisionDetectorInterface collisionDetector_;
         //END Jared's test stuff
 
         protected Engine engine_;
@@ -75,7 +76,8 @@ namespace Commando
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             engine_.IsMouseVisible = true;
             //Jared's test stuff
-            player_ = new MainPlayer();
+            //player_ = new MainPlayer();
+            player_ = new ActuatedMainPlayer();
             enemy_ = new DummyEnemy();
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
@@ -100,26 +102,36 @@ namespace Commando
                                         {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
                                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
             tiles_ = Tiler.getTiles(tiles);
-            List<Point> boundsPoints = new List<Point>();
-            boundsPoints.Add(new Point(30, 30));
-            boundsPoints.Add(new Point(255, 30));
-            boundsPoints.Add(new Point(255, 90));
-            boundsPoints.Add(new Point(345, 90));
-            boundsPoints.Add(new Point(345, 240));
-            boundsPoints.Add(new Point(255, 240));
-            boundsPoints.Add(new Point(255, 300));
-            boundsPoints.Add(new Point(30, 300));
+            List<Vector2> boundsPoints = new List<Vector2>();
+            boundsPoints.Add(new Vector2(30f, 30f));
+            boundsPoints.Add(new Vector2(255f, 30f));
+            boundsPoints.Add(new Vector2(255f, 90f));
+            boundsPoints.Add(new Vector2(345f, 90f));
+            boundsPoints.Add(new Vector2(345f, 240f));
+            boundsPoints.Add(new Vector2(255f, 240f));
+            boundsPoints.Add(new Vector2(255f, 300f));
+            boundsPoints.Add(new Vector2(30f, 300f));
             BoundingPolygon walls = new BoundingPolygon(boundsPoints);
-            List<Point> boxBoundsPoints = new List<Point>();
-            boxBoundsPoints.Add(new Point(75, 75));
-            boxBoundsPoints.Add(new Point(165, 75));
-            boxBoundsPoints.Add(new Point(165, 120));
-            boxBoundsPoints.Add(new Point(75, 120));
+            List<Vector2> boxBoundsPoints = new List<Vector2>();
+            /*
+            boxBoundsPoints.Add(new Vector2(75f, 75f));
+            boxBoundsPoints.Add(new Vector2(165f, 75f));
+            boxBoundsPoints.Add(new Vector2(165f, 120f));
+            boxBoundsPoints.Add(new Vector2(75f, 120f));
+            */
+            boxBoundsPoints.Add(new Vector2(120f - 75f, 97.5f - 75f));
+            boxBoundsPoints.Add(new Vector2(120f - 165f, 97.5f - 75f));
+            boxBoundsPoints.Add(new Vector2(120f - 165f, 97.5f - 120f));
+            boxBoundsPoints.Add(new Vector2(120f - 75f, 97.5f - 120f));
             BoundingPolygon boxes = new BoundingPolygon(boxBoundsPoints);
+            BoxObject box = new BoxObject(boxBoundsPoints, new Vector2(120f, 97.5f));
             List<BoundingPolygon> polygons = new List<BoundingPolygon>();
             polygons.Add(walls);
             polygons.Add(boxes);
-            collisionDetector_ = new CollisionDetector(polygons);
+            //collisionDetector_ = new CollisionDetector(polygons);
+            collisionDetector_ = new SeparatingAxisCollisionDetector();
+            box.getBounds().rotate(new Vector2(1.0f, 0.0f), box.getPosition());
+            collisionDetector_.register(box);
             //END Jared's test stuff
 
             healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);
@@ -131,7 +143,7 @@ namespace Commando
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
             player_.setCollisionDetector(collisionDetector_);
-            enemy_.setCollisionDetector(collisionDetector_);
+            //enemy_.setCollisionDetector(collisionDetector_);
         }
 
         #region EngineStateInterface Members
@@ -155,7 +167,7 @@ namespace Commando
             //Jared's test stuff
             player_.setInputSet(inputs);
             player_.update(gameTime);
-            enemy_.update(gameTime);
+            //enemy_.update(gameTime);
             //END Jared's test stuff
 
             return this;
@@ -170,7 +182,7 @@ namespace Commando
 
             //Jared's test stuff
             player_.draw(new GameTime());
-            enemy_.draw(new GameTime());
+            //enemy_.draw(new GameTime());
             foreach (TileObject tOb in tiles_)
             {
                 tOb.draw(new GameTime());

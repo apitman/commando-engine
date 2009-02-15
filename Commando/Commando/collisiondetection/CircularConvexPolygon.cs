@@ -25,43 +25,60 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.collisiondetection
 {
-    public class BoundingPolygon
+    public class CircularConvexPolygon : ConvexPolygonInterface
     {
-        protected List<BoundingLine> lines_;
+        protected float radius_;
 
-        public BoundingPolygon(List<Vector2> points)
+        protected Vector2 center_;
+
+        public Vector2 getCenter()
         {
-            lines_ = new List<BoundingLine>();
-            if (points.Count > 2)
+            return center_;
+        }
+
+        public Vector2 getEdge(int edgeNumber)
+        {
+            return Vector2.Zero;
+        }
+
+        public int getNumberOfPoints()
+        {
+            return 0;
+        }
+
+        public Vector2 getPoint(int index)
+        {
+            return Vector2.Zero;
+        }
+
+        public Vector2[] getPoints()
+        {
+            return null;
+        }
+
+        public void projectPolygonOnAxis(Vector2 axis, ref float min, ref float max)
+        {
+            axis.Normalize();
+            axis.X *= radius_;
+            axis.Y *= radius_;
+            min = ConvexPolygon.dotProduct(axis, center_ + axis);
+            max = ConvexPolygon.dotProduct(axis, center_ - axis);
+            if (min > max)
             {
-                lines_.Add(new BoundingLine(points[0], points[points.Count - 1]));
-            }
-            for (int i = 1; i < points.Count; i++)
-            {
-                lines_.Add(new BoundingLine(points[i - 1], points[i]));
+                float temp = min;
+                min = max;
+                max = temp;
             }
         }
 
-        /*
-        public bool checkCollision(Point center, float radius)
+        public void rotate(Vector2 newAxis, Vector2 position)
         {
-            for (int i = 0; i < lines_.Count; i++)
-            {
-                if (lines_[i].intersect(center, radius))
-                {
-                    return true;
-                }
-            }
-            return false;
+            center_ = position;
         }
-        */
-        public Vector2 checkCollision(Vector2 center, float radius)
+
+        public float getRadius()
         {
-            for (int i = 0; i < lines_.Count; i++)
-            {
-                center = lines_[i].checkCollision(center, radius);
-            }
-            return center;
+            return radius_;
         }
     }
 }

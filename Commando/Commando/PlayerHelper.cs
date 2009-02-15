@@ -32,7 +32,7 @@ namespace Commando
     /// </summary>
     public class PlayerHelper
     {
-        public static MainPlayer Player_ { get; set; }
+        public static PlayableCharacterAbstract Player_ { get; set; }
 
         private PlayerHelper()
         {

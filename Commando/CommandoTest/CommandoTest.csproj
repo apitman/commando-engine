@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterHealthTest.cs" />
+    <Compile Include="CollisionDetectorTest.cs" />
     <Compile Include="EngineStatePauseTest.cs" />
     <Compile Include="InputSetTest.cs" />
     <Compile Include="MenuListTest.cs" />

@@ -127,5 +127,11 @@ namespace Commando
         {
             name_ = name;
         }
+
+        //TESTING FUNCTION
+        public virtual collisiondetection.CollisionDetectorInterface getCollisionDetector()
+        {
+            return null;
+        }
     }
 }

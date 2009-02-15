@@ -27,11 +27,11 @@ namespace Commando.collisiondetection
 {
     public class BoundingLine
     {
-        protected Point begin_;
-        protected Point end_;
+        protected Vector2 begin_;
+        protected Vector2 end_;
         protected bool vertical_;
 
-        public BoundingLine(Point p1, Point p2)
+        public BoundingLine(Vector2 p1, Vector2 p2)
         {
             if (p1.X == p2.X)
             {
@@ -63,7 +63,7 @@ namespace Commando.collisiondetection
             }
         }
 
-        public bool intersect(Point center, float radius)
+        public bool intersect(Vector2 center, float radius)
         {
             if (center.X <= begin_.X && center.X >= end_.X)
             {
@@ -86,18 +86,18 @@ namespace Commando.collisiondetection
             return false;
         }
         
-        public Point checkCollision(Point center, float radius)
+        public Vector2 checkCollision(Vector2 center, float radius)
         {
             if (center.X <= begin_.X && center.X >= end_.X)
             {
                 if (Math.Abs(center.Y - begin_.Y) < radius)
                 {
-                    center.Y = begin_.Y + (int)Math.Round((float)Math.Sign(center.Y - begin_.Y) * radius);
+                    center.Y = begin_.Y + (float)Math.Sign(center.Y - begin_.Y) * radius;
                     return center;
                 }
                 if (Math.Abs(center.Y - end_.Y) < radius)
                 {
-                    center.Y = end_.Y + (int)Math.Round((float)Math.Sign(center.Y - end_.Y) * radius);
+                    center.Y = end_.Y + (float)Math.Sign(center.Y - end_.Y) * radius;
                     return center;
                 }
             }
@@ -105,12 +105,12 @@ namespace Commando.collisiondetection
             {
                 if (Math.Abs(center.X - begin_.X) < radius)
                 {
-                    center.X = begin_.X + (int)Math.Round((float)Math.Sign(center.X - begin_.X) * radius);
+                    center.X = begin_.X + (float)Math.Sign(center.X - begin_.X) * radius;
                     return center;
                 }
                 if (Math.Abs(center.X - end_.X) < radius)
                 {
-                    center.X = end_.X + (int)Math.Round((float)Math.Sign(center.X - end_.X) * radius);
+                    center.X = end_.X + (float)Math.Sign(center.X - end_.X) * radius;
                     return center;
                 }
             }
@@ -118,12 +118,12 @@ namespace Commando.collisiondetection
             {
                 if (vertical_)
                 {
-                    center.Y = begin_.Y + (int)Math.Round(Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(begin_.X - center.X, 2.0)));
+                    center.Y = begin_.Y + (float)Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(begin_.X - center.X, 2.0));
                     return center;
                 }
                 else
                 {
-                    center.X = begin_.X + (int)Math.Round(Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(begin_.Y - center.Y, 2.0)));
+                    center.X = begin_.X + (float)Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(begin_.Y - center.Y, 2.0));
                     return center;
                 }
             }
@@ -131,19 +131,19 @@ namespace Commando.collisiondetection
             {
                 if (vertical_)
                 {
-                    center.Y = end_.Y - (int)Math.Round(Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(end_.X - center.X, 2.0)));
+                    center.Y = end_.Y - (float)Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(end_.X - center.X, 2.0));
                     return center;
                 }
                 else
                 {
-                    center.X = end_.X - (int)Math.Round(Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(end_.Y - center.Y, 2.0)));
+                    center.X = end_.X - (float)Math.Sqrt(Math.Pow(radius, 2.0) - Math.Pow(end_.Y - center.Y, 2.0));
                     return center;
                 }
             }
             return center;
         }
 
-        protected float distance(Point p1, Point p2)
+        protected float distance(Vector2 p1, Vector2 p2)
         {
             return (float)(Math.Sqrt(Math.Pow((double)(p1.X - p2.X), 2.0) + Math.Pow((double)(p1.Y - p2.Y), 2.0)));
         }
