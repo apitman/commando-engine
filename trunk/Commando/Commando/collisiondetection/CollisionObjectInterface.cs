@@ -29,6 +29,10 @@ namespace Commando.collisiondetection
     {
         Vector2 getPosition();
 
+        Vector2 getDirection();
+
         float getRadius();
+
+        ConvexPolygonInterface getBounds();
     }
 }

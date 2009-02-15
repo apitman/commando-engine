@@ -16,52 +16,32 @@
 ***************************************************************************
 */
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace Commando.collisiondetection
+namespace Commando.graphics
 {
-    public class BoundingPolygon
+    public interface AnimationInterface
     {
-        protected List<BoundingLine> lines_;
+        void updateFrameNumber(int frameNumber);
 
-        public BoundingPolygon(List<Vector2> points)
-        {
-            lines_ = new List<BoundingLine>();
-            if (points.Count > 2)
-            {
-                lines_.Add(new BoundingLine(points[0], points[points.Count - 1]));
-            }
-            for (int i = 1; i < points.Count; i++)
-            {
-                lines_.Add(new BoundingLine(points[i - 1], points[i]));
-            }
-        }
+        void moveNFramesForward(int numFrames);
 
-        /*
-        public bool checkCollision(Point center, float radius)
-        {
-            for (int i = 0; i < lines_.Count; i++)
-            {
-                if (lines_[i].intersect(center, radius))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        */
-        public Vector2 checkCollision(Vector2 center, float radius)
-        {
-            for (int i = 0; i < lines_.Count; i++)
-            {
-                center = lines_[i].checkCollision(center, radius);
-            }
-            return center;
-        }
+        void setPosition(Vector2 position);
+
+        void setRotation(Vector2 rotation);
+
+        void update(Vector2 newPosition, Vector2 newRotation);
+
+        void setDepth(float depth);
+
+        void draw();
+
+        void reset();
+
+        //TODO: Add functionality to get the current frame's bounds
     }
 }

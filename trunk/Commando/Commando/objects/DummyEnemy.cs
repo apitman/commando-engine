@@ -122,5 +122,10 @@ namespace Commando.objects
         {
             lookingAt_ = location;
         }
+
+        public ConvexPolygonInterface getBounds()
+        {
+            return null;
+        }
     }
 }

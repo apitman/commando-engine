@@ -121,6 +121,9 @@
     <Compile Include="..\Commando\collisiondetection\BoundingPolygon.cs">
       <Link>collisiondetection\BoundingPolygon.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\collisiondetection\CircularConvexPolygon.cs">
+      <Link>collisiondetection\CircularConvexPolygon.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\collisiondetection\CollisionDetectionGrid.cs">
       <Link>collisiondetection\CollisionDetectionGrid.cs</Link>
     </Compile>
@@ -132,6 +135,15 @@
     </Compile>
     <Compile Include="..\Commando\collisiondetection\CollisionObjectInterface.cs">
       <Link>collisiondetection\CollisionObjectInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\ConvexPolygon.cs">
+      <Link>collisiondetection\ConvexPolygon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\ConvexPolygonInterface.cs">
+      <Link>collisiondetection\ConvexPolygonInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\SeparatingAxisCollisionDetector.cs">
+      <Link>collisiondetection\SeparatingAxisCollisionDetector.cs</Link>
     </Compile>
     <Compile Include="..\Commando\controls\ControllerInputInterface.cs">
       <Link>controls\ControllerInputInterface.cs</Link>
@@ -181,6 +193,39 @@
     <Compile Include="..\Commando\GameTexture.cs">
       <Link>GameTexture.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\ActionSetValidator.cs">
+      <Link>graphics\ActionSetValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\ActuatorInterface.cs">
+      <Link>graphics\ActuatorInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\AnimationInterface.cs">
+      <Link>graphics\AnimationInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterActionInterface.cs">
+      <Link>graphics\CharacterActionInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterRunAction.cs">
+      <Link>graphics\CharacterRunAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterRunToAction.cs">
+      <Link>graphics\CharacterRunToAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterStayStillAction.cs">
+      <Link>graphics\CharacterStayStillAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\DefaultActuator.cs">
+      <Link>graphics\DefaultActuator.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\LoopAnimation.cs">
+      <Link>graphics\LoopAnimation.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\MoveActionInterface.cs">
+      <Link>graphics\MoveActionInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\MoveToActionInterface.cs">
+      <Link>graphics\MoveToActionInterface.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\levels\Level.cs">
       <Link>levels\Level.cs</Link>
     </Compile>
@@ -196,8 +241,14 @@
     <Compile Include="..\Commando\MenuList.cs">
       <Link>MenuList.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\ActuatedMainPlayer.cs">
+      <Link>objects\ActuatedMainPlayer.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\AnimatedObjectAbstract.cs">
       <Link>objects\AnimatedObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\BoxObject.cs">
+      <Link>objects\BoxObject.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\CharacterAbstract.cs">
       <Link>objects\CharacterAbstract.cs</Link>

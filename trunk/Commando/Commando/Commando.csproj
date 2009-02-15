@@ -18,7 +18,7 @@
     <ManifestCertificateThumbprint>1DDBDFE3771A4814A96019FCFE38491BAE7A694F</ManifestCertificateThumbprint>
     <ManifestKeyFile>Commando_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
     <PublishUrl>C:\Documents and Settings\pitmanam\Desktop\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,7 +29,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -108,16 +108,31 @@
     <Compile Include="CharacterStatusElementInterface.cs" />
     <Compile Include="collisiondetection\BoundingLine.cs" />
     <Compile Include="collisiondetection\BoundingPolygon.cs" />
+    <Compile Include="collisiondetection\CircularConvexPolygon.cs" />
     <Compile Include="collisiondetection\CollisionDetectionGrid.cs" />
     <Compile Include="collisiondetection\CollisionDetector.cs" />
     <Compile Include="collisiondetection\CollisionDetectorInterface.cs" />
     <Compile Include="collisiondetection\CollisionObjectInterface.cs" />
+    <Compile Include="collisiondetection\ConvexPolygon.cs" />
+    <Compile Include="collisiondetection\ConvexPolygonInterface.cs" />
+    <Compile Include="collisiondetection\SeparatingAxisCollisionDetector.cs" />
     <Compile Include="EngineStateControls.cs" />
     <Compile Include="EngineStateLevelEditor.cs" />
     <Compile Include="EngineStateOutofFocus.cs" />
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />
     <Compile Include="FontEnum.cs" />
+    <Compile Include="graphics\ActionSetValidator.cs" />
+    <Compile Include="graphics\ActuatorInterface.cs" />
+    <Compile Include="graphics\CharacterActionInterface.cs" />
+    <Compile Include="graphics\AnimationInterface.cs" />
+    <Compile Include="graphics\CharacterRunToAction.cs" />
+    <Compile Include="graphics\CharacterStayStillAction.cs" />
+    <Compile Include="graphics\DefaultActuator.cs" />
+    <Compile Include="graphics\LoopAnimation.cs" />
+    <Compile Include="graphics\MoveActionInterface.cs" />
+    <Compile Include="graphics\MoveToActionInterface.cs" />
+    <Compile Include="graphics\CharacterRunAction.cs" />
     <Compile Include="levels\TileGrid.cs" />
     <Compile Include="MenuList.cs" />
     <Compile Include="FontMap.cs" />
@@ -126,6 +141,8 @@
     <Compile Include="levels\LevelAbstract.cs" />
     <Compile Include="levels\RoomAbstract.cs" />
     <Compile Include="levels\Tiler.cs" />
+    <Compile Include="objects\ActuatedMainPlayer.cs" />
+    <Compile Include="objects\BoxObject.cs" />
     <Compile Include="objects\DummyEnemy.cs" />
     <Compile Include="objects\HeadsUpDisplayObject.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />

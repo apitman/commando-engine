@@ -21,47 +21,45 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.collisiondetection;
 using Microsoft.Xna.Framework;
 
-namespace Commando.collisiondetection
+namespace Commando.objects
 {
-    public class BoundingPolygon
+    public class BoxObject : CollisionObjectInterface
     {
-        protected List<BoundingLine> lines_;
+        protected ConvexPolygonInterface boundsPolygon_;
 
-        public BoundingPolygon(List<Vector2> points)
+        protected Vector2 position_;
+
+        public BoxObject(List<Vector2> points, Vector2 center)
         {
-            lines_ = new List<BoundingLine>();
-            if (points.Count > 2)
-            {
-                lines_.Add(new BoundingLine(points[0], points[points.Count - 1]));
-            }
-            for (int i = 1; i < points.Count; i++)
-            {
-                lines_.Add(new BoundingLine(points[i - 1], points[i]));
-            }
+            position_ = center;
+            boundsPolygon_ = new ConvexPolygon(points, Vector2.Zero);
         }
 
-        /*
-        public bool checkCollision(Point center, float radius)
+        #region CollisionObjectInterface Members
+
+        public Vector2 getPosition()
         {
-            for (int i = 0; i < lines_.Count; i++)
-            {
-                if (lines_[i].intersect(center, radius))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return position_;
         }
-        */
-        public Vector2 checkCollision(Vector2 center, float radius)
+
+        public Vector2 getDirection()
         {
-            for (int i = 0; i < lines_.Count; i++)
-            {
-                center = lines_[i].checkCollision(center, radius);
-            }
-            return center;
+            return new Vector2(1.0f, 0.0f);
         }
+
+        public float getRadius()
+        {
+            return boundsPolygon_.getPoint(0).Length();
+        }
+
+        public ConvexPolygonInterface getBounds()
+        {
+            return boundsPolygon_;
+        }
+
+        #endregion
     }
 }

@@ -21,17 +21,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Commando.controls;
-using Commando.ai;
 using Commando.collisiondetection;
+using Microsoft.Xna.Framework;
+using Commando.graphics;
+using Commando.ai;
 
 namespace Commando.objects
 {
-    /// <summary>
-    /// The main player in the game.
-    /// </summary>
-    public class MainPlayer : PlayableCharacterAbstract, CollisionObjectInterface
+    public class ActuatedMainPlayer : PlayableCharacterAbstract, CollisionObjectInterface
     {
         const bool CONTROLSTYLE = false;
 
@@ -43,13 +40,38 @@ namespace Commando.objects
 
         protected CollisionDetectorInterface collisionDetector_;
 
+        protected ConvexPolygonInterface boundsPolygon_;
+
+        protected DefaultActuator actuator_;
+
         /// <summary>
         /// Create the main player of the game.
         /// </summary>
-        public MainPlayer() :
+        public ActuatedMainPlayer() :
             base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
             PlayerHelper.Player_ = this;
+            
+            //TEMP create bounds polygon
+            List<Vector2> points = new List<Vector2>();
+            points.Add(new Vector2(-5.0f, 0f));
+            points.Add(new Vector2(-1.0f, -15.0f));
+            points.Add(new Vector2(7.0f, -15.0f));
+            points.Add(new Vector2(10.0f, 0f));
+            points.Add(new Vector2(7.0f, 15.0f));
+            points.Add(new Vector2(-1.0f, 15.0f));
+            boundsPolygon_ = new ConvexPolygon(points, Vector2.Zero);
+            //ENDTEMP
+            
+            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
+            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
+            Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
+            actions.Add("default", new Dictionary<string, CharacterActionInterface>());
+            actions["default"].Add("move", new CharacterRunAction(this, run, 2.0f));
+            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 2.0f));
+            actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
+            actuator_ = new DefaultActuator(actions, this, "default");
 
             List<GameTexture> anims = new List<GameTexture>();
             anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
@@ -70,7 +92,8 @@ namespace Commando.objects
         /// <param name="gameTime"></param>
         public override void draw(GameTime gameTime)
         {
-            animations_.drawNextFrame(position_, getRotationAngle(), depth_);
+            //animations_.drawNextFrame(position_, getRotationAngle(), depth_);
+            actuator_.draw();
         }
         
         /// <summary>
@@ -80,7 +103,37 @@ namespace Commando.objects
         /// <param name="gameTime"></param>
         public override void update(GameTime gameTime)
         {
+            Vector2 rightD = new Vector2(inputSet_.getRightDirectionalX(), inputSet_.getRightDirectionalY());
+            Vector2 leftD = new Vector2(inputSet_.getLeftDirectionalX(), -inputSet_.getLeftDirectionalY());
+            actuator_.look(rightD);
 
+            if (Settings.getInstance().getMovementType() == MovementType.RELATIVE)
+            {
+                float rotAngle = getRotationAngle();
+                float X = -leftD.Y;
+                float Y = leftD.X;
+                leftD.X = (float)Math.Cos((double)rotAngle) * X - (float)Math.Sin((double)rotAngle) * Y;
+                leftD.Y = (float)Math.Sin((double)rotAngle) * X + (float)Math.Cos((double)rotAngle) * Y;
+            }
+            
+            if (leftD.LengthSquared() > 0.2f)
+            {
+                actuator_.move(leftD);
+            }
+            actuator_.update();
+
+            // TODO Change/fix how this is done, modularize it, etc.
+            // Essentially, the player updates his visual location in the WorldState
+            // Must remove before adding because Dictionaries don't like duplicate keys
+            // Removing a nonexistent key (for first frame) does no harm
+            // Also, need to make it so the radius isn't hardcoded - probably all
+            //  objects which will have a visual stimulus should have a radius
+            WorldState.Visual_.Remove(visualStimulusId_);
+            WorldState.Visual_.Add(
+                visualStimulusId_,
+                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition())
+            );
+            /*
             int MaxX = 345;
             int MinX = 30;
             int MaxY = 300;
@@ -222,6 +275,8 @@ namespace Commando.objects
                 visualStimulusId_,
                 new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition())
             );
+            */
+
         }
 
         public float getRadius()
@@ -231,7 +286,12 @@ namespace Commando.objects
 
         public ConvexPolygonInterface getBounds()
         {
-            return null;
+            return boundsPolygon_;
+        }
+
+        public override CollisionDetectorInterface getCollisionDetector()
+        {
+            return collisionDetector_;
         }
     }
 }
