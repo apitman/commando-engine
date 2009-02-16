@@ -33,11 +33,11 @@ namespace Commando
     /// </summary>
     public struct objectRepresentation
     {
-        string objName_;
-        Vector2 objPos_;
-        Vector2 objRotation_;
-        float objDepth_;
-        objectRepresentation(string objName,Vector2 objPos,Vector2 objRotation, float objDepth)
+        public string objName_;
+        public Vector2 objPos_;
+        public Vector2 objRotation_;
+        public float objDepth_;
+        public objectRepresentation(string objName, Vector2 objPos, Vector2 objRotation, float objDepth)
         {
             objName_ = objName;
             objPos_ = objPos;
@@ -47,6 +47,9 @@ namespace Commando
     }
     public class EngineStateLevelEditor : EngineStateInterface
     {
+    
+
+
         const int SCREEN_SIZE_X = 375;
         const int SCREEN_SIZE_Y = 375;
         const int NUM_TILES = 23;
@@ -57,7 +60,7 @@ namespace Commando
         const int MinX = 30;
         const int MaxY = 300;
         const int MinY = 30;
-
+        const string DUMMY_ENEMY = "dummyEnemy";
         const float DISP_TILE_DEPTH = 0.1f;
 
         protected int[,] defaultTiles_ = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -114,6 +117,7 @@ namespace Commando
             cursorPosY_ = 0;
             curTileIndex_ = 0;
             displayTile_ = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
+            myObjects_ = new List<objectRepresentation>();
         }
 
         /// <summary>
@@ -132,41 +136,9 @@ namespace Commando
                 return returnState_;
             }
 
-            if (inputs.getLeftDirectionalX() < 0)
+            else if (inputs.getButton(InputsEnum.LEFT_BUMPER))
             {
-                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosX_ > 0)
-                {
-                    cursorPosX_--;
-                }
-            }
-            else if (inputs.getLeftDirectionalX() > 0)
-            {
-                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosX_ < NUM_TILES_PER_ROW - 1)
-                {
-                    cursorPosX_++;
-                }
-            }
-
-            if (inputs.getLeftDirectionalY() < 0)
-            {
-                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosY_ < NUM_TILES_PER_COL - 1)
-                {
-                    cursorPosY_++;
-                }
-            }
-            else if (inputs.getLeftDirectionalY() > 0)
-            {
-                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosY_ > 0)
-                {
-                    cursorPosY_--;
-                }
-            }
-            if (inputs.getLeftBumper())
-            {
+                curTileIndex_ = 0;
                 inputs.setToggle(InputsEnum.LEFT_BUMPER);
                 curPallette_--;
                 if (curPallette_ < 0)
@@ -174,31 +146,51 @@ namespace Commando
                     curPallette_ = NUM_PALLETTES - 1;
                 }
             }
-            if (inputs.getRightBumper())
+            else if (inputs.getButton(InputsEnum.RIGHT_BUMPER))
             {
+                curTileIndex_ = 0;
                 inputs.setToggle(InputsEnum.RIGHT_BUMPER);
                 curPallette_++;
                 curPallette_ = curPallette_ % NUM_PALLETTES;
             }
-            if (inputs.getLeftTrigger())
+            else if (inputs.getButton(InputsEnum.LEFT_TRIGGER))
             {
                 inputs.setToggle(InputsEnum.LEFT_TRIGGER);
                 //tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
-                if (rightD.X < MaxX && rightD.X > MinX && rightD.Y < MaxY && rightD.Y > MinY)
+               
+                switch(curPallette_)
                 {
-                    objectRepresentation newObject = new objectRepresentation("test", rightD, Vector2.Zero, 1.0f);
-                    myObjects_.Add(newObject);
+                    case (int)pallette_.tile:
+                        {
+                            if (rightD.X < MaxX && rightD.X > MinX && rightD.Y < MaxY && rightD.Y > MinY)
+                            {
+                                int myX = (int)rightD.X / 15;
+                                int myY = (int)rightD.Y / 15;
+                                tiles_[myX + myY * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)myX * Tiler.tileSideLength_, (float)myY * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+
+                            }
+                            break;
+                        }
+                    case (int)pallette_.enemy:
+                        {
+                            if (rightD.X < MaxX && rightD.X > MinX && rightD.Y < MaxY && rightD.Y > MinY)
+                            {
+                                objectRepresentation newObject = new objectRepresentation(DUMMY_ENEMY, rightD, Vector2.Zero, 0.2f);
+                                myObjects_.Add(newObject);
+                            }
+                            break;
+                        }
                 }
             }
 
-            if (inputs.getButton(InputsEnum.BUTTON_1))
+            else if (inputs.getButton(InputsEnum.BUTTON_1))
             {
                 inputs.setToggle(InputsEnum.BUTTON_1);
                 curTileIndex_ = (curTileIndex_ + 1) % NUM_TILES;
             }
 
-            if (inputs.getButton(InputsEnum.BUTTON_2))
+            else if (inputs.getButton(InputsEnum.BUTTON_2))
             {
                 inputs.setToggle(InputsEnum.BUTTON_2);
                 if (curTileIndex_ == 0)
@@ -227,20 +219,17 @@ namespace Commando
 
             displayTile_.draw(new GameTime());
 
-            // Draw the highlight
-            TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((float)cursorPosX_ * Tiler.tileSideLength_ - 1.0f, (float)cursorPosY_ * Tiler.tileSideLength_ - 1.0f), 0.15f);
-            //Draw the drawn objects
+           // Draw  objects (ie enemies/misc)
             for (int i = 0; i < myObjects_.Count(); i++)
             {
                 
                 objectRepresentation currObject = myObjects_[i];
-                switch (currObject.objName_)
+                
+                if (currObject.objName_ == DUMMY_ENEMY);
                 {
-                    cond"test":
-                {
-
+                    TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, currObject.objPos_, currObject.objDepth_);
                 }
-                }
+                
                 
             }
 
@@ -251,10 +240,13 @@ namespace Commando
                     for (int i = 0; i < NUM_TILES; i++)
                     {
                         TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), 0.2f);
+                        if(i == curTileIndex_)
+                            TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), 0.2f);
                     }
                     break;
                 case (int)pallette_.enemy:
                     {
+                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, new Vector2(10.0f , (((10* 20) / 365) * 20.0f) + 335.0f), 0.2f);
                         break;
                     }
                 case (int)pallette_.misc:
