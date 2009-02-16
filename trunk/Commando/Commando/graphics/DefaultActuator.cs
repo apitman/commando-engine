@@ -105,7 +105,10 @@ namespace Commando.graphics
 
         public void look(Vector2 direction)
         {
-            character_.setDirection(direction);
+            if (direction != Vector2.Zero)
+            {
+                character_.setDirection(direction);
+            }
         }
     }
 }
