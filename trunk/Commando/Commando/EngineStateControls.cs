@@ -50,13 +50,12 @@ namespace Commando
 
             List<string> editorControlsString = new List<string>();
             editorControlsString.Add("EDITOR CONTROLS");
-            editorControlsString.Add("W - move curor up");
-            editorControlsString.Add("S - move cursor down");
-            editorControlsString.Add("A - move cursor left");
-            editorControlsString.Add("D - move cursor right");
+            editorControlsString.Add("Mouse - move cursor");
             editorControlsString.Add("Left Shift - Change Tile +");
             editorControlsString.Add("Spacebar - Change Tile -");
-            editorControlsString.Add("Enter - place tile");
+            editorControlsString.Add("Q - Change Pallette +");
+            editorControlsString.Add("E - Change Pallette -");
+            editorControlsString.Add("Left Mouse Button - Place Tile/Enemy");
             editorControlsString.Add("Esc - return to main menu");
             gameControlsMenuList_ = new MenuList(gameControlsString,
                                                new Vector2(200.0f,

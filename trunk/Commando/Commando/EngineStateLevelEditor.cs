@@ -31,6 +31,20 @@ namespace Commando
     /// <summary>
     /// The main class for the level editor
     /// </summary>
+    public struct objectRepresentation
+    {
+        string objName_;
+        Vector2 objPos_;
+        Vector2 objRotation_;
+        float objDepth_;
+        objectRepresentation(string objName,Vector2 objPos,Vector2 objRotation, float objDepth)
+        {
+            objName_ = objName;
+            objPos_ = objPos;
+            objRotation_ = objRotation;
+            objDepth_ = objDepth;
+        }
+    }
     public class EngineStateLevelEditor : EngineStateInterface
     {
         const int SCREEN_SIZE_X = 375;
@@ -38,6 +52,12 @@ namespace Commando
         const int NUM_TILES = 23;
         const int NUM_TILES_PER_ROW = 25;
         const int NUM_TILES_PER_COL = 22;
+        const int NUM_PALLETTES = 3;
+        const int MaxX = 345;
+        const int MinX = 30;
+        const int MaxY = 300;
+        const int MinY = 30;
+
         const float DISP_TILE_DEPTH = 0.1f;
 
         protected int[,] defaultTiles_ = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -71,6 +91,12 @@ namespace Commando
         protected int cursorPosY_;
         protected TileObject displayTile_;
         protected int curTileIndex_;
+        protected List<objectRepresentation> myObjects_;
+        protected List<String>enemyNameList;
+        protected List<String>objectNameList;
+        protected enum pallette_{tile, enemy, misc};
+        protected int curPallette_;
+
 
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
@@ -79,6 +105,7 @@ namespace Commando
         {
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            engine_.IsMouseVisible = true;
             returnState_ = returnState;
             returnScreenSizeX_ = returnScreenSizeX;
             returnScreenSizeY_ = returnScreenSizeY;
@@ -138,11 +165,31 @@ namespace Commando
                     cursorPosY_--;
                 }
             }
-
-            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON))
+            if (inputs.getLeftBumper())
             {
-                inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
-                tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                inputs.setToggle(InputsEnum.LEFT_BUMPER);
+                curPallette_--;
+                if (curPallette_ < 0)
+                {
+                    curPallette_ = NUM_PALLETTES - 1;
+                }
+            }
+            if (inputs.getRightBumper())
+            {
+                inputs.setToggle(InputsEnum.RIGHT_BUMPER);
+                curPallette_++;
+                curPallette_ = curPallette_ % NUM_PALLETTES;
+            }
+            if (inputs.getLeftTrigger())
+            {
+                inputs.setToggle(InputsEnum.LEFT_TRIGGER);
+                //tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
+                if (rightD.X < MaxX && rightD.X > MinX && rightD.Y < MaxY && rightD.Y > MinY)
+                {
+                    objectRepresentation newObject = new objectRepresentation("test", rightD, Vector2.Zero, 1.0f);
+                    myObjects_.Add(newObject);
+                }
             }
 
             if (inputs.getButton(InputsEnum.BUTTON_1))
@@ -182,12 +229,39 @@ namespace Commando
 
             // Draw the highlight
             TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((float)cursorPosX_ * Tiler.tileSideLength_ - 1.0f, (float)cursorPosY_ * Tiler.tileSideLength_ - 1.0f), 0.15f);
+            //Draw the drawn objects
+            for (int i = 0; i < myObjects_.Count(); i++)
+            {
+                
+                objectRepresentation currObject = myObjects_[i];
+                switch (currObject.objName_)
+                {
+                    cond"test":
+                {
+
+                }
+                }
+                
+            }
 
             // Draw the palette
-            for (int i = 0; i < NUM_TILES; i++)
-			{
-                TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), 0.2f);
-			}
+            switch (curPallette_)
+            {
+                case (int)pallette_.tile:
+                    for (int i = 0; i < NUM_TILES; i++)
+                    {
+                        TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), 0.2f);
+                    }
+                    break;
+                case (int)pallette_.enemy:
+                    {
+                        break;
+                    }
+                case (int)pallette_.misc:
+                    {
+                        break;
+                    }
+            }
         }
     }
 }
