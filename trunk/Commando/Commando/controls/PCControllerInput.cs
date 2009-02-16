@@ -113,7 +113,7 @@ namespace Commando.controls
             }
             else
             {
-                inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, -1, -1);
+                inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, ms.X, ms.Y);
             }
 
             inputs_.setButton(InputsEnum.CONFIRM_BUTTON,

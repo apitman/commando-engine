@@ -18,7 +18,7 @@
     <ManifestCertificateThumbprint>1DDBDFE3771A4814A96019FCFE38491BAE7A694F</ManifestCertificateThumbprint>
     <ManifestKeyFile>Commando_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <PublishUrl>C:\Documents and Settings\pitmanam\Desktop\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
