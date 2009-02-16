@@ -4,12 +4,12 @@
 
 == Build 3: Feb. 10 - Feb. 19 ==
 
-  # User can select different palettes (Tiles, Enemies, Misc) in the level editor - Eric
-  # User can place objects in the level editor using the mouse - Eric
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can select different palettes (Tiles, Enemies, Misc) in the level editor - Eric
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can place objects in the level editor using the mouse - Eric
   # User can save levels in the level editor - Andrew
   # User can load levels into the game - Andrew
-  # User can play the game on PC using the Xbox 360 gamepad - Ken
-  # User sees controls based on which control device they are using - Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can play the game on PC using the Xbox 360 gamepad - Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User sees controls based on which control device they are using - Ken
   # User can play the game on the Xbox 360 - Ken
   # User can run from an intelligent enemy who will navigate around obstacles - Ken
   # User can fire a weapon - Jared
@@ -20,24 +20,24 @@
 
 == Build 2: Jan. 27 - Feb. 5 ==
 
-  # User can see the character sprite change while moving (simple animation) - Jared
-  # User's character will be stopped by walls - Jared
-  # User can see mouse cursor in game window - Andrew
-  # User's character will rotate based on mouse position relative to the character - Ken
-  # From the main menu, user can enter a simple page showing the controls for PC - Eric
-  # User can boot a simple level editor with a palette and a grid - Andrew, Eric
-  # User can see an enemy who attempts to move toward the player character - Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see the character sprite change while moving (simple animation) - Jared
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character will be stopped by walls - Jared
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see mouse cursor in game window - Andrew
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character will rotate based on mouse position relative to the character - Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]From the main menu, user can enter a simple page showing the controls for PC - Eric
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can boot a simple level editor with a palette and a grid - Andrew, Eric
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see an enemy who attempts to move toward the player character - Ken
 
 == Build 1: Jan. 13 - Jan. 22 ==
 
-  # User can begin game and see a main menu - Eric
-  # User can highlight options on the main menu using the keyboard - Eric, Ken
-  # User can select the "Begin Game" option with the Enter key - Eric, Ken
-  # User can see a blank/plain level - Jared
-  # User has a "heads-up display" showing health, ammo, and current weapon - Andrew
-  # User can see his character in the level - Jared
-  # User can move his character around the screen using the WASD keys - Jared, Ken
-  # User can press a key to get to a Pause screen - Andrew, Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can begin game and see a main menu - Eric
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can highlight options on the main menu using the keyboard - Eric, Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can select the "Begin Game" option with the Enter key - Eric, Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see a blank/plain level - Jared
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User has a "heads-up display" showing health, ammo, and current weapon - Andrew
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see his character in the level - Jared
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can move his character around the screen using the WASD keys - Jared, Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can press a key to get to a Pause screen - Andrew, Ken
 
 = List of user stories =
 
