@@ -36,27 +36,25 @@ namespace Commando
 
         public EngineStateControls(Engine engine)
         {
+            InputSet inputs = InputSet.getInstance();
+
             controlTitle_ = "PC CONTROLS";
             engine_ = engine;
             List<string> gameControlsString = new List<string>();
             gameControlsString.Add("GAMEPLAY CONTROLS");
-            gameControlsString.Add("W - move foreward");
-            gameControlsString.Add("S - move backward");
-            gameControlsString.Add("A - sidestep left");
-            gameControlsString.Add("D - sidestep right");
-            gameControlsString.Add("Mouse - turn");
-            gameControlsString.Add("Esc - pause");
-            gameControlsString.Add("Press Enter to return to main menu");
+            gameControlsString.Add("Move: " + inputs.getControlName(InputsEnum.LEFT_DIRECTIONAL));
+            gameControlsString.Add("Rotate: " + inputs.getControlName(InputsEnum.RIGHT_DIRECTIONAL));
+            gameControlsString.Add("Pause: " + inputs.getControlName(InputsEnum.CANCEL_BUTTON));
 
             List<string> editorControlsString = new List<string>();
             editorControlsString.Add("EDITOR CONTROLS");
-            editorControlsString.Add("Mouse - move cursor");
-            editorControlsString.Add("Left Shift - Change Tile +");
-            editorControlsString.Add("Spacebar - Change Tile -");
-            editorControlsString.Add("Q - Change Pallette +");
-            editorControlsString.Add("E - Change Pallette -");
-            editorControlsString.Add("Left Mouse Button - Place Tile/Enemy");
-            editorControlsString.Add("Esc - return to main menu");
+            editorControlsString.Add("Move Cursor: " + inputs.getControlName(InputsEnum.LEFT_DIRECTIONAL));
+            editorControlsString.Add("Next Tile: " + inputs.getControlName(InputsEnum.BUTTON_1));
+            editorControlsString.Add("Prev Tile: " + inputs.getControlName(InputsEnum.BUTTON_2));
+            editorControlsString.Add("Next Palette: " + inputs.getControlName(InputsEnum.LEFT_BUMPER));
+            editorControlsString.Add("Prev Palette: " + inputs.getControlName(InputsEnum.RIGHT_BUMPER));
+            editorControlsString.Add("Place Tile: " + inputs.getControlName(InputsEnum.RIGHT_TRIGGER));
+            editorControlsString.Add("Quit: " + inputs.getControlName(InputsEnum.CANCEL_BUTTON));
             gameControlsMenuList_ = new MenuList(gameControlsString,
                                                new Vector2(200.0f,
                                                engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f),

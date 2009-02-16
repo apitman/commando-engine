@@ -40,6 +40,11 @@ namespace Commando.controls
         static protected InputSet[] instances_ = null;
 
         /// <summary>
+        /// Control device which has most recently used this InputSet.
+        /// </summary>
+        protected ControllerInputInterface controller_;
+
+        /// <summary>
         /// An array of ints for each input device in InputsEnum;
         ///  each int represents the number of frames left for which that
         ///  particular device will pretend to be released regardless of its
@@ -106,6 +111,22 @@ namespace Commando.controls
             return instances_[i];
         }
 
+        /// <summary>
+        /// Reduces all sticks by one.
+        /// </summary>
+        /// <param name="cii">Controller updating this InputSet</param>
+        public void update(ControllerInputInterface cii)
+        {
+            controller_ = cii;
+            for (int i = 0; i < (int)InputsEnum.LENGTH; i++)
+            {
+                if (stickState_[i] > 0)
+                {
+                    stickState_[i]--;
+                }
+            }
+        }
+
         public float getLeftDirectionalX()
         {
             return directionals_[0].X;
@@ -158,10 +179,6 @@ namespace Commando.controls
             if (stickState_[index] > 0 ||
                 toggleState_[index])
             {
-                if (stickState_[index] > 0)
-                {
-                    stickState_[index]--;
-                }
                 if (x == 0 && y == 0)
                 {
                     toggleState_[index] = false;
@@ -189,10 +206,6 @@ namespace Commando.controls
             if (stickState_[index] > 0 ||
                 toggleState_[index])
             {
-                if (stickState_[index] > 0)
-                {
-                    stickState_[index]--;
-                }
                 if (!value)
                 {
                     toggleState_[index] = false;
@@ -314,6 +327,18 @@ namespace Commando.controls
             clearSticks();
             clearToggles();
             clearInputs();
+        }
+
+        /// <summary>
+        /// Fetches the name of a particular button or directional
+        /// </summary>
+        /// <param name="device">Device whose name is desired</param>
+        /// <returns>Name of the device</returns>
+        public string getControlName(InputsEnum device)
+        {
+            if (controller_ == null)
+                return "";
+            return controller_.getControlName(device);
         }
 
     }

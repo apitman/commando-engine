@@ -18,6 +18,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Commando.controls
 {
@@ -25,7 +26,7 @@ namespace Commando.controls
     /// Implementation of ControllerInputInterface for a regular PC user
     /// with keyboard and mouse.
     /// </summary>
-    class PCControllerInput : ControllerInputInterface
+    public class PCControllerInput : ControllerInputInterface
     {
         protected Engine engine_;
         protected InputSet inputs_;
@@ -34,18 +35,18 @@ namespace Commando.controls
         // ------------------
         // Currently the Left and Right triggers are hardcoded to the mouse
         // buttons, and the right directional is hardcoded to mouse movement.
-        protected const Keys LEFT_DIR_UP = Keys.W;
-        protected const Keys LEFT_DIR_DOWN = Keys.S;
-        protected const Keys LEFT_DIR_LEFT = Keys.A;
-        protected const Keys LEFT_DIR_RIGHT = Keys.D;
-        protected const Keys CONFIRM = Keys.Enter;
-        protected const Keys CANCEL = Keys.Escape;
-        protected const Keys BUTTON_1 = Keys.Space;
-        protected const Keys BUTTON_2 = Keys.LeftShift;
-        protected const Keys BUTTON_3 = Keys.X;
-        protected const Keys BUTTON_4 = Keys.C;
-        protected const Keys LEFT_BUMPER = Keys.Q;
-        protected const Keys RIGHT_BUMPER = Keys.E;
+        protected Keys LEFT_DIR_UP = Keys.W;
+        protected Keys LEFT_DIR_DOWN = Keys.S;
+        protected Keys LEFT_DIR_LEFT = Keys.A;
+        protected Keys LEFT_DIR_RIGHT = Keys.D;
+        protected Keys CONFIRM = Keys.Enter;
+        protected Keys CANCEL = Keys.Escape;
+        protected Keys BUTTON_1 = Keys.Space;
+        protected Keys BUTTON_2 = Keys.LeftShift;
+        protected Keys BUTTON_3 = Keys.X;
+        protected Keys BUTTON_4 = Keys.C;
+        protected Keys LEFT_BUMPER = Keys.Q;
+        protected Keys RIGHT_BUMPER = Keys.E;
 
         /// <summary>
         /// Default constructor.
@@ -74,6 +75,7 @@ namespace Commando.controls
         /// </summary>
         public void updateInputSet()
         {
+            inputs_.update(this);
 
             KeyboardState ks = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
@@ -81,25 +83,28 @@ namespace Commando.controls
             float leftX = 0;
             float leftY = 0;
 
-            if (ks.IsKeyDown(LEFT_DIR_UP))
+            if (ks.IsKeyDown(LEFT_DIR_UP) || ks.IsKeyDown(Keys.Up))
             {
                 leftY += 1.0f;
             }
-            if (ks.IsKeyDown(LEFT_DIR_DOWN))
+            if (ks.IsKeyDown(LEFT_DIR_DOWN) || ks.IsKeyDown(Keys.Down))
             {
                 leftY += -1.0f;
             }
-
-            if (ks.IsKeyDown(LEFT_DIR_RIGHT))
+            
+            if (ks.IsKeyDown(LEFT_DIR_RIGHT) || ks.IsKeyDown(Keys.Right))
             {
                 leftX += 1.0f;
             }
-            if (ks.IsKeyDown(LEFT_DIR_LEFT))
+            if (ks.IsKeyDown(LEFT_DIR_LEFT) || ks.IsKeyDown(Keys.Left))
             {
                 leftX += -1.0f;
             }
+            Vector2 leftDir = new Vector2(leftX, leftY);
+            if (leftDir.Length() > 1.0f)
+                leftDir.Normalize();
 
-            inputs_.setDirectional(InputsEnum.LEFT_DIRECTIONAL, leftX, leftY);
+            inputs_.setDirectional(InputsEnum.LEFT_DIRECTIONAL, leftDir.X, leftDir.Y);
 
             if (PlayerHelper.Player_ != null)
             {
@@ -127,14 +132,57 @@ namespace Commando.controls
             inputs_.setButton(InputsEnum.BUTTON_4, ks.IsKeyDown(BUTTON_4));
 
             inputs_.setButton(InputsEnum.LEFT_TRIGGER,
-                                ms.LeftButton == ButtonState.Pressed);
-            inputs_.setButton(InputsEnum.RIGHT_TRIGGER,
                                 ms.RightButton == ButtonState.Pressed);
+            inputs_.setButton(InputsEnum.RIGHT_TRIGGER,
+                                ms.LeftButton == ButtonState.Pressed);
 
             inputs_.setButton(InputsEnum.LEFT_BUMPER,
                                 ks.IsKeyDown(LEFT_BUMPER));
             inputs_.setButton(InputsEnum.RIGHT_BUMPER,
                                 ks.IsKeyDown(RIGHT_BUMPER));
+        }
+
+        /// <summary>
+        /// Fetches the name of a particular button or directional
+        /// </summary>
+        /// <param name="device">Device whose name is desired</param>
+        /// <returns>Name of the device</returns>
+        public string getControlName(InputsEnum device)
+        {
+            switch (device)
+            {
+            case InputsEnum.LEFT_DIRECTIONAL:
+                return LEFT_DIR_UP.ToString() +
+                        LEFT_DIR_LEFT.ToString() +
+                        LEFT_DIR_DOWN.ToString() +
+                        LEFT_DIR_RIGHT.ToString();
+            case InputsEnum.RIGHT_DIRECTIONAL:
+                return "Mouse";
+            case InputsEnum.CONFIRM_BUTTON:
+                return CONFIRM.ToString();
+            case InputsEnum.CANCEL_BUTTON:
+                return CANCEL.ToString();
+            case InputsEnum.BUTTON_1:
+                return BUTTON_1.ToString();
+            case InputsEnum.BUTTON_2:
+                return BUTTON_2.ToString();
+            case InputsEnum.BUTTON_3:
+                return BUTTON_3.ToString();
+            case InputsEnum.BUTTON_4:
+                return BUTTON_4.ToString();
+            case InputsEnum.LEFT_BUMPER:
+                return LEFT_BUMPER.ToString();
+            case InputsEnum.RIGHT_BUMPER:
+                return RIGHT_BUMPER.ToString();
+            case InputsEnum.LEFT_TRIGGER: // backwards on mouse!
+                return "RightClick";
+            case InputsEnum.RIGHT_TRIGGER:
+                return "LeftClick";
+            default:
+                throw new NotImplementedException();
+            }
+            // make compiler happy
+            return "Error";
         }
 
         #endregion

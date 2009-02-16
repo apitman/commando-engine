@@ -49,8 +49,13 @@ namespace Commando
             menuString.Add("Controls");
             menuString.Add("Level Editor");
             menuString.Add("Exit");
-            
-            controlTips_ = "W = scroll up | S = scroll down | Enter = Select | Esc = Exit";
+
+            InputSet inputs = InputSet.getInstance();
+            controlTips_ = "Select: " +
+                            inputs.getControlName(InputsEnum.CONFIRM_BUTTON) +
+                            " | " +
+                            "Cancel: " +
+                            inputs.getControlName(InputsEnum.CANCEL_BUTTON);
             mainMenuList_ = new MenuList(menuString,
                                                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                                                 engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f),
@@ -62,12 +67,7 @@ namespace Commando
                                                 SpriteEffects.None,
                                                 1.0f,
                                                 40.0f);
- 
-
         }
-
-
-        
 
         #region EngineStateInterface Members
 
@@ -122,6 +122,12 @@ namespace Commando
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
                 mainMenuList_.incrementCursorPos();
             }
+
+            controlTips_ = "Select: " +
+                            inputs.getControlName(InputsEnum.CONFIRM_BUTTON) +
+                            " | " +
+                            "Cancel: " +
+                            inputs.getControlName(InputsEnum.CANCEL_BUTTON);
 
             return this;
         }
