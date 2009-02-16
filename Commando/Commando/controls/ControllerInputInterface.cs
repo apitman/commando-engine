@@ -37,5 +37,12 @@ namespace Commando.controls
         /// the device and populate the InputSet accordingly.
         /// </summary>
         void updateInputSet();
+
+        /// <summary>
+        /// Fetches the name of a particular button or directional
+        /// </summary>
+        /// <param name="device">Device whose name is desired</param>
+        /// <returns>Name of the device</returns>
+        string getControlName(InputsEnum device);
     }
 }

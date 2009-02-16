@@ -28,11 +28,14 @@ namespace CommandoTest
     [TestClass]
     public class InputSetTest
     {
+        private PCControllerInput controller_;
+
         public InputSetTest()
         {
             //
             // TODO: Add constructor logic here
             //
+            controller_ = new PCControllerInput(null);
         }
 
         private TestContext testContextInstance;
@@ -81,6 +84,7 @@ namespace CommandoTest
             InputSet instance = InputSet.getInstance();
             instance.reset(); // Reset the singleton
 
+            instance.update(controller_);
             instance.setButton(InputsEnum.BUTTON_1, true);
             instance.setButton(InputsEnum.BUTTON_2, true);
             instance.setButton(InputsEnum.BUTTON_3, true);
@@ -109,6 +113,7 @@ namespace CommandoTest
             Assert.AreEqual(1.0f, instance.getRightDirectionalX());
             Assert.AreEqual(1.0f, instance.getRightDirectionalY());
 
+            instance.update(controller_);
             instance.setButton(InputsEnum.BUTTON_1, false);
             instance.setButton(InputsEnum.BUTTON_2, false);
             instance.setButton(InputsEnum.BUTTON_3, false);
@@ -146,6 +151,7 @@ namespace CommandoTest
             instance.reset(); // Reset the singleton
 
             // Set all items to being pushed
+            instance.update(controller_);
             instance.setButton(InputsEnum.BUTTON_1, true);
             instance.setButton(InputsEnum.BUTTON_2, true);
             instance.setButton(InputsEnum.BUTTON_3, true);
@@ -169,6 +175,7 @@ namespace CommandoTest
             // not very likely (and would be readily apparent during playtesting).
 
             // Set them again, as if the buttons were still held down
+            instance.update(controller_);
             instance.setButton(InputsEnum.BUTTON_1, true);
             instance.setButton(InputsEnum.BUTTON_2, true);
             instance.setButton(InputsEnum.BUTTON_3, true);
@@ -200,6 +207,7 @@ namespace CommandoTest
 
             // Now, act like the user released all buttons, which
             // should clear the toggles
+            instance.update(controller_);
             instance.setButton(InputsEnum.BUTTON_1, false);
             instance.setButton(InputsEnum.BUTTON_2, false);
             instance.setButton(InputsEnum.BUTTON_3, false);
@@ -230,6 +238,7 @@ namespace CommandoTest
             Assert.AreEqual(0.0f, instance.getRightDirectionalY());
 
             // Now the toggles should be cleared, so set all buttons
+            instance.update(controller_);
             instance.setButton(InputsEnum.BUTTON_1, true);
             instance.setButton(InputsEnum.BUTTON_2, true);
             instance.setButton(InputsEnum.BUTTON_3, true);
@@ -267,6 +276,7 @@ namespace CommandoTest
             instance.clearToggles();
 
             // Now the toggles should be cleared, so set all buttons
+            instance.update(controller_);
             instance.setButton(InputsEnum.BUTTON_1, true);
             instance.setButton(InputsEnum.BUTTON_2, true);
             instance.setButton(InputsEnum.BUTTON_3, true);
@@ -324,6 +334,7 @@ namespace CommandoTest
             instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
             instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
             instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.update(controller_);
 
             // Make sure the Stick is working and devices act released
             Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_1));
@@ -354,6 +365,7 @@ namespace CommandoTest
             instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
             instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
             instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.update(controller_);
 
             // Make sure the Stick is working and devices act released
             Assert.AreEqual(false, instance.getButton(InputsEnum.BUTTON_1));
@@ -384,6 +396,7 @@ namespace CommandoTest
             instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
             instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
             instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.update(controller_);
 
             // Verify it wore off correctly
             Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_1));
@@ -420,6 +433,7 @@ namespace CommandoTest
             instance.setButton(InputsEnum.RIGHT_TRIGGER, true);
             instance.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);
             instance.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 1.0f, 1.0f);
+            instance.update(controller_);
 
             // And now verify that the sticks cleared correctly
             Assert.AreEqual(true, instance.getButton(InputsEnum.BUTTON_1));
@@ -452,6 +466,10 @@ namespace CommandoTest
 
             // And now set each player to different values to make
             // sure they all work independently
+            p1.update(controller_);
+            p2.update(controller_);
+            p3.update(controller_);
+            p4.update(controller_);
             p1.setDirectional(InputsEnum.LEFT_DIRECTIONAL, -1.0f, -1.0f);
             p2.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 0.0f, 0.0f);
             p3.setDirectional(InputsEnum.LEFT_DIRECTIONAL, 1.0f, 1.0f);

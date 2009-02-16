@@ -18,6 +18,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Commando.controls
 {
@@ -34,16 +35,16 @@ namespace Commando.controls
         // Key mapping
         // ------------------
         // Currently both directionals are hardcoded to the thumbsticks.
-        protected const Buttons CONFIRM = Buttons.Start;
-        protected const Buttons CANCEL = Buttons.Back;
-        protected const Buttons BUTTON_1 = Buttons.A;
-        protected const Buttons BUTTON_2 = Buttons.B;
-        protected const Buttons BUTTON_3 = Buttons.X;
-        protected const Buttons BUTTON_4 = Buttons.Y;
-        protected const Buttons LEFT_TRIGGER = Buttons.LeftTrigger;
-        protected const Buttons RIGHT_TRIGGER = Buttons.RightTrigger;
-        protected const Buttons LEFT_BUMPER = Buttons.LeftShoulder;
-        protected const Buttons RIGHT_BUMPER = Buttons.RightShoulder;
+        protected Buttons CONFIRM = Buttons.Start;
+        protected Buttons CANCEL = Buttons.Back;
+        protected Buttons BUTTON_1 = Buttons.A;
+        protected Buttons BUTTON_2 = Buttons.B;
+        protected Buttons BUTTON_3 = Buttons.X;
+        protected Buttons BUTTON_4 = Buttons.Y;
+        protected Buttons LEFT_TRIGGER = Buttons.LeftTrigger;
+        protected Buttons RIGHT_TRIGGER = Buttons.RightTrigger;
+        protected Buttons LEFT_BUMPER = Buttons.LeftShoulder;
+        protected Buttons RIGHT_BUMPER = Buttons.RightShoulder;
 
         /// <summary>
         /// Default constructor; assigns itself to Player One's input device.
@@ -85,6 +86,8 @@ namespace Commando.controls
         /// </summary>
         public void updateInputSet()
         {
+            inputs_.update(this);
+
             GamePadState gps = GamePad.GetState(player_);
 
             inputs_.setDirectional(InputsEnum.LEFT_DIRECTIONAL,
@@ -107,6 +110,44 @@ namespace Commando.controls
             inputs_.setButton(InputsEnum.LEFT_BUMPER, gps.IsButtonDown(LEFT_BUMPER));
             inputs_.setButton(InputsEnum.RIGHT_BUMPER, gps.IsButtonDown(RIGHT_BUMPER));
 
+        }
+
+        /// <summary>
+        /// Fetches the name of a particular button or directional
+        /// </summary>
+        /// <param name="device">Device whose name is desired</param>
+        /// <returns>Name of the device</returns>
+        public string getControlName(InputsEnum device)
+        {
+            switch (device)
+            {
+            case InputsEnum.LEFT_DIRECTIONAL:
+                return "Left Thumbstick";
+            case InputsEnum.RIGHT_DIRECTIONAL:
+                return "Right Thumbstick";
+            case InputsEnum.CONFIRM_BUTTON:
+                return CONFIRM.ToString();
+            case InputsEnum.CANCEL_BUTTON:
+                return CANCEL.ToString();
+            case InputsEnum.BUTTON_1:
+                return BUTTON_1.ToString();
+            case InputsEnum.BUTTON_2:
+                return BUTTON_2.ToString();
+            case InputsEnum.BUTTON_3:
+                return BUTTON_3.ToString();
+            case InputsEnum.BUTTON_4:
+                return BUTTON_4.ToString();
+            case InputsEnum.LEFT_BUMPER:
+                return LEFT_BUMPER.ToString();
+            case InputsEnum.RIGHT_BUMPER:
+                return RIGHT_BUMPER.ToString();
+            case InputsEnum.LEFT_TRIGGER:
+                return LEFT_TRIGGER.ToString();
+            case InputsEnum.RIGHT_TRIGGER:
+                return RIGHT_TRIGGER.ToString();
+            default:
+                throw new NotImplementedException();
+            }
         }
 
         #endregion

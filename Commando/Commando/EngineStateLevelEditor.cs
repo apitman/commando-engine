@@ -153,9 +153,9 @@ namespace Commando
                 curPallette_++;
                 curPallette_ = curPallette_ % NUM_PALLETTES;
             }
-            else if (inputs.getButton(InputsEnum.LEFT_TRIGGER))
+            else if (inputs.getButton(InputsEnum.RIGHT_TRIGGER))
             {
-                inputs.setToggle(InputsEnum.LEFT_TRIGGER);
+                inputs.setStick(InputsEnum.RIGHT_TRIGGER, 3);
                 //tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
                
