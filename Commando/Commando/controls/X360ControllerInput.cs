@@ -88,14 +88,31 @@ namespace Commando.controls
         {
             inputs_.update(this);
 
-            GamePadState gps = GamePad.GetState(player_);
+            GamePadState gps = GamePad.GetState(player_, GamePadDeadZone.Circular);
 
+
+            Vector2 left = gps.ThumbSticks.Left;
+            if (left.LengthSquared() == 0)
+            {
+                if (gps.IsButtonDown(Buttons.DPadLeft))
+                    left.X += 1;
+                if (gps.IsButtonDown(Buttons.DPadRight))
+                    left.X -= 1;
+                if (gps.IsButtonDown(Buttons.DPadUp))
+                    left.Y += 1;
+                if (gps.IsButtonDown(Buttons.DPadDown))
+                    left.Y -= 1;
+                if (left.LengthSquared() != 0)
+                    left.Normalize();
+            }
             inputs_.setDirectional(InputsEnum.LEFT_DIRECTIONAL,
-                                        gps.ThumbSticks.Left.X,
-                                        gps.ThumbSticks.Left.Y);
+                                        left.X,
+                                        left.Y);
+
+            Vector2 right = gps.ThumbSticks.Right;
             inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL,
-                                        gps.ThumbSticks.Right.X,
-                                        -gps.ThumbSticks.Right.Y);
+                                        right.X,
+                                        -right.Y);
 
             inputs_.setButton(InputsEnum.CONFIRM_BUTTON, gps.IsButtonDown(CONFIRM));
             inputs_.setButton(InputsEnum.CANCEL_BUTTON, gps.IsButtonDown(CANCEL));

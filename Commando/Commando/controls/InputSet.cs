@@ -337,7 +337,7 @@ namespace Commando.controls
         public string getControlName(InputsEnum device)
         {
             if (controller_ == null)
-                return "";
+                return "Error";
             return controller_.getControlName(device);
         }
 
