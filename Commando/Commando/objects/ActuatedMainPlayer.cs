@@ -68,8 +68,8 @@ namespace Commando.objects
             AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
             Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
             actions.Add("default", new Dictionary<string, CharacterActionInterface>());
-            actions["default"].Add("move", new CharacterRunAction(this, run, 2.0f));
-            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 2.0f));
+            actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
+            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
             actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
             actuator_ = new DefaultActuator(actions, this, "default");
 

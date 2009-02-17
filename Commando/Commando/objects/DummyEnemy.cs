@@ -44,7 +44,7 @@ namespace Commando.objects
 
         protected DefaultActuator actuator_;
 
-        protected  const float RADIUS = 16.0f;
+        protected  const float RADIUS = 12.0f;
 
         protected float radius_;
 

@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using Commando.controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.graphics;
 
 namespace Commando
 {
@@ -137,6 +138,7 @@ namespace Commando
         /// </summary>
         public void draw()
         {
+
             if (menu_ == null)
             {
                 menu_ = TextureMap.getInstance().getTexture("TitleScreen");

@@ -66,6 +66,7 @@ namespace Commando
                 Projectile bullet = new Projectile(TextureMap.getInstance().getTexture("Bullet"), rotation_ * 20.0f, pos, rotation_, 0.5f);
                 drawPipeline_.Add(bullet);
                 recoil_ = 5;
+                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
             }
         }
 

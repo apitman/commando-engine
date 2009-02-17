@@ -217,6 +217,9 @@
     <Compile Include="..\Commando\graphics\DefaultActuator.cs">
       <Link>graphics\DefaultActuator.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\Illustrator.cs">
+      <Link>graphics\Illustrator.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\LoopAnimation.cs">
       <Link>graphics\LoopAnimation.cs</Link>
     </Compile>
