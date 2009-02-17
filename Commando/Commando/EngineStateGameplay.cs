@@ -126,11 +126,36 @@ namespace Commando
             boundsPoints.Add(new Vector2(300f - 345f, 60f - 30f));
             BoxObject wall2 = new BoxObject(boundsPoints, new Vector2(300f, 60f));
             wall2.getBounds().rotate(new Vector2(1.0f, 0.0f), wall2.getPosition());
+            boundsPoints.Clear();
+            boundsPoints.Add(new Vector2(360f - 345f, 165f - 90f));
+            boundsPoints.Add(new Vector2(360f - 375f, 165f - 90f));
+            boundsPoints.Add(new Vector2(360f - 375f, 165f - 240f));
+            boundsPoints.Add(new Vector2(360f - 345f, 165f - 240f));
+            BoxObject wall3 = new BoxObject(boundsPoints, new Vector2(360f, 165f));
+            wall3.getBounds().rotate(new Vector2(1.0f, 0.0f), wall3.getPosition());
+            boundsPoints.Clear();
+            boundsPoints.Add(new Vector2(300f - 255f, 270f - 240f));
+            boundsPoints.Add(new Vector2(300f - 345f, 270f - 240f));
+            boundsPoints.Add(new Vector2(300f - 345f, 270f - 300f));
+            boundsPoints.Add(new Vector2(300f - 255f, 270f - 300f));
+            BoxObject wall4 = new BoxObject(boundsPoints, new Vector2(300f, 270f));
+            wall4.getBounds().rotate(new Vector2(1.0f, 0.0f), wall4.getPosition());
+            boundsPoints.Clear();
+            boundsPoints.Add(new Vector2(142.5f - 30f, 315f - 300f));
+            boundsPoints.Add(new Vector2(142.5f - 255f, 315f - 300f));
+            boundsPoints.Add(new Vector2(142.5f - 255f, 315f - 330f));
+            boundsPoints.Add(new Vector2(142.5f - 30f, 315f - 330f));
+            BoxObject wall5 = new BoxObject(boundsPoints, new Vector2(142.5f, 315f));
+            wall5.getBounds().rotate(new Vector2(1.0f, 0.0f), wall5.getPosition());
+            boundsPoints.Clear();
+            boundsPoints.Add(new Vector2(15f - 0f, 165f - 30f));
+            boundsPoints.Add(new Vector2(15f - 30f, 165f - 30f));
+            boundsPoints.Add(new Vector2(15f - 30f, 165f - 300f));
+            boundsPoints.Add(new Vector2(15f - 0f, 165f - 300f));
+            BoxObject wall6 = new BoxObject(boundsPoints, new Vector2(15f, 165f));
+            wall6.getBounds().rotate(new Vector2(1.0f, 0.0f), wall6.getPosition());
+            boundsPoints.Clear();
 
-            boundsPoints.Add(new Vector2(345f, 240f));
-            boundsPoints.Add(new Vector2(255f, 240f));
-            boundsPoints.Add(new Vector2(255f, 300f));
-            boundsPoints.Add(new Vector2(30f, 300f));
             BoundingPolygon walls = new BoundingPolygon(boundsPoints);
             List<Vector2> boxBoundsPoints = new List<Vector2>();
             /*
@@ -154,6 +179,10 @@ namespace Commando
             collisionDetector_.register(box);
             collisionDetector_.register(wall1);
             collisionDetector_.register(wall2);
+            collisionDetector_.register(wall3);
+            collisionDetector_.register(wall4);
+            collisionDetector_.register(wall5);
+            collisionDetector_.register(wall6);
             //END Jared's test stuff
 
             healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);

@@ -44,9 +44,9 @@ namespace Commando
 
         protected CollisionDetectorInterface collisionDetector_;
 
-        List<CollisionObjectInterface> collidedWith_ = new List<CollisionObjectInterface>();
+        protected List<CollisionObjectInterface> collidedWith_ = new List<CollisionObjectInterface>();
 
-        List<CollisionObjectInterface> collidedInto_ = new List<CollisionObjectInterface>();
+        protected List<CollisionObjectInterface> collidedInto_ = new List<CollisionObjectInterface>();
 
         /// <summary>
         /// Create a default Character
