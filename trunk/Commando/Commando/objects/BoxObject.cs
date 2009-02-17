@@ -60,6 +60,16 @@ namespace Commando.objects
             return boundsPolygon_;
         }
 
+        public void collidedWith(CollisionObjectInterface obj)
+        {
+            
+        }
+
+        public void collidedInto(CollisionObjectInterface obj)
+        {
+            
+        }
+
         #endregion
     }
 }

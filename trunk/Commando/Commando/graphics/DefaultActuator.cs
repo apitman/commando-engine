@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.graphics
 {
@@ -71,6 +72,11 @@ namespace Commando.graphics
         public void draw()
         {
             currentAction_.draw();
+        }
+
+        public void draw(Color color)
+        {
+            currentAction_.draw(color);
         }
 
         public void move(Vector2 direction)

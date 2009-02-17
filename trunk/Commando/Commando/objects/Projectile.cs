@@ -37,6 +37,8 @@ namespace Commando.objects
 
         protected float radius_;
 
+        CollisionObjectInterface collidedInto_ = null;
+
         public Projectile() :
             this(null, null, null, 0f)
         {
@@ -75,6 +77,10 @@ namespace Commando.objects
                 newPosition.Y > 330 || newPosition.Y < 0 ||
                 newPosition != collisionDetector_.checkCollisions(this, newPosition))
             {
+                if (collidedInto_ != null && collidedInto_ is CharacterAbstract)
+                {
+                    (collidedInto_ as CharacterAbstract).damage(5, this);
+                }
                 die();
             }
             position_ = newPosition;
@@ -94,16 +100,6 @@ namespace Commando.objects
             }
         }
 
-        public Vector2 getPosition()
-        {
-            return position_;
-        }
-
-        public Vector2 getDirection()
-        {
-            return direction_;
-        }
-
         public float getRadius()
         {
             return radius_;
@@ -121,6 +117,16 @@ namespace Commando.objects
             {
                 collisionDetector_.remove(this);
             }
+        }
+
+        public void collidedWith(CollisionObjectInterface obj)
+        {
+            //collidedWith_.Add(obj);
+        }
+
+        public void collidedInto(CollisionObjectInterface obj)
+        {
+            collidedInto_ = obj;
         }
     }
 }

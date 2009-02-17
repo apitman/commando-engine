@@ -19,5 +19,7 @@ namespace Commando.collisiondetection
         void projectPolygonOnAxis(Vector2 axis, ref float min, ref float max);
         
         void rotate(Vector2 newAxis, Vector2 position);
+
+        void translate(Vector2 translation);
     }
 }

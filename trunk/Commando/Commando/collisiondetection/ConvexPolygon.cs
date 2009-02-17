@@ -180,12 +180,12 @@ namespace Commando.collisiondetection
             Illustrator.drawLine(points_[points_.Length - 1], points_[0]);
         }
 
-        protected void translate(Vector2 position)
+        public void translate(Vector2 translation)
         {
             for (int i = 0; i < numPoints_; i++)
             {
-                points_[i].X = points_[i].X + position.X;
-                points_[i].Y = points_[i].Y + position.Y;
+                points_[i].X = points_[i].X + translation.X;
+                points_[i].Y = points_[i].Y + translation.Y;
             }
         }
 

@@ -162,5 +162,10 @@ namespace Commando.objects
         {
             return actuator_;
         }
+
+        public override void damage(int amount, CollisionObjectInterface obj)
+        {
+            
+        }
     }
 }
