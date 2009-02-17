@@ -74,7 +74,8 @@ namespace Commando.collisiondetection
                         obj.collidedInto(cObj);
                         cObj.collidedWith(obj);
                         newPosition += translate;
-                        movingObjectPolygon.translate(translate);
+                        //movingObjectPolygon.translate(translate);
+                        movingObjectPolygon.rotate(direction, newPosition);
                     }
                 }
             }

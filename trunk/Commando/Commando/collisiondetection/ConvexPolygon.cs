@@ -187,6 +187,7 @@ namespace Commando.collisiondetection
                 points_[i].X = points_[i].X + translation.X;
                 points_[i].Y = points_[i].Y + translation.Y;
             }
+            curCenter_ += translation;
         }
 
         protected float getRotationAngle(Vector2 direction)
