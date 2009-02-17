@@ -170,7 +170,7 @@ namespace Commando
             //Jared's test stuff
             player_.setInputSet(inputs);
             player_.update(gameTime);
-            //enemy_.update(gameTime);
+            enemy_.update(gameTime);
             //END Jared's test stuff
 
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)
@@ -192,9 +192,13 @@ namespace Commando
         {
             engine_.GraphicsDevice.Clear(Color.Chocolate);
 
+            //TEST
+            (collisionDetector_ as SeparatingAxisCollisionDetector).draw();
+            //
+
             //Jared's test stuff
             player_.draw(new GameTime());
-            //enemy_.draw(new GameTime());
+            enemy_.draw(new GameTime());
             foreach (TileObject tOb in tiles_)
             {
                 tOb.draw(new GameTime());

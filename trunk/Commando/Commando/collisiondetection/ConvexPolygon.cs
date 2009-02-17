@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.graphics;
 
 namespace Commando.collisiondetection
 {
@@ -102,12 +103,13 @@ namespace Commando.collisiondetection
 
         public void rotate(Vector2 newAxis, Vector2 position)
         {
-            curCenter_ = position;
             if (newAxis == curAxis_)
             {
-                translate(position);
+                translate(position - curCenter_);
+                curCenter_ = position;
                 return;
             }
+            curCenter_ = position;
             float rotationAngle = getRotationAngle(newAxis);
             float cosA = (float)Math.Cos(rotationAngle);
             float sinA = (float)Math.Sin(rotationAngle);
@@ -167,6 +169,15 @@ namespace Commando.collisiondetection
         public static float dotProduct(Vector2 first, Vector2 second)
         {
             return (first.X * second.X) + (first.Y * second.Y);
+        }
+
+        public void draw()
+        {
+            for (int i = 0; i < points_.Length - 1; i++)
+            {
+                Illustrator.drawLine(points_[i], points_[i + 1]);
+            }
+            Illustrator.drawLine(points_[points_.Length - 1], points_[0]);
         }
 
         protected void translate(Vector2 position)

@@ -74,6 +74,18 @@ namespace Commando.collisiondetection
             return newPosition;
         }
 
+        public void draw()
+        {
+            foreach (CollisionObjectInterface cObj in objects_)
+            {
+                ConvexPolygonInterface poly = cObj.getBounds();
+                if (poly is ConvexPolygon)
+                {
+                    (poly as ConvexPolygon).draw();
+                }
+            }
+        }
+
         protected Vector2 checkCollision(ConvexPolygonInterface polygonA, ConvexPolygonInterface polygonB, float radDistance)
         {
             int edgesCountPolygonA = polygonA.getNumberOfPoints();

@@ -249,5 +249,11 @@ namespace Commando
         {
             spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, depth);
         }
+
+        public void drawImageWithDim(int imageNumber, Rectangle destinationDims, float rotation, float depth, Vector2 origin, Color color)
+        {
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], color, rotation, origin, SpriteEffects.None, depth);
+        }
     }
 }

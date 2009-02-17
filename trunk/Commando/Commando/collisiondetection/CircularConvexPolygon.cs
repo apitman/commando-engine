@@ -65,10 +65,9 @@ namespace Commando.collisiondetection
         public void projectPolygonOnAxis(Vector2 axis, ref float min, ref float max)
         {
             axis.Normalize();
-            axis.X *= radius_;
-            axis.Y *= radius_;
-            min = ConvexPolygon.dotProduct(axis, center_ + axis);
-            max = ConvexPolygon.dotProduct(axis, center_ - axis);
+            min = ConvexPolygon.dotProduct(axis, center_);
+            max = min + radius_;
+            min -= radius_;
             if (min > max)
             {
                 float temp = min;

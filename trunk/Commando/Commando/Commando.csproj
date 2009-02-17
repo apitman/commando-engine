@@ -129,6 +129,7 @@
     <Compile Include="graphics\CharacterRunToAction.cs" />
     <Compile Include="graphics\CharacterStayStillAction.cs" />
     <Compile Include="graphics\DefaultActuator.cs" />
+    <Compile Include="graphics\Illustrator.cs" />
     <Compile Include="graphics\LoopAnimation.cs" />
     <Compile Include="graphics\MoveActionInterface.cs" />
     <Compile Include="graphics\MoveToActionInterface.cs" />
