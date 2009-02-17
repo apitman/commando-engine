@@ -83,7 +83,7 @@ namespace Commando.graphics
             moveVector *= (MathHelper.TwoPi - Math.Abs(moveDiff)) / MathHelper.Pi;
             */
 
-            //TODO: Implement Collision Detection
+            newPosition = character_.getCollisionDetector().checkCollisions(character_, newPosition);
 
             if (newPosition == moveToLocation_)
             {

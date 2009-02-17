@@ -173,8 +173,8 @@ namespace Commando.collisiondetection
         {
             for (int i = 0; i < numPoints_; i++)
             {
-                points_[i].X = original_[i].X + position.X;
-                points_[i].Y = original_[i].Y + position.Y;
+                points_[i].X = points_[i].X + position.X;
+                points_[i].Y = points_[i].Y + position.Y;
             }
         }
 

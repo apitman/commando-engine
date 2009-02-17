@@ -52,6 +52,7 @@ namespace Commando.collisiondetection
             float radius = obj.getRadius();
             ConvexPolygonInterface movingObjectPolygon = obj.getBounds();
             Vector2 direction = obj.getDirection();
+            Console.Out.WriteLine("DIRECTION: " + direction);
             movingObjectPolygon.rotate(direction, newPosition);
             Vector2 translate;
             float dist;
@@ -116,7 +117,7 @@ namespace Commando.collisiondetection
                 {
                     if (polygonB is CircularConvexPolygon)
                     {
-                        currentEdgeNormal = polygonA.getPoint(i) - centerB;
+                        currentEdgeNormal = polygonA.getPoint(i - edgesCountPolygonA) - centerB;
                     }
                     else
                     {
@@ -131,7 +132,10 @@ namespace Commando.collisiondetection
                 polygonB.projectPolygonOnAxis(currentEdgeNormal, ref minB, ref maxB);
 
                 float distance = distanceBetweenProjections(minA, maxA, minB, maxB);
-                //Console.Out.WriteLine(minA + "," + maxA+ "," + minB + "," + maxB + "," + distance);
+                if (distance < -5 && currentEdgeNormal.Y == 1.0f && currentEdgeNormal.X == 0.0f)
+                {
+                    Console.Out.WriteLine(minA + "," + maxA + "," + minB + "," + maxB + "," + distance);
+                }
                 if (distance > 0)
                 {
                     return Vector2.Zero;
@@ -141,6 +145,7 @@ namespace Commando.collisiondetection
                 if (distance < minDistance)
                 {
                     //Console.Out.WriteLine("In Here: " + distance);
+                    //Console.Out.WriteLine(minA + "," + maxA + "," + minB + "," + maxB + "," + distance);
                     minDistance = distance;
                     if (ConvexPolygon.dotProduct(centerA - centerB, currentEdgeNormal) < 0)
                     {
@@ -152,6 +157,7 @@ namespace Commando.collisiondetection
                     }
                 }
             }
+            Console.Out.WriteLine(minDistance + " " + minAxis);
             return minAxis * minDistance;
         }
 

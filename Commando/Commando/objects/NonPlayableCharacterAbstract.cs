@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.ai;
+using Commando.collisiondetection;
 
 namespace Commando.objects
 {
@@ -46,8 +47,8 @@ namespace Commando.objects
         /// <param name="ammo">CharacterStatusElement for ammo</param>
         /// <param name="weapon">CharacterStatusElement for the current weapon</param>
         /// <param name="name">The character's name</param>
-        public NonPlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name) :
-            base(health, ammo, weapon, name)
+        public NonPlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface detector) :
+            base(health, ammo, weapon, name, detector)
         {
             AI_ = new AI(this);
         }
@@ -67,8 +68,8 @@ namespace Commando.objects
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public NonPlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
-            base(health, ammo, weapon, name, animations, frameLengthModifier, velocity, position, direction, depth)
+        public NonPlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface detector, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(health, ammo, weapon, name, detector, animations, frameLengthModifier, velocity, position, direction, depth)
         {
             AI_ = new AI(this);
         }

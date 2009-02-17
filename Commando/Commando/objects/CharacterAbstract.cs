@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.collisiondetection;
+using Commando.graphics;
 
 namespace Commando
 {
@@ -29,7 +31,7 @@ namespace Commando
     /// CharacterAbstract inherits from AnimatedObjectAbstract and is an ancestor of all 
     /// playable and non-playable characters.
     /// </summary>
-    public abstract class CharacterAbstract : AnimatedObjectAbstract
+    public abstract class CharacterAbstract : AnimatedObjectAbstract, CollisionObjectInterface
     {
 
         protected CharacterHealth health_;
@@ -40,11 +42,13 @@ namespace Commando
 
         protected string name_;
 
+        protected CollisionDetectorInterface collisionDetector_;
+
         /// <summary>
         /// Create a default Character
         /// </summary>
         public CharacterAbstract() :
-            this(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "")
+            this(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "", null)
         {
         }
 
@@ -55,13 +59,18 @@ namespace Commando
         /// <param name="ammo">CharacterStatusElement for ammo</param>
         /// <param name="weapon">CharacterStatusElement for the current weapon</param>
         /// <param name="name">The character's name</param>
-        public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name) :
+        public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface collisionDetector) :
             base()
         {
             health_ = health;
             ammo_ = ammo;
             weapon_ = weapon;
             name_ = name;
+            collisionDetector_ = collisionDetector;
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.register(this);
+            }
         }
 
         /// <summary>
@@ -79,13 +88,18 @@ namespace Commando
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+        public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface collisionDetector, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(animations, frameLengthModifier, velocity, position, direction, depth)
         {
             health_ = health;
             ammo_ = ammo;
             weapon_ = weapon;
             name_ = name;
+            collisionDetector_ = collisionDetector;
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.register(this);
+            }
         }
 
         public CharacterHealth getHealth()
@@ -108,6 +122,13 @@ namespace Commando
             return name_;
         }
 
+        public CollisionDetectorInterface getCollisionDetector()
+        {
+            return collisionDetector_;
+        }
+
+        public abstract ActuatorInterface getActuator();
+
         public void setHealth(CharacterHealth health)
         {
             health_ = health;
@@ -128,10 +149,17 @@ namespace Commando
             name_ = name;
         }
 
-        //TESTING FUNCTION
-        public virtual collisiondetection.CollisionDetectorInterface getCollisionDetector()
+        public void setCollisionDetector(CollisionDetectorInterface collisionDetector)
         {
-            return null;
+            collisionDetector_ = collisionDetector;
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.register(this);
+            }
         }
+
+        public abstract float getRadius();
+
+        public abstract ConvexPolygonInterface getBounds();
     }
 }
