@@ -128,7 +128,31 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
+            if (inputs.getLeftDirectionalY() < 0)
+            {
+                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
+                if (cursorPosY_ < NUM_TILES_PER_COL -1)
+                    cursorPosY_++;
+            }
+            else if (inputs.getLeftDirectionalY() > 0)
+            {
+                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
+                if (cursorPosY_ > 0)
+                    cursorPosY_--;
+            }
+            else if (inputs.getLeftDirectionalX() > 0)
+            {
+                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
+                if (cursorPosY_ < NUM_TILES_PER_ROW - 1)
+                    cursorPosX_++;
+            }
+            else if (inputs.getLeftDirectionalX() < 0)
+            {
+                inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
+                if (cursorPosX_ > 0)
+                    cursorPosX_--;
+            }
+            else if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
                 engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
@@ -152,13 +176,39 @@ namespace Commando
                 curPallette_++;
                 curPallette_ = curPallette_ % NUM_PALLETTES;
             }
+            else if (inputs.getButton(InputsEnum.CONFIRM_BUTTON))
+            {
+                inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
+                switch (curPallette_)
+                {
+                    case (int)pallette_.tile:
+                        {
+                            tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                            break;
+                        }
+                    case (int)pallette_.enemy:
+                        {
+                            
+                         //to do, add enemy on cursor position
+
+                            break;
+                        }
+                    case (int)pallette_.misc:
+                        {
+
+                            break;
+                        }
+                }
+            }
             else if (inputs.getButton(InputsEnum.RIGHT_TRIGGER))
             {
                 if (curPallette_ != (int)pallette_.tile)
                 {
                     inputs.setToggle(InputsEnum.RIGHT_TRIGGER);
+                    
+                   
                 }
-                //tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
 
                 // Prepare to output to XML
@@ -216,11 +266,12 @@ namespace Commando
                                 // Add an XML enemy
                                 System.Xml.XmlElement enemyElement = (System.Xml.XmlElement) doc.GetElementsByTagName("enemies")[0];
                                 System.Xml.XmlElement element = doc.CreateElement("enemy");
-                                element.SetAttribute("name", DUMMY_ENEMY);
                                 element.SetAttribute("posX", rightD.X.ToString());
                                 element.SetAttribute("posY", rightD.Y.ToString());
                                 enemyElement.AppendChild(element);
                             }
+
+
                             break;
                         }
                 }
@@ -263,6 +314,9 @@ namespace Commando
             }
 
             displayTile_.draw(new GameTime());
+
+            TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((cursorPosX_ *Tiler.tileSideLength_ - 1 ), (cursorPosY_ * Tiler.tileSideLength_ - 1)), 0.2f);
+
 
            // Draw  objects (ie enemies/misc)
             for (int i = 0; i < myObjects_.Count(); i++)
