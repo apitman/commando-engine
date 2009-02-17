@@ -149,12 +149,12 @@ namespace Commando
             depth_ = dep;
         }
 
-        public bool isDead()
+        public virtual bool isDead()
         {
             return isDead_;
         }
 
-        public void die()
+        public virtual void die()
         {
             isDead_ = true;
         }

@@ -47,12 +47,16 @@ namespace Commando.collisiondetection
             }
         }
 
+        public void remove(CollisionObjectInterface obj)
+        {
+            objects_.Remove(obj);
+        }
+
         public Vector2 checkCollisions(CollisionObjectInterface obj, Vector2 newPosition)
         {
             float radius = obj.getRadius();
             ConvexPolygonInterface movingObjectPolygon = obj.getBounds();
             Vector2 direction = obj.getDirection();
-            Console.Out.WriteLine("DIRECTION: " + direction);
             movingObjectPolygon.rotate(direction, newPosition);
             Vector2 translate;
             float dist;

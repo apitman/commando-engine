@@ -27,41 +27,100 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
-    public class Projectile : MovableObjectAbstract/*, CollisionObjectInterface*/
+    public class Projectile : MovableObjectAbstract, CollisionObjectInterface
     {
         protected GameTexture texture_;
 
+        protected CollisionDetectorInterface collisionDetector_;
+
+        protected ConvexPolygonInterface boundsPolygon_;
+
+        protected float radius_;
+
         public Projectile() :
-            base()
+            this(null, null, null, 0f)
         {
-            texture_ = null;
         }
 
-        public Projectile(GameTexture texture) :
+        public Projectile(GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius) :
             base()
         {
             texture_ = texture;
+            if (detector != null)
+            {
+                detector.register(this);
+                collisionDetector_ = detector;
+            }
+            boundsPolygon_ = bounds;
+            radius_ = radius;
         }
 
-        public Projectile(GameTexture texture, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+        public Projectile(GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(velocity, position, direction, depth)
         {
             texture_ = texture;
+            if (detector != null)
+            {
+                detector.register(this);
+                collisionDetector_ = detector;
+            }
+            boundsPolygon_ = bounds;
+            radius_ = radius;
         }
 
         public override void update(GameTime gameTime)
         {
-            position_ += velocity_;
-            if (position_.X > 400 || position_.X < 0 ||
-                position_.Y > 400 || position_.Y < 0)
+            Vector2 newPosition = position_+ velocity_;
+            if (newPosition.X > 400 || newPosition.X < 0 ||
+                newPosition.Y > 330 || newPosition.Y < 0 ||
+                newPosition != collisionDetector_.checkCollisions(this, newPosition))
             {
                 die();
             }
+            position_ = newPosition;
         }
 
         public override void draw(GameTime gameTime)
         {
             texture_.drawImage(0, position_, getRotationAngle(), depth_);
+        }
+
+        public void setCollisionDetector(CollisionDetectorInterface detector)
+        {
+            if (detector != null)
+            {
+                detector.register(this);
+                collisionDetector_ = detector;
+            }
+        }
+
+        public Vector2 getPosition()
+        {
+            return position_;
+        }
+
+        public Vector2 getDirection()
+        {
+            return direction_;
+        }
+
+        public float getRadius()
+        {
+            return radius_;
+        }
+
+        public ConvexPolygonInterface getBounds()
+        {
+            return boundsPolygon_;
+        }
+
+        public override void die()
+        {
+            base.die();
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.remove(this);
+            }
         }
     }
 }

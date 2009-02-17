@@ -24,6 +24,7 @@ using System.Text;
 using Commando.graphics;
 using Commando.objects;
 using Microsoft.Xna.Framework;
+using Commando.collisiondetection;
 
 namespace Commando
 {
@@ -57,15 +58,20 @@ namespace Commando
             recoil_ = 0;
         }
 
-        public void shoot()
+        public void shoot(CollisionDetectorInterface detector)
         {
             if (recoil_ == 0 && character_.getAmmo().getValue() > 0)
             {
+                List<Vector2> points = new List<Vector2>();
+                points.Add(new Vector2(2f, 2f));
+                points.Add(new Vector2(-2f, 2f));
+                points.Add(new Vector2(-2f, -2f));
+                points.Add(new Vector2(2f, -2f));
                 rotation_.Normalize();
                 Vector2 pos = position_ + rotation_ * 15f;
-                Projectile bullet = new Projectile(TextureMap.getInstance().getTexture("Bullet"), rotation_ * 20.0f, pos, rotation_, 0.5f);
+                Projectile bullet = new Projectile(TextureMap.getInstance().getTexture("Bullet"), detector, new ConvexPolygon(points, Vector2.Zero), 2.5f, rotation_ * 20.0f, pos, rotation_, 0.5f);
                 drawPipeline_.Add(bullet);
-                recoil_ = 5;
+                recoil_ = 10;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
             }
         }
