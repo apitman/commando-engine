@@ -109,24 +109,24 @@ namespace CommandoTest
             Assert.AreEqual(0, testMenuList_.getCursorPos());
             for (int i = 0; i < 90; i++)
             {
-                testMenuList_.decremnentCursorPos();
+                testMenuList_.decrementCursorPos();
             }
             Assert.AreEqual(0, testMenuList_.getCursorPos());
         }
         public void TestDecrementCursor()
         {
             Assert.AreEqual(0, testMenuList_.getCursorPos());
-            testMenuList_.decremnentCursorPos();
+            testMenuList_.decrementCursorPos();
             Assert.AreEqual(2, testMenuList_.getCursorPos());
-            testMenuList_.decremnentCursorPos();
+            testMenuList_.decrementCursorPos();
             Assert.AreEqual(1, testMenuList_.getCursorPos());
-            testMenuList_.decremnentCursorPos();
+            testMenuList_.decrementCursorPos();
             //this is a three item menu, so the cursor should wrap
             //back to the first item
             Assert.AreEqual(0, testMenuList_.getCursorPos());
             for (int i = 0; i < 90; i++)
             {
-                testMenuList_.decremnentCursorPos();
+                testMenuList_.decrementCursorPos();
             }
             Assert.AreEqual(0, testMenuList_.getCursorPos());
         }

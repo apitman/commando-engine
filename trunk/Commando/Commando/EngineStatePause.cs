@@ -107,9 +107,11 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON))
+            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) ||
+                inputs.getButton(InputsEnum.BUTTON_1))
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
+                inputs.setToggle(InputsEnum.BUTTON_1);
                 switch (pauseMenu_.getCursorPos())
                 {
                     case MENU_OPTION_RETURN:
@@ -142,7 +144,7 @@ namespace Commando
             if (inputs.getLeftDirectionalY() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                pauseMenu_.decremnentCursorPos();
+                pauseMenu_.decrementCursorPos();
             }
             else if (inputs.getLeftDirectionalY() < 0)
             {

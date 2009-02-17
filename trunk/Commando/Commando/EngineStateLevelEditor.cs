@@ -47,9 +47,6 @@ namespace Commando
     }
     public class EngineStateLevelEditor : EngineStateInterface
     {
-    
-
-
         const int SCREEN_SIZE_X = 375;
         const int SCREEN_SIZE_Y = 375;
         const int NUM_TILES = 23;
@@ -86,6 +83,7 @@ namespace Commando
                                         {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
                                         {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
                                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+
         protected EngineStateInterface returnState_;
         protected int returnScreenSizeX_;
         protected int returnScreenSizeY_;
@@ -156,7 +154,10 @@ namespace Commando
             }
             else if (inputs.getButton(InputsEnum.RIGHT_TRIGGER))
             {
-                inputs.setStick(InputsEnum.RIGHT_TRIGGER, 3);
+                if (curPallette_ != (int)pallette_.tile)
+                {
+                    inputs.setToggle(InputsEnum.RIGHT_TRIGGER);
+                }
                 //tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
 
@@ -269,7 +270,7 @@ namespace Commando
                 
                 objectRepresentation currObject = myObjects_[i];
                 
-                if (currObject.objName_ == DUMMY_ENEMY);
+                if (currObject.objName_ == DUMMY_ENEMY)
                 {
                     TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, currObject.objPos_, currObject.objDepth_);
                 }

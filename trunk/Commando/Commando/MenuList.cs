@@ -185,7 +185,7 @@ namespace Commando
         /// <summary>
         /// decrements cursor position with wraparound
         /// </summary>
-        public void decremnentCursorPos()
+        public void decrementCursorPos()
         {
             cursorPos_--;
             if (cursorPos_ < 0) 

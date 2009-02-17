@@ -32,11 +32,17 @@ namespace Commando
         const int SCREEN_SIZE_X = 800;
         const int SCREEN_SIZE_Y = 600;
 
+        protected const string MENU_START_GAME = "Start Game";
+        protected const string MENU_CONTROLS = "Controls";
+        protected const string MENU_LEVEL_EDITOR = "Level Editor";
+        protected const string MENU_QUIT = "Quit";
+
         protected Engine engine_;
         protected GameTexture menu_;
         protected MenuList mainMenuList_;
         protected int cursorPos_;
         protected string controlTips_;
+
         /// <summary>
         /// Creates a main menu state
         /// </summary>
@@ -46,17 +52,18 @@ namespace Commando
             cursorPos_ = 0;
             engine_ = engine;
             List<string> menuString = new List<string>();
-            menuString.Add("Start Game");
-            menuString.Add("Controls");
-            menuString.Add("Level Editor");
-            menuString.Add("Exit");
+            menuString.Add(MENU_START_GAME);
+            menuString.Add(MENU_CONTROLS);
+            menuString.Add(MENU_LEVEL_EDITOR);
+            menuString.Add(MENU_QUIT);
 
             InputSet inputs = InputSet.getInstance();
-            controlTips_ = "Select: " +
+            /*controlTips_ = "Select: " +
                             inputs.getControlName(InputsEnum.CONFIRM_BUTTON) +
                             " | " +
                             "Cancel: " +
-                            inputs.getControlName(InputsEnum.CANCEL_BUTTON);
+                            inputs.getControlName(InputsEnum.CANCEL_BUTTON);*/
+            controlTips_ = ""; // currrently refreshed every fram in draw()
             mainMenuList_ = new MenuList(menuString,
                                                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                                                 engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f),
@@ -82,32 +89,34 @@ namespace Commando
             InputSet inputs = engine_.getInputs();
 
             // Temporary for Andrew's test purposes
-            if (inputs.getButton(InputsEnum.BUTTON_1))
+            /*if (inputs.getButton(InputsEnum.BUTTON_1))
             {
                 return new EngineStateLevelEditor(engine_, this, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             }
+            */
 
+            /* Commenting this out, seems better to just let them go to "Quit"
             if (inputs.getButton(InputsEnum.CANCEL_BUTTON)) // tenatively Escape / Back
             {
                 engine_.Exit();
             }
+             */
 
-            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON)) // tenatively Enter / Start
+            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) ||
+                inputs.getButton(InputsEnum.BUTTON_1))
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
+                inputs.setToggle(InputsEnum.BUTTON_1);
                 //get position of cursor from mainMenuList_
                 int myCursorPos_ = mainMenuList_.getCursorPos();
                 switch(myCursorPos_)
                 {
                     case 0:
                         return new EngineStateGameplay(engine_);
-                        break;
                     case 1:
                         return new EngineStateControls(engine_);
-                        break;
                     case 2:
                         return new EngineStateLevelEditor(engine_, this , 800, 600);
-                        break;
                     case 3:
                         engine_.Exit();
                         break;
@@ -116,7 +125,7 @@ namespace Commando
             if (inputs.getLeftDirectionalY() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                mainMenuList_.decremnentCursorPos();
+                mainMenuList_.decrementCursorPos();
             }
             if (inputs.getLeftDirectionalY() < 0)
             {
@@ -124,11 +133,7 @@ namespace Commando
                 mainMenuList_.incrementCursorPos();
             }
 
-            controlTips_ = "Select: " +
-                            inputs.getControlName(InputsEnum.CONFIRM_BUTTON) +
-                            " | " +
-                            "Cancel: " +
-                            inputs.getControlName(InputsEnum.CANCEL_BUTTON);
+            controlTips_ = "Press " + inputs.getControlName(InputsEnum.CONFIRM_BUTTON) + " to select an option";
 
             return this;
         }
@@ -150,9 +155,12 @@ namespace Commando
             
             GameFont myFont = FontMap.getInstance().getFont(FontEnum.Kootenay);
             //print control Tips for main menu
-           myFont.drawStringCentered(controlTips_,
-                                          new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
-                                          engine_.GraphicsDevice.Viewport.Height / 2.0f -10.0f),
+
+            Vector2 controlTipsPos =
+                new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
+                            engine_.GraphicsDevice.Viewport.Height / 2.0f - 10.0f);
+            myFont.drawStringCentered(controlTips_,
+                                          controlTipsPos,
                                           Color.White,
                                           0.0f,
                                           1.0f,

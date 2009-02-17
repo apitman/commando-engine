@@ -55,28 +55,35 @@ namespace Commando
             editorControlsString.Add("Prev Palette: " + inputs.getControlName(InputsEnum.RIGHT_BUMPER));
             editorControlsString.Add("Place Tile: " + inputs.getControlName(InputsEnum.RIGHT_TRIGGER));
             editorControlsString.Add("Quit: " + inputs.getControlName(InputsEnum.CANCEL_BUTTON));
-            gameControlsMenuList_ = new MenuList(gameControlsString,
-                                               new Vector2(200.0f,
-                                               engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f),
-                                               Color.Green,
-                                               Color.White,
-                                               8,
-                                               0.0f,
-                                               1.0f,
-                                               SpriteEffects.None,
-                                               1.0f,
-                                               40.0f);
-            editorControlsMenuList_ = new MenuList(editorControlsString,
-                                   new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f + 200.0f,
-                                   engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f),
-                                   Color.Green,
-                                   Color.Green,
-                                   7,
-                                   0.0f,
-                                   1.0f,
-                                   SpriteEffects.None,
-                                   1.0f,
-                                   40.0f);
+
+            Vector2 gameControlsMenuPos =
+                new Vector2(200.0f, engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f);
+            gameControlsMenuList_ =
+                new MenuList(gameControlsString,
+                               gameControlsMenuPos,
+                               Color.Green,
+                               Color.White,
+                               8,
+                               0.0f,
+                               1.0f,
+                               SpriteEffects.None,
+                               1.0f,
+                               40.0f);
+
+            Vector2 editorControlsMenuPos =
+                new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f + 200.0f,
+                            engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f);
+            editorControlsMenuList_ =
+                new MenuList(editorControlsString,
+                               editorControlsMenuPos,
+                               Color.Green,
+                               Color.Green,
+                               7,
+                               0.0f,
+                               1.0f,
+                               SpriteEffects.None,
+                               1.0f,
+                               40.0f);
         }
 
         #region EngineStateInterface Members
@@ -91,9 +98,11 @@ namespace Commando
 
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON)) // tenatively Enter / Start
+            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) ||
+                inputs.getButton(InputsEnum.CANCEL_BUTTON) ||
+                inputs.getButton(InputsEnum.BUTTON_1))
             {
-                inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
+                inputs.setAllToggles();
                 return new EngineStateMenu(engine_);
             }
 
