@@ -34,5 +34,9 @@ namespace Commando.collisiondetection
         float getRadius();
 
         ConvexPolygonInterface getBounds();
+
+        void collidedWith(CollisionObjectInterface obj);
+
+        void collidedInto(CollisionObjectInterface obj);
     }
 }

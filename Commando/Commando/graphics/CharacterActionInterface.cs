@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.graphics
 {
@@ -28,6 +29,8 @@ namespace Commando.graphics
         void update();
 
         void draw();
+
+        void draw(Color color);
 
         bool isFinished();
 

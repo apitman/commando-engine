@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.graphics
 {
@@ -39,6 +40,8 @@ namespace Commando.graphics
         void setDepth(float depth);
 
         void draw();
+
+        void draw(Color color);
 
         void reset();
 

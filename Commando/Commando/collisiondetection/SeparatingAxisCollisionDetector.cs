@@ -66,12 +66,15 @@ namespace Commando.collisiondetection
                 //Console.Out.WriteLine(dist);
                 if (cObj != obj && dist < radius + cObj.getRadius())
                 {
+                    dist = radius + cObj.getRadius() - dist;
                     translate = checkCollision(movingObjectPolygon, cObj.getBounds(), dist);
                     //Console.Out.WriteLine(translate);
                     if (translate != Vector2.Zero)
                     {
+                        obj.collidedInto(cObj);
+                        cObj.collidedWith(obj);
                         newPosition += translate;
-                        movingObjectPolygon.rotate(direction, newPosition);
+                        movingObjectPolygon.translate(translate);
                     }
                 }
             }

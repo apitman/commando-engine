@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.graphics
 {
@@ -100,6 +101,11 @@ namespace Commando.graphics
         public void draw()
         {
             sprites_.drawImage(currentFrame_, position_, getRotationAngle(), depth_);
+        }
+
+        public void draw(Color color)
+        {
+            sprites_.drawImageWithColor(currentFrame_, position_, getRotationAngle(), depth_, color);
         }
 
         public void reset()

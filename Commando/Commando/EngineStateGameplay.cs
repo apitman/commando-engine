@@ -54,7 +54,8 @@ namespace Commando
         //Jared's test stuff
         //protected MainPlayer player_;
         protected ActuatedMainPlayer player_;
-        protected DummyEnemy enemy_;
+        protected DummyEnemy enemy1_;
+        protected DummyEnemy enemy2_;
         protected CollisionDetectorInterface collisionDetector_;
         protected List<DrawableObjectAbstract> drawPipeline_;
         //END Jared's test stuff
@@ -83,7 +84,9 @@ namespace Commando
             //Jared's test stuff
             //player_ = new MainPlayer();
             player_ = new ActuatedMainPlayer(drawPipeline_);
-            enemy_ = new DummyEnemy();
+            enemy1_ = new DummyEnemy();
+            enemy2_ = new DummyEnemy();
+            enemy2_.setPosition(new Vector2(200f, 130f));
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
                                         {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
@@ -108,10 +111,22 @@ namespace Commando
                                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
             tiles_ = Tiler.getTiles(tiles);
             List<Vector2> boundsPoints = new List<Vector2>();
-            boundsPoints.Add(new Vector2(30f, 30f));
-            boundsPoints.Add(new Vector2(255f, 30f));
-            boundsPoints.Add(new Vector2(255f, 90f));
-            boundsPoints.Add(new Vector2(345f, 90f));
+            boundsPoints.Add(new Vector2(142.5f - 30f, 15f - 0f));
+            boundsPoints.Add(new Vector2(142.5f - 255f, 15f - 0f));
+            boundsPoints.Add(new Vector2(142.5f - 255f, 15f - 30f));
+            boundsPoints.Add(new Vector2(142.5f - 30f, 15f - 30f));
+            //boundsPoints.Add(new Vector2(142.5f - 255f, 0f));
+            //boundsPoints.Add(new Vector2(142.5f - 30f, 0f));
+            BoxObject wall1 = new BoxObject(boundsPoints, new Vector2(142.5f, 15f));
+            wall1.getBounds().rotate(new Vector2(1.0f, 0.0f), wall1.getPosition());
+            boundsPoints.Clear();
+            boundsPoints.Add(new Vector2(300f - 255f, 60f - 30f));
+            boundsPoints.Add(new Vector2(300f - 255f, 60f - 90f));
+            boundsPoints.Add(new Vector2(300f - 345f, 60f - 90f));
+            boundsPoints.Add(new Vector2(300f - 345f, 60f - 30f));
+            BoxObject wall2 = new BoxObject(boundsPoints, new Vector2(300f, 60f));
+            wall2.getBounds().rotate(new Vector2(1.0f, 0.0f), wall2.getPosition());
+
             boundsPoints.Add(new Vector2(345f, 240f));
             boundsPoints.Add(new Vector2(255f, 240f));
             boundsPoints.Add(new Vector2(255f, 300f));
@@ -137,6 +152,8 @@ namespace Commando
             collisionDetector_ = new SeparatingAxisCollisionDetector();
             box.getBounds().rotate(new Vector2(1.0f, 0.0f), box.getPosition());
             collisionDetector_.register(box);
+            //collisionDetector_.register(wall1);
+            //collisionDetector_.register(wall2);
             //END Jared's test stuff
 
             healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);
@@ -150,7 +167,8 @@ namespace Commando
             player_.getWeapon().addObserver(weapon_);
             player_.getAmmo().addObserver(ammo_);
             player_.setCollisionDetector(collisionDetector_);
-            enemy_.setCollisionDetector(collisionDetector_);
+            enemy1_.setCollisionDetector(collisionDetector_);
+            enemy2_.setCollisionDetector(collisionDetector_);
         }
 
         #region EngineStateInterface Members
@@ -174,7 +192,14 @@ namespace Commando
             //Jared's test stuff
             player_.setInputSet(inputs);
             player_.update(gameTime);
-            enemy_.update(gameTime);
+            if (!enemy1_.isDead())
+            {
+                enemy1_.update(gameTime);
+            }
+            if (!enemy2_.isDead())
+            {
+                enemy2_.update(gameTime);
+            }
             //END Jared's test stuff
 
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)
@@ -202,7 +227,8 @@ namespace Commando
 
             //Jared's test stuff
             player_.draw(new GameTime());
-            enemy_.draw(new GameTime());
+            enemy1_.draw(new GameTime());
+            enemy2_.draw(new GameTime());
             foreach (TileObject tOb in tiles_)
             {
                 tOb.draw(new GameTime());

@@ -25,6 +25,7 @@ using Microsoft.Xna.Framework;
 using Commando.ai;
 using Commando.collisiondetection;
 using Commando.graphics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.objects
 {
@@ -48,8 +49,12 @@ namespace Commando.objects
 
         protected float radius_;
 
+        protected Color currentDrawColor_;
+
+        protected int drawColorCount_ = 0;
+
         public DummyEnemy() :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, new Vector2(30.0f, 30.0f), new Vector2(1.0f, 0.0f), 0.5f)
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, new Vector2(30.0f, 30.0f), new Vector2(1.0f, 0.0f), 0.49f)
         {
             List<GameTexture> animationTextures = new List<GameTexture>();
             animationTextures.Add(TextureMap.getInstance().getTexture("basic_enemy_walk"));
@@ -70,6 +75,9 @@ namespace Commando.objects
             actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 2.0f));
             actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
             actuator_ = new DefaultActuator(actions, this, "default");
+
+            currentDrawColor_ = Color.White;
+            health_.update(15);
         }
 
         public override float getRadius()
@@ -90,12 +98,20 @@ namespace Commando.objects
                 new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition())
             );*/
 
-            actuator_.update();            
+            actuator_.update();
+            if (drawColorCount_ > 0)
+            {
+                drawColorCount_--;
+            }
+            else
+            {
+                currentDrawColor_ = Color.White;
+            }
         }
 
         public override void draw(GameTime gameTime)
         {
-            actuator_.draw();
+            actuator_.draw(currentDrawColor_);
         }
 
         public override void moveTo(Vector2 position)
@@ -119,6 +135,21 @@ namespace Commando.objects
         public override ActuatorInterface getActuator()
         {
             return actuator_;
+        }
+
+        public override void damage(int amount, CollisionObjectInterface obj)
+        {
+            health_.update(health_.getValue() - amount);
+            if (health_.getValue() <= 0)
+            {
+                die();
+                currentDrawColor_ = Color.Brown;
+            }
+            else
+            {
+                currentDrawColor_ = Color.Salmon;
+                drawColorCount_ = 2;
+            }
         }
     }
 }

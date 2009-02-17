@@ -81,6 +81,11 @@ namespace Commando.collisiondetection
             center_ = position;
         }
 
+        public void translate(Vector2 translation)
+        {
+            center_ += translation;
+        }
+
         public float getRadius()
         {
             return radius_;

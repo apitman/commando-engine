@@ -44,6 +44,10 @@ namespace Commando
 
         protected CollisionDetectorInterface collisionDetector_;
 
+        List<CollisionObjectInterface> collidedWith_ = new List<CollisionObjectInterface>();
+
+        List<CollisionObjectInterface> collidedInto_ = new List<CollisionObjectInterface>();
+
         /// <summary>
         /// Create a default Character
         /// </summary>
@@ -157,6 +161,18 @@ namespace Commando
                 collisionDetector_.register(this);
             }
         }
+
+        public virtual void collidedWith(CollisionObjectInterface obj)
+        {
+            collidedWith_.Add(obj);
+        }
+
+        public virtual void collidedInto(CollisionObjectInterface obj)
+        {
+            collidedInto_.Add(obj);
+        }
+
+        public abstract void damage(int amount, CollisionObjectInterface obj);
 
         public abstract float getRadius();
 

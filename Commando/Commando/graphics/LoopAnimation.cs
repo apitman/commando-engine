@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.graphics
 {
@@ -84,7 +85,11 @@ namespace Commando.graphics
                 }
                 else
                 {
-                    currentFrame_ = (currentFrame_ - (int)frameDiff + totalFrames_) % totalFrames_;
+                    currentFrame_ = (currentFrame_ - (int)frameDiff) % totalFrames_;
+                    if (currentFrame_ < 0)
+                    {
+                        currentFrame_ += totalFrames_;
+                    }
                 }
                 moved_.Normalize();
                 moved_ *= magnitude % frameLengthModifier_;
@@ -100,6 +105,11 @@ namespace Commando.graphics
         public void draw()
         {
             sprites_.drawImage(currentFrame_, position_, getRotationAngle(), depth_);
+        }
+
+        public void draw(Color color)
+        {
+            sprites_.drawImageWithColor(currentFrame_, position_, getRotationAngle(), depth_, color);
         }
 
         public void reset()
