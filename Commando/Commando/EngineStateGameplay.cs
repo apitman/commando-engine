@@ -152,8 +152,8 @@ namespace Commando
             collisionDetector_ = new SeparatingAxisCollisionDetector();
             box.getBounds().rotate(new Vector2(1.0f, 0.0f), box.getPosition());
             collisionDetector_.register(box);
-            //collisionDetector_.register(wall1);
-            //collisionDetector_.register(wall2);
+            collisionDetector_.register(wall1);
+            collisionDetector_.register(wall2);
             //END Jared's test stuff
 
             healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);
