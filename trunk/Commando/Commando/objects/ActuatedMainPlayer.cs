@@ -165,7 +165,7 @@ namespace Commando.objects
 
         public override void damage(int amount, CollisionObjectInterface obj)
         {
-            
+            health_.update(health_.getValue() - amount);
         }
     }
 }

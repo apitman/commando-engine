@@ -107,6 +107,28 @@ namespace Commando.objects
             {
                 currentDrawColor_ = Color.White;
             }
+            if (collidedInto_.Count > 0)
+            {
+                foreach (CollisionObjectInterface cObj in collidedInto_)
+                {
+                    if (cObj is ActuatedMainPlayer)
+                    {
+                        (cObj as ActuatedMainPlayer).damage(1, this);
+                    }
+                }
+                collidedInto_.Clear();
+            }
+            if (collidedWith_.Count > 0)
+            {
+                foreach (CollisionObjectInterface cObj in collidedWith_)
+                {
+                    if (cObj is ActuatedMainPlayer)
+                    {
+                        (cObj as ActuatedMainPlayer).damage(1, this);
+                    }
+                }
+                collidedWith_.Clear();
+            }
         }
 
         public override void draw(GameTime gameTime)
