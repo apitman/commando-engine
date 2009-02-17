@@ -271,6 +271,12 @@
     <Compile Include="..\Commando\objects\HeadsUpDisplayObjectAbstract.cs">
       <Link>objects\HeadsUpDisplayObjectAbstract.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\HeadsUpDisplayText.cs">
+      <Link>objects\HeadsUpDisplayText.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\HeadsUpDisplayWeapon.cs">
+      <Link>objects\HeadsUpDisplayWeapon.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\LevelObjectAbstract.cs">
       <Link>objects\LevelObjectAbstract.cs</Link>
     </Compile>

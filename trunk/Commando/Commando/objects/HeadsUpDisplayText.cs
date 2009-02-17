@@ -21,43 +21,44 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace Commando
+namespace Commando.objects
 {
-    /// <summary>
-    /// Keeps track of a characters current ammo supply.
-    /// </summary>
-    public class CharacterAmmo : CharacterStatusElementInterface
+    public class HeadsUpDisplayText : CharacterStatusObserverInterface
     {
-        protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();
-        protected int ammoRemaining_ = 20;
+        protected int newValue_;
+        protected FontEnum font_;
+        protected Vector2 pos_;
+        protected float depth_;
 
-        /// <summary>
-        /// Add an observer to this CharacterAmmo.
-        /// </summary>
-        /// <param name="obs">Observer to be added</param>
-        public void addObserver(CharacterStatusObserverInterface obs)
+        public HeadsUpDisplayText()
         {
-            observers_.Add(obs);
+            font_ = FontEnum.Kootenay;
+            newValue_ = 20;
+        }
+
+        public HeadsUpDisplayText(Vector2 pos, float depth, FontEnum font)
+        {
+            pos_ = pos;
+            depth_ = depth;
+            font_ = font;
+            newValue_ = 20;
         }
 
         /// <summary>
-        /// Update the value of this CharacterAmmo.  Notifies all observers.
+        /// Notifies the observer that the value has changed
         /// </summary>
-        /// <param name="value">New value of this CharacterAmmo</param>
-        public void update(int value)
+        /// <param name="value">The value to change to</param>
+        public void notifyOfChange(int value)
         {
-            ammoRemaining_ = value;
-            foreach (CharacterStatusObserverInterface observer in observers_)
-            {
-                observer.notifyOfChange(value);
-            }
+            newValue_ = value;
         }
 
-        public int getValue()
+        public void drawString(string text, string textToReplace, Color color, float rotation)
         {
-            return ammoRemaining_;
+            FontMap.getInstance().getFont(font_).drawStringCentered(text.Replace(textToReplace, newValue_.ToString()), pos_, color, rotation, depth_);
         }
     }
 }

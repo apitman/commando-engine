@@ -59,7 +59,7 @@ namespace Commando
 
         public void shoot()
         {
-            if (recoil_ == 0)
+            if (recoil_ == 0 && character_.getAmmo().getValue() > 0)
             {
                 rotation_.Normalize();
                 Vector2 pos = position_ + rotation_ * 15f;
