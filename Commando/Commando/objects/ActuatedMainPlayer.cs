@@ -120,8 +120,8 @@ namespace Commando.objects
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {
-                weapon_.shoot();
-                Console.Out.WriteLine("SHOOT");
+                weapon_.shoot(collisionDetector_);
+                inputSet_.setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
             }
             
             if (leftD.LengthSquared() > 0.2f)

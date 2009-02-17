@@ -83,5 +83,9 @@ namespace Commando.collisiondetection
         {
             return (float)(Math.Sqrt(Math.Pow((double)(p1.X - p2.X), 2.0) + Math.Pow((double)(p1.Y - p2.Y), 2.0)));
         }
+
+        public void remove(CollisionObjectInterface obj)
+        {
+        }
     }
 }

@@ -30,5 +30,7 @@ namespace Commando.collisiondetection
         void register(CollisionObjectInterface obj);
 
         Vector2 checkCollisions(CollisionObjectInterface obj, Vector2 newPosition);
+
+        void remove(CollisionObjectInterface obj);
     }
 }
