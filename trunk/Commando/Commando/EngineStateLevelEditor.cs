@@ -61,6 +61,7 @@ namespace Commando
         const int MaxY = 300;
         const int MinY = 30;
         const string DUMMY_ENEMY = "dummyEnemy";
+        const string SAVE_PATH = "user level.xml";
         const float DISP_TILE_DEPTH = 0.1f;
 
         protected int[,] defaultTiles_ = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -158,7 +159,36 @@ namespace Commando
                 inputs.setStick(InputsEnum.RIGHT_TRIGGER, 3);
                 //tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
-               
+
+                // Prepare to output to XML
+                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                try
+                {
+                    doc.Load(SAVE_PATH);
+                }
+                catch (System.IO.FileNotFoundException)
+                {
+                    System.Xml.XmlElement ele = doc.CreateElement("level");
+                    ele.SetAttribute("numTilesWide", NUM_TILES_PER_ROW.ToString());
+                    ele.SetAttribute("numTilesTall", NUM_TILES_PER_COL.ToString());
+                    ele.SetAttribute("screenSizeX", SCREEN_SIZE_X.ToString());
+                    ele.SetAttribute("screenSizeY", SCREEN_SIZE_Y.ToString());
+                    doc.AppendChild(ele);
+
+                    ele = doc.CreateElement("tiles");
+                    System.Xml.XmlElement ele2;
+                    foreach (int i in defaultTiles_)
+                    {
+                        ele2 = doc.CreateElement("tile");
+                        ele2.SetAttribute("index", i.ToString());
+                        ele.AppendChild(ele2);
+                    }
+                    doc.GetElementsByTagName("level")[0].AppendChild(ele);
+
+                    ele = doc.CreateElement("enemies");
+                    doc.GetElementsByTagName("level")[0].AppendChild(ele);
+                }
+
                 switch(curPallette_)
                 {
                     case (int)pallette_.tile:
@@ -169,6 +199,9 @@ namespace Commando
                                 int myY = (int)rightD.Y / 15;
                                 tiles_[myX + myY * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)myX * Tiler.tileSideLength_, (float)myY * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
 
+                                // Edit the XML tile
+                                System.Xml.XmlElement tileElement = (System.Xml.XmlElement) doc.GetElementsByTagName("tile")[myX + myY * NUM_TILES_PER_ROW];
+                                tileElement.SetAttribute("index", curTileIndex_.ToString());
                             }
                             break;
                         }
@@ -178,10 +211,21 @@ namespace Commando
                             {
                                 objectRepresentation newObject = new objectRepresentation(DUMMY_ENEMY, rightD, Vector2.Zero, 0.2f);
                                 myObjects_.Add(newObject);
+
+                                // Add an XML enemy
+                                System.Xml.XmlElement enemyElement = (System.Xml.XmlElement) doc.GetElementsByTagName("enemies")[0];
+                                System.Xml.XmlElement element = doc.CreateElement("enemy");
+                                element.SetAttribute("name", DUMMY_ENEMY);
+                                element.SetAttribute("posX", rightD.X.ToString());
+                                element.SetAttribute("posY", rightD.Y.ToString());
+                                enemyElement.AppendChild(element);
                             }
                             break;
                         }
                 }
+
+                // Finish Outputting to XML
+                doc.Save(SAVE_PATH);
             }
 
             else if (inputs.getButton(InputsEnum.BUTTON_1))
