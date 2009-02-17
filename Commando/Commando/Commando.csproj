@@ -163,6 +163,8 @@
     <Compile Include="EngineStateMenu.cs" />
     <Compile Include="GameTexture.cs" />
     <Compile Include="objects\HeadsUpDisplayObjectAbstract.cs" />
+    <Compile Include="objects\HeadsUpDisplayText.cs" />
+    <Compile Include="objects\HeadsUpDisplayWeapon.cs" />
     <Compile Include="objects\LevelObjectAbstract.cs" />
     <Compile Include="objects\MovableObjectAbstract.cs" />
     <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />

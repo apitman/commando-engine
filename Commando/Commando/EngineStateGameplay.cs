@@ -40,14 +40,15 @@ namespace Commando
         const float WEAPON_ICON_POS_Y = 350.0f;
         const float HEALTH_TEXT_OFFSET_X = -27.0f;
         const float HEALTH_TEXT_OFFSET_Y = -12.0f;
-        const float AMMO_TEXT_OFFSET_X = 50.0f;
-        const float AMMO_TEXT_OFFSET_Y = -14.0f;
+        const float AMMO_TEXT_POS_X = 300.0f;
+        const float AMMO_TEXT_POS_Y = 350.0f;
         const float HUD_DRAW_DEPTH = 0.8f;
         const string HEALTH_BAR_OUTLINE_TEX_NAME = "healthBarOutline";
         const string HEALTH_BAR_FILL_TEX_NAME = "healthBarFiller";
         const string WEAPON_TEX_NAME = "pistol";
         const string HEALTH_TEXT = "Health";
-        const string AMMO_TEXT = "20/20 bullets";
+        const string AMMO_TEXT = "%i/20 bullets";
+        const string AMMO_REPLACE_TEXT = "%i";
         const float FONT_DRAW_DEPTH = 0.9f;
 
         //Jared's test stuff
@@ -60,7 +61,8 @@ namespace Commando
 
         protected Engine engine_;
         protected HeadsUpDisplayObject healthBar_;
-        protected HeadsUpDisplayObject weapon_;
+        protected HeadsUpDisplayWeapon weapon_;
+        protected HeadsUpDisplayText ammo_;
         protected List<TileObject> tiles_;
         protected Vector2 healthBarPos_;
         protected Vector2 weaponIconPos_;
@@ -140,11 +142,13 @@ namespace Commando
             healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);
             weaponIconPos_ = new Vector2(WEAPON_ICON_POS_X, WEAPON_ICON_POS_Y);
             healthTextPos_ = new Vector2(HEALTH_BAR_POS_X + HEALTH_TEXT_OFFSET_X, HEALTH_BAR_POS_Y + HEALTH_TEXT_OFFSET_Y);
-            ammoTextPos_ = new Vector2(WEAPON_ICON_POS_X + AMMO_TEXT_OFFSET_X, WEAPON_ICON_POS_Y + AMMO_TEXT_OFFSET_Y);
-            healthBar_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, new Vector2(0.0f), HUD_DRAW_DEPTH);
-            weapon_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, new Vector2(0.0f), HUD_DRAW_DEPTH);
+            ammoTextPos_ = new Vector2(AMMO_TEXT_POS_X, AMMO_TEXT_POS_Y);
+            healthBar_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+            weapon_ = new HeadsUpDisplayWeapon(TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+            ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay);
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
+            player_.getAmmo().addObserver(ammo_);
             player_.setCollisionDetector(collisionDetector_);
             enemy_.setCollisionDetector(collisionDetector_);
         }
@@ -215,7 +219,8 @@ namespace Commando
             weapon_.draw(new GameTime());
 
             FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
-            FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
+            //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
+            ammo_.drawString(AMMO_TEXT, AMMO_REPLACE_TEXT, Color.Black, 0.0f);
         }
 
         #endregion
