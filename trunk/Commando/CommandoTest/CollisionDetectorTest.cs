@@ -64,7 +64,25 @@ namespace CommandoTest
         [TestMethod]
         public void checkCollisionsTest()
         {
-            SeparatingAxisCollisionDetector cDetector = new SeparatingAxisCollisionDetector();
+            List<Vector2> points = new List<Vector2>();
+            points.Add(new Vector2(-5.0f, 0f));
+            points.Add(new Vector2(-1.0f, -15.0f));
+            points.Add(new Vector2(7.0f, -15.0f));
+            points.Add(new Vector2(10.0f, 0f));
+            points.Add(new Vector2(7.0f, 15.0f));
+            points.Add(new Vector2(-1.0f, 15.0f));
+            ConvexPolygon boundsPolygon = new ConvexPolygon(points, Vector2.Zero);
+            boundsPolygon.rotate(new Vector2(0.0f, 1.0f), Vector2.Zero);
+            float minA = 0, maxA = 0, minB = 0, maxB = 0;
+            boundsPolygon.projectPolygonOnAxis(new Vector2(1.0f, 0.0f), ref minA, ref maxA);
+            Assert.AreEqual(-15.0f, minA);
+            Assert.AreEqual(15.0f, maxA);
+            boundsPolygon.rotate(new Vector2(1.0f, 0.0f), Vector2.Zero);
+            boundsPolygon.projectPolygonOnAxis(new Vector2(1.0f, 0.0f), ref minB, ref maxB);
+            Assert.AreNotEqual(minA, minB);
+            Assert.AreNotEqual(minA, minB);
+            Assert.AreEqual(-5.0f, minB);
+            Assert.AreEqual(10.0f, maxB);
         }
     }
 }

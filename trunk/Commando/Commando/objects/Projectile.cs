@@ -21,70 +21,47 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.collisiondetection;
+using Commando.graphics;
 using Microsoft.Xna.Framework;
 
-namespace Commando.collisiondetection
+namespace Commando.objects
 {
-    public class CircularConvexPolygon : ConvexPolygonInterface
+    public class Projectile : MovableObjectAbstract/*, CollisionObjectInterface*/
     {
-        protected float radius_;
+        protected GameTexture texture_;
 
-        protected Vector2 center_;
-
-        public CircularConvexPolygon(float radius, Vector2 position)
+        public Projectile() :
+            base()
         {
-            center_ = position;
-            radius_ = radius;
+            texture_ = null;
         }
 
-        public Vector2 getCenter()
+        public Projectile(GameTexture texture) :
+            base()
         {
-            return center_;
+            texture_ = texture;
         }
 
-        public Vector2 getEdge(int edgeNumber)
+        public Projectile(GameTexture texture, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(velocity, position, direction, depth)
         {
-            return Vector2.Zero;
+            texture_ = texture;
         }
 
-        public int getNumberOfPoints()
+        public override void update(GameTime gameTime)
         {
-            return 0;
-        }
-
-        public Vector2 getPoint(int index)
-        {
-            return Vector2.Zero;
-        }
-
-        public Vector2[] getPoints()
-        {
-            return null;
-        }
-
-        public void projectPolygonOnAxis(Vector2 axis, ref float min, ref float max)
-        {
-            axis.Normalize();
-            axis.X *= radius_;
-            axis.Y *= radius_;
-            min = ConvexPolygon.dotProduct(axis, center_ + axis);
-            max = ConvexPolygon.dotProduct(axis, center_ - axis);
-            if (min > max)
+            position_ += velocity_;
+            if (position_.X > 400 || position_.X < 0 ||
+                position_.Y > 400 || position_.Y < 0)
             {
-                float temp = min;
-                min = max;
-                max = temp;
+                die();
             }
         }
 
-        public void rotate(Vector2 newAxis, Vector2 position)
+        public override void draw(GameTime gameTime)
         {
-            center_ = position;
-        }
-
-        public float getRadius()
-        {
-            return radius_;
+            texture_.drawImage(0, position_, getRotationAngle(), depth_);
         }
     }
 }

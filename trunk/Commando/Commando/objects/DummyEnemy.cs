@@ -24,6 +24,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.ai;
 using Commando.collisiondetection;
+using Commando.graphics;
 
 namespace Commando.objects
 {
@@ -39,12 +40,16 @@ namespace Commando.objects
 
         protected CollisionDetector collisionDetector_;
 
+        protected ConvexPolygonInterface boundsPolygon_;
+
+        protected DefaultActuator actuator_;
+
         protected  const float RADIUS = 16.0f;
 
         protected float radius_;
 
         public DummyEnemy() :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, FRAMELENGTHMODIFIER, Vector2.Zero, new Vector2(30.0f, 30.0f), new Vector2(1.0f, 0.0f), 0.5f)
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, new Vector2(30.0f, 30.0f), new Vector2(1.0f, 0.0f), 0.5f)
         {
             List<GameTexture> animationTextures = new List<GameTexture>();
             animationTextures.Add(TextureMap.getInstance().getTexture("basic_enemy_walk"));
@@ -54,15 +59,20 @@ namespace Commando.objects
             atLocation_ = false;
             collisionDetector_ = null;
             radius_ = RADIUS;
+            boundsPolygon_ = new CircularConvexPolygon(radius_, position_);
+
+            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_);
+            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_);
+            Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
+            actions.Add("default", new Dictionary<string, CharacterActionInterface>());
+            actions["default"].Add("move", new CharacterRunAction(this, run, 2.0f));
+            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 2.0f));
+            actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
+            actuator_ = new DefaultActuator(actions, this, "default");
         }
 
-        public void setCollisionDetector(CollisionDetector collisionDetector)
-        {
-            collisionDetector_ = collisionDetector;
-            collisionDetector_.register(this);
-        }
-
-        public float getRadius()
+        public override float getRadius()
         {
             return radius_;
         }
@@ -80,52 +90,35 @@ namespace Commando.objects
                 new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition())
             );*/
 
-
-            if (!atLocation_)
-            {
-                Vector2 move = movingToward_ - position_;
-                if (move.Length() > 2.0f)
-                {
-                    move.Normalize();
-                    move *= 2.0f;
-                }
-                Vector2 newPosition = position_ + move;
-                newPosition = collisionDetector_.checkCollisions(this, newPosition);
-                moved_ += (newPosition - position_);
-                position_ = newPosition;
-                if (position_.Equals(movingToward_))
-                {
-                    atLocation_ = true;
-                }
-                direction_ = lookingAt_ - position_;
-                updateFrameNumber();
-                currentFrame_ = animations_.setNextFrame(currentFrame_);
-            }
-            else
-            {
-                animations_.setNextFrame(0);
-            }
+            actuator_.update();            
         }
 
         public override void draw(GameTime gameTime)
         {
-            animations_.drawNextFrame(position_, getRotationAngle(), depth_);
+            actuator_.draw();
         }
 
         public override void moveTo(Vector2 position)
         {
-            movingToward_ = position;
-            atLocation_ = false;
+            actuator_.moveTo(position);
+            //movingToward_ = position;
+            //atLocation_ = false;
         }
 
         public override void lookAt(Vector2 location)
         {
-            lookingAt_ = location;
+            actuator_.lookAt(location);
+            //lookingAt_ = location;
         }
 
-        public ConvexPolygonInterface getBounds()
+        public override ConvexPolygonInterface getBounds()
         {
-            return null;
+            return boundsPolygon_;
+        }
+
+        public override ActuatorInterface getActuator()
+        {
+            return actuator_;
         }
     }
 }

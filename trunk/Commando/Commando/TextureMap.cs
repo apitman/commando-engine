@@ -126,6 +126,12 @@ namespace Commando
             textures_.Add(basicEnemyWalk.Key, basicEnemyWalk.Value);
             KeyValuePair<string, GameTexture> playerWalk = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\PlayerWalk.xml", spriteBatch, graphics);
             textures_.Add(playerWalk.Key, playerWalk.Value);
+            KeyValuePair<string, GameTexture> playerWalkNoPistol = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\PlayerWalkNoPistol.xml", spriteBatch, graphics);
+            textures_.Add(playerWalkNoPistol.Key, playerWalkNoPistol.Value);
+            KeyValuePair<string, GameTexture> pistol = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\Pistol.xml", spriteBatch, graphics);
+            textures_.Add(pistol.Key, pistol.Value);
+            KeyValuePair<string, GameTexture> bullet = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\Bullet.xml", spriteBatch, graphics);
+            textures_.Add(bullet.Key, bullet.Value);
         }
 
         /// <summary>

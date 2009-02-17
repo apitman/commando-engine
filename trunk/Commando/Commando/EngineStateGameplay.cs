@@ -55,6 +55,7 @@ namespace Commando
         protected ActuatedMainPlayer player_;
         protected DummyEnemy enemy_;
         protected CollisionDetectorInterface collisionDetector_;
+        protected List<DrawableObjectAbstract> drawPipeline_;
         //END Jared's test stuff
 
         protected Engine engine_;
@@ -66,18 +67,20 @@ namespace Commando
         protected Vector2 healthTextPos_;
         protected Vector2 ammoTextPos_;
 
+
         /// <summary>
         /// Constructs a state of gameplay
         /// </summary>
         /// <param name="engine">Reference to the engine running the state</param>
         public EngineStateGameplay(Engine engine)
         {
+            drawPipeline_ = new List<DrawableObjectAbstract>();
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             engine_.IsMouseVisible = true;
             //Jared's test stuff
             //player_ = new MainPlayer();
-            player_ = new ActuatedMainPlayer();
+            player_ = new ActuatedMainPlayer(drawPipeline_);
             enemy_ = new DummyEnemy();
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
@@ -143,7 +146,7 @@ namespace Commando
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
             player_.setCollisionDetector(collisionDetector_);
-            //enemy_.setCollisionDetector(collisionDetector_);
+            enemy_.setCollisionDetector(collisionDetector_);
         }
 
         #region EngineStateInterface Members
@@ -170,6 +173,15 @@ namespace Commando
             //enemy_.update(gameTime);
             //END Jared's test stuff
 
+            for (int i = drawPipeline_.Count - 1; i >= 0; i--)
+            {
+                drawPipeline_[i].update(null);
+                if (drawPipeline_[i].isDead())
+                {
+                    drawPipeline_.RemoveAt(i);
+                }
+            }
+
             return this;
         }
 
@@ -186,6 +198,11 @@ namespace Commando
             foreach (TileObject tOb in tiles_)
             {
                 tOb.draw(new GameTime());
+            }
+
+            for (int i = drawPipeline_.Count - 1; i >= 0; i--)
+            {
+                drawPipeline_[i].draw(null);
             }
             //END Jared's test stuff
 

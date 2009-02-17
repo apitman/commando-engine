@@ -40,6 +40,8 @@ namespace Commando
 
         protected float depth_;
 
+        protected bool isDead_;
+
         // TODO Temporary block?
         /// <summary>
         /// Contains the ID for the visual stimulus this object owns
@@ -55,6 +57,7 @@ namespace Commando
             position_ = Vector2.Zero;
             direction_ = new Vector2(1.0f, 0.0f);
             depth_ = 0.5f;
+            isDead_ = false;
 
             visualStimulusId_ = StimulusIDGenerator.getNext();
         }
@@ -70,6 +73,10 @@ namespace Commando
             position_ = position;
             direction_ = direction;
             depth_ = depth;
+
+            visualStimulusId_ = StimulusIDGenerator.getNext();
+
+            isDead_ = false;
         }
 
         /// <summary>
@@ -140,6 +147,16 @@ namespace Commando
             if (dep > 1.0f)
                 dep = 1.0f;
             depth_ = dep;
+        }
+
+        public bool isDead()
+        {
+            return isDead_;
+        }
+
+        public void die()
+        {
+            isDead_ = true;
         }
 
         /// <summary>

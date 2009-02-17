@@ -1,0 +1,31 @@
+﻿<ImageDefinition>
+  <Key>PlayerWalkNoPistol</Key>
+  <ImageFilename>Sprites\PlayerWalkNoPistol</ImageFilename>
+  <ImageDimensions>
+    <NumberOfImages>4</NumberOfImages>
+    <Image>
+      <x>0</x>
+      <y>0</y>
+      <w>75</w>
+      <h>75</h>
+    </Image>
+    <Image>
+      <x>76</x>
+      <y>0</y>
+      <w>75</w>
+      <h>75</h>
+    </Image>
+    <Image>
+      <x>152</x>
+      <y>0</y>
+      <w>75</w>
+      <h>75</h>
+    </Image>
+    <Image>
+      <x>228</x>
+      <y>0</y>
+      <w>75</w>
+      <h>75</h>
+    </Image>
+  </ImageDimensions>
+</ImageDefinition>

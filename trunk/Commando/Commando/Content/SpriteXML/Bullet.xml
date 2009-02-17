@@ -1,0 +1,13 @@
+﻿<ImageDefinition>
+  <Key>Bullet</Key>
+  <ImageFilename>Sprites\Bullet</ImageFilename>
+  <ImageDimensions>
+    <NumberOfImages>1</NumberOfImages>
+    <Image>
+      <x>0</x>
+      <y>0</y>
+      <w>5</w>
+      <h>5</h>
+    </Image>
+  </ImageDimensions>
+</ImageDefinition>

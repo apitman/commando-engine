@@ -271,9 +271,6 @@
     <Compile Include="..\Commando\objects\LevelObjectAbstract.cs">
       <Link>objects\LevelObjectAbstract.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\objects\MainPlayer.cs">
-      <Link>objects\MainPlayer.cs</Link>
-    </Compile>
     <Compile Include="..\Commando\objects\MovableObjectAbstract.cs">
       <Link>objects\MovableObjectAbstract.cs</Link>
     </Compile>
@@ -288,6 +285,9 @@
     </Compile>
     <Compile Include="..\Commando\objects\PlayableCharacterAbstract.cs">
       <Link>objects\PlayableCharacterAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\Projectile.cs">
+      <Link>objects\Projectile.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\TileObject.cs">
       <Link>objects\TileObject.cs</Link>
@@ -306,6 +306,9 @@
     </Compile>
     <Compile Include="..\Commando\TextureMap.cs">
       <Link>TextureMap.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\WeaponAbstract.cs">
+      <Link>WeaponAbstract.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

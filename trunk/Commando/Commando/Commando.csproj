@@ -133,6 +133,7 @@
     <Compile Include="graphics\MoveActionInterface.cs" />
     <Compile Include="graphics\MoveToActionInterface.cs" />
     <Compile Include="graphics\CharacterRunAction.cs" />
+    <Compile Include="graphics\NonLoopAnimation.cs" />
     <Compile Include="levels\TileGrid.cs" />
     <Compile Include="MenuList.cs" />
     <Compile Include="FontMap.cs" />
@@ -162,12 +163,12 @@
     <Compile Include="GameTexture.cs" />
     <Compile Include="objects\HeadsUpDisplayObjectAbstract.cs" />
     <Compile Include="objects\LevelObjectAbstract.cs" />
-    <Compile Include="objects\MainPlayer.cs" />
     <Compile Include="objects\MovableObjectAbstract.cs" />
     <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />
     <Compile Include="objects\NonPlayableCharacterAbstract.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
+    <Compile Include="objects\Projectile.cs" />
     <Compile Include="objects\TileObject.cs" />
     <Compile Include="PlayerHelper.cs" />
     <Compile Include="Pool.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SoundEngine.cs" />
     <Compile Include="TextureMap.cs" />
+    <Compile Include="WeaponAbstract.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
