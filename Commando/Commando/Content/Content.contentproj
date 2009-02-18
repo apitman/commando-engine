@@ -458,7 +458,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\Xbox\" />
-    <Folder Include="SpriteXML\" />
     <Folder Include="XML\Actions\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>

@@ -52,7 +52,7 @@ namespace Commando.levels
             return retList;
         }
 
-        public static List<BoxObject> mergeBoxes(bool[,] boxes)
+        public static List<BoxObject> mergeBoxes(Tile[,] boxes)
         {
             //List<List<BoxObject>> tempMergedBoxes = new List<List<BoxObject>>();
             List<List<int[]>> tempMergedDims = new List<List<int[]>>();
@@ -69,7 +69,7 @@ namespace Commando.levels
                 tempMergedDims.Add(new List<int[]>());
                 for (int x = 0; x < boxes.GetLength(1); x++)
                 {
-                    if (!started && boxes[y,x])
+                    if (!started && boxes[y,x].blocksHigh_)
                     {
                         started = true;
                         tempSet[0] = x;
@@ -77,11 +77,11 @@ namespace Commando.levels
                         tempSet[2] = x;
                         tempSet[3] = y;
                     }
-                    else if (started && boxes[y,x])
+                    else if (started && boxes[y,x].blocksHigh_)
                     {
                         tempSet[2] = x;
                     }
-                    else if (started && !boxes[y,x])
+                    else if (started && !boxes[y,x].blocksHigh_)
                     {
                         tempMergedDims[y].Add(tempSet);
                         tempSet = new int[4];
