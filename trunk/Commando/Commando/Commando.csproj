@@ -115,6 +115,7 @@
     <Compile Include="collisiondetection\CollisionObjectInterface.cs" />
     <Compile Include="collisiondetection\ConvexPolygon.cs" />
     <Compile Include="collisiondetection\ConvexPolygonInterface.cs" />
+    <Compile Include="collisiondetection\ProjectileConvexPolygon.cs" />
     <Compile Include="collisiondetection\SeparatingAxisCollisionDetector.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EngineStateControls.cs" />

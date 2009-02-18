@@ -1,0 +1,27 @@
+﻿<character>
+  <actions>
+    <default>
+      <move>
+        <animation>PlayerWalk</animation>
+        <weaponHandle>
+          <x>60</x>
+          <y>33.5</y>
+        </weaponHandle>
+      </move>
+      <moveTo>
+        <animation>PlayerWalk</animation>
+        <weaponHandle>
+          <x>60</x>
+          <y>33.5</y>
+        </weaponHandle>
+      </moveTo>
+      <rest>
+        <animation>PlayerWalk</animation>
+        <weaponHandle>
+          <x>60</x>
+          <y>33.5</y>
+        </weaponHandle>
+      </rest>
+    </default>
+  </actions>
+</character>

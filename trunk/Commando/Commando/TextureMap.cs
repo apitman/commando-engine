@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.Xml;
 
 namespace Commando
 {
@@ -85,55 +86,41 @@ namespace Commando
         /// <param name="graphics">GraphicsDevice for the game</param>
         public void loadTextures(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
-            //TODO: Eventually, create automatic scripted loading of textures
-            //      For now, just create the load for each texture in the function
-            textures_.Add("Woger_Ru", new GameTexture("Giant_A", spriteBatch, graphics));
-            textures_.Add("TitleScreen", new GameTexture("TitleScreen", spriteBatch, graphics));
-            textures_.Add("SamplePlayer", new GameTexture("Sprites\\SamplePlayer", spriteBatch, graphics));
-            textures_.Add("SamplePlayer_Small", new GameTexture("Sprites\\SamplePlayer_Small", spriteBatch, graphics));
-            textures_.Add("SamplePlayer_XSmall", new GameTexture("Sprites\\SamplePlayer_XSmall", spriteBatch, graphics));
-            textures_.Add("testMenu", new GameTexture("Sprites\\testmenu", spriteBatch, graphics));
-            textures_.Add("MenuStartReg", new GameTexture("Sprites\\menuStartReg", spriteBatch, graphics));
-            textures_.Add("MenuStartSelected", new GameTexture("Sprites\\menuStartDown", spriteBatch, graphics));
-            textures_.Add("healthBarOutline", new GameTexture("healthBarOutline", spriteBatch, graphics));
-            textures_.Add("healthBarFiller", new GameTexture("healthBarFiller", spriteBatch, graphics));
-            textures_.Add("pistol", new GameTexture("pistol", spriteBatch, graphics));
-            textures_.Add("Tile_0", new GameTexture("Tiles\\Blank", spriteBatch, graphics));
-            textures_.Add("Tile_1", new GameTexture("Tiles\\Floor_Tile", spriteBatch, graphics));
-            textures_.Add("Tile_2", new GameTexture("Tiles\\Wall_Left", spriteBatch, graphics));
-            textures_.Add("Tile_3", new GameTexture("Tiles\\Wall_Top", spriteBatch, graphics));
-            textures_.Add("Tile_4", new GameTexture("Tiles\\Wall_Right", spriteBatch, graphics));
-            textures_.Add("Tile_5", new GameTexture("Tiles\\Wall_Bottom", spriteBatch, graphics));
-            textures_.Add("Tile_6", new GameTexture("Tiles\\Wall_Corner_Bottom_Left", spriteBatch, graphics));
-            textures_.Add("Tile_7", new GameTexture("Tiles\\Wall_Corner_Top_Left", spriteBatch, graphics));
-            textures_.Add("Tile_8", new GameTexture("Tiles\\Wall_Corner_Top_Right", spriteBatch, graphics));
-            textures_.Add("Tile_9", new GameTexture("Tiles\\Wall_Corner_Bottom_Right", spriteBatch, graphics));
-            textures_.Add("Tile_10", new GameTexture("Tiles\\Crate_0_0", spriteBatch, graphics));
-            textures_.Add("Tile_11", new GameTexture("Tiles\\Crate_0_1", spriteBatch, graphics));
-            textures_.Add("Tile_12", new GameTexture("Tiles\\Crate_0_2", spriteBatch, graphics));
-            textures_.Add("Tile_13", new GameTexture("Tiles\\Crate_1_0", spriteBatch, graphics));
-            textures_.Add("Tile_14", new GameTexture("Tiles\\Crate_1_1", spriteBatch, graphics));
-            textures_.Add("Tile_15", new GameTexture("Tiles\\Crate_1_2", spriteBatch, graphics));
-            textures_.Add("Tile_16", new GameTexture("Tiles\\Crate_2_0", spriteBatch, graphics));
-            textures_.Add("Tile_17", new GameTexture("Tiles\\Crate_2_1", spriteBatch, graphics));
-            textures_.Add("Tile_18", new GameTexture("Tiles\\Crate_2_2", spriteBatch, graphics));
-            textures_.Add("Tile_19", new GameTexture("Tiles\\Wall_Corner_I_Bottom_Left", spriteBatch, graphics));
-            textures_.Add("Tile_20", new GameTexture("Tiles\\Wall_Corner_I_Top_Left", spriteBatch, graphics));
-            textures_.Add("Tile_21", new GameTexture("Tiles\\Wall_Corner_I_Top_Right", spriteBatch, graphics));
-            textures_.Add("Tile_22", new GameTexture("Tiles\\Wall_Corner_I_Bottom_Right", spriteBatch, graphics));
-            textures_.Add("TileHighlight", new GameTexture("Tiles\\TileHighlight", spriteBatch, graphics));
-            textures_.Add("blank", new GameTexture("blank_white_tile", spriteBatch, graphics));
-            textures_.Add("overlay", new GameTexture("overlay", spriteBatch, graphics));
-            KeyValuePair<string, GameTexture> basicEnemyWalk = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\basic_enemy_walk.xml", spriteBatch, graphics);
-            textures_.Add(basicEnemyWalk.Key, basicEnemyWalk.Value);
-            KeyValuePair<string, GameTexture> playerWalk = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\PlayerWalk.xml", spriteBatch, graphics);
-            textures_.Add(playerWalk.Key, playerWalk.Value);
-            KeyValuePair<string, GameTexture> playerWalkNoPistol = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\PlayerWalkNoPistol.xml", spriteBatch, graphics);
-            textures_.Add(playerWalkNoPistol.Key, playerWalkNoPistol.Value);
-            KeyValuePair<string, GameTexture> pistol = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\Pistol.xml", spriteBatch, graphics);
-            textures_.Add(pistol.Key, pistol.Value);
-            KeyValuePair<string, GameTexture> bullet = GameTexture.loadTextureFromFile(".\\Content\\SpriteXML\\Bullet.xml", spriteBatch, graphics);
-            textures_.Add(bullet.Key, bullet.Value);
+            XmlTextReader reader = new XmlTextReader(filename);
+            XmlDocument document = new XmlDocument();
+            try
+            {
+                document.Load(filename);
+                XmlNodeList textureXMLs = document.GetElementsByTagName("texture");
+                foreach (XmlNode node in textureXMLs)
+                {
+                    KeyValuePair<string, GameTexture> tempPair = GameTexture.loadTextureFromFile(node.InnerText, spriteBatch, graphics);
+                    textures_.Add(tempPair.Key, tempPair.Value);
+                }
+                XmlNodeList images = document.GetElementsByTagName("image");
+                foreach (XmlNode node in images)
+                {
+                    string key = "", image = "";
+                    XmlNodeList children = node.ChildNodes;
+                    foreach (XmlNode child in children)
+                    {
+                        if (child.LocalName == "key")
+                        {
+                            key = child.InnerText;
+                        }
+                        else if (child.LocalName == "handle")
+                        {
+                            image = child.InnerText;
+                        }
+                    }
+                    textures_.Add(key, new GameTexture(image, spriteBatch, graphics));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Out.WriteLine("FATAL ERROR: Texture Map failed to load!");
+                throw e;
+            }
         }
 
         /// <summary>

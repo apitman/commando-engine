@@ -86,6 +86,12 @@ namespace Commando
             //Jared's test stuff
             //player_ = new MainPlayer();
             player_ = new ActuatedMainPlayer(drawPipeline_);
+            //List<BoxObject> boxesToBeAdded = new List<BoxObject>();
+            List<Vector2> tileBox = new List<Vector2>();
+            tileBox.Add(new Vector2(-7.5f, -7.5f));
+            tileBox.Add(new Vector2(7.5f, -7.5f));
+            tileBox.Add(new Vector2(7.5f, 7.5f));
+            tileBox.Add(new Vector2(-7.5f, 7.5f));
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
                                         {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
@@ -109,6 +115,9 @@ namespace Commando
                                         {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
                                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
             // Load the user's level from XML
+            //BoxObject[,] boxesToBeAdded;
+            bool[,] boxesToBeAdded;
+            List<BoxObject> boxesToBeAddedForReal = new List<BoxObject>();
             try
             {
                 System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
@@ -117,6 +126,8 @@ namespace Commando
                 // First load the tiles
                 System.Xml.XmlElement ele = (System.Xml.XmlElement)doc.GetElementsByTagName("level")[0];
                 int[,] loadedTiles = new int[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
+                //boxesToBeAdded = new BoxObject[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
+                boxesToBeAdded = new bool[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
                 System.Xml.XmlNodeList tList = doc.GetElementsByTagName("tile");
                 for (int i = 0; i < Convert.ToInt32(ele.GetAttribute("numTilesTall")); i++)
                 {
@@ -124,9 +135,21 @@ namespace Commando
                     {
                         System.Xml.XmlElement ele2 = (System.Xml.XmlElement)tList[j + i * Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
                         loadedTiles[i, j] = Convert.ToInt32(ele2.GetAttribute("index"));
+                        if (loadedTiles[i, j] != 1)
+                        {
+                            //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
+                            boxesToBeAdded[i, j] = true;
+                        }
+                        else
+                        {
+                            //boxesToBeAdded[i, j] = null;
+                            boxesToBeAdded[i, j] = false;
+                        }
                     }
                 }
                 tiles_ = Tiler.getTiles(loadedTiles);
+
+                boxesToBeAddedForReal = Tiler.mergeBoxes(boxesToBeAdded);
 
                 // Now load the enemies
                 tList = doc.GetElementsByTagName("enemy");
@@ -209,13 +232,20 @@ namespace Commando
             //collisionDetector_ = new CollisionDetector(polygons);
             collisionDetector_ = new SeparatingAxisCollisionDetector();
             box.getBounds().rotate(new Vector2(1.0f, 0.0f), box.getPosition());
+            
             collisionDetector_.register(box);
-            collisionDetector_.register(wall1);
+            /*collisionDetector_.register(wall1);
             collisionDetector_.register(wall2);
             collisionDetector_.register(wall3);
             collisionDetector_.register(wall4);
             collisionDetector_.register(wall5);
             collisionDetector_.register(wall6);
+            */
+            foreach (BoxObject boxOb in boxesToBeAddedForReal)
+            {
+                //boxOb.getBounds().rotate(new Vector2(1.0f, 0.0f), boxOb.getPosition());
+                collisionDetector_.register(boxOb);
+            }
             //END Jared's test stuff
 
             healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);
