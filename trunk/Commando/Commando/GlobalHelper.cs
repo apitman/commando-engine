@@ -21,55 +21,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using Commando.levels;
 
-namespace Commando.levels
+namespace Commando
 {
-    public class TileGrid
+    public class GlobalHelper
     {
-        public const int TILEWIDTH = 15;
+        protected static GlobalHelper instance_ = null;
 
-        public const int TILEHEIGHT = 15;
+        protected TileGrid curLevelTileGrid_;
 
-        protected Tile[,] tiles_;
-
-        public TileGrid(Tile[,] tiles)
+        private GlobalHelper()
         {
-            tiles_ = tiles;
+            curLevelTileGrid_ = null;
         }
 
-        public Tile[,] getTiles()
+        public static GlobalHelper getInstance()
         {
-            return tiles_;
+            if (instance_ == null)
+            {
+                instance_ = new GlobalHelper();
+            }
+            return instance_;
         }
 
-        public static TileIndex getTileIndex(Vector2 position)
+        public TileGrid getCurrentLevelTileGrid()
         {
-            return new TileIndex((int)position.X % TILEWIDTH, (int)position.Y % TILEHEIGHT);
-        }
-    }
-
-    public struct Tile
-    {
-        public bool blocksLow_;
-
-        public bool blocksHigh_;
-    }
-
-    public struct TileIndex
-    {
-        public int x_;
-        public int y_;
-
-        public TileIndex(int x, int y)
-        {
-            x_ = x;
-            y_ = y;
+            return curLevelTileGrid_;
         }
 
-        public static bool equals(TileIndex lhs, TileIndex rhs)
+        public void setCurrentLevelTileGrid(TileGrid grid)
         {
-            return lhs.x_ == rhs.x_ && lhs.y_ == rhs.y_;
+            curLevelTileGrid_ = grid;
         }
     }
 }

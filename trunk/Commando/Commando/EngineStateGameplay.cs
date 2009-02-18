@@ -87,6 +87,7 @@ namespace Commando
             //player_ = new MainPlayer();
             player_ = new ActuatedMainPlayer(drawPipeline_);
             //List<BoxObject> boxesToBeAdded = new List<BoxObject>();
+            Tile[,] tilesForGrid;
             List<Vector2> tileBox = new List<Vector2>();
             tileBox.Add(new Vector2(-7.5f, -7.5f));
             tileBox.Add(new Vector2(7.5f, -7.5f));
@@ -128,6 +129,7 @@ namespace Commando
                 int[,] loadedTiles = new int[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
                 //boxesToBeAdded = new BoxObject[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
                 boxesToBeAdded = new bool[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
+                tilesForGrid = new Tile[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
                 System.Xml.XmlNodeList tList = doc.GetElementsByTagName("tile");
                 for (int i = 0; i < Convert.ToInt32(ele.GetAttribute("numTilesTall")); i++)
                 {
@@ -139,17 +141,22 @@ namespace Commando
                         {
                             //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
                             boxesToBeAdded[i, j] = true;
+                            tilesForGrid[i, j].blocksHigh_ = true;
+                            tilesForGrid[i, j].blocksLow_ = true;
                         }
                         else
                         {
                             //boxesToBeAdded[i, j] = null;
                             boxesToBeAdded[i, j] = false;
+                            tilesForGrid[i, j].blocksHigh_ = false;
+                            tilesForGrid[i, j].blocksLow_ = false;
                         }
                     }
                 }
                 tiles_ = Tiler.getTiles(loadedTiles);
 
-                boxesToBeAddedForReal = Tiler.mergeBoxes(boxesToBeAdded);
+                boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
+                GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
 
                 // Now load the enemies
                 tList = doc.GetElementsByTagName("enemy");
@@ -166,81 +173,10 @@ namespace Commando
             }
             // Done loading level from XML
             
-            List<Vector2> boundsPoints = new List<Vector2>();
-            boundsPoints.Add(new Vector2(142.5f - 0f, 15f - 0f));
-            boundsPoints.Add(new Vector2(142.5f - 285f, 15f - 0f));
-            boundsPoints.Add(new Vector2(142.5f - 285f, 15f - 30f));
-            boundsPoints.Add(new Vector2(142.5f - 0f, 15f - 30f));
-            //boundsPoints.Add(new Vector2(142.5f - 255f, 0f));
-            //boundsPoints.Add(new Vector2(142.5f - 30f, 0f));
-            BoxObject wall1 = new BoxObject(boundsPoints, new Vector2(142.5f, 15f));
-            wall1.getBounds().rotate(new Vector2(1.0f, 0.0f), wall1.getPosition());
-            boundsPoints.Clear();
-            boundsPoints.Add(new Vector2(300f - 255f, 60f - 30f));
-            boundsPoints.Add(new Vector2(300f - 345f, 60f - 30f));
-            boundsPoints.Add(new Vector2(300f - 345f, 60f - 90f));
-            boundsPoints.Add(new Vector2(300f - 255f, 60f - 90f));
-            BoxObject wall2 = new BoxObject(boundsPoints, new Vector2(300f, 60f));
-            wall2.getBounds().rotate(new Vector2(1.0f, 0.0f), wall2.getPosition());
-            boundsPoints.Clear();
-            boundsPoints.Add(new Vector2(360f - 345f, 165f - 60f));
-            boundsPoints.Add(new Vector2(360f - 375f, 165f - 60f));
-            boundsPoints.Add(new Vector2(360f - 375f, 165f - 270f));
-            boundsPoints.Add(new Vector2(360f - 345f, 165f - 270f));
-            BoxObject wall3 = new BoxObject(boundsPoints, new Vector2(360f, 165f));
-            wall3.getBounds().rotate(new Vector2(1.0f, 0.0f), wall3.getPosition());
-            boundsPoints.Clear();
-            boundsPoints.Add(new Vector2(300f - 255f, 270f - 240f));
-            boundsPoints.Add(new Vector2(300f - 345f, 270f - 240f));
-            boundsPoints.Add(new Vector2(300f - 345f, 270f - 300f));
-            boundsPoints.Add(new Vector2(300f - 255f, 270f - 300f));
-            BoxObject wall4 = new BoxObject(boundsPoints, new Vector2(300f, 270f));
-            wall4.getBounds().rotate(new Vector2(1.0f, 0.0f), wall4.getPosition());
-            boundsPoints.Clear();
-            boundsPoints.Add(new Vector2(142.5f - 0f, 315f - 300f));
-            boundsPoints.Add(new Vector2(142.5f - 285f, 315f - 300f));
-            boundsPoints.Add(new Vector2(142.5f - 285f, 315f - 330f));
-            boundsPoints.Add(new Vector2(142.5f - 0f, 315f - 330f));
-            BoxObject wall5 = new BoxObject(boundsPoints, new Vector2(142.5f, 315f));
-            wall5.getBounds().rotate(new Vector2(1.0f, 0.0f), wall5.getPosition());
-            boundsPoints.Clear();
-            boundsPoints.Add(new Vector2(15f - 0f, 165f - 0f));
-            boundsPoints.Add(new Vector2(15f - 30f, 165f - 0f));
-            boundsPoints.Add(new Vector2(15f - 30f, 165f - 330f));
-            boundsPoints.Add(new Vector2(15f - 0f, 165f - 330f));
-            BoxObject wall6 = new BoxObject(boundsPoints, new Vector2(15f, 165f));
-            wall6.getBounds().rotate(new Vector2(1.0f, 0.0f), wall6.getPosition());
-            boundsPoints.Clear();
-
-            BoundingPolygon walls = new BoundingPolygon(boundsPoints);
-            List<Vector2> boxBoundsPoints = new List<Vector2>();
-            /*
-            boxBoundsPoints.Add(new Vector2(75f, 75f));
-            boxBoundsPoints.Add(new Vector2(165f, 75f));
-            boxBoundsPoints.Add(new Vector2(165f, 120f));
-            boxBoundsPoints.Add(new Vector2(75f, 120f));
-            */
-            boxBoundsPoints.Add(new Vector2(120f - 75f, 97.5f - 75f));
-            boxBoundsPoints.Add(new Vector2(120f - 165f, 97.5f - 75f));
-            boxBoundsPoints.Add(new Vector2(120f - 165f, 97.5f - 120f));
-            boxBoundsPoints.Add(new Vector2(120f - 75f, 97.5f - 120f));
-            BoundingPolygon boxes = new BoundingPolygon(boxBoundsPoints);
-            BoxObject box = new BoxObject(boxBoundsPoints, new Vector2(120f, 97.5f));
-            List<BoundingPolygon> polygons = new List<BoundingPolygon>();
-            polygons.Add(walls);
-            polygons.Add(boxes);
+            
             //collisionDetector_ = new CollisionDetector(polygons);
             collisionDetector_ = new SeparatingAxisCollisionDetector();
-            box.getBounds().rotate(new Vector2(1.0f, 0.0f), box.getPosition());
-            
-            collisionDetector_.register(box);
-            /*collisionDetector_.register(wall1);
-            collisionDetector_.register(wall2);
-            collisionDetector_.register(wall3);
-            collisionDetector_.register(wall4);
-            collisionDetector_.register(wall5);
-            collisionDetector_.register(wall6);
-            */
+
             foreach (BoxObject boxOb in boxesToBeAddedForReal)
             {
                 //boxOb.getBounds().rotate(new Vector2(1.0f, 0.0f), boxOb.getPosition());

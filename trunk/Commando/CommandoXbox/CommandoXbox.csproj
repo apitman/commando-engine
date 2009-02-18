@@ -241,6 +241,9 @@
     <Compile Include="..\Commando\levels\RoomAbstract.cs">
       <Link>levels\RoomAbstract.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\levels\TileGrid.cs">
+      <Link>levels\TileGrid.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\levels\Tiler.cs">
       <Link>levels\Tiler.cs</Link>
     </Compile>
