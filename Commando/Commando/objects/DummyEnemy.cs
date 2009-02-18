@@ -53,8 +53,8 @@ namespace Commando.objects
 
         protected int drawColorCount_ = 0;
 
-        public DummyEnemy() :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, new Vector2(30.0f, 30.0f), new Vector2(1.0f, 0.0f), 0.49f)
+        public DummyEnemy(Vector2 pos) :
+            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
         {
             List<GameTexture> animationTextures = new List<GameTexture>();
             animationTextures.Add(TextureMap.getInstance().getTexture("basic_enemy_walk"));
