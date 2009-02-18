@@ -34,6 +34,16 @@ namespace Commando
         protected MenuList editorControlsMenuList_;
         protected string controlTitle_;
 
+        protected readonly FontEnum CONTROLS_FONT = FontEnum.Kootenay;
+        protected readonly Color CONTROLS_COLOR = Color.Green;
+        protected const int CONTROLS_CURSOR_POS = 0;
+        protected const float CONTROLS_SPACING = 40.0f;
+
+        protected readonly FontEnum HEADER_FONT = FontEnum.Kootenay48;
+        protected readonly Color HEADER_COLOR = Color.White;
+        protected const float HEADER_ROTATION = 0.0f;
+        protected const float HEADER_DEPTH = Constants.DEPTH_MENU_TEXT;
+
         public EngineStateControls(Engine engine)
         {
             InputSet inputs = InputSet.getInstance();
@@ -60,30 +70,24 @@ namespace Commando
                 new Vector2(200.0f, engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f);
             gameControlsMenuList_ =
                 new MenuList(gameControlsString,
-                               gameControlsMenuPos,
-                               Color.Green,
-                               Color.White,
-                               8,
-                               0.0f,
-                               1.0f,
-                               SpriteEffects.None,
-                               1.0f,
-                               40.0f);
+                                CONTROLS_FONT,
+                                gameControlsMenuPos,
+                                CONTROLS_COLOR,
+                                CONTROLS_COLOR,
+                                CONTROLS_CURSOR_POS,
+                                CONTROLS_SPACING);
 
             Vector2 editorControlsMenuPos =
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f + 200.0f,
                             engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f);
             editorControlsMenuList_ =
                 new MenuList(editorControlsString,
+                               CONTROLS_FONT,
                                editorControlsMenuPos,
-                               Color.Green,
-                               Color.Green,
-                               7,
-                               0.0f,
-                               1.0f,
-                               SpriteEffects.None,
-                               1.0f,
-                               40.0f);
+                               CONTROLS_COLOR,
+                               CONTROLS_COLOR,
+                               CONTROLS_CURSOR_POS,
+                               CONTROLS_SPACING);
         }
 
         #region EngineStateInterface Members
@@ -113,16 +117,16 @@ namespace Commando
         public void draw()
         {
             engine_.GraphicsDevice.Clear(Color.Black);
-            GameFont myFont = FontMap.getInstance().getFont(FontEnum.Kootenay);
+            GameFont myFont = FontMap.getInstance().getFont(HEADER_FONT);
             //print title of controls screen
+            Vector2 headerPos =
+                new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
+                                           50.0f);
             myFont.drawStringCentered(controlTitle_,
-                                           new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
-                                           50.0f),
-                                           Color.White,
-                                           0.0f,
-                                           4.0f,
-                                           SpriteEffects.None,
-                                           1.0f);
+                                           headerPos,
+                                           HEADER_COLOR,
+                                           HEADER_ROTATION,
+                                           HEADER_DEPTH);
             gameControlsMenuList_.draw();
             editorControlsMenuList_.draw();
         }

@@ -30,6 +30,9 @@ namespace Commando.graphics
     {
         public static GameTexture blank_ = null;
 
+        static readonly Color LINE_COLOR = Color.LimeGreen;
+        const float LINE_DEPTH = Constants.DEPTH_DEBUG_LINES;
+
         public static void drawLine(Vector2 point1, Vector2 point2)
         {
             if (blank_ == null)
@@ -43,7 +46,7 @@ namespace Commando.graphics
             center.Y /= 2.0f;
             Vector2 rotation = point2 - point1;
             float rotationAngle = (float)Math.Atan2((double)rotation.Y, (double)rotation.X);
-            blank_.drawImageWithDim(0, new Rectangle((int)point1.X, (int)point1.Y, (int)rotation.Length(), 2), rotationAngle, 1f, Vector2.Zero, Color.LimeGreen);
+            blank_.drawImageWithDim(0, new Rectangle((int)point1.X, (int)point1.Y, (int)rotation.Length(), 2), rotationAngle, LINE_DEPTH, Vector2.Zero, LINE_COLOR);
         }
 
         public static void init()

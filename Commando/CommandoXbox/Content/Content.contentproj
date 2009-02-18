@@ -312,6 +312,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Commando\Content\overlay.png">
+      <Link>overlay.png</Link>
+      <Name>overlay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

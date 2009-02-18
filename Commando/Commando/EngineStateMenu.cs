@@ -32,10 +32,21 @@ namespace Commando
         const int SCREEN_SIZE_X = 800;
         const int SCREEN_SIZE_Y = 600;
 
-        protected const string MENU_START_GAME = "Start Game";
-        protected const string MENU_CONTROLS = "Controls";
-        protected const string MENU_LEVEL_EDITOR = "Level Editor";
-        protected const string MENU_QUIT = "Quit";
+        protected readonly FontEnum MENU_FONT = FontEnum.Kootenay;
+        protected readonly Color MENU_SELECTED_COLOR = Color.Green;
+        protected readonly Color MENU_UNSELECTED_COLOR = Color.White;
+        protected const float MENU_DEPTH = Constants.DEPTH_MENU_TEXT;
+        protected const float MENU_ROTATION = 0.0f;
+        protected const float MENU_SPACING = 40.0f;
+
+        protected readonly Color CONTROL_TIPS_COLOR = Color.White;
+        protected const float CONTROL_TIPS_ROTATION = 0.0f;
+        protected const float CONTROL_TIPS_DEPTH = Constants.DEPTH_MENU_TEXT;
+
+        protected const string STR_MENU_START_GAME = "Start Game";
+        protected const string STR_MENU_CONTROLS = "Controls";
+        protected const string STR_MENU_LEVEL_EDITOR = "Level Editor";
+        protected const string STR_MENU_QUIT = "Quit";
 
         protected Engine engine_;
         protected GameTexture menu_;
@@ -52,10 +63,10 @@ namespace Commando
             cursorPos_ = 0;
             engine_ = engine;
             List<string> menuString = new List<string>();
-            menuString.Add(MENU_START_GAME);
-            menuString.Add(MENU_CONTROLS);
-            menuString.Add(MENU_LEVEL_EDITOR);
-            menuString.Add(MENU_QUIT);
+            menuString.Add(STR_MENU_START_GAME);
+            menuString.Add(STR_MENU_CONTROLS);
+            menuString.Add(STR_MENU_LEVEL_EDITOR);
+            menuString.Add(STR_MENU_QUIT);
 
             InputSet inputs = InputSet.getInstance();
             /*controlTips_ = "Select: " +
@@ -64,17 +75,15 @@ namespace Commando
                             "Cancel: " +
                             inputs.getControlName(InputsEnum.CANCEL_BUTTON);*/
             controlTips_ = ""; // currrently refreshed every fram in draw()
+            Vector2 menuPos = new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
+                                                engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f);
             mainMenuList_ = new MenuList(menuString,
-                                                new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
-                                                engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f),
-                                                Color.Green,
-                                                Color.White,
-                                                cursorPos_,
-                                                0.0f,
-                                                1.0f,
-                                                SpriteEffects.None,
-                                                1.0f,
-                                                40.0f);
+                MENU_FONT,
+                menuPos,
+                MENU_SELECTED_COLOR,
+                MENU_UNSELECTED_COLOR,
+                cursorPos_,
+                MENU_SPACING);
         }
 
         #region EngineStateInterface Members
@@ -160,12 +169,10 @@ namespace Commando
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                             engine_.GraphicsDevice.Viewport.Height / 2.0f - 10.0f);
             myFont.drawStringCentered(controlTips_,
-                                          controlTipsPos,
-                                          Color.White,
-                                          0.0f,
-                                          1.0f,
-                                          SpriteEffects.None,
-                                          1.0f);
+                                        controlTipsPos,
+                                        CONTROL_TIPS_COLOR,
+                                        CONTROL_TIPS_ROTATION,
+                                        CONTROL_TIPS_DEPTH);
             mainMenuList_.draw();
         }
 
