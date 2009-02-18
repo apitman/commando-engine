@@ -16,6 +16,7 @@
  ***************************************************************************
 */
 
+using System;
 using System.Collections.Generic;
 using Commando.controls;
 using Commando.levels;
@@ -49,13 +50,13 @@ namespace Commando
         const string HEALTH_TEXT = "Health";
         const string AMMO_TEXT = "%i/20 bullets";
         const string AMMO_REPLACE_TEXT = "%i";
+        const string SAVE_PATH = "user level.xml";
         const float FONT_DRAW_DEPTH = 0.9f;
 
         //Jared's test stuff
         //protected MainPlayer player_;
         protected ActuatedMainPlayer player_;
-        protected DummyEnemy enemy1_;
-        protected DummyEnemy enemy2_;
+        protected List<DummyEnemy> enemyList_;
         protected CollisionDetectorInterface collisionDetector_;
         protected List<DrawableObjectAbstract> drawPipeline_;
         //END Jared's test stuff
@@ -78,15 +79,13 @@ namespace Commando
         public EngineStateGameplay(Engine engine)
         {
             drawPipeline_ = new List<DrawableObjectAbstract>();
+            enemyList_ = new List<DummyEnemy>();
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             engine_.IsMouseVisible = true;
             //Jared's test stuff
             //player_ = new MainPlayer();
             player_ = new ActuatedMainPlayer(drawPipeline_);
-            enemy1_ = new DummyEnemy();
-            enemy2_ = new DummyEnemy();
-            enemy2_.setPosition(new Vector2(200f, 130f));
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
                                         {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
@@ -109,7 +108,41 @@ namespace Commando
                                         {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
                                         {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
                                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-            tiles_ = Tiler.getTiles(tiles);
+            // Load the user's level from XML
+            try
+            {
+                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                doc.Load(SAVE_PATH);
+
+                // First load the tiles
+                System.Xml.XmlElement ele = (System.Xml.XmlElement)doc.GetElementsByTagName("level")[0];
+                int[,] loadedTiles = new int[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
+                System.Xml.XmlNodeList tList = doc.GetElementsByTagName("tile");
+                for (int i = 0; i < Convert.ToInt32(ele.GetAttribute("numTilesTall")); i++)
+                {
+                    for (int j = 0; j < Convert.ToInt32(ele.GetAttribute("numTilesWide")); j++)
+                    {
+                        System.Xml.XmlElement ele2 = (System.Xml.XmlElement)tList[j + i * Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
+                        loadedTiles[i, j] = Convert.ToInt32(ele2.GetAttribute("index"));
+                    }
+                }
+                tiles_ = Tiler.getTiles(loadedTiles);
+
+                // Now load the enemies
+                tList = doc.GetElementsByTagName("enemy");
+                for (int i = 0; i < Convert.ToInt32(tList.Count); i++)
+                {
+                    System.Xml.XmlElement ele2 = (System.Xml.XmlElement)tList[i];
+                    DummyEnemy dum = new DummyEnemy(new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
+                    enemyList_.Add(dum);
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                tiles_ = Tiler.getTiles(tiles);
+            }
+            // Done loading level from XML
+            
             List<Vector2> boundsPoints = new List<Vector2>();
             boundsPoints.Add(new Vector2(142.5f - 0f, 15f - 0f));
             boundsPoints.Add(new Vector2(142.5f - 285f, 15f - 0f));
@@ -196,8 +229,10 @@ namespace Commando
             player_.getWeapon().addObserver(weapon_);
             player_.getAmmo().addObserver(ammo_);
             player_.setCollisionDetector(collisionDetector_);
-            enemy1_.setCollisionDetector(collisionDetector_);
-            enemy2_.setCollisionDetector(collisionDetector_);
+            for (int i = 0; i < enemyList_.Count; i++)
+            {
+                enemyList_[i].setCollisionDetector(collisionDetector_);
+            }
         }
 
         #region EngineStateInterface Members
@@ -221,13 +256,12 @@ namespace Commando
             //Jared's test stuff
             player_.setInputSet(inputs);
             player_.update(gameTime);
-            if (!enemy1_.isDead())
+            for (int i = 0; i < enemyList_.Count; i++)
             {
-                enemy1_.update(gameTime);
-            }
-            if (!enemy2_.isDead())
-            {
-                enemy2_.update(gameTime);
+                if (!enemyList_[i].isDead())
+                {
+                    enemyList_[i].update(gameTime);
+                }
             }
             //END Jared's test stuff
 
@@ -256,8 +290,10 @@ namespace Commando
 
             //Jared's test stuff
             player_.draw(new GameTime());
-            enemy1_.draw(new GameTime());
-            enemy2_.draw(new GameTime());
+            for (int i = 0; i < enemyList_.Count; i++)
+            {
+                enemyList_[i].draw(new GameTime());
+            }
             foreach (TileObject tOb in tiles_)
             {
                 tOb.draw(new GameTime());

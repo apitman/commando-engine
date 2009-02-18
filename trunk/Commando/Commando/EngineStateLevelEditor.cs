@@ -28,9 +28,6 @@ using Commando.objects;
 
 namespace Commando
 {
-    /// <summary>
-    /// The main class for the level editor
-    /// </summary>
     public struct objectRepresentation
     {
         public string objName_;
@@ -45,6 +42,10 @@ namespace Commando
             objDepth_ = objDepth;
         }
     }
+
+    /// <summary>
+    /// The main class for the level editor
+    /// </summary>
     public class EngineStateLevelEditor : EngineStateInterface
     {
         const int SCREEN_SIZE_X = 375;
@@ -111,12 +112,46 @@ namespace Commando
             returnState_ = returnState;
             returnScreenSizeX_ = returnScreenSizeX;
             returnScreenSizeY_ = returnScreenSizeY;
-            tiles_ = Tiler.getTiles(defaultTiles_);
+            myObjects_ = new List<objectRepresentation>();
+
+            // Load the user's level from XML
+            try
+            {
+                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+                doc.Load(SAVE_PATH);
+                
+                // First load the tiles
+                System.Xml.XmlElement ele = (System.Xml.XmlElement) doc.GetElementsByTagName("level")[0];
+                int[,] loadedTiles = new int[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
+                System.Xml.XmlNodeList tList = doc.GetElementsByTagName("tile");
+                for (int i = 0; i < Convert.ToInt32(ele.GetAttribute("numTilesTall")); i++)
+                {
+                    for (int j = 0; j < Convert.ToInt32(ele.GetAttribute("numTilesWide")); j++)
+                    {
+                        System.Xml.XmlElement ele2 = (System.Xml.XmlElement) tList[j + i * Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
+                        loadedTiles[i, j] = Convert.ToInt32(ele2.GetAttribute("index"));
+                    }
+                }
+                tiles_ = Tiler.getTiles(loadedTiles);
+
+                // Now load the enemies
+                tList = doc.GetElementsByTagName("enemy");
+                for (int i = 0; i < Convert.ToInt32(tList.Count); i++)
+                {
+                    System.Xml.XmlElement ele2 = (System.Xml.XmlElement) tList[i];
+                    objectRepresentation newObject = new objectRepresentation(ele2.GetAttribute("name"), new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))), Vector2.Zero, 0.2f);
+                    myObjects_.Add(newObject);
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                tiles_ = Tiler.getTiles(defaultTiles_);
+            }
+
             cursorPosX_ = 0;
             cursorPosY_ = 0;
             curTileIndex_ = 0;
             displayTile_ = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
-            myObjects_ = new List<objectRepresentation>();
         }
 
         /// <summary>
