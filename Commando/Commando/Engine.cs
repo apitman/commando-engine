@@ -44,6 +44,7 @@ namespace Commando
 
         const float GLOBALSPEEDMULTIPLIER = 2.5F;
         const int FRAMERATE = 30;
+        const string TEXTUREMAPXML = ".\\Content\\XML\\LoadScripts\\TextureLoader.xml";
 
         public Engine()
         {
@@ -110,7 +111,7 @@ namespace Commando
 
             // TODO: use this.Content to load your game content here
             TextureMap.getInstance().setContent(Content);
-            TextureMap.getInstance().loadTextures("", spriteBatch_, graphics_.GraphicsDevice);
+            TextureMap.getInstance().loadTextures(TEXTUREMAPXML, spriteBatch_, graphics_.GraphicsDevice);
             FontMap.getInstance().loadFonts("", spriteBatch_, this);
 
         }

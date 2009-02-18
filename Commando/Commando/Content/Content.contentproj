@@ -350,7 +350,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SpriteXML\basic_enemy_walk.xml">
+    <None Include="XML\Sprites\basic_enemy_walk.xml">
       <Name>basic_enemy_walk</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
@@ -365,7 +365,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SpriteXML\PlayerWalk.xml">
+    <None Include="XML\Sprites\PlayerWalk.xml">
       <Name>PlayerWalk</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
@@ -381,7 +381,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CharacterXML\MainPlayer.xml">
+    <None Include="XML\Characters\MainPlayer.xml">
       <Name>MainPlayer</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
@@ -396,7 +396,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SpriteXML\PlayerWalkNoPistol.xml">
+    <None Include="XML\Sprites\PlayerWalkNoPistol.xml">
       <Name>PlayerWalkNoPistol</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
@@ -411,7 +411,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SpriteXML\Pistol.xml">
+    <None Include="XML\Sprites\Pistol.xml">
       <Name>Pistol</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
@@ -426,7 +426,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SpriteXML\Bullet.xml">
+    <None Include="XML\Sprites\Bullet.xml">
       <Name>Bullet</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
@@ -441,6 +441,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="XML\LoadScripts\TextureLoader.xml">
+      <Name>TextureLoader</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="overlay.png">
       <Name>overlay</Name>
       <Importer>TextureImporter</Importer>
@@ -450,6 +458,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\Xbox\" />
+    <Folder Include="SpriteXML\" />
+    <Folder Include="XML\Actions\" />
+    <Folder Include="XML\Animations\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

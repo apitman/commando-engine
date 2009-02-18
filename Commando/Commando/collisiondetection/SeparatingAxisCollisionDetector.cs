@@ -58,11 +58,12 @@ namespace Commando.collisiondetection
             ConvexPolygonInterface movingObjectPolygon = obj.getBounds();
             Vector2 direction = obj.getDirection();
             movingObjectPolygon.rotate(direction, newPosition);
+            Vector2 position = movingObjectPolygon.getCenter();
             Vector2 translate;
             float dist;
             foreach (CollisionObjectInterface cObj in objects_)
             {
-                dist = distanceBetweenPoints(newPosition, cObj.getPosition());
+                dist = distanceBetweenPoints(position, cObj.getPosition());
                 //Console.Out.WriteLine(dist);
                 if (cObj != obj && dist < radius + cObj.getRadius())
                 {
@@ -76,6 +77,7 @@ namespace Commando.collisiondetection
                         newPosition += translate;
                         //movingObjectPolygon.translate(translate);
                         movingObjectPolygon.rotate(direction, newPosition);
+                        position = movingObjectPolygon.getCenter();
                     }
                 }
             }

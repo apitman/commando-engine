@@ -303,9 +303,37 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Commando\Content\SpriteXML\basic_enemy_walk.xml">
-      <Link>SpriteXML\basic_enemy_walk.xml</Link>
+    <None Include="..\..\Commando\Content\XML\Sprites\basic_enemy_walk.xml">
+      <Link>XML\Sprites\basic_enemy_walk.xml</Link>
       <Name>basic_enemy_walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Commando\Content\XML\Sprites\Bullet.xml">
+      <Link>XML\Sprites\Bullet.xml</Link>
+      <Name>Bullet</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Commando\Content\XML\Sprites\Pistol.xml">
+      <Link>XML\Sprites\Pistol.xml</Link>
+      <Name>Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Commando\Content\XML\Sprites\PlayerWalk.xml">
+      <Link>XML\Sprites\PlayerWalk.xml</Link>
+      <Name>PlayerWalk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Commando\Content\XML\Sprites\PlayerWalkNoPistol.xml">
+      <Link>XML\Sprites\PlayerWalkNoPistol.xml</Link>
+      <Name>PlayerWalkNoPistol</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -320,7 +348,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Commando\Content\XML\LoadScripts\TextureLoader.xml">
+      <Link>XML\LoadScripts\TextureLoader.xml</Link>
+      <Name>TextureLoader</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Commando\Content\XML\Characters\MainPlayer.xml">
+      <Link>XML\Characters\MainPlayer.xml</Link>
+      <Name>MainPlayer</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\" />
+    <Folder Include="XML\Animations\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
