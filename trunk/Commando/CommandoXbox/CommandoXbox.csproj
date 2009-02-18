@@ -145,6 +145,9 @@
     <Compile Include="..\Commando\collisiondetection\SeparatingAxisCollisionDetector.cs">
       <Link>collisiondetection\SeparatingAxisCollisionDetector.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\Constants.cs">
+      <Link>Constants.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\controls\ControllerInputInterface.cs">
       <Link>controls\ControllerInputInterface.cs</Link>
     </Compile>

@@ -18,6 +18,8 @@
 
 
 using Microsoft.Xna.Framework;
+using Commando.graphics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
@@ -28,6 +30,12 @@ namespace Commando
     class EngineStateOutofFocus : EngineStateInterface
     {
         protected EngineStateInterface outOfFocusState_;
+
+        const float OVERLAY_DEPTH = Constants.DEPTH_OUT_OF_FOCUS_OVERLAY;
+        const string MESSAGE = "Game Temporarily Paused\n\nPlease move the mouse back\ninto the game window and make\nsure that it is active.";
+        readonly Color MESSAGE_COLOR = Color.White;
+        const float MESSAGE_ROTATION = 0.0f;
+        const float MESSAGE_DEPTH = Constants.DEPTH_OUT_OF_FOCUS_TEXT;
 
         protected Engine engine_;
 
@@ -54,7 +62,11 @@ namespace Commando
         /// <returns></returns>
         public EngineStateInterface update(GameTime gameTime)
         {
-            if (engine_.IsActive)
+            if (engine_.IsActive
+#if !XBOX                
+                && !engine_.mouseOutsideWindow()
+#endif
+                )
             {
                 return outOfFocusState_;
             }
@@ -69,6 +81,27 @@ namespace Commando
         public void draw()
         {
             outOfFocusState_.draw();
+
+            Rectangle screen =
+                new Rectangle(
+                    0,
+                    0,
+                    engine_.GraphicsDevice.Viewport.Width,
+                    engine_.GraphicsDevice.Viewport.Height);
+
+            TextureMap tm = TextureMap.getInstance();
+            tm.getTexture("overlay").drawImageWithDim(0, screen, OVERLAY_DEPTH);
+
+            Vector2 fontpos = new Vector2(
+                engine_.GraphicsDevice.Viewport.Width / 2,
+                engine_.GraphicsDevice.Viewport.Height / 2);
+
+            GameFont gf = FontMap.getInstance().getFont(FontEnum.Pericles);
+            gf.drawStringCentered(MESSAGE,
+                fontpos,
+                MESSAGE_COLOR,
+                MESSAGE_ROTATION,
+                MESSAGE_DEPTH);
         }
 
         #endregion

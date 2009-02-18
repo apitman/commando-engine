@@ -29,6 +29,7 @@ namespace Commando
     /// </summary>
     public class EngineStatePause : EngineStateInterface
     {
+        static readonly Color BACKGROUND_COLOR = Color.Black;
 
         const FontEnum PAUSE_FONT = FontEnum.Pericles;
         readonly Color PAUSE_MENU_SELECTED_COLOR = Color.Green;
@@ -42,7 +43,7 @@ namespace Commando
         const string STR_RETURN_TO_GAME = "Return to Game";
         const string STR_MOVEMENT_TYPE_ABSOLUTE = "Movement Type: Absolute";
         const string STR_MOVEMENT_TYPE_RELATIVE = "Movement Type: Relative";
-        const string STR_QUIT_GAME = "Quit Game";
+        const string STR_QUIT_GAME = "Return to Main Menu";
 
         const int MENU_OPTION_RETURN = 0;
         const int MENU_OPTION_MOVEMENT_TYPE = 1;
@@ -130,8 +131,7 @@ namespace Commando
                         break;
 
                     case MENU_OPTION_QUIT_GAME:
-                        engine_.Exit();
-                        break;
+                        return new EngineStateMenu(engine_);
                 }
             }
 
@@ -160,7 +160,7 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            engine_.GraphicsDevice.Clear(BACKGROUND_COLOR);
             pauseMenu_.draw();
         }
 

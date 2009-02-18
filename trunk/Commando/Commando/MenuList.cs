@@ -37,7 +37,7 @@ namespace Commando
         const FontEnum DEFAULT_FONT = FontEnum.Kootenay;
         const float DEFAULT_ROTATION = 0.0f;
         const float DEFAULT_SCALE = 1.0f;
-        const float DEFAULT_DEPTH = 1.0f;
+        const float DEFAULT_DEPTH = Constants.DEPTH_MENU_TEXT;
         const SpriteEffects DEFAULT_SPRITE_EFFECTS = SpriteEffects.None;
 
         //list of strings used to make each menu item

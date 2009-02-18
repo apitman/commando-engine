@@ -116,6 +116,7 @@
     <Compile Include="collisiondetection\ConvexPolygon.cs" />
     <Compile Include="collisiondetection\ConvexPolygonInterface.cs" />
     <Compile Include="collisiondetection\SeparatingAxisCollisionDetector.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="EngineStateControls.cs" />
     <Compile Include="EngineStateLevelEditor.cs" />
     <Compile Include="EngineStateOutofFocus.cs" />

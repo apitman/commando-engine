@@ -132,7 +132,11 @@ namespace Commando
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-            if (!IsActive && !(engineState_ is EngineStateOutofFocus))
+            if (!IsActive && !(engineState_ is EngineStateOutofFocus)
+#if !XBOX
+                || mouseOutsideWindow() && !(engineState_ is EngineStateOutofFocus) 
+#endif           
+               )
             {
                 engineState_ = new EngineStateOutofFocus(this, engineState_);
             }
@@ -158,5 +162,25 @@ namespace Commando
             //GraphicsDevice.Clear(Color.CornflowerBlue);
             base.Draw(gameTime);
         }
+
+#if !XBOX
+        /// <summary>
+        /// Whether or not the mouse is outside the game window.
+        /// </summary>
+        /// <returns>True is the mouse is outside the game window, false otherwise</returns>
+        internal protected bool mouseOutsideWindow()
+        {
+            MouseState ms = Mouse.GetState();
+            if (ms.X < 0 || ms.Y < 0 ||
+                ms.X > this.GraphicsDevice.Viewport.X + this.GraphicsDevice.Viewport.Width ||
+                ms.Y > this.GraphicsDevice.Viewport.Y + this.GraphicsDevice.Viewport.Height)
+            {
+                return true;
+            }
+            return false;
+        }
+#endif
+
     }
+
 }
