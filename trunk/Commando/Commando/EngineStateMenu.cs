@@ -38,7 +38,9 @@ namespace Commando
         protected const float MENU_DEPTH = Constants.DEPTH_MENU_TEXT;
         protected const float MENU_ROTATION = 0.0f;
         protected const float MENU_SPACING = 40.0f;
+        protected const int MENU_DEFAULT_CURSOR_POSITION = 0;
 
+        protected const FontEnum CONTROL_TIPS_FONT = FontEnum.Kootenay;
         protected readonly Color CONTROL_TIPS_COLOR = Color.White;
         protected const float CONTROL_TIPS_ROTATION = 0.0f;
         protected const float CONTROL_TIPS_DEPTH = Constants.DEPTH_MENU_TEXT;
@@ -51,7 +53,6 @@ namespace Commando
         protected Engine engine_;
         protected GameTexture menu_;
         protected MenuList mainMenuList_;
-        protected int cursorPos_;
         protected string controlTips_;
 
         /// <summary>
@@ -60,12 +61,15 @@ namespace Commando
         /// <param name="engine">A reference to the engine running the state</param>
         public EngineStateMenu(Engine engine)
         {
-            cursorPos_ = 0;
             engine_ = engine;
+            engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+
             List<string> menuString = new List<string>();
             menuString.Add(STR_MENU_START_GAME);
             menuString.Add(STR_MENU_CONTROLS);
+#if !XBOX
             menuString.Add(STR_MENU_LEVEL_EDITOR);
+#endif
             menuString.Add(STR_MENU_QUIT);
 
             InputSet inputs = InputSet.getInstance();
@@ -74,7 +78,7 @@ namespace Commando
                             " | " +
                             "Cancel: " +
                             inputs.getControlName(InputsEnum.CANCEL_BUTTON);*/
-            controlTips_ = ""; // currrently refreshed every fram in draw()
+            controlTips_ = ""; // currrently refreshed every frame in draw()
             Vector2 menuPos = new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                                                 engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f);
             mainMenuList_ = new MenuList(menuString,
@@ -82,7 +86,7 @@ namespace Commando
                 menuPos,
                 MENU_SELECTED_COLOR,
                 MENU_UNSELECTED_COLOR,
-                cursorPos_,
+                MENU_DEFAULT_CURSOR_POSITION,
                 MENU_SPACING);
         }
 
@@ -95,21 +99,8 @@ namespace Commando
         /// <returns>A handle to the state of play to be run next frame</returns>
         public EngineStateInterface update(GameTime gameTime)
         {
+
             InputSet inputs = engine_.getInputs();
-
-            // Temporary for Andrew's test purposes
-            /*if (inputs.getButton(InputsEnum.BUTTON_1))
-            {
-                return new EngineStateLevelEditor(engine_, this, SCREEN_SIZE_X, SCREEN_SIZE_Y);
-            }
-            */
-
-            /* Commenting this out, seems better to just let them go to "Quit"
-            if (inputs.getButton(InputsEnum.CANCEL_BUTTON)) // tenatively Escape / Back
-            {
-                engine_.Exit();
-            }
-             */
 
             if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) ||
                 inputs.getButton(InputsEnum.BUTTON_1))
@@ -117,15 +108,18 @@ namespace Commando
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 inputs.setToggle(InputsEnum.BUTTON_1);
                 //get position of cursor from mainMenuList_
-                int myCursorPos_ = mainMenuList_.getCursorPos();
-                switch(myCursorPos_)
+                int cursorPos = mainMenuList_.getCursorPos();
+#if XBOX
+                if (cursorPos == 2) cursorPos = 3;
+#endif
+                switch(cursorPos)
                 {
                     case 0:
                         return new EngineStateGameplay(engine_);
                     case 1:
                         return new EngineStateControls(engine_);
                     case 2:
-                        return new EngineStateLevelEditor(engine_, this , 800, 600);
+                        return new EngineStateLevelEditor(engine_, this , SCREEN_SIZE_X, SCREEN_SIZE_Y);
                     case 3:
                         engine_.Exit();
                         break;
@@ -161,10 +155,9 @@ namespace Commando
             engine_.GraphicsDevice.Clear(Color.Black);
 
             menu_.drawImage(0, new Vector2((engine_.GraphicsDevice.Viewport.Width - menu_.getImageDimensions()[0].Width) / 2, 0), 0.0f);
-            
-            GameFont myFont = FontMap.getInstance().getFont(FontEnum.Kootenay);
-            //print control Tips for main menu
 
+            //print control Tips for main menu
+            GameFont myFont = FontMap.getInstance().getFont(CONTROL_TIPS_FONT);
             Vector2 controlTipsPos =
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                             engine_.GraphicsDevice.Viewport.Height / 2.0f - 10.0f);
