@@ -36,6 +36,7 @@ namespace Commando
 
         protected readonly FontEnum CONTROLS_FONT = FontEnum.Kootenay;
         protected readonly Color CONTROLS_COLOR = Color.Green;
+        protected readonly Color CONTROLS_TITLE_COLOR = Color.WhiteSmoke;
         protected const int CONTROLS_CURSOR_POS = 0;
         protected const float CONTROLS_SPACING = 40.0f;
 
@@ -48,16 +49,20 @@ namespace Commando
         {
             InputSet inputs = InputSet.getInstance();
 
-            controlTitle_ = "PC CONTROLS";
+            controlTitle_ = "CONTROLS";
             engine_ = engine;
             List<string> gameControlsString = new List<string>();
             gameControlsString.Add("GAMEPLAY CONTROLS");
             gameControlsString.Add("Move: " + inputs.getControlName(InputsEnum.LEFT_DIRECTIONAL));
             gameControlsString.Add("Rotate: " + inputs.getControlName(InputsEnum.RIGHT_DIRECTIONAL));
+            gameControlsString.Add("Fire: " + inputs.getControlName(InputsEnum.RIGHT_TRIGGER));
             gameControlsString.Add("Pause: " + inputs.getControlName(InputsEnum.CANCEL_BUTTON));
 
             List<string> editorControlsString = new List<string>();
             editorControlsString.Add("EDITOR CONTROLS");
+#if XBOX
+            editorControlsString.Add("(Coming Soon)");
+#endif
             editorControlsString.Add("Move Cursor: " + inputs.getControlName(InputsEnum.LEFT_DIRECTIONAL));
             editorControlsString.Add("Next Tile: " + inputs.getControlName(InputsEnum.BUTTON_1));
             editorControlsString.Add("Prev Tile: " + inputs.getControlName(InputsEnum.BUTTON_2));
@@ -67,25 +72,26 @@ namespace Commando
             editorControlsString.Add("Quit: " + inputs.getControlName(InputsEnum.CANCEL_BUTTON));
 
             Vector2 gameControlsMenuPos =
-                new Vector2(200.0f, engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f);
+                new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f - 200.0f,
+                            engine_.GraphicsDevice.Viewport.Height / 2.0f - 125.0f);
             gameControlsMenuList_ =
                 new MenuList(gameControlsString,
                                 CONTROLS_FONT,
                                 gameControlsMenuPos,
                                 CONTROLS_COLOR,
-                                CONTROLS_COLOR,
+                                CONTROLS_TITLE_COLOR,
                                 CONTROLS_CURSOR_POS,
                                 CONTROLS_SPACING);
 
             Vector2 editorControlsMenuPos =
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f + 200.0f,
-                            engine_.GraphicsDevice.Viewport.Height / 2.0f - 50.0f);
+                            engine_.GraphicsDevice.Viewport.Height / 2.0f - 125.0f);
             editorControlsMenuList_ =
                 new MenuList(editorControlsString,
                                CONTROLS_FONT,
                                editorControlsMenuPos,
                                CONTROLS_COLOR,
-                               CONTROLS_COLOR,
+                               CONTROLS_TITLE_COLOR,
                                CONTROLS_CURSOR_POS,
                                CONTROLS_SPACING);
         }
