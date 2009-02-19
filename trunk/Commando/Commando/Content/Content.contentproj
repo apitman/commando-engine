@@ -350,12 +350,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XML\Sprites\basic_enemy_walk.xml">
+    <Content Include="XML\Sprites\basic_enemy_walk.xml">
       <Name>basic_enemy_walk</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\PlayerWalk.png">
@@ -365,12 +365,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XML\Sprites\PlayerWalk.xml">
+    <Content Include="XML\Sprites\PlayerWalk.xml">
       <Name>PlayerWalk</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tiles\TileHighlight.png">
@@ -381,12 +381,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XML\Characters\MainPlayer.xml">
+    <Content Include="XML\Characters\MainPlayer.xml">
       <Name>MainPlayer</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\PlayerWalkNoPistol.png">
@@ -396,12 +396,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XML\Sprites\PlayerWalkNoPistol.xml">
+    <Content Include="XML\Sprites\PlayerWalkNoPistol.xml">
       <Name>PlayerWalkNoPistol</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\PistolAnimation.png">
@@ -411,27 +411,28 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XML\Sprites\Pistol.xml">
+    <Content Include="XML\Sprites\Pistol.xml">
       <Name>Pistol</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Bullet.png">
       <Name>Bullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XML\Sprites\Bullet.xml">
+    <Content Include="XML\Sprites\Bullet.xml">
       <Name>Bullet</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="blank_white_tile.bmp">
@@ -441,12 +442,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="XML\LoadScripts\TextureLoader.xml">
+    <Content Include="XML\LoadScripts\TextureLoader.xml">
       <Name>TextureLoader</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="overlay.png">

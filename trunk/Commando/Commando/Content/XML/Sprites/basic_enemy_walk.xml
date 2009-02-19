@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
 <ImageDefinition>
 	<Key>basic_enemy_walk</Key>
 	<ImageFilename>Sprites\basic_enemy_walk</ImageFilename>
@@ -29,3 +33,5 @@
 		</Image>
 	</ImageDimensions>
 </ImageDefinition>
+  </Asset>
+</XnaContent>

@@ -366,6 +366,62 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\Bullet.png">
+      <Link>Sprites\Bullet.png</Link>
+      <Name>Bullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PistolAnimation.png">
+      <Link>Sprites\PistolAnimation.png</Link>
+      <Name>PistolAnimation</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerWalk.png">
+      <Link>Sprites\PlayerWalk.png</Link>
+      <Name>PlayerWalk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerWalkNoPistol.png">
+      <Link>Sprites\PlayerWalkNoPistol.png</Link>
+      <Name>PlayerWalkNoPistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\TitleScreen.png">
+      <Link>TitleScreen.png</Link>
+      <Name>TitleScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\blank_white_tile.bmp">
+      <Link>blank_white_tile.bmp</Link>
+      <Name>blank_white_tile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Tiles\TileHighlight.png">
+      <Link>Tiles\TileHighlight.png</Link>
+      <Name>TileHighlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>
