@@ -196,6 +196,9 @@
     <Compile Include="..\Commando\GameTexture.cs">
       <Link>GameTexture.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\GlobalHelper.cs">
+      <Link>GlobalHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\ActionSetValidator.cs">
       <Link>graphics\ActionSetValidator.cs</Link>
     </Compile>

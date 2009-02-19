@@ -54,6 +54,7 @@ namespace Commando.collisiondetection
 
         public Vector2 checkCollisions(CollisionObjectInterface obj, Vector2 newPosition)
         {
+            Vector2 oldPosition = obj.getPosition();
             float radius = obj.getRadius();
             ConvexPolygonInterface movingObjectPolygon = obj.getBounds();
             Vector2 direction = obj.getDirection();
@@ -61,6 +62,7 @@ namespace Commando.collisiondetection
             Vector2 position = movingObjectPolygon.getCenter();
             Vector2 translate;
             float dist;
+            List<CollisionObjectInterface> collisions = new List<CollisionObjectInterface>();
             foreach (CollisionObjectInterface cObj in objects_)
             {
                 dist = distanceBetweenPoints(position, cObj.getPosition());
@@ -78,10 +80,33 @@ namespace Commando.collisiondetection
                         //movingObjectPolygon.translate(translate);
                         movingObjectPolygon.rotate(direction, newPosition);
                         position = movingObjectPolygon.getCenter();
+                        collisions.Add(cObj);
                     }
                 }
             }
-            return newPosition;
+            bool noMoreCollisions = true;
+/*            foreach (CollisionObjectInterface cObj in collisions)
+            {
+                dist = distanceBetweenPoints(position, cObj.getPosition());
+                //Console.Out.WriteLine(dist);
+                if (cObj != obj && dist < radius + cObj.getRadius())
+                {
+                    dist = radius + cObj.getRadius() - dist;
+                    translate = checkCollision(movingObjectPolygon, cObj.getBounds(), dist);
+                    //Console.Out.WriteLine(translate);
+                    if (translate != Vector2.Zero)
+                    {
+                        noMoreCollisions = false;
+                        break;
+                    }
+                }
+            }*/
+            if (noMoreCollisions)
+            {
+                return newPosition;
+            }
+            movingObjectPolygon.rotate(direction, oldPosition);
+            return oldPosition;
         }
 
         public void draw()
