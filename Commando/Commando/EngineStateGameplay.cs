@@ -241,8 +241,9 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
+            if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) || inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
+                inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
                 return new EngineStatePause(engine_, this);
             }

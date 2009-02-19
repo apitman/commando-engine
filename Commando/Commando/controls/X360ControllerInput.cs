@@ -95,9 +95,9 @@ namespace Commando.controls
             if (left.LengthSquared() == 0)
             {
                 if (gps.IsButtonDown(Buttons.DPadLeft))
-                    left.X += 1;
-                if (gps.IsButtonDown(Buttons.DPadRight))
                     left.X -= 1;
+                if (gps.IsButtonDown(Buttons.DPadRight))
+                    left.X += 1;
                 if (gps.IsButtonDown(Buttons.DPadUp))
                     left.Y += 1;
                 if (gps.IsButtonDown(Buttons.DPadDown))

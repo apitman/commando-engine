@@ -91,8 +91,9 @@ namespace Commando.ai
         // TileGrid being which contains information on passability
         protected static TileGrid grid_;
 
+        // Since the AStar search space can be superimposed onto a TileGrid
+        //  of any size, these offsets are used to adjust the lookup
         protected static int gridXOffset_;
-
         protected static int gridYOffset_;
 
         /*
