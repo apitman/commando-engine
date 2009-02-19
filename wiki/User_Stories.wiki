@@ -7,14 +7,14 @@
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can select different palettes (Tiles, Enemies, Misc) in the level editor - Eric
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can place objects in the level editor using the mouse - Eric
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can save levels in the level editor - Andrew
-  # User can load levels into the game - Andrew
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can load levels into the game - Andrew
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can play the game on PC using the Xbox 360 gamepad - Ken
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User sees controls based on which control device they are using - Ken
-  # User can play the game on the Xbox 360 - Ken
-  # User can run from an intelligent enemy who will navigate around obstacles - Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can play the game on the Xbox 360 - Ken
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can run from an intelligent enemy who will navigate around obstacles - Ken
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fire a weapon - Jared
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can kill enemies by firing weapon at them - Jared
-  # User can get hurt by an enemy upon contact - Jared
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can get hurt by an enemy upon contact - Jared
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's HUD will update ammo level - Andrew
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's HUD will update health level - Andrew
 
