@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
+using Commando.levels;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai
 {
@@ -35,6 +37,12 @@ namespace Commando.ai
 
         protected List<Sensor> sensors_;
 
+        protected List<TileIndex> path_; // temporary
+
+        protected int lastPathfindUpdate_;
+
+        protected const int PATHFIND_THRESHOLD = 15;
+
         public AI(NonPlayableCharacterAbstract npc)
         {
             Character_ = npc;
@@ -42,6 +50,8 @@ namespace Commando.ai
             sensors_ = new List<Sensor>();
             sensors_.Add(new SensorEars(Memory_));
             sensors_.Add(new SensorEyes(Memory_));
+            path_ = new List<TileIndex>();
+            lastPathfindUpdate_ = 0;
         }
 
         public void update()
@@ -53,16 +63,50 @@ namespace Commando.ai
 
             // TODO Temporary block
             // Tells the AI to proceed to the location of a known enemy
-            IEnumerator<Belief> cur = Memory_.Beliefs_.Values.GetEnumerator();
-            while (cur.MoveNext())
+            //  if it does not currently have a place to go
+            lastPathfindUpdate_++;
+            TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
+            if (path_ == null || path_.Count == 0 || lastPathfindUpdate_ > PATHFIND_THRESHOLD)
             {
-                Belief b = cur.Current;
-                if (b.type_ == BeliefType.EnemyLoc)
+                IEnumerator<Belief> iter = Memory_.Beliefs_.Values.GetEnumerator();
+                while (iter.MoveNext())
                 {
-                    Character_.moveTo(b.position_);
-                    Character_.lookAt(b.position_);
+                    Belief b = iter.Current;
+                    if (b.type_ == BeliefType.EnemyLoc)
+                    {
+                        //Character_.moveTo(b.position_);
+                        //Character_.lookAt(b.position_);
+                        Vector2 start = Character_.getPosition();
+                        Vector2 dest = b.position_;
+                        float radius = Character_.getRadius();
+                        Height h = new Height(true, true);
+                        path_ = 
+                            AStarPathfinder.run(grid, start, dest, radius, h);
+                        lastPathfindUpdate_ = 0;
+                        if (path_ == null || path_.Count == 0)
+                        {
+                            return;
+                        }
+                    }
                 }
             }
+
+            TileIndex cur = path_[0];
+            if (grid.isPointWithinTile(Character_.getPosition(), cur))
+            {
+                path_.RemoveAt(0);
+                if (path_.Count != 0)
+                {
+                    Character_.moveTo(grid.getTileCenter(path_[0]));
+                    Character_.lookAt(grid.getTileCenter(path_[0]));
+                }
+            }
+            else
+            {
+                Character_.moveTo(grid.getTileCenter(path_[0]));
+                Character_.lookAt(grid.getTileCenter(path_[0]));
+            }
+
             // End test block
         }
     }

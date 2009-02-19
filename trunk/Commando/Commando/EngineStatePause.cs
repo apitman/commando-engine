@@ -43,7 +43,7 @@ namespace Commando
         const string STR_RETURN_TO_GAME = "Return to Game";
         const string STR_MOVEMENT_TYPE_ABSOLUTE = "Movement Type: Absolute";
         const string STR_MOVEMENT_TYPE_RELATIVE = "Movement Type: Relative";
-        const string STR_QUIT_GAME = "Return to Main Menu";
+        const string STR_QUIT_GAME = "Quit to Main Menu";
 
         const int MENU_OPTION_RETURN = 0;
         const int MENU_OPTION_MOVEMENT_TYPE = 1;
