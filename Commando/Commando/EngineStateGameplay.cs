@@ -279,7 +279,7 @@ namespace Commando
             engine_.GraphicsDevice.Clear(Color.Chocolate);
 
             //TEST
-            (collisionDetector_ as SeparatingAxisCollisionDetector).draw();
+            //(collisionDetector_ as SeparatingAxisCollisionDetector).draw();
             //
 
             //Jared's test stuff

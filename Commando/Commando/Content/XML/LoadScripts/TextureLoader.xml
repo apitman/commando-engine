@@ -1,4 +1,8 @@
-﻿<textures>
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
+<textures>
   <texture>.\\Content\\XML\\Sprites\\Bullet.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\Pistol.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\basic_enemy_walk.xml</texture>
@@ -153,3 +157,5 @@
     <handle>overlay</handle>
   </image>
 </textures>
+  </Asset>
+</XnaContent>

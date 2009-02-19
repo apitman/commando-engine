@@ -1,27 +1,33 @@
-﻿<character>
-  <actions>
-    <default>
-      <move>
-        <animation>PlayerWalk</animation>
-        <weaponHandle>
-          <x>60</x>
-          <y>33.5</y>
-        </weaponHandle>
-      </move>
-      <moveTo>
-        <animation>PlayerWalk</animation>
-        <weaponHandle>
-          <x>60</x>
-          <y>33.5</y>
-        </weaponHandle>
-      </moveTo>
-      <rest>
-        <animation>PlayerWalk</animation>
-        <weaponHandle>
-          <x>60</x>
-          <y>33.5</y>
-        </weaponHandle>
-      </rest>
-    </default>
-  </actions>
-</character>
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
+    <character>
+      <actions>
+        <default>
+          <move>
+            <animation>PlayerWalk</animation>
+            <weaponHandle>
+              <x>60</x>
+              <y>33.5</y>
+            </weaponHandle>
+          </move>
+          <moveTo>
+            <animation>PlayerWalk</animation>
+            <weaponHandle>
+              <x>60</x>
+              <y>33.5</y>
+            </weaponHandle>
+          </moveTo>
+          <rest>
+            <animation>PlayerWalk</animation>
+            <weaponHandle>
+              <x>60</x>
+              <y>33.5</y>
+            </weaponHandle>
+          </rest>
+        </default>
+      </actions>
+    </character>
+  </Asset>
+</XnaContent>
