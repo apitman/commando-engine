@@ -181,7 +181,7 @@ namespace Commando.collisiondetection
                 float distance = distanceBetweenProjections(minA, maxA, minB, maxB);
                 if (distance < -5 && currentEdgeNormal.Y == 1.0f && currentEdgeNormal.X == 0.0f)
                 {
-                    Console.Out.WriteLine(minA + "," + maxA + "," + minB + "," + maxB + "," + distance);
+                    //Console.Out.WriteLine(minA + "," + maxA + "," + minB + "," + maxB + "," + distance);
                 }
                 if (distance > 0)
                 {
@@ -204,7 +204,7 @@ namespace Commando.collisiondetection
                     }
                 }
             }
-            Console.Out.WriteLine(minDistance + " " + minAxis);
+            //Console.Out.WriteLine(minDistance + " " + minAxis);
             return minAxis * minDistance;
         }
 
