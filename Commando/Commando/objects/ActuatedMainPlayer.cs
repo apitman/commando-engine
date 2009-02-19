@@ -113,11 +113,6 @@ namespace Commando.objects
                 leftD.X = (float)Math.Cos((double)rotAngle) * X - (float)Math.Sin((double)rotAngle) * Y;
                 leftD.Y = (float)Math.Sin((double)rotAngle) * X + (float)Math.Cos((double)rotAngle) * Y;
             }
-            
-            if (leftD != Vector2.Zero)
-            {
-                Console.Out.WriteLine("LEFT: " + leftD);
-            }
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {

@@ -82,12 +82,12 @@ namespace Commando.graphics
             moveDiff = MathHelper.WrapAngle(moveDiff);
             moveVector *= (MathHelper.TwoPi - Math.Abs(moveDiff)) / MathHelper.Pi;
             */
-            Console.Out.WriteLine("OldPosBeforeCollision: " + position);
-            Console.Out.WriteLine("NewPosBeforeCollision: " + newPosition);
+            //Console.Out.WriteLine("OldPosBeforeCollision: " + position);
+            //Console.Out.WriteLine("NewPosBeforeCollision: " + newPosition);
 
             newPosition = character_.getCollisionDetector().checkCollisions(character_, newPosition);
 
-            Console.Out.WriteLine("NewPosAfterCollision: " + newPosition);
+            //Console.Out.WriteLine("NewPosAfterCollision: " + newPosition);
 
             animation_.update(newPosition, direction);
             character_.setPosition(newPosition);
