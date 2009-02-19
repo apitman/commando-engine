@@ -94,26 +94,26 @@ namespace Commando
             tileBox.Add(new Vector2(7.5f, 7.5f));
             tileBox.Add(new Vector2(-7.5f, 7.5f));
             int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                        {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,10,11,12,10,11,12,1,1,1,1,1,1,19,3,3,3,3,3,8,0},
-                                        {0,2,1,1,1,13,14,15,13,14,15,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,16,17,18,16,17,18,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,20,5,5,5,5,5,9,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
+                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                        {0,0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,10,11,12,10,11,12,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,13,14,15,13,14,15,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,16,17,18,16,17,18,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                        {0,0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0},
+                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
             // Load the user's level from XML
             //BoxObject[,] boxesToBeAdded;
@@ -127,7 +127,6 @@ namespace Commando
                 // First load the tiles
                 System.Xml.XmlElement ele = (System.Xml.XmlElement)doc.GetElementsByTagName("level")[0];
                 int[,] loadedTiles = new int[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
-                //boxesToBeAdded = new BoxObject[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
                 boxesToBeAdded = new bool[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
                 tilesForGrid = new Tile[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
                 System.Xml.XmlNodeList tList = doc.GetElementsByTagName("tile");
@@ -167,9 +166,38 @@ namespace Commando
                     enemyList_.Add(dum);
                 }
             }
-            catch (System.IO.FileNotFoundException)
+            catch (Exception)
             {
+                int numTilesTall = 22;
+                int numTilesWide = 25;
+                boxesToBeAdded = new bool[numTilesTall, numTilesWide];
+                tilesForGrid = new Tile[numTilesTall, numTilesWide];
+                for (int i = 0; i < numTilesTall; i++)
+                {
+                    for (int j = 0; j < numTilesWide; j++)
+                    {
+                        if (tiles[i, j] != 1)
+                        {
+                            boxesToBeAdded[i, j] = true;
+                            tilesForGrid[i, j].blocksHigh_ = true;
+                            tilesForGrid[i, j].blocksLow_ = true;
+                        }
+                        else
+                        {
+                            boxesToBeAdded[i, j] = false;
+                            tilesForGrid[i, j].blocksHigh_ = false;
+                            tilesForGrid[i, j].blocksLow_ = false;
+                        }
+                    }
+                }
                 tiles_ = Tiler.getTiles(tiles);
+
+                boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
+                GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
+
+                // Now add an enemy
+                DummyEnemy dumE = new DummyEnemy(new Vector2(250.0f, 250.0f));
+                enemyList_.Add(dumE);
             }
             // Done loading level from XML
             

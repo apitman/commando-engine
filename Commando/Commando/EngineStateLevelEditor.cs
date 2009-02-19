@@ -54,36 +54,41 @@ namespace Commando
         const int NUM_TILES_PER_ROW = 25;
         const int NUM_TILES_PER_COL = 22;
         const int NUM_PALLETTES = 3;
-        const int MaxX = 345;
-        const int MinX = 30;
-        const int MaxY = 300;
-        const int MinY = 30;
+        const int MAX_MOUSE_X = 345;
+        const int MAX_MOUSE_Y = 300;
+        const int MIN_MOUSE_X = 30;
+        const int MIN_MOUSE_Y = 30;
+        const int MAX_CURSOR_X = NUM_TILES_PER_ROW - 3;
+        const int MAX_CURSOR_Y = NUM_TILES_PER_COL - 3;
+        const int MIN_CURSOR_X = 2;
+        const int MIN_CURSOR_Y = 2;
+        const int MAX_NUM_ENEMIES = 3;
         const string DUMMY_ENEMY = "dummyEnemy";
         const string SAVE_PATH = "user level.xml";
         const float DISP_TILE_DEPTH = 0.1f;
 
         protected int[,] defaultTiles_ = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                        {0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,10,11,12,10,11,12,1,1,1,1,1,1,19,3,3,3,3,3,8,0},
-                                        {0,2,1,1,1,13,14,15,13,14,15,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,16,17,18,16,17,18,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,20,5,5,5,5,5,9,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,0},
-                                        {0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0,0,0,0,0,0},
-                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+                                                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                    {0,0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,10,11,12,10,11,12,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,13,14,15,13,14,15,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,16,17,18,16,17,18,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
+                                                    {0,0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0},
+                                                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 
         protected EngineStateInterface returnState_;
         protected int returnScreenSizeX_;
@@ -99,6 +104,7 @@ namespace Commando
         protected List<String>objectNameList;
         protected enum pallette_{tile, enemy, misc};
         protected int curPallette_;
+        protected int enemyIndex_;
 
 
         /// <summary>
@@ -106,13 +112,15 @@ namespace Commando
         /// </summary>
         public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState, int returnScreenSizeX, int returnScreenSizeY)
         {
+            PlayerHelper.Player_ = null; // Necessary to have mouse input if the player has entered EngineStateGameplay before entering the level editor
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             engine_.IsMouseVisible = true;
             returnState_ = returnState;
             returnScreenSizeX_ = returnScreenSizeX;
             returnScreenSizeY_ = returnScreenSizeY;
-            myObjects_ = new List<objectRepresentation>();
+            enemyIndex_ = 0;
+            myObjects_ = new List<objectRepresentation>(MAX_NUM_ENEMIES);
 
             // Load the user's level from XML
             try
@@ -143,13 +151,13 @@ namespace Commando
                     myObjects_.Add(newObject);
                 }
             }
-            catch (System.IO.FileNotFoundException)
+            catch (Exception)
             {
                 tiles_ = Tiler.getTiles(defaultTiles_);
             }
 
-            cursorPosX_ = 0;
-            cursorPosY_ = 0;
+            cursorPosX_ = 2;
+            cursorPosY_ = 2;
             curTileIndex_ = 0;
             displayTile_ = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
         }
@@ -163,28 +171,58 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
+            // Prepare to output to XML
+            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            try
+            {
+                doc.Load(SAVE_PATH);
+            }
+            catch (Exception)
+            {
+                System.Xml.XmlElement ele = doc.CreateElement("level");
+                ele.SetAttribute("numTilesWide", NUM_TILES_PER_ROW.ToString());
+                ele.SetAttribute("numTilesTall", NUM_TILES_PER_COL.ToString());
+                ele.SetAttribute("screenSizeX", SCREEN_SIZE_X.ToString());
+                ele.SetAttribute("screenSizeY", SCREEN_SIZE_Y.ToString());
+                doc.AppendChild(ele);
+
+                ele = doc.CreateElement("tiles");
+                System.Xml.XmlElement ele2;
+                foreach (int i in defaultTiles_)
+                {
+                    ele2 = doc.CreateElement("tile");
+                    ele2.SetAttribute("index", i.ToString());
+                    ele.AppendChild(ele2);
+                }
+                doc.GetElementsByTagName("level")[0].AppendChild(ele);
+
+                ele = doc.CreateElement("enemies");
+                doc.GetElementsByTagName("level")[0].AppendChild(ele);
+            }
+
+            // Check the inputs
             if (inputs.getLeftDirectionalY() < 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosY_ < NUM_TILES_PER_COL -1)
+                if (cursorPosY_ < MAX_CURSOR_Y)
                     cursorPosY_++;
             }
             else if (inputs.getLeftDirectionalY() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosY_ > 0)
+                if (cursorPosY_ > MIN_CURSOR_Y)
                     cursorPosY_--;
             }
             else if (inputs.getLeftDirectionalX() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosY_ < NUM_TILES_PER_ROW - 1)
+                if (cursorPosX_ < MAX_CURSOR_X)
                     cursorPosX_++;
             }
             else if (inputs.getLeftDirectionalX() < 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosX_ > 0)
+                if (cursorPosX_ > MIN_CURSOR_X)
                     cursorPosX_--;
             }
             else if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
@@ -219,6 +257,10 @@ namespace Commando
                     case (int)pallette_.tile:
                         {
                             tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                            
+                            // Edit the XML tile
+                            System.Xml.XmlElement tileElement = (System.Xml.XmlElement)doc.GetElementsByTagName("tile")[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW];
+                            tileElement.SetAttribute("index", curTileIndex_.ToString());
                             break;
                         }
                     case (int)pallette_.enemy:
@@ -246,40 +288,11 @@ namespace Commando
                 
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
 
-                // Prepare to output to XML
-                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                try
-                {
-                    doc.Load(SAVE_PATH);
-                }
-                catch (System.IO.FileNotFoundException)
-                {
-                    System.Xml.XmlElement ele = doc.CreateElement("level");
-                    ele.SetAttribute("numTilesWide", NUM_TILES_PER_ROW.ToString());
-                    ele.SetAttribute("numTilesTall", NUM_TILES_PER_COL.ToString());
-                    ele.SetAttribute("screenSizeX", SCREEN_SIZE_X.ToString());
-                    ele.SetAttribute("screenSizeY", SCREEN_SIZE_Y.ToString());
-                    doc.AppendChild(ele);
-
-                    ele = doc.CreateElement("tiles");
-                    System.Xml.XmlElement ele2;
-                    foreach (int i in defaultTiles_)
-                    {
-                        ele2 = doc.CreateElement("tile");
-                        ele2.SetAttribute("index", i.ToString());
-                        ele.AppendChild(ele2);
-                    }
-                    doc.GetElementsByTagName("level")[0].AppendChild(ele);
-
-                    ele = doc.CreateElement("enemies");
-                    doc.GetElementsByTagName("level")[0].AppendChild(ele);
-                }
-
                 switch(curPallette_)
                 {
                     case (int)pallette_.tile:
                         {
-                            if (rightD.X < MaxX && rightD.X > MinX && rightD.Y < MaxY && rightD.Y > MinY)
+                            if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
                             {
                                 int myX = (int)rightD.X / 15;
                                 int myY = (int)rightD.Y / 15;
@@ -293,26 +306,43 @@ namespace Commando
                         }
                     case (int)pallette_.enemy:
                         {
-                            if (rightD.X < MaxX && rightD.X > MinX && rightD.Y < MaxY && rightD.Y > MinY)
+                            if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
                             {
                                 objectRepresentation newObject = new objectRepresentation(DUMMY_ENEMY, rightD, Vector2.Zero, 0.2f);
-                                myObjects_.Add(newObject);
+                                if (myObjects_.Count < MAX_NUM_ENEMIES)
+                                {
+                                    myObjects_.Add(newObject);
+                                }
+                                else
+                                {
+                                    myObjects_[enemyIndex_] = newObject;
+                                    enemyIndex_++;
+                                    enemyIndex_ = enemyIndex_ % MAX_NUM_ENEMIES;
+                                }
 
-                                // Add an XML enemy
-                                System.Xml.XmlElement enemyElement = (System.Xml.XmlElement) doc.GetElementsByTagName("enemies")[0];
-                                System.Xml.XmlElement element = doc.CreateElement("enemy");
-                                element.SetAttribute("posX", rightD.X.ToString());
-                                element.SetAttribute("posY", rightD.Y.ToString());
-                                enemyElement.AppendChild(element);
+                                 // Add an XML enemy
+                                if (doc.GetElementsByTagName("enemy").Count < MAX_NUM_ENEMIES)
+                                {
+                                    System.Xml.XmlElement enemiesElement = (System.Xml.XmlElement) doc.GetElementsByTagName("enemies")[0];
+                                    System.Xml.XmlElement enemyElement = doc.CreateElement("enemy");
+                                    enemyElement.SetAttribute("name", DUMMY_ENEMY);
+                                    enemyElement.SetAttribute("posX", rightD.X.ToString());
+                                    enemyElement.SetAttribute("posY", rightD.Y.ToString());
+                                    enemiesElement.AppendChild(enemyElement);
+                                }
+                                else
+                                {
+                                    System.Xml.XmlElement enemyElement = (System.Xml.XmlElement) doc.GetElementsByTagName("enemy")[(enemyIndex_ + MAX_NUM_ENEMIES - 1) % MAX_NUM_ENEMIES];
+                                    enemyElement.SetAttribute("name", DUMMY_ENEMY);
+                                    enemyElement.SetAttribute("posX", rightD.X.ToString());
+                                    enemyElement.SetAttribute("posY", rightD.Y.ToString());
+                                }
                             }
 
 
                             break;
                         }
                 }
-
-                // Finish Outputting to XML
-                doc.Save(SAVE_PATH);
             }
 
             else if (inputs.getButton(InputsEnum.BUTTON_1))
@@ -330,6 +360,9 @@ namespace Commando
                 }
                 curTileIndex_ = curTileIndex_ - 1;
             }
+
+            // Finish Outputting to XML
+            doc.Save(SAVE_PATH);
 
             displayTile_ = new TileObject(TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
 
