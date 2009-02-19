@@ -67,6 +67,9 @@
     <Compile Include="..\Commando\ai\AI.cs">
       <Link>ai\AI.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\AStarPathfinder.cs">
+      <Link>AStarPathfinder.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\Belief.cs">
       <Link>ai\Belief.cs</Link>
     </Compile>
