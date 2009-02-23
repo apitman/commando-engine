@@ -78,6 +78,7 @@ namespace Commando
         /// <param name="engine">Reference to the engine running the state</param>
         public EngineStateGameplay(Engine engine)
         {
+            Commando.ai.WorldState.reset();
             drawPipeline_ = new List<DrawableObjectAbstract>();
             enemyList_ = new List<DummyEnemy>();
             engine_ = engine;
