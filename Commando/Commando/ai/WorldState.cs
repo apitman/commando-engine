@@ -27,11 +27,11 @@ namespace Commando.ai
     /// Lists of Stimulus'es (sic) which describe the state of the world, to
     /// be picked up by sensors.
     /// </summary>
-    class WorldState
+    internal class WorldState
     {
-        static public Dictionary<int, Stimulus> Visual_ {get; private set;}
+        static internal Dictionary<int, Stimulus> Visual_ {get; private set;}
 
-        static public Dictionary<int, Stimulus> Audial_ {get; private set;}
+        static internal Dictionary<int, Stimulus> Audial_ {get; private set;}
 
         static WorldState()
         {
@@ -40,6 +40,12 @@ namespace Commando.ai
         }
 
         private WorldState() {}
+
+        static internal void reset()
+        {
+            Visual_.Clear();
+            Audial_.Clear();
+        }
     }
 
 }
