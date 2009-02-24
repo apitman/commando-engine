@@ -6,26 +6,9 @@
 
   === Gameplay ===
   # User can fire bullets at both high and low heights
-  # User hears background music looping throughout the game
-  # User's cursor is a crosshair
-  # User's character will die when reaching 0 health
-  # User sees a Game Over screen upon his character's death
   # User's character will flash and be momentarily invincible upon being hit
-
-  === Level Editor ===
-  # User can create larger levels in the level editor to make use of moving camera
-  # User can select existing objects in the level editor using Right Trigger / LMB
-  # User can move existing objects in the level editor
-  # User can delete existing objects in the level editor
-  # User can rotate enemies in the level editor
-  # User can deselect a selected object in the level editor using Left Trigger / RMB
-  # User can select an object from the palette using the mouse
-  # User can see currently selected object as it follows the mouse
-  # User can place enemies and objects using the gamepad
-  # User has access to an ammunition and health drop in the level editor palette
-  # User has access to a "player starting point" drop in the level editor palette
-  # User can access a list of controls from inside the level editor using a "Help" hotkey
-  # User can see a hint on the main level editor screen for the Help hotkey
+  # User can see multiple different types of enemies
+  # User's character can attach to cover
 
 == Build 4: Feb. 24 - Mar. 12 ==
 
@@ -39,9 +22,27 @@
   # User can pick up ammunition
   # User can pick up health
   # User can hide from enemies by staying out of their line of sight (Ken)
+  # User hears background music looping throughout the game
+  # User's cursor is a crosshair
+  # User's character will die when reaching 0 health
+  # User sees a Game Over screen upon his character's death
+  # User can see enemies shooting at the character
 
   === Level Editor ===
   # User can save a level to a specific file name using an Xbox 360 keyboard emulator (Andrew)
+  # User can create larger levels in the level editor to make use of moving camera
+  # User can select existing objects in the level editor using Right Trigger / LMB
+  # User can move existing objects in the level editor
+  # User can delete existing objects in the level editor
+  # User can rotate enemies in the level editor
+  # User can deselect a selected object in the level editor using Left Trigger / RMB
+  # User can select an object from the palette using the mouse
+  # User can see currently selected object as it follows the mouse
+  # User can place enemies and objects using the gamepad
+  # User has access to an ammunition and health drop in the level editor palette
+  # User has access to a "player starting point" drop in the level editor palette
+  # User can access a list of controls from inside the level editor using a "Help" hotkey
+  # User can see a hint on the main level editor screen for the Help hotkey
 
 == Build 3: Feb. 10 - Feb. 19 ==
 
