@@ -25,7 +25,7 @@ namespace Commando.ai
 {
     class SensorEars : Sensor
     {
-        public SensorEars(Memory memory_) : base(memory_) { }
+        public SensorEars(AI ai) : base(ai) { }
 
         public override void collect()
         {

@@ -68,13 +68,16 @@
       <Link>ai\AI.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\AStarPathfinder.cs">
-      <Link>AStarPathfinder.cs</Link>
+      <Link>ai\AStarPathfinder.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\Belief.cs">
       <Link>ai\Belief.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\Memory.cs">
       <Link>ai\Memory.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\Raycaster.cs">
+      <Link>ai\Raycaster.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\Sensor.cs">
       <Link>ai\Sensor.cs</Link>

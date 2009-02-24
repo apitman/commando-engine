@@ -69,6 +69,12 @@ namespace Commando.levels
             return tiles_[y, x]; // TILES IS Y, X
         }
 
+        public Tile getTile(Vector2 position)
+        {
+            TileIndex ti = getTileIndex(position);
+            return getTile(ti);
+        }
+
         public bool isPointWithinTile(Vector2 position, TileIndex tile)
         {
             TileIndex actual = getTileIndex(position);
@@ -96,6 +102,11 @@ namespace Commando.levels
             blocksHigh_ = blocksHigh;
         }
 
+        public bool collides(Height rhs)
+        {
+            return (this.blocksLow_ && rhs.blocksLow_ || this.blocksHigh_ && rhs.blocksHigh_);
+        }
+
         public bool blocksLow_;
 
         public bool blocksHigh_;
@@ -107,6 +118,11 @@ namespace Commando.levels
         {
             blocksLow_ = blocksLow;
             blocksHigh_ = blocksHigh;
+        }
+
+        public bool collides(Height rhs)
+        {
+            return (this.blocksLow_ && rhs.blocksLow_ || this.blocksHigh_ && rhs.blocksHigh_);
         }
 
         public bool blocksLow_;

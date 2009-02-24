@@ -31,11 +31,11 @@ namespace Commando.ai
     /// </summary>
     public abstract class Sensor
     {
-        protected Memory Memory_ {get; set;}
+        protected AI AI_ {get; set;}
 
-        public Sensor(Memory memory)
+        public Sensor(AI ai)
         {
-            Memory_ = memory;
+            AI_ = ai;
         }
 
         public abstract void collect();

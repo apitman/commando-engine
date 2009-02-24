@@ -25,6 +25,8 @@ using Commando.graphics;
 using Commando.objects;
 using Microsoft.Xna.Framework;
 using Commando.collisiondetection;
+using Commando.ai;
+using Commando.levels;
 
 namespace Commando
 {
@@ -41,6 +43,8 @@ namespace Commando
         protected Vector2 rotation_;
 
         protected Vector2 gunHandle_;
+
+        protected Vector2 guessTarget_;
 
         protected float gunLength_;
 
@@ -89,6 +93,8 @@ namespace Commando
             position_ = newPos;
             if (recoil_ > 0)
                 recoil_--;
+
+            guessTarget_ = Raycaster.roughCollision(position_, rotation_, new Height(false, true));
         }
 
         public void draw()
@@ -96,6 +102,8 @@ namespace Commando
             rotation_.Normalize();
             rotation_ *= gunLength_ / 2f;
             animation_.drawImage(0, position_ + rotation_, getRotationAngle(), 0.6f);
+
+            Illustrator.drawLine(position_, guessTarget_);
         }
 
         protected float getRotationAngle()
