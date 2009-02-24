@@ -76,7 +76,7 @@ namespace Commando.objects
         /// <param name="gameTime"></param>
         public override void draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            texture_.drawImageWithDim(0, new Rectangle((int)position_.X - (texture_.getTexture().Width / 2), (int)position_.Y - (texture_.getTexture().Height / 2), texture_.getTexture().Width * newValue_ / 100, texture_.getTexture().Height), depth_);
+            texture_.drawImageWithDimAbsolute(0, new Rectangle((int)position_.X - (texture_.getTexture().Width / 2), (int)position_.Y - (texture_.getTexture().Height / 2), texture_.getTexture().Width * newValue_ / 100, texture_.getTexture().Height), depth_);
         }
     }
 }

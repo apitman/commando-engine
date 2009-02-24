@@ -91,7 +91,7 @@ namespace Commando
                     engine_.GraphicsDevice.Viewport.Height);
 
             TextureMap tm = TextureMap.getInstance();
-            tm.getTexture("overlay").drawImageWithDim(0, screen, OVERLAY_DEPTH);
+            tm.getTexture("overlay").drawImageWithDimAbsolute(0, screen, OVERLAY_DEPTH);
 
             Vector2 fontpos = new Vector2(
                 engine_.GraphicsDevice.Viewport.Width / 2,
