@@ -23,14 +23,15 @@
   # User can pick up health (Andrew, Jared)
   # User can hide from enemies by staying out of their line of sight (Ken)
   # User hears background music looping throughout the game (Ken, Andrew)
-  # User's cursor is a crosshair (Ken)
+  # User's mouse cursor is a crosshair (Ken)
+  # When using gamepad, user has a laser sight to show approx. where shots will go (Ken)
   # User's character will die when reaching 0 health (Andrew)
   # User sees a Game Over screen upon his character's death (Andrew)
-  # User can see enemies shooting at the character (Ken, Jared)
+  # User can fight enemies who shoot at his character (Ken, Jared)
 
   === Level Editor ===
   # User can save a level to a specific file name on the Xbox 360 (Andrew)
-  # User can create larger levels in the level editor to make use of moving camera
+  # User can create larger levels in the level editor to make use of moving camera (Andrew, Eric)
   # User can select existing objects in the level editor using Right Trigger / LMB (Eric, Andrew)
   # User can move existing objects in the level editor (Eric)
   # User can delete existing objects in the level editor (Eric)
