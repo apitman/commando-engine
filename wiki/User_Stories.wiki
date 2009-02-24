@@ -19,30 +19,30 @@
   # User's character will turn smoothly to face new positions (Jared)
   # User sees realistic stops when more than 2 objects collide (Jared)
   # User's character will stop when rotating into a collision instead of translating (Jared)
-  # User can pick up ammunition
-  # User can pick up health
+  # User can pick up ammunition (Andrew, Jared)
+  # User can pick up health (Andrew, Jared)
   # User can hide from enemies by staying out of their line of sight (Ken)
-  # User hears background music looping throughout the game
-  # User's cursor is a crosshair
-  # User's character will die when reaching 0 health
-  # User sees a Game Over screen upon his character's death
-  # User can see enemies shooting at the character
+  # User hears background music looping throughout the game (Ken, Andrew)
+  # User's cursor is a crosshair (Ken)
+  # User's character will die when reaching 0 health (Andrew)
+  # User sees a Game Over screen upon his character's death (Andrew)
+  # User can see enemies shooting at the character (Ken, Jared)
 
   === Level Editor ===
-  # User can save a level to a specific file name using an Xbox 360 keyboard emulator (Andrew)
+  # User can save a level to a specific file name on the Xbox 360 (Andrew)
   # User can create larger levels in the level editor to make use of moving camera
-  # User can select existing objects in the level editor using Right Trigger / LMB
-  # User can move existing objects in the level editor
-  # User can delete existing objects in the level editor
-  # User can rotate enemies in the level editor
-  # User can deselect a selected object in the level editor using Left Trigger / RMB
-  # User can select an object from the palette using the mouse
-  # User can see currently selected object as it follows the mouse
-  # User can place enemies and objects using the gamepad
-  # User has access to an ammunition and health drop in the level editor palette
-  # User has access to a "player starting point" drop in the level editor palette
-  # User can access a list of controls from inside the level editor using a "Help" hotkey
-  # User can see a hint on the main level editor screen for the Help hotkey
+  # User can select existing objects in the level editor using Right Trigger / LMB (Eric, Andrew)
+  # User can move existing objects in the level editor (Eric)
+  # User can delete existing objects in the level editor (Eric)
+  # User can rotate enemies in the level editor (Eric)
+  # User can deselect a selected object in the level editor using Left Trigger / RMB (Eric)
+  # User can select an object from the palette using the mouse (Eric, Andrew)
+  # User can see currently selected object as it follows the mouse (Eric)
+  # User can place enemies and objects using the gamepad (Eric)
+  # User has access to an ammunition and health drop in the level editor palette (Eric)
+  # User has access to a "player starting point" drop in the level editor palette (Eric)
+  # User can access a list of controls from inside the level editor using a "Help" hotkey (Eric)
+  # User can see a hint on the main level editor screen for the Help hotkey (Eric)
 
 == Build 3: Feb. 10 - Feb. 19 ==
 
