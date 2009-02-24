@@ -103,6 +103,7 @@ namespace Commando.objects
             Vector2 rightD = new Vector2(inputSet_.getRightDirectionalX(), inputSet_.getRightDirectionalY());
             Vector2 leftD = new Vector2(inputSet_.getLeftDirectionalX(), -inputSet_.getLeftDirectionalY());
             Vector2 oldDirection = direction_;
+            Vector2 oldPosition = position_;
             actuator_.look(rightD);
 
             if (Settings.getInstance().getMovementType() == MovementType.RELATIVE)
@@ -137,6 +138,8 @@ namespace Commando.objects
             weapon_.update();
             collidedInto_.Clear();
             collidedWith_.Clear();
+            oldPosition -= position_;
+            GlobalHelper.getInstance().getCurrentCamera().setCenter(position_.X, position_.Y);
 
             // TODO Change/fix how this is done, modularize it, etc.
             // Essentially, the player updates his visual location in the WorldState

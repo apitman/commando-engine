@@ -72,6 +72,8 @@ namespace Commando
 #endif
             menuString.Add(STR_MENU_QUIT);
 
+            GlobalHelper.getInstance().setCurrentCamera(new Camera());
+
             InputSet inputs = InputSet.getInstance();
             /*controlTips_ = "Select: " +
                             inputs.getControlName(InputsEnum.CONFIRM_BUTTON) +
@@ -154,7 +156,7 @@ namespace Commando
          
             engine_.GraphicsDevice.Clear(Color.Black);
 
-            menu_.drawImage(0, new Vector2((engine_.GraphicsDevice.Viewport.Width - menu_.getImageDimensions()[0].Width) / 2, 0), 0.0f);
+            menu_.drawImageAbsolute(0, new Vector2((engine_.GraphicsDevice.Viewport.Width - menu_.getImageDimensions()[0].Width) / 2, 0), 0.0f);
 
             //print control Tips for main menu
             GameFont myFont = FontMap.getInstance().getFont(CONTROL_TIPS_FONT);

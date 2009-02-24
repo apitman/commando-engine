@@ -52,6 +52,9 @@ namespace Commando
         const string AMMO_REPLACE_TEXT = "%i";
         const string SAVE_PATH = "user level.xml";
         const float FONT_DRAW_DEPTH = 0.9f;
+        const int HUD_BAR_DRAW_Y = SCREEN_SIZE_Y - HUD_BAR_HEIGHT;
+        const int HUD_BAR_DRAW_X = 0;
+        const int HUD_BAR_HEIGHT = 45;
 
         //Jared's test stuff
         //protected MainPlayer player_;
@@ -87,6 +90,9 @@ namespace Commando
             //Jared's test stuff
             //player_ = new MainPlayer();
             player_ = new ActuatedMainPlayer(drawPipeline_);
+            GlobalHelper.getInstance().getCurrentCamera().setPosition(0,0);
+            GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)SCREEN_SIZE_X);
+            GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)SCREEN_SIZE_Y);
             //List<BoxObject> boxesToBeAdded = new List<BoxObject>();
             Tile[,] tilesForGrid;
             List<Vector2> tileBox = new List<Vector2>();
@@ -278,7 +284,7 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Chocolate);
+            engine_.GraphicsDevice.Clear(Color.Black);
 
             //TEST
             //(collisionDetector_ as SeparatingAxisCollisionDetector).draw();
@@ -302,8 +308,9 @@ namespace Commando
             //END Jared's test stuff
 
             healthBar_.draw(new GameTime());
-            TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImage(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
+            TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImageAbsolute(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
             weapon_.draw(new GameTime());
+            TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, SCREEN_SIZE_X, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
 
             FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
             //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);

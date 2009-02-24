@@ -115,10 +115,11 @@ namespace Commando.controls
             }
             else*/if (PlayerHelper.Player_ != null)
             {
-                Vector2 playerCenter = PlayerHelper.Player_.getPosition();
-
+                //Vector2 playerCenter = PlayerHelper.Player_.getPosition();
+                float centerX = GlobalHelper.getInstance().getCurrentCamera().getScreenWidth() / 2f;
+                float centerY = GlobalHelper.getInstance().getCurrentCamera().getScreenHeight() / 2f;
                 Vector2 rightDirectional =
-                    new Vector2(ms.X - playerCenter.X, ms.Y - playerCenter.Y);
+                    new Vector2(ms.X - centerX, ms.Y - centerY);
                 rightDirectional.Normalize();
                 inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL,
                                     rightDirectional.X, rightDirectional.Y);

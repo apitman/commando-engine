@@ -214,6 +214,9 @@
     <Compile Include="..\Commando\graphics\AnimationInterface.cs">
       <Link>graphics\AnimationInterface.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\Camera.cs">
+      <Link>graphics\Camera.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\CharacterActionInterface.cs">
       <Link>graphics\CharacterActionInterface.cs</Link>
     </Compile>

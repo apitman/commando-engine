@@ -21,51 +21,77 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.levels;
-using Commando.graphics;
 
-namespace Commando
+namespace Commando.graphics
 {
-    public class GlobalHelper
+    public class Camera
     {
-        protected static GlobalHelper instance_ = null;
+        protected float curX_;
 
-        protected TileGrid curLevelTileGrid_;
+        protected float curY_;
 
-        protected Camera currentCamera_;
+        protected float screenWidth_;
 
-        private GlobalHelper()
+        protected float screenHeight_;
+
+        public Camera()
+            :this(0,0)
         {
-            curLevelTileGrid_ = null;
         }
 
-        public static GlobalHelper getInstance()
+        public Camera(float sWidth, float sHeight)
         {
-            if (instance_ == null)
-            {
-                instance_ = new GlobalHelper();
-            }
-            return instance_;
+            screenWidth_ = sWidth;
+            screenHeight_ = sHeight;
+            curX_ = 0;
+            curY_ = 0;
+        }
+        public void setPosition(float x, float y)
+        {
+            curX_ = x;
+            curY_ = y;
         }
 
-        public TileGrid getCurrentLevelTileGrid()
+        public void setCenter(float x, float y)
         {
-            return curLevelTileGrid_;
+            curX_ = x - (screenWidth_ / 2f);
+            curY_ = y - (screenHeight_ / 2f);
         }
 
-        public void setCurrentLevelTileGrid(TileGrid grid)
+        public float getX()
         {
-            curLevelTileGrid_ = grid;
+            return curX_;
         }
 
-        public void setCurrentCamera(Camera cam)
+        public float getY()
         {
-            currentCamera_ = cam;
+            return curY_;
         }
 
-        public Camera getCurrentCamera()
+        public float getScreenWidth()
         {
-            return currentCamera_;
+            return screenWidth_;
+        }
+
+        public float getScreenHeight()
+        {
+            return screenHeight_;
+        }
+
+        public void setScreenWidth(float width)
+        {
+            screenWidth_ = width;
+        }
+
+        public void setScreenHeight(float height)
+        {
+            screenHeight_ = height;
+        }
+
+        public void move(float X, float Y)
+        {
+            curX_ += X;
+            curY_ += Y;
         }
     }
 }

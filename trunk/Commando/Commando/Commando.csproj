@@ -128,6 +128,7 @@
     <Compile Include="GlobalHelper.cs" />
     <Compile Include="graphics\ActionSetValidator.cs" />
     <Compile Include="graphics\ActuatorInterface.cs" />
+    <Compile Include="graphics\Camera.cs" />
     <Compile Include="graphics\CharacterActionInterface.cs" />
     <Compile Include="graphics\AnimationInterface.cs" />
     <Compile Include="graphics\CharacterRunToAction.cs" />
