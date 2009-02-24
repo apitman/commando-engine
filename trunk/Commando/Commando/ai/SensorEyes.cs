@@ -21,12 +21,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Commando.levels;
 
 namespace Commando.ai
 {
     class SensorEyes : Sensor
     {
-        public SensorEyes(Memory memory) : base(memory) { }
+        public SensorEyes(AI ai) : base(ai) { }
 
         // TODO
         // Eye sensors probably need a link back to their AI or to their
@@ -59,10 +61,11 @@ namespace Commando.ai
             //   checks, etc. as an actual filter
             // Furthermore, Eyes might be just an interface?  Actually probably not,
             //   but it should be easily extendable for more specific eyes and such
-            if (stim.source_ == StimulusSource.CharacterAbstract)
+            if (stim.source_ == StimulusSource.CharacterAbstract &&
+                Raycaster.canSeePoint(AI_.Character_.getPosition(), stim.position_, new Height(true, false), new Height(true, true)))
             {
-                Memory_.Beliefs_.Remove(id);
-                Memory_.Beliefs_.Add(id, new Belief(BeliefType.EnemyLoc, 100, stim.position_.X, stim.position_.Y));
+                AI_.Memory_.Beliefs_.Remove(id);
+                AI_.Memory_.Beliefs_.Add(id, new Belief(BeliefType.EnemyLoc, 100, stim.position_.X, stim.position_.Y));
             }
         }
 

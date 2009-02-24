@@ -48,8 +48,8 @@ namespace Commando.ai
             Character_ = npc;
             Memory_ = new Memory();
             sensors_ = new List<Sensor>();
-            sensors_.Add(new SensorEars(Memory_));
-            sensors_.Add(new SensorEyes(Memory_));
+            sensors_.Add(new SensorEars(this));
+            sensors_.Add(new SensorEyes(this));
             path_ = new List<TileIndex>();
             lastPathfindUpdate_ = 0;
         }
@@ -83,12 +83,15 @@ namespace Commando.ai
                         path_ = 
                             AStarPathfinder.run(grid, start, dest, radius, h);
                         lastPathfindUpdate_ = 0;
-                        if (path_ == null || path_.Count == 0)
-                        {
-                            return;
-                        }
+                        if (path_ != null)
+                            break;
                     }
                 }
+            }
+
+            if (path_ == null || path_.Count == 0)
+            {
+                return;
             }
 
             TileIndex cur = path_[0];
