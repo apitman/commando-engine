@@ -97,6 +97,9 @@
     <Compile Include="..\Commando\ai\SystemBehavior.cs">
       <Link>ai\SystemBehavior.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\SystemCommunication.cs">
+      <Link>ai\SystemCommunication.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\SystemNavigation.cs">
       <Link>ai\SystemNavigation.cs</Link>
     </Compile>
