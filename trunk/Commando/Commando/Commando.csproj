@@ -103,6 +103,7 @@
     <Compile Include="ai\SensorEyes.cs" />
     <Compile Include="ai\Stimulus.cs" />
     <Compile Include="ai\SystemBehavior.cs" />
+    <Compile Include="ai\SystemCommunication.cs" />
     <Compile Include="ai\SystemNavigation.cs" />
     <Compile Include="ai\SystemPlanning.cs" />
     <Compile Include="ai\SystemTactics.cs" />
