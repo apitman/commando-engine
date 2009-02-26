@@ -2,13 +2,28 @@
 
 = Stories by Build =
 
-== Future User Stories ==
+== Future User Stories by End of Semester ==
 
   === Gameplay ===
   # User can fire bullets at both high and low heights
-  # User's character will flash and be momentarily invincible upon being hit
-  # User can see multiple different types of enemies
+  # User's character will flash and be momentarily invincible upon being hit (if desired)
+  # User's character can crouch
   # User's character can attach to cover
+  # User's character can throw grenades
+  # User hears footsteps, gunfire, etc. (all sound effects)
+  # User's character can pickup and switch between pistol, machine gun, and shotgun
+  # User can fight at least four different types of enemies
+  # User's enemies will create dynamic plans to combat the player
+  # User's enemies will create dynamic squad-based plans to combat the player
+  # User's enemies move intelligently around obstacles without unnecessary wall-hugging
+  # User can participate in a "boss battle"
+  # User can either hear or see enemy agents communicating (either via sound or text)
+
+  === Level Editor ===
+  # User can link levels together with waypoints
+  # User can create overlay sprites for different layers of the map
+  # User can load in different tilesets
+  # User can change level size
 
 == Build 4: Feb. 24 - Mar. 12 ==
 
@@ -82,58 +97,3 @@
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see his character in the level - Jared
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can move his character around the screen using the WASD keys - Jared, Ken
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can press a key to get to a Pause screen - Andrew, Ken
-
-= List of user stories =
-
-Items listed here are subject to change.
-
-== Controls ==
-
-  * User can control character using keyboard/mouse
-  * User can control character using Xbox 360 gamepad
-  * User can select to use either choice of controls
-  * User can move the mouse to simulate joystick rotation
-  * User can start the game from a main menu
-  * User can view a screen displaying the controls
-  * User can pause the game
-
-== Gameplay and Animation ==
-
-  * User can view statistics, currently selected weapon, etc. via HUD
-  * User can shoot
-  * User can activate supernatural abilities
-  * User can crouch
-  * User can hide behind obstacles, and shoot over/around them
-  * User can hide next to walls, and shoot over/around them
-  * User can throw grenades
-  * User can move between isolated regions
-  * Non-playable characters can perform similar actions
-  * Sound effects will accommodate various animations and events
-  * Background music will accompany various gameplay sequences
-
-== Physics and Simulation ==
-
-  * Objects will stop moving when contacting walls and objects
-  * Non-playable characters will have ranges of vision / line of sight
-
-== Artificial Intelligence ==
-
-  * Non-playable characters navigate around obstacles
-  * Non-playable characters navigate between rooms and areas
-  * Non-playable characters perform dynamically-planned sequences of actions
-  * Non-playable characters transfer knowledge to one another
-  * Non-playable characters coordinate their plans with one another
-  * Non-playable characters search for and attack player
-
-== Game Content ==
-
-  * User can play through a single level
-  * User can move into different rooms
-  * User can play against different enemy types including humanoid and flying
-  * User can fight a boss enemy character
-  * User can develop levels with level editor tool
-
-== Miscellaneous ==
-
-  * User can select level of difficulty
-  * User can play the game on Xbox 360 in addition to PC
