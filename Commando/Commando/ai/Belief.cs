@@ -44,6 +44,7 @@ namespace Commando.ai
 
     public enum BeliefType
     {
-        EnemyLoc
+        EnemyLoc,
+        SuspiciousNoise
     }
 }

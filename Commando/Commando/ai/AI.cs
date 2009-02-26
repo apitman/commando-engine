@@ -43,6 +43,8 @@ namespace Commando.ai
 
         protected const int PATHFIND_THRESHOLD = 15;
 
+        protected InferenceEngine inferenceEngine_;
+
         public AI(NonPlayableCharacterAbstract npc)
         {
             Character_ = npc;
@@ -52,6 +54,7 @@ namespace Commando.ai
             sensors_.Add(new SensorEyes(this));
             path_ = new List<TileIndex>();
             lastPathfindUpdate_ = 0;
+            inferenceEngine_ = new InferenceEngine(this);
         }
 
         public void update()
@@ -60,6 +63,8 @@ namespace Commando.ai
             {
                 sensors_[i].collect();
             }
+
+            inferenceEngine_.update();
 
             // TODO Temporary block
             // Tells the AI to proceed to the location of a known enemy
@@ -81,6 +86,30 @@ namespace Commando.ai
                         float radius = Character_.getRadius();
                         Height h = new Height(true, true);
                         path_ = 
+                            AStarPathfinder.run(grid, start, dest, radius, h);
+                        lastPathfindUpdate_ = 0;
+                        if (path_ != null)
+                            break;
+                    }                   
+                }
+            }
+
+            // TODO Temporary block
+            // Tells the AI to proceed to the location of a suspicious
+            // noise if there is no known enemy location
+            if (path_ == null || path_.Count == 0 || lastPathfindUpdate_ > PATHFIND_THRESHOLD)
+            {
+                IEnumerator<Belief> iter = Memory_.Beliefs_.Values.GetEnumerator();
+                while (iter.MoveNext())
+                {
+                    Belief b = iter.Current;
+                    if (b.type_ == BeliefType.SuspiciousNoise)
+                    {
+                        Vector2 start = Character_.getPosition();
+                        Vector2 dest = b.position_;
+                        float radius = Character_.getRadius();
+                        Height h = new Height(true, true);
+                        path_ =
                             AStarPathfinder.run(grid, start, dest, radius, h);
                         lastPathfindUpdate_ = 0;
                         if (path_ != null)
