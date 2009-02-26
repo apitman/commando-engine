@@ -22,6 +22,7 @@
   # User can pick up ammunition (Andrew, Jared)
   # User can pick up health (Andrew, Jared)
   # User can hide from enemies by staying out of their line of sight (Ken)
+  # User can see enemies communicating rudimentary information regarding the player's location (Andrew)
   # User hears background music looping throughout the game (Ken, Andrew)
   # User's mouse cursor is a crosshair (Ken)
   # When using gamepad, user has a laser sight to show approx. where shots will go (Ken)
