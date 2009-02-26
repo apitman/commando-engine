@@ -29,12 +29,23 @@ namespace Commando.ai
 
         public override void collect()
         {
-            // TODO
+            Dictionary<int, Stimulus>.Enumerator cur = WorldState.Audial_.GetEnumerator();
+            for (int i = 0; i < WorldState.Audial_.Count; i++)
+            {
+                cur.MoveNext();
+                int id = cur.Current.Key;
+                Stimulus stim = cur.Current.Value;
+                filter(id, stim);
+            }
         }
 
-        private void filter(Stimulus stim)
+        private void filter(int id, Stimulus stim)
         {
-            // TODO
+            if (CommonFunctions.distance(AI_.Character_.getPosition(), stim.position_) < (double) stim.radius_)
+            {
+                AI_.Memory_.Beliefs_.Remove(id);
+                AI_.Memory_.Beliefs_.Add(id, new Belief(BeliefType.SuspiciousNoise, 100, stim.position_.X, stim.position_.Y));
+            }
         }
 
     }

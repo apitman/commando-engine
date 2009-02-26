@@ -95,6 +95,7 @@
     <Compile Include="ai\AI.cs" />
     <Compile Include="ai\AStarPathfinder.cs" />
     <Compile Include="ai\Belief.cs" />
+    <Compile Include="ai\InferenceEngine.cs" />
     <Compile Include="ai\Memory.cs" />
     <Compile Include="ai\Raycaster.cs" />
     <Compile Include="ai\Sensor.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="collisiondetection\ConvexPolygonInterface.cs" />
     <Compile Include="collisiondetection\ProjectileConvexPolygon.cs" />
     <Compile Include="collisiondetection\SeparatingAxisCollisionDetector.cs" />
+    <Compile Include="CommonFunctions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EngineStateControls.cs" />
     <Compile Include="EngineStateLevelEditor.cs" />

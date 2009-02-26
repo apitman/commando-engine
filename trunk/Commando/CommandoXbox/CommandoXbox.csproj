@@ -73,6 +73,9 @@
     <Compile Include="..\Commando\ai\Belief.cs">
       <Link>ai\Belief.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\InferenceEngine.cs">
+      <Link>ai\InferenceEngine.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\Memory.cs">
       <Link>ai\Memory.cs</Link>
     </Compile>
@@ -150,6 +153,9 @@
     </Compile>
     <Compile Include="..\Commando\collisiondetection\SeparatingAxisCollisionDetector.cs">
       <Link>collisiondetection\SeparatingAxisCollisionDetector.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\CommonFunctions.cs">
+      <Link>CommonFunctions.cs</Link>
     </Compile>
     <Compile Include="..\Commando\Constants.cs">
       <Link>Constants.cs</Link>

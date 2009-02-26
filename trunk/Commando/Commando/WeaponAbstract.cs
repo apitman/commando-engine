@@ -50,6 +50,10 @@ namespace Commando
 
         protected int recoil_;
 
+        protected int audialStimulusId_;
+
+        protected bool weaponFired_;
+
         public WeaponAbstract(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
         {
             drawPipeline_ = pipeline;
@@ -60,6 +64,8 @@ namespace Commando
             rotation_ = Vector2.Zero;
             gunLength_ = animation.getImageDimensions()[0].Width;
             recoil_ = 0;
+            audialStimulusId_ = StimulusIDGenerator.getNext();
+            weaponFired_ = false;
         }
 
         public void shoot(CollisionDetectorInterface detector)
@@ -77,11 +83,30 @@ namespace Commando
                 drawPipeline_.Add(bullet);
                 recoil_ = 10;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
+
+
+                weaponFired_ = true;
             }
         }
 
         public void update()
         {
+            // TODO Change/fix how this is done, modularize it, etc.
+            // Essentially, the player updates his visual location in the WorldState
+            // Must remove before adding because Dictionaries don't like duplicate keys
+            // Removing a nonexistent key (for first frame) does no harm
+            // Also, need to make it so the radius isn't hardcoded - probably all
+            //  objects which will have a visual stimulus should have a radius
+            WorldState.Audial_.Remove(audialStimulusId_);
+            if (weaponFired_)
+            {
+                weaponFired_ = false;
+                WorldState.Audial_.Add(
+                    audialStimulusId_,
+                    new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 150.0f, character_.getPosition())
+                );
+            }
+
             Vector2 charPos = character_.getPosition();
             Vector2 newPos = Vector2.Zero;
             rotation_ = character_.getDirection();
