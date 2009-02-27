@@ -37,6 +37,7 @@ namespace Commando
         protected CharacterAbstract character_;
 
         protected GameTexture animation_;
+        protected GameTexture laser_;
 
         protected Vector2 position_;
 
@@ -59,6 +60,7 @@ namespace Commando
             drawPipeline_ = pipeline;
             character_ = character;
             animation_ = animation;
+            laser_ = TextureMap.getInstance().getTexture("laserpointer");
             gunHandle_ = gunHandle;
             position_ = Vector2.Zero;
             rotation_ = Vector2.Zero;
@@ -128,7 +130,8 @@ namespace Commando
             rotation_ *= gunLength_ / 2f;
             animation_.drawImage(0, position_ + rotation_, getRotationAngle(), 0.6f);
 
-            Illustrator.drawLine(position_, guessTarget_);
+            if (!Settings.getInstance().UsingMouse_)
+                laser_.drawImage(0, guessTarget_, Constants.DEPTH_LASER);
         }
 
         protected float getRotationAngle()

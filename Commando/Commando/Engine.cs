@@ -53,14 +53,17 @@ namespace Commando
 
 #if XBOX
             controls_ = new X360ControllerInput(this);
+            Settings.getInstance().UsingMouse_ = false;
 #else
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {
                 controls_ = new X360ControllerInput(this);
+                Settings.getInstance().UsingMouse_ = false;
             }
             else
             {
                 controls_ = new PCControllerInput(this);
+                Settings.getInstance().UsingMouse_ = true;
             }
 #endif
             this.IsFixedTimeStep = true;

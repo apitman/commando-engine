@@ -32,6 +32,10 @@ namespace Commando
 
         protected MovementType movementType_;
 
+        internal bool UsingMouse_ { get; set; }
+
+        internal bool DebugMode_ { get; set; }
+
         static Settings()
         {
             // TODO Read from settings file here?

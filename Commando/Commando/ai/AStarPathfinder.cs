@@ -280,8 +280,8 @@ namespace Commando.ai
             grid_ = grid;
             searchHeight_ = height;
 
-            Console.WriteLine("Pathfind Start: " + start_.x_ + "," + start_.y_);
-            Console.WriteLine("Pathfind Goal: " + goal_.x_ + "," + goal_.y_);
+            //Console.WriteLine("Pathfind Start: " + start_.x_ + "," + start_.y_);
+            //Console.WriteLine("Pathfind Goal: " + goal_.x_ + "," + goal_.y_);
 
             TileIndex cur = start_;
             searchSpace_[cur.x_, cur.y_].g = 0;

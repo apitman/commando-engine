@@ -62,18 +62,19 @@ namespace Commando.ai
             Vector2 sampleInterval = direction * SAMPLE_LENGTH;
 
             Vector2 current = start;
+            Height currentVisionHeight = new Height(true, true);
             while ((current - dest).LengthSquared() > SAMPLE_LENGTH_SQ)
             {
                 Tile tile = grid.getTile(current);
                 if (tile.blocksHigh_)
-                    visionHeight.blocksHigh_ = false;
+                    currentVisionHeight.blocksHigh_ = false;
                 if (tile.blocksLow_)
-                    visionHeight.blocksLow_ = false;
-                if (!visionHeight.collides(targetHeight))
+                    currentVisionHeight.blocksLow_ = false;
+                if (!currentVisionHeight.collides(visionHeight))
                     return false;
                 current += sampleInterval;
             }
-            return visionHeight.collides(targetHeight);
+            return currentVisionHeight.collides(targetHeight);
         }
 
         /// <summary>
@@ -101,6 +102,61 @@ namespace Commando.ai
                 }
                 current += sampleInterval;
             }
+        }
+
+        static internal bool canSeeObject(Vector2 start, Vector2 objectPos, float objectRadius, Height visionHeight, Height objectHeight)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Determines whether a target object is within a specific field of view.
+        /// </summary>
+        /// <param name="facing">Direction the observer is facing</param>
+        /// <param name="position">Position of the observer</param>
+        /// <param name="targetPosition">Position of the target</param>
+        /// <param name="fieldAngle">Range, in radians, of the observer's field of view</param>
+        /// <returns></returns>
+        static internal bool inFieldOfView(Vector2 facing, Vector2 position, Vector2 targetPosition, float fieldAngle)
+        {
+            Vector2 relativePosition = targetPosition - position;
+
+            if (facing.X == 0)
+                facing.X = 0.001f;
+            double facingAngle = Math.Atan(facing.Y / facing.X);
+            if (facing.X < 0)
+                facingAngle += Math.PI;
+            facingAngle = normalizeAngle(facingAngle);
+
+            if (relativePosition.X == 0)
+                relativePosition.X = 0.001f;
+            double relativeAngle = Math.Atan(relativePosition.Y / relativePosition.X);
+            if (relativePosition.X < 0)
+                relativeAngle += Math.PI;
+            relativeAngle = normalizeAngle(relativeAngle);
+
+            double shortestAngle = Math.Min(normalizeAngle(facingAngle - relativeAngle),
+                                            normalizeAngle(relativeAngle - facingAngle));
+
+            return shortestAngle <= fieldAngle / 2;
+        }
+
+        static internal double normalizeAngle(double angle)
+        {
+            while (angle < 0)
+                angle += Math.PI * 2;
+            while (angle > Math.PI * 2)
+                angle -= Math.PI * 2;
+            return angle;
+        }
+
+        static internal float normalizeAngle(float angle)
+        {
+            while (angle < 0)
+                angle += (float)Math.PI * 2;
+            while (angle > Math.PI * 2)
+                angle -= (float)Math.PI * 2;
+            return angle;
         }
     }
 }

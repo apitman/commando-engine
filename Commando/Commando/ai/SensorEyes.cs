@@ -28,6 +28,9 @@ namespace Commando.ai
 {
     class SensorEyes : Sensor
     {
+
+        const float FIELD_OF_VIEW = (float)Math.PI;
+
         public SensorEyes(AI ai) : base(ai) { }
 
         // TODO
@@ -62,6 +65,7 @@ namespace Commando.ai
             // Furthermore, Eyes might be just an interface?  Actually probably not,
             //   but it should be easily extendable for more specific eyes and such
             if (stim.source_ == StimulusSource.CharacterAbstract &&
+                Raycaster.inFieldOfView(AI_.Character_.getDirection(), AI_.Character_.getPosition(), stim.position_, FIELD_OF_VIEW) &&
                 Raycaster.canSeePoint(AI_.Character_.getPosition(), stim.position_, new Height(true, false), new Height(true, true)))
             {
                 AI_.Memory_.Beliefs_.Remove(id);
