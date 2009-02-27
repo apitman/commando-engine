@@ -156,6 +156,10 @@
     <key>overlay</key>
     <handle>overlay</handle>
   </image>
+  <image>
+    <key>laserpointer</key>
+    <handle>Sprites\\laserpointer</handle>
+  </image>
 </textures>
   </Asset>
 </XnaContent>

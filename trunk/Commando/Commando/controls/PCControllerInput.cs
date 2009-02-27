@@ -184,14 +184,12 @@ namespace Commando.controls
             case InputsEnum.RIGHT_BUMPER:
                 return RIGHT_BUMPER.ToString();
             case InputsEnum.LEFT_TRIGGER: // backwards on mouse!
-                return "RightClick";
+                return "Right Click";
             case InputsEnum.RIGHT_TRIGGER:
-                return "LeftClick";
+                return "Left Click";
             default:
                 throw new NotImplementedException();
             }
-            // make compiler happy
-            return "Error";
         }
 
         #endregion

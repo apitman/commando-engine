@@ -442,6 +442,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sprites\laserpointer.png">
+      <Name>laserpointer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="XML\LoadScripts\TextureLoader.xml">
       <Name>TextureLoader</Name>
       <Importer>XmlImporter</Importer>

@@ -22,6 +22,7 @@ using Commando.controls;
 using Commando.levels;
 using Commando.objects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.collisiondetection;
 
@@ -43,7 +44,6 @@ namespace Commando
         const float HEALTH_TEXT_OFFSET_Y = -12.0f;
         const float AMMO_TEXT_POS_X = 300.0f;
         const float AMMO_TEXT_POS_Y = 350.0f;
-        const float HUD_DRAW_DEPTH = 0.8f;
         const string HEALTH_BAR_OUTLINE_TEX_NAME = "healthBarOutline";
         const string HEALTH_BAR_FILL_TEX_NAME = "healthBarFiller";
         const string WEAPON_TEX_NAME = "pistol";
@@ -51,7 +51,8 @@ namespace Commando
         const string AMMO_TEXT = "%i/20 bullets";
         const string AMMO_REPLACE_TEXT = "%i";
         const string SAVE_PATH = "user level.xml";
-        const float FONT_DRAW_DEPTH = 0.9f;
+        const float HUD_DRAW_DEPTH = Constants.DEPTH_HUD;
+        const float FONT_DRAW_DEPTH = Constants.DEPTH_HUD_TEXT;
         const int HUD_BAR_DRAW_Y = SCREEN_SIZE_Y - HUD_BAR_HEIGHT;
         const int HUD_BAR_DRAW_X = 0;
         const int HUD_BAR_HEIGHT = 45;
@@ -81,12 +82,17 @@ namespace Commando
         /// <param name="engine">Reference to the engine running the state</param>
         public EngineStateGameplay(Engine engine)
         {
+            // Cleanup singletons used by prior EngineStateGameplay
             Commando.ai.WorldState.reset();
+
+            // Stuff
             drawPipeline_ = new List<DrawableObjectAbstract>();
             enemyList_ = new List<DummyEnemy>();
+
+            // Perform initializations of variables
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
-            engine_.IsMouseVisible = true;
+
             //Jared's test stuff
             //player_ = new MainPlayer();
             player_ = new ActuatedMainPlayer(drawPipeline_);
@@ -255,6 +261,14 @@ namespace Commando
                 return new EngineStatePause(engine_, this);
             }
 
+            // Enter debug mode at this breakpoint to diagnose problems
+            #if !XBOX
+            if (Keyboard.GetState().IsKeyDown(Keys.F12))
+            {
+                System.Console.WriteLine("Debugging Started Here");
+            }
+            #endif
+
             //Jared's test stuff
             player_.setInputSet(inputs);
             player_.update(gameTime);
@@ -286,9 +300,20 @@ namespace Commando
         {
             engine_.GraphicsDevice.Clear(Color.Black);
 
-            //TEST
-            //(collisionDetector_ as SeparatingAxisCollisionDetector).draw();
-            //
+            // Draw Debug Lines
+            if (Settings.getInstance().DebugMode_)
+                (collisionDetector_ as SeparatingAxisCollisionDetector).draw();
+            
+            // Draw Laser Pointer at Cursor Position if using a mouse
+            #if !XBOX
+            if (Settings.getInstance().UsingMouse_)
+            {
+                MouseState ms = Mouse.GetState();
+                Vector2 mpos = new Vector2(ms.X, ms.Y);
+                TextureMap.getInstance().getTexture("laserpointer").drawImageAbsolute(
+                    0, mpos, Constants.DEPTH_LASER);
+            }
+            #endif
 
             //Jared's test stuff
             player_.draw(new GameTime());

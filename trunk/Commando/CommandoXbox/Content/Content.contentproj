@@ -422,6 +422,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\laserpointer.png">
+      <Link>Sprites\laserpointer.png</Link>
+      <Name>laserpointer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>
