@@ -80,7 +80,7 @@ namespace Commando.objects
             radius_ = RADIUS;
             collisionDetector_ = new CollisionDetector(null);
 
-            weapon_ = new Pistol(pipeline, this, TextureMap.fetchTexture("Pistol"), new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
         }
 
         /// <summary>

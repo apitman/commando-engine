@@ -325,6 +325,9 @@
     <Compile Include="..\Commando\objects\TileObject.cs">
       <Link>objects\TileObject.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\weapons\Bullet.cs">
+      <Link>objects\weapons\Bullet.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\DroneGun.cs">
       <Link>objects\weapons\DroneGun.cs</Link>
     </Compile>

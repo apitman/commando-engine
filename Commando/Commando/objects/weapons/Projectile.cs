@@ -27,7 +27,7 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.objects
 {
-    public class Projectile : MovableObjectAbstract, CollisionObjectInterface
+    public abstract class Projectile : MovableObjectAbstract, CollisionObjectInterface
     {
         protected GameTexture texture_;
 
@@ -119,12 +119,12 @@ namespace Commando.objects
             }
         }
 
-        public void collidedWith(CollisionObjectInterface obj)
+        public virtual void collidedWith(CollisionObjectInterface obj)
         {
             //collidedWith_.Add(obj);
         }
 
-        public void collidedInto(CollisionObjectInterface obj)
+        public virtual void collidedInto(CollisionObjectInterface obj)
         {
             collidedInto_ = obj;
         }

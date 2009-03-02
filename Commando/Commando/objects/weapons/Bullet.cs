@@ -20,38 +20,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 using Commando.collisiondetection;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects.weapons
 {
-    public class DroneGun : WeaponAbstract
+    class Bullet : Projectile
     {
-        public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
-            : base(pipeline, character, animation, gunHandle)
+        protected const string TEXTURE_NAME = "Pistol";
+        protected const float RADIUS = 2.5f;
+        protected const float SPEED = 20.0f;
+        protected const float HEIGHT = 0.5f;
+
+        protected static ConvexPolygon BOUNDS;
+
+        static Bullet()
         {
-            // nothing
+            List<Vector2> points = new List<Vector2>();
+            points.Add(new Vector2(2f, 2f));
+            points.Add(new Vector2(-2f, 2f));
+            points.Add(new Vector2(-2f, -2f));
+            points.Add(new Vector2(2f, -2f));
+            BOUNDS = new ConvexPolygon(points, Vector2.Zero);
         }
 
-        public override void shoot(Commando.collisiondetection.CollisionDetectorInterface detector)
+        public Bullet(CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
+            : base(TextureMap.fetchTexture(TEXTURE_NAME), detector, BOUNDS, RADIUS, direction * SPEED, position, direction, HEIGHT)
         {
-            if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
-            {
-                List<Vector2> points = new List<Vector2>();
-                points.Add(new Vector2(2f, 2f));
-                points.Add(new Vector2(-2f, 2f));
-                points.Add(new Vector2(-2f, -2f));
-                points.Add(new Vector2(2f, -2f));
-                rotation_.Normalize();
-                Vector2 pos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(detector, pos, rotation_);
-                drawPipeline_.Add(bullet);
-                refireCounter_ = 10;
-                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
 
-
-                weaponFired_ = true;
-            }
         }
     }
 }
