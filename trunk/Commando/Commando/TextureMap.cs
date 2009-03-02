@@ -61,6 +61,16 @@ namespace Commando
         }
 
         /// <summary>
+        /// Simply calls TextureMap.getInstance().getTexture(texture)
+        /// </summary>
+        /// <param name="texture">Name of the texture</param>
+        /// <returns>The GameTexture object requested, null if not found</returns>
+        public static GameTexture fetchTexture(string texture)
+        {
+            return getInstance().getTexture(texture);
+        }
+
+        /// <summary>
         /// Get the ContentManager.
         /// </summary>
         /// <returns>The ContentManager for the game.</returns>

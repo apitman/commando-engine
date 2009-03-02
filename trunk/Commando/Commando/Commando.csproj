@@ -97,6 +97,10 @@
     <Compile Include="ai\Belief.cs" />
     <Compile Include="ai\InferenceEngine.cs" />
     <Compile Include="ai\Memory.cs" />
+    <Compile Include="ai\planning\Action.cs" />
+    <Compile Include="ai\planning\ActionType.cs" />
+    <Compile Include="ai\planning\IndividualPlanner.cs" />
+    <Compile Include="ai\planning\SearchNode.cs" />
     <Compile Include="ai\Raycaster.cs" />
     <Compile Include="ai\Sensor.cs" />
     <Compile Include="ai\SensorEars.cs" />
@@ -153,7 +157,7 @@
     <Compile Include="levels\Tiler.cs" />
     <Compile Include="objects\ActuatedMainPlayer.cs" />
     <Compile Include="objects\BoxObject.cs" />
-    <Compile Include="objects\DummyEnemy.cs" />
+    <Compile Include="objects\enemies\DummyEnemy.cs" />
     <Compile Include="objects\HeadsUpDisplayObject.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />
     <Compile Include="AnimationSet.cs" />
@@ -179,8 +183,10 @@
     <Compile Include="objects\NonPlayableCharacterAbstract.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
-    <Compile Include="objects\Projectile.cs" />
+    <Compile Include="objects\weapons\Projectile.cs" />
     <Compile Include="objects\TileObject.cs" />
+    <Compile Include="objects\weapons\DroneGun.cs" />
+    <Compile Include="objects\weapons\Pistol.cs" />
     <Compile Include="PlayerHelper.cs" />
     <Compile Include="Pool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -189,7 +195,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SoundEngine.cs" />
     <Compile Include="TextureMap.cs" />
-    <Compile Include="WeaponAbstract.cs" />
+    <Compile Include="objects\weapons\WeaponAbstract.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
