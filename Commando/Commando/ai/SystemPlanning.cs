@@ -27,8 +27,13 @@ namespace Commando.ai
     /// System responsible for action planning based on beliefs about the
     /// world and the character's available actions.
     /// </summary>
-    class SystemPlanning
+    internal class SystemPlanning
     {
 
     }
+
+    // TODO
+    // See MainPlayer shoot()
+    // Handle is the backend of the gun
+    // 
 }

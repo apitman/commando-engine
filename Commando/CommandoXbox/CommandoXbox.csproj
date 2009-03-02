@@ -289,8 +289,8 @@
     <Compile Include="..\Commando\objects\DrawableObjectAbstract.cs">
       <Link>objects\DrawableObjectAbstract.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\objects\DummyEnemy.cs">
-      <Link>objects\DummyEnemy.cs</Link>
+    <Compile Include="..\Commando\objects\enemies\DummyEnemy.cs">
+      <Link>objects\enemies\DummyEnemy.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\HeadsUpDisplayObject.cs">
       <Link>objects\HeadsUpDisplayObject.cs</Link>
@@ -322,11 +322,20 @@
     <Compile Include="..\Commando\objects\PlayableCharacterAbstract.cs">
       <Link>objects\PlayableCharacterAbstract.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\objects\Projectile.cs">
-      <Link>objects\Projectile.cs</Link>
-    </Compile>
     <Compile Include="..\Commando\objects\TileObject.cs">
       <Link>objects\TileObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\DroneGun.cs">
+      <Link>objects\weapons\DroneGun.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Pistol.cs">
+      <Link>objects\weapons\Pistol.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Projectile.cs">
+      <Link>objects\weapons\Projectile.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\WeaponAbstract.cs">
+      <Link>objects\weapons\WeaponAbstract.cs</Link>
     </Compile>
     <Compile Include="..\Commando\PlayerHelper.cs">
       <Link>PlayerHelper.cs</Link>
@@ -342,9 +351,6 @@
     </Compile>
     <Compile Include="..\Commando\TextureMap.cs">
       <Link>TextureMap.cs</Link>
-    </Compile>
-    <Compile Include="..\Commando\WeaponAbstract.cs">
-      <Link>WeaponAbstract.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

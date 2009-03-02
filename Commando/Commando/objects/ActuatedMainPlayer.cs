@@ -25,6 +25,7 @@ using Commando.collisiondetection;
 using Microsoft.Xna.Framework;
 using Commando.graphics;
 using Commando.ai;
+using Commando.objects.weapons;
 
 namespace Commando.objects
 {
@@ -79,7 +80,7 @@ namespace Commando.objects
             radius_ = RADIUS;
             collisionDetector_ = new CollisionDetector(null);
 
-            weapon_ = new WeaponAbstract(pipeline, this, TextureMap.getInstance().getTexture("Pistol"), new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            weapon_ = new Pistol(pipeline, this, TextureMap.fetchTexture("Pistol"), new Vector2(60f - 37.5f, 33.5f - 37.5f));
         }
 
         /// <summary>
