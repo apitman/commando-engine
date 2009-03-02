@@ -183,6 +183,7 @@
     <Compile Include="objects\NonPlayableCharacterAbstract.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
+    <Compile Include="objects\weapons\Bullet.cs" />
     <Compile Include="objects\weapons\Projectile.cs" />
     <Compile Include="objects\TileObject.cs" />
     <Compile Include="objects\weapons\DroneGun.cs" />
