@@ -1,0 +1,384 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectGuid>{961D61FB-C777-4CFA-ADBC-D609A6ED818F}</ProjectGuid>
+    <ProjectTypeGuids>{2DF5C3F4-5A5F-47a9-8E94-23B4456F55E2};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CommandoXbox</RootNamespace>
+    <AssemblyName>CommandoXbox</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <XnaFrameworkVersion>v3.0</XnaFrameworkVersion>
+    <XnaPlatform>Xbox 360</XnaPlatform>
+    <XnaCrossPlatformGroupID>5f208979-f9c2-4b7f-b94a-cbcc5aa1900c</XnaCrossPlatformGroupID>
+    <Thumbnail>
+    </Thumbnail>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Xbox 360' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Xbox 360\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;XBOX;XBOX360</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Xbox 360' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Xbox 360\Release</OutputPath>
+    <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Commando\ai\AI.cs">
+      <Link>ai\AI.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\AStarPathfinder.cs">
+      <Link>ai\AStarPathfinder.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\Belief.cs">
+      <Link>ai\Belief.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\InferenceEngine.cs">
+      <Link>ai\InferenceEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\Memory.cs">
+      <Link>ai\Memory.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\Raycaster.cs">
+      <Link>ai\Raycaster.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\Sensor.cs">
+      <Link>ai\Sensor.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SensorEars.cs">
+      <Link>ai\SensorEars.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SensorEyes.cs">
+      <Link>ai\SensorEyes.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\Stimulus.cs">
+      <Link>ai\Stimulus.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SystemBehavior.cs">
+      <Link>ai\SystemBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SystemCommunication.cs">
+      <Link>ai\SystemCommunication.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SystemNavigation.cs">
+      <Link>ai\SystemNavigation.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SystemPlanning.cs">
+      <Link>ai\SystemPlanning.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SystemTactics.cs">
+      <Link>ai\SystemTactics.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\WorldState.cs">
+      <Link>ai\WorldState.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\AnimationSet.cs">
+      <Link>AnimationSet.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\CharacterAmmo.cs">
+      <Link>CharacterAmmo.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\CharacterHealth.cs">
+      <Link>CharacterHealth.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\CharacterStatusElementInterface.cs">
+      <Link>CharacterStatusElementInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\CharacterWeapon.cs">
+      <Link>CharacterWeapon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\BoundingLine.cs">
+      <Link>collisiondetection\BoundingLine.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\BoundingPolygon.cs">
+      <Link>collisiondetection\BoundingPolygon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CircularConvexPolygon.cs">
+      <Link>collisiondetection\CircularConvexPolygon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CollisionDetectionGrid.cs">
+      <Link>collisiondetection\CollisionDetectionGrid.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CollisionDetector.cs">
+      <Link>collisiondetection\CollisionDetector.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CollisionDetectorInterface.cs">
+      <Link>collisiondetection\CollisionDetectorInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\CollisionObjectInterface.cs">
+      <Link>collisiondetection\CollisionObjectInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\ConvexPolygon.cs">
+      <Link>collisiondetection\ConvexPolygon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\ConvexPolygonInterface.cs">
+      <Link>collisiondetection\ConvexPolygonInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\collisiondetection\SeparatingAxisCollisionDetector.cs">
+      <Link>collisiondetection\SeparatingAxisCollisionDetector.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\CommonFunctions.cs">
+      <Link>CommonFunctions.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\Constants.cs">
+      <Link>Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\controls\ControllerInputInterface.cs">
+      <Link>controls\ControllerInputInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\controls\InputSet.cs">
+      <Link>controls\InputSet.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\controls\PCControllerInput.cs">
+      <Link>controls\PCControllerInput.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\controls\X360ControllerInput.cs">
+      <Link>controls\X360ControllerInput.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\Engine.cs">
+      <Link>Engine.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\EngineStateControls.cs">
+      <Link>EngineStateControls.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\EngineStateGameplay.cs">
+      <Link>EngineStateGameplay.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\EngineStateInterface.cs">
+      <Link>EngineStateInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\EngineStateLevelEditor.cs">
+      <Link>EngineStateLevelEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\EngineStateMenu.cs">
+      <Link>EngineStateMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\EngineStateOutofFocus.cs">
+      <Link>EngineStateOutofFocus.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\EngineStatePause.cs">
+      <Link>EngineStatePause.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\FontEnum.cs">
+      <Link>FontEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\FontMap.cs">
+      <Link>FontMap.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\GameFont.cs">
+      <Link>GameFont.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\GameTexture.cs">
+      <Link>GameTexture.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\GlobalHelper.cs">
+      <Link>GlobalHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\ActionSetValidator.cs">
+      <Link>graphics\ActionSetValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\ActuatorInterface.cs">
+      <Link>graphics\ActuatorInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\AnimationInterface.cs">
+      <Link>graphics\AnimationInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\Camera.cs">
+      <Link>graphics\Camera.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterActionInterface.cs">
+      <Link>graphics\CharacterActionInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterRunAction.cs">
+      <Link>graphics\CharacterRunAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterRunToAction.cs">
+      <Link>graphics\CharacterRunToAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterStayStillAction.cs">
+      <Link>graphics\CharacterStayStillAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\DefaultActuator.cs">
+      <Link>graphics\DefaultActuator.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\Illustrator.cs">
+      <Link>graphics\Illustrator.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\LoopAnimation.cs">
+      <Link>graphics\LoopAnimation.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\MoveActionInterface.cs">
+      <Link>graphics\MoveActionInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\MoveToActionInterface.cs">
+      <Link>graphics\MoveToActionInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\levels\Level.cs">
+      <Link>levels\Level.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\levels\LevelAbstract.cs">
+      <Link>levels\LevelAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\levels\RoomAbstract.cs">
+      <Link>levels\RoomAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\levels\TileGrid.cs">
+      <Link>levels\TileGrid.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\levels\Tiler.cs">
+      <Link>levels\Tiler.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\MenuList.cs">
+      <Link>MenuList.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\ActuatedMainPlayer.cs">
+      <Link>objects\ActuatedMainPlayer.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\AnimatedObjectAbstract.cs">
+      <Link>objects\AnimatedObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\BoxObject.cs">
+      <Link>objects\BoxObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\CharacterAbstract.cs">
+      <Link>objects\CharacterAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\CharacterStatusObserverInterface.cs">
+      <Link>objects\CharacterStatusObserverInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\DrawableObjectAbstract.cs">
+      <Link>objects\DrawableObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\enemies\DummyEnemy.cs">
+      <Link>objects\enemies\DummyEnemy.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\HeadsUpDisplayObject.cs">
+      <Link>objects\HeadsUpDisplayObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\HeadsUpDisplayObjectAbstract.cs">
+      <Link>objects\HeadsUpDisplayObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\HeadsUpDisplayText.cs">
+      <Link>objects\HeadsUpDisplayText.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\HeadsUpDisplayWeapon.cs">
+      <Link>objects\HeadsUpDisplayWeapon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\LevelObjectAbstract.cs">
+      <Link>objects\LevelObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\MovableObjectAbstract.cs">
+      <Link>objects\MovableObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\NonAnimatedMovableObjectAbstract.cs">
+      <Link>objects\NonAnimatedMovableObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\NonPlayableCharacterAbstract.cs">
+      <Link>objects\NonPlayableCharacterAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\PipelineObjectAbstract.cs">
+      <Link>objects\PipelineObjectAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\PlayableCharacterAbstract.cs">
+      <Link>objects\PlayableCharacterAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\TileObject.cs">
+      <Link>objects\TileObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Bullet.cs">
+      <Link>objects\weapons\Bullet.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\DroneGun.cs">
+      <Link>objects\weapons\DroneGun.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Pistol.cs">
+      <Link>objects\weapons\Pistol.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\PlayerWeapon.cs">
+      <Link>objects\weapons\PlayerWeapon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Projectile.cs">
+      <Link>objects\weapons\Projectile.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Shotgun.cs">
+      <Link>objects\weapons\Shotgun.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Shrapnel.cs">
+      <Link>objects\weapons\Shrapnel.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\WeaponAbstract.cs">
+      <Link>objects\weapons\WeaponAbstract.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\PlayerHelper.cs">
+      <Link>PlayerHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\SoundEngine.cs">
+      <Link>SoundEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\TextureMap.cs">
+      <Link>TextureMap.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <NestedContentProject Include="Content\Content.contentproj">
+      <Project>b87b80b3-4b26-44e4-b537-86d63f0e053f</Project>
+      <Visible>False</Visible>
+    </NestedContentProject>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
