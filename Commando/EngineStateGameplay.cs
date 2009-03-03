@@ -60,9 +60,9 @@ namespace Commando
         //Jared's test stuff
         //protected MainPlayer player_;
         protected ActuatedMainPlayer player_;
-        protected List<DummyEnemy> enemyList_;
+        protected List<DummyEnemy> enemyList_ = new List<DummyEnemy>();
         protected CollisionDetectorInterface collisionDetector_;
-        protected List<DrawableObjectAbstract> drawPipeline_;
+        protected List<DrawableObjectAbstract> drawPipeline_ = new List<DrawableObjectAbstract>();
         //END Jared's test stuff
 
         protected Engine engine_;
@@ -84,10 +84,6 @@ namespace Commando
         {
             // Cleanup singletons used by prior EngineStateGameplay
             Commando.ai.WorldState.reset();
-
-            // Stuff
-            drawPipeline_ = new List<DrawableObjectAbstract>();
-            enemyList_ = new List<DummyEnemy>();
 
             // Perform initializations of variables
             engine_ = engine;
@@ -175,7 +171,7 @@ namespace Commando
                 for (int i = 0; i < Convert.ToInt32(tList.Count); i++)
                 {
                     System.Xml.XmlElement ele2 = (System.Xml.XmlElement)tList[i];
-                    DummyEnemy dum = new DummyEnemy(new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
+                    DummyEnemy dum = new DummyEnemy(drawPipeline_, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
                     enemyList_.Add(dum);
                 }
             }
@@ -209,7 +205,7 @@ namespace Commando
                 GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
 
                 // Now add an enemy
-                DummyEnemy dumE = new DummyEnemy(new Vector2(250.0f, 250.0f));
+                DummyEnemy dumE = new DummyEnemy(drawPipeline_, new Vector2(250.0f, 250.0f));
                 enemyList_.Add(dumE);
             }
             // Done loading level from XML
@@ -229,8 +225,8 @@ namespace Commando
             weaponIconPos_ = new Vector2(WEAPON_ICON_POS_X, WEAPON_ICON_POS_Y);
             healthTextPos_ = new Vector2(HEALTH_BAR_POS_X + HEALTH_TEXT_OFFSET_X, HEALTH_BAR_POS_Y + HEALTH_TEXT_OFFSET_Y);
             ammoTextPos_ = new Vector2(AMMO_TEXT_POS_X, AMMO_TEXT_POS_Y);
-            healthBar_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
-            weapon_ = new HeadsUpDisplayWeapon(TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+            healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+            weapon_ = new HeadsUpDisplayWeapon(drawPipeline_,  TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
             ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay);
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
@@ -316,11 +312,11 @@ namespace Commando
             #endif
 
             //Jared's test stuff
-            player_.draw(new GameTime());
-            for (int i = 0; i < enemyList_.Count; i++)
-            {
-                enemyList_[i].draw(new GameTime());
-            }
+            //player_.draw(new GameTime());
+            //for (int i = 0; i < enemyList_.Count; i++)
+            //{
+            //    enemyList_[i].draw(new GameTime());
+            //}
             foreach (TileObject tOb in tiles_)
             {
                 tOb.draw(new GameTime());

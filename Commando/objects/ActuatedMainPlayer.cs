@@ -49,7 +49,7 @@ namespace Commando.objects
         /// Create the main player of the game.
         /// </summary>
         public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline) :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
+            base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
             PlayerHelper.Player_ = this;
             

@@ -16,15 +16,11 @@
 ***************************************************************************
 */
 
-
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Commando.ai;
 using Commando.collisiondetection;
 using Commando.graphics;
+using Commando.objects.weapons;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.objects
@@ -39,7 +35,7 @@ namespace Commando.objects
 
         protected Vector2 lookingAt_;
 
-        protected CollisionDetector collisionDetector_;
+        //protected CollisionDetector collisionDetector_;
 
         protected ConvexPolygonInterface boundsPolygon_;
 
@@ -53,8 +49,10 @@ namespace Commando.objects
 
         protected int drawColorCount_ = 0;
 
-        public DummyEnemy(Vector2 pos) :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
+        protected WeaponAbstract weapon_; // TODO figure out this overwriting business
+
+        public DummyEnemy(List<DrawableObjectAbstract> pipeline, Vector2 pos) :
+            base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
         {
             List<GameTexture> animationTextures = new List<GameTexture>();
             animationTextures.Add(TextureMap.getInstance().getTexture("basic_enemy_walk"));
@@ -78,6 +76,8 @@ namespace Commando.objects
 
             currentDrawColor_ = Color.White;
             health_.update(15);
+
+            weapon_ = new DroneGun(pipeline_, this, position_);
         }
 
         public override float getRadius()

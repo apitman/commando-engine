@@ -35,22 +35,9 @@ namespace Commando
         protected int curImage_;
 
         /// <summary>
-        /// Create a default NonAnimatedMovableObject.
+        /// Hidden default constructor.
         /// </summary>
-        public NonAnimatedMovableObjectAbstract() :
-            base()
-        {
-        }
-
-        /// <summary>
-        /// Create a NonAnimatedMovableObject with the specified texture and current image.
-        /// </summary>
-        /// <param name="texture">GameTexture of this object</param>
-        /// <param name="curImage">The number of the current image</param>
-        public NonAnimatedMovableObjectAbstract(GameTexture texture, int curImage) :
-            base()
-        {
-        }
+        protected NonAnimatedMovableObjectAbstract() { }
 
         /// <summary>
         /// Create a NonAnimatedMovableObject with the specified texture, current image,
@@ -62,8 +49,8 @@ namespace Commando
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public NonAnimatedMovableObjectAbstract(GameTexture texture, int curImage, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
-            base(velocity, position, direction, depth)
+        public NonAnimatedMovableObjectAbstract(List<DrawableObjectAbstract> pipeline, GameTexture texture, int curImage, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, velocity, position, direction, depth)
         {
         }
     }

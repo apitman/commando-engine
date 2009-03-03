@@ -16,54 +16,59 @@
 ***************************************************************************
 */
 
+using System;
 using System.Collections.Generic;
-using Commando.ai;
-using Commando.collisiondetection;
-using Commando.levels;
+using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.ai;
+using Commando.levels;
 
 namespace Commando.objects.weapons
 {
-    class Pistol : PlayerWeapon
+    /// <summary>
+    /// Weapon which is usable by the player; controls laser pointer and
+    /// producing suspicious noises.
+    /// </summary>
+    abstract class PlayerWeapon : WeaponAbstract
     {
-        protected const string WEAPON_TEXTURE_NAME = "Pistol";
         protected const string TARGET_TEXTURE_NAME = "laserpointer";
-
-        protected const int TIME_TO_REFIRE = 10;
-        protected const float PISTOL_SOUND_RADIUS = 150.0f;
 
         protected GameTexture laserImage_;
         protected Vector2 laserTarget_;
 
-        public Pistol(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
-            : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle)
+        protected bool weaponFired_;
+
+        protected static float SOUND_RADIUS;
+
+        public PlayerWeapon(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
+            : base(pipeline, character, animation, gunHandle)
         {
             laserImage_ = TextureMap.fetchTexture(TARGET_TEXTURE_NAME);
-            SOUND_RADIUS = PISTOL_SOUND_RADIUS;
-        }
-
-        public override void shoot(CollisionDetectorInterface detector)
-        {
-            if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
-            {
-                rotation_.Normalize();
-                Vector2 bulletPos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(drawPipeline_, detector, bulletPos, rotation_);
-                refireCounter_ = TIME_TO_REFIRE;
-                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
-
-                weaponFired_ = true;
-            }
+            weaponFired_ = false;
         }
 
         public override void update()
         {
             base.update();
+            laserTarget_ = Raycaster.roughCollision(position_, rotation_, new Height(false, true));
+
+            WorldState.Audial_.Remove(audialStimulusId_);
+            if (weaponFired_)
+            {
+                weaponFired_ = false;
+                WorldState.Audial_.Add(
+                    audialStimulusId_,
+                    new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, SOUND_RADIUS, this.position_)
+                );
+            }
         }
 
         public override void draw()
         {
             base.draw();
+            if (!Settings.getInstance().UsingMouse_)
+                laserImage_.drawImage(0, laserTarget_, Constants.DEPTH_LASER);
         }
     }
 }

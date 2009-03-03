@@ -32,21 +32,9 @@ namespace Commando.objects
     {
 
         /// <summary>
-        /// Create a default TileObject.
+        /// Hidden default constructor.
         /// </summary>
-        public TileObject() :
-            base()
-        {
-        }
-
-        /// <summary>
-        /// Create a TileObject with the specified image.
-        /// </summary>
-        /// <param name="image">Image of the TileObject</param>
-        public TileObject(GameTexture image) :
-            base(image)
-        {
-        }
+        protected TileObject() { }
 
         /// <summary>
         /// Create a TileObject with the specified image, position, direction, and depth.
@@ -55,8 +43,8 @@ namespace Commando.objects
         /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
         /// <param name="direction">Direction of the object as a Vector</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public TileObject(GameTexture image, Vector2 position, Vector2 direction, float depth) :
-            base(image, position, direction, depth)
+        public TileObject(List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, image, position, direction, depth)
         {
         }
 

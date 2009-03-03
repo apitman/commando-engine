@@ -21,50 +21,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Commando.ai;
-using Commando.levels;
+using Commando.collisiondetection;
 
 namespace Commando.objects.weapons
 {
-    abstract class PlayerWeapon : WeaponAbstract
+    public class DroneGun : WeaponAbstract
     {
-        protected const string TARGET_TEXTURE_NAME = "laserpointer";
+        protected const int TIME_TO_REFIRE = 10;
 
-        protected GameTexture laserImage_;
-        protected Vector2 laserTarget_;
-
-        protected bool weaponFired_;
-
-        protected static float SOUND_RADIUS;
-
-        public PlayerWeapon(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
-            : base(pipeline, character, animation, gunHandle)
+        public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
+            : base(pipeline, character, TextureMap.fetchTexture("Pistol"), gunHandle)
         {
-            laserImage_ = TextureMap.fetchTexture(TARGET_TEXTURE_NAME);
-            weaponFired_ = false;
+            // nothing
         }
 
-        public override void update()
+        public override void shoot(CollisionDetectorInterface detector)
         {
-            base.update();
-            laserTarget_ = Raycaster.roughCollision(position_, rotation_, new Height(false, true));
-
-            WorldState.Audial_.Remove(audialStimulusId_);
-            if (weaponFired_)
+            if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
-                weaponFired_ = false;
-                WorldState.Audial_.Add(
-                    audialStimulusId_,
-                    new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, SOUND_RADIUS, this.position_)
-                );
+                rotation_.Normalize();
+                Vector2 pos = position_ + rotation_ * 15f;
+                Bullet bullet = new Bullet(drawPipeline_, detector, pos, rotation_);
+                refireCounter_ = TIME_TO_REFIRE;
+                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
             }
         }
 
         public override void draw()
         {
-            base.draw();
-            if (!Settings.getInstance().UsingMouse_)
-                laserImage_.drawImage(0, laserTarget_, Constants.DEPTH_LASER);
+            // do nothing - no graphic for the DroneGun
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Commando
     /// </summary>
     public abstract class DrawableObjectAbstract
     {
+        protected List<DrawableObjectAbstract> pipeline_;
 
         protected Vector2 position_;
 
@@ -50,26 +51,25 @@ namespace Commando
         protected int visualStimulusId_;
 
         /// <summary>
-        /// Creates a default DrawableObject with default values for position_, direction_, and depth_
+        /// Hidden default constructor.
         /// </summary>
-        public DrawableObjectAbstract()
-        {
-            position_ = Vector2.Zero;
-            direction_ = new Vector2(1.0f, 0.0f);
-            depth_ = 0.5f;
-            isDead_ = false;
-
-            visualStimulusId_ = StimulusIDGenerator.getNext();
-        }
+        protected DrawableObjectAbstract() { }
 
         /// <summary>
         /// Creates a DrawableObject with the specified position, direction, and depth
         /// </summary>
+        /// <param name="pipeline">Drawing pipeline in which to register the object</param>
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public DrawableObjectAbstract(Vector2 position, Vector2 direction, float depth)
+        public DrawableObjectAbstract(List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction, float depth)
         {
+            pipeline_ = pipeline;
+            if (pipeline_ != null)
+            {
+                pipeline_.Add(this);
+            }
+
             position_ = position;
             direction_ = direction;
             depth_ = depth;

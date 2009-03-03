@@ -25,37 +25,56 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.objects.weapons
 {
-    class Shrapnel : MovableObjectAbstract
+    internal class Shrapnel : NonAnimatedMovableObjectAbstract
     {
-        protected GameTexture image_;
         protected Color color_;
         //protected float depth_;
 
-        protected List<Vector2> piecePositions_ = new List<Vector2>();
-        protected List<Vector2> pieceVelocities_ = new List<Vector2>();
-        protected List<int> pieceLifespans_ = new List<int>();
+        protected int lifeLeft_;
 
-        protected int timeAlive_;
-        protected int timeDeath_;
-
-        protected const int DEFAULT_COUNT_MIN = 3;
-        protected const int DEFAULT_COUNT_MAX = 7;
-        protected const int DEFAULT_COUNT_RANGE = DEFAULT_COUNT_MAX - DEFAULT_COUNT_MIN;
-
-        protected const int DEFAULT_VELOCITY_MIN = -3;
-        protected const int DEFAULT_VELOCITY_MAX = 3;
-        protected const int DEFAULT_VELOCITY_RANGE = DEFAULT_VELOCITY_MAX - DEFAULT_VELOCITY_MIN;
-
-        protected const int DEFAULT_LIFE_MIN = 4;
-        protected const int DEFAULT_LIFE_MAX = 10;
-        protected const int DEFAULT_LIFE_RANGE = DEFAULT_LIFE_MAX - DEFAULT_LIFE_MIN;
-
-        public Shrapnel(List<DrawableObjectAbstract> pipeline, Vector2 pos, Color color, float depth)
+        public Shrapnel(List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 velocity, float depth, Color color, int lifeLeft)
+            : base(pipeline, TextureMap.fetchTexture("Pixel"), 0, velocity, position, Vector2.Zero, depth)
         {
-            pipeline.Add(this);
-            image_ = TextureMap.fetchTexture("Pixel");
             color_ = color;
-            depth_ = depth;
+            lifeLeft_ = lifeLeft;
+        }
+
+        public override void update(GameTime gameTime)
+        {
+            //base.update(gameTime);
+            lifeLeft_--;
+            if (lifeLeft_ <= 0)
+                die();
+        }
+
+        public override void draw(GameTime gameTime)
+        {
+            // TODO figure this crap out
+            //texture_.drawImageWithColor(0, position_, direction_, depth_, color_);
+        }
+    }
+
+    /// <summary>
+    /// Basic implementation of pieces of shrapnel which fly out when projectiles
+    /// strike objects; this class encapsulates a set of "particles."
+    /// </summary>
+    static class ShrapnelGenerator
+    {
+        const int DEFAULT_COUNT_MIN = 3;
+        const int DEFAULT_COUNT_MAX = 7;
+        const int DEFAULT_COUNT_RANGE = DEFAULT_COUNT_MAX - DEFAULT_COUNT_MIN;
+
+        const int DEFAULT_VELOCITY_MIN = -3;
+        const int DEFAULT_VELOCITY_MAX = 3;
+        const int DEFAULT_VELOCITY_RANGE = DEFAULT_VELOCITY_MAX - DEFAULT_VELOCITY_MIN;
+
+        const int DEFAULT_LIFE_MIN = 4;
+        const int DEFAULT_LIFE_MAX = 10;
+        const int DEFAULT_LIFE_RANGE = DEFAULT_LIFE_MAX - DEFAULT_LIFE_MIN;
+
+        internal static void createShrapnel(List<DrawableObjectAbstract> pipeline, Vector2 pos, Color color, float depth)
+        {
+            GameTexture image = TextureMap.fetchTexture("Pixel");
 
             // use a random seed based on position, not time, otherwise all the bullets
             //  in a frame will have the same shrapnel generated (or so it seems)
@@ -64,37 +83,14 @@ namespace Commando.objects.weapons
             int biggestlife = int.MinValue;
             for (int i = 0; i < count; i++)
             {
-                piecePositions_.Add(pos);
                 Vector2 v =
                     new Vector2(r.Next(DEFAULT_VELOCITY_RANGE) + DEFAULT_VELOCITY_MIN,
                                 r.Next(DEFAULT_VELOCITY_RANGE) + DEFAULT_VELOCITY_MIN);
-                pieceVelocities_.Add(v);
                 int life = r.Next(DEFAULT_LIFE_RANGE) + DEFAULT_LIFE_MIN;
                 if (life > biggestlife)
                     biggestlife = life;
-                pieceLifespans_.Add(life);
-            }
-            timeAlive_ = 0;
-            timeDeath_ = biggestlife;
-        }
-
-        public override void update(Microsoft.Xna.Framework.GameTime gameTime)
-        {
-            for (int i = 0; i < piecePositions_.Count; i++)
-            {
-                piecePositions_[i] += pieceVelocities_[i];
-            }
-            timeAlive_++;
-            if (timeAlive_ > timeDeath_)
-                this.die();
-        }
-
-        public override void draw(Microsoft.Xna.Framework.GameTime gameTime)
-        {
-            for (int i = 0; i < piecePositions_.Count; i++)
-            {
-                if (pieceLifespans_[i] >= timeAlive_)
-                    image_.drawImage(0, piecePositions_[i], depth_);
+                
+                Shrapnel s = new Shrapnel(pipeline, pos, v, depth, color, life);
             }
         }
     }

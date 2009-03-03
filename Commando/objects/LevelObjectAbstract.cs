@@ -16,35 +16,51 @@
 ***************************************************************************
 */
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Commando.collisiondetection;
 
-namespace Commando.objects.weapons
+namespace Commando.objects
 {
-    public class DroneGun : WeaponAbstract
+    /// <summary>
+    /// All objects drawn on the level inherit from this class.
+    /// </summary>
+    public abstract class LevelObjectAbstract : DrawableObjectAbstract
     {
-        protected const int TIME_TO_REFIRE = 10;
 
-        public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
-            : base(pipeline, character, animation, gunHandle)
+        protected GameTexture image_;
+
+        //Additional info to be added for passable/unpassable, rooms, level, etc.
+
+        /// <summary>
+        /// Hidden default constructor.
+        /// </summary>
+        protected LevelObjectAbstract() { }
+
+        /// <summary>
+        /// Create a LevelObject with the specified image, position, direction, and depth.
+        /// </summary>
+        /// <param name="image">GameTexture for this object.</param>
+        /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
+        /// <param name="direction">Direction of the object as a Vector</param>
+        /// <param name="depth">Drawing depth of the object</param>
+        public LevelObjectAbstract(List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, position, direction, depth)
         {
-            // nothing
+            image_ = image;
         }
 
-        public override void shoot(Commando.collisiondetection.CollisionDetectorInterface detector)
+        public GameTexture getImage()
         {
-            if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
-            {
-                rotation_.Normalize();
-                Vector2 pos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(drawPipeline_, detector, pos, rotation_);
-                refireCounter_ = TIME_TO_REFIRE;
-                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
-            }
+            return image_;
+        }
+
+        public void setImage(GameTexture image)
+        {
+            image_ = image;
         }
     }
 }

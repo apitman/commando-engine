@@ -28,26 +28,12 @@ namespace Commando.objects
     /// <summary>
     /// Concrete version of the HeadsUpDisplayObjectAbstract.
     /// </summary>
-    public class HeadsUpDisplayObject : HeadsUpDisplayObjectAbstract
+    public class HeadsUpDisplayWeapon : HeadsUpDisplayObjectAbstract
     {
         /// <summary>
-        /// Create a default HeadsUpDisplayObject.
+        /// Hidden default constructor.
         /// </summary>
-        public HeadsUpDisplayObject()
-            : base()
-        {
-            newValue_ = 100;
-        }
-
-        /// <summary>
-        /// Create a HeadsUpDisplayObject with the specified texture
-        /// </summary>
-        /// <param name="tex">GameTexture for this HeadsUpDisplayObject</param>
-        public HeadsUpDisplayObject(GameTexture tex)
-            : base(tex)
-        {
-            newValue_ = 100;
-        }
+        protected HeadsUpDisplayWeapon() { }
 
         /// <summary>
         /// Create a HeadsUpDisplayObject with the specified texture, position, direction, and depth.
@@ -56,10 +42,9 @@ namespace Commando.objects
         /// <param name="pos">Position as a Vector relative to the top left corner</param>
         /// <param name="dir">Direction of the HeadsUpDisplayObject as a Vector</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public HeadsUpDisplayObject(GameTexture tex, Vector2 pos, Vector2 dir, float depth)
-            : base(tex, pos, dir, depth)
+        public HeadsUpDisplayWeapon(List<DrawableObjectAbstract> pipeline, GameTexture tex, Vector2 pos, Vector2 dir, float depth)
+            : base(pipeline, tex, pos, dir, depth)
         {
-            newValue_ = 100;
         }
 
         public override void updateImage()
@@ -76,7 +61,7 @@ namespace Commando.objects
         /// <param name="gameTime"></param>
         public override void draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            texture_.drawImageWithDimAbsolute(0, new Rectangle((int)position_.X - (texture_.getTexture().Width / 2), (int)position_.Y - (texture_.getTexture().Height / 2), texture_.getTexture().Width * newValue_ / 100, texture_.getTexture().Height), depth_);
+            texture_.drawImageAbsolute(0, position_, 0.0f, depth_);
         }
     }
 }
