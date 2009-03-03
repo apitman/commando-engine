@@ -27,7 +27,7 @@ namespace Commando.objects.weapons
 {
     class Bullet : Projectile
     {
-        protected const string TEXTURE_NAME = "Pistol";
+        protected const string TEXTURE_NAME = "Bullet";
         protected const float RADIUS = 2.5f;
         protected const float SPEED = 15.0f;
         protected const float HEIGHT = 0.5f;
@@ -45,8 +45,8 @@ namespace Commando.objects.weapons
             BOUNDS = new ConvexPolygon(points, Vector2.Zero);
         }
 
-        public Bullet(CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
-            : base(TextureMap.fetchTexture(TEXTURE_NAME), detector, BOUNDS, RADIUS, direction * SPEED, position, direction, HEIGHT)
+        public Bullet(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
+            : base(pipeline, TextureMap.fetchTexture(TEXTURE_NAME), detector, BOUNDS, RADIUS, direction * SPEED, position, direction, HEIGHT)
         {
 
         }
@@ -64,6 +64,7 @@ namespace Commando.objects.weapons
             {
                 (collidedInto_ as CharacterAbstract).damage(DAMAGE, this);
             }
+            Shrapnel s = new Shrapnel(drawPipeline_, position_, Microsoft.Xna.Framework.Graphics.Color.Yellow, Constants.DEPTH_DEBUG_LINES);
             die();
         }
     }

@@ -42,19 +42,16 @@ namespace Commando.objects.weapons
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
                 rotation_.Normalize();
-                Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
-                Vector2 rotation3 = CommonFunctions.rotate(rotation_, 10 * Math.PI / 180f);
+                Vector2 rotation2 = CommonFunctions.rotate(rotation_, -5 * Math.PI / 180f);
+                Vector2 rotation3 = CommonFunctions.rotate(rotation_, 5 * Math.PI / 180f);
                 rotation2.Normalize();
                 rotation3.Normalize();
                 Vector2 bulletPos = position_ + rotation_ * 15f;
                 Vector2 bulletPos2 = position_ + rotation2 * 15f;
                 Vector2 bulletPos3 = position_ + rotation3 * 15f;
-                Bullet bullet = new Bullet(detector, bulletPos, rotation_);
-                Bullet bullet2 = new Bullet(detector, bulletPos2, rotation2);
-                Bullet bullet3 = new Bullet(detector, bulletPos3, rotation3);
-                drawPipeline_.Add(bullet);
-                drawPipeline_.Add(bullet2);
-                drawPipeline_.Add(bullet3);
+                Bullet bullet = new Bullet(drawPipeline_, detector, bulletPos, rotation_);
+                Bullet bullet2 = new Bullet(drawPipeline_, detector, bulletPos2, rotation2);
+                Bullet bullet3 = new Bullet(drawPipeline_, detector, bulletPos3, rotation3);
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
 

@@ -343,6 +343,9 @@
     <Compile Include="..\Commando\objects\weapons\Shotgun.cs">
       <Link>objects\weapons\Shotgun.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\weapons\Shrapnel.cs">
+      <Link>objects\weapons\Shrapnel.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\WeaponAbstract.cs">
       <Link>objects\weapons\WeaponAbstract.cs</Link>
     </Compile>

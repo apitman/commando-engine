@@ -42,6 +42,7 @@ namespace Commando
 
             instance_ = new Settings();
             instance_.movementType_ = MovementType.ABSOLUTE;
+            instance_.DebugMode_ = false;
         }
 
         private Settings()

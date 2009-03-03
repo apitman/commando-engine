@@ -48,8 +48,7 @@ namespace Commando.objects.weapons
             {
                 rotation_.Normalize();
                 Vector2 bulletPos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(detector, bulletPos, rotation_);
-                drawPipeline_.Add(bullet);
+                Bullet bullet = new Bullet(drawPipeline_, detector, bulletPos, rotation_);
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
 
