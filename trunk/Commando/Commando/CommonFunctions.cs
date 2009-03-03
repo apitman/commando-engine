@@ -31,5 +31,41 @@ namespace Commando
         {
             return Math.Sqrt(Math.Pow(Math.Abs(point1.X - point2.X), 2) + Math.Pow(Math.Abs(point1.Y - point2.Y), 2));
         }
+
+        public static void rotate(ref Vector2 vector, float angle)
+        {
+            Vector2 temp = vector;
+
+            vector.X = (float)((temp.X * Math.Cos(angle)) - (temp.Y * Math.Sin(angle)));
+            vector.Y = (float)((temp.Y * Math.Cos(angle)) + (temp.X * Math.Sin(angle)));
+        }
+
+        public static void rotate(ref Vector2 vector, double angle)
+        {
+            Vector2 temp = vector;
+
+            vector.X = (float)((temp.X * Math.Cos(angle)) - (temp.Y * Math.Sin(angle)));
+            vector.Y = (float)((temp.Y * Math.Cos(angle)) + (temp.X * Math.Sin(angle)));
+        }
+
+        public static Vector2 rotate(Vector2 vector, float angle)
+        {
+            Vector2 temp = vector;
+
+            vector.X = (float)((temp.X * Math.Cos(angle)) - (temp.Y * Math.Sin(angle)));
+            vector.Y = (float)((temp.Y * Math.Cos(angle)) + (temp.X * Math.Sin(angle)));
+
+            return vector;
+        }
+
+        public static Vector2 rotate(Vector2 vector, double angle)
+        {
+            Vector2 temp = vector;
+
+            vector.X = (float)((temp.X * Math.Cos(angle)) - (temp.Y * Math.Sin(angle)));
+            vector.Y = (float)((temp.Y * Math.Cos(angle)) + (temp.X * Math.Sin(angle)));
+
+            return vector;
+        }
     }
 }

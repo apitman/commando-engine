@@ -50,8 +50,6 @@ namespace Commando
 
         protected int audialStimulusId_;
 
-        protected bool weaponFired_;
-
         public WeaponAbstract(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
         {
             drawPipeline_ = pipeline;
@@ -63,7 +61,6 @@ namespace Commando
             gunLength_ = animation.getImageDimensions()[0].Width;
             refireCounter_ = 0;
             audialStimulusId_ = StimulusIDGenerator.getNext();
-            weaponFired_ = false;
         }
 
         public abstract void shoot(CollisionDetectorInterface detector);

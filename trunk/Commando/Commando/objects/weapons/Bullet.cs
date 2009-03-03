@@ -29,10 +29,11 @@ namespace Commando.objects.weapons
     {
         protected const string TEXTURE_NAME = "Pistol";
         protected const float RADIUS = 2.5f;
-        protected const float SPEED = 20.0f;
+        protected const float SPEED = 15.0f;
         protected const float HEIGHT = 0.5f;
+        protected const int DAMAGE = 5;
 
-        protected static ConvexPolygon BOUNDS;
+        protected static readonly ConvexPolygon BOUNDS;
 
         static Bullet()
         {
@@ -48,6 +49,22 @@ namespace Commando.objects.weapons
             : base(TextureMap.fetchTexture(TEXTURE_NAME), detector, BOUNDS, RADIUS, direction * SPEED, position, direction, HEIGHT)
         {
 
+        }
+
+        public override void update(GameTime gameTime)
+        {
+            base.update(gameTime);
+            // nothing needed here, Projectile works fine and will pass
+            //  collisions to our handleCollision() method
+        }
+
+        public override void handleCollision()
+        {
+            if (collidedInto_ != null && collidedInto_ is CharacterAbstract)
+            {
+                (collidedInto_ as CharacterAbstract).damage(DAMAGE, this);
+            }
+            die();
         }
     }
 }

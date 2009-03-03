@@ -21,31 +21,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Commando.collisiondetection;
+using Commando.ai;
+using Commando.levels;
 
 namespace Commando.objects.weapons
 {
-    public class DroneGun : WeaponAbstract
+    abstract class PlayerWeapon : WeaponAbstract
     {
-        protected const int TIME_TO_REFIRE = 10;
+        protected const string TARGET_TEXTURE_NAME = "laserpointer";
 
-        public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
+        protected GameTexture laserImage_;
+        protected Vector2 laserTarget_;
+
+        protected bool weaponFired_;
+
+        protected static float SOUND_RADIUS;
+
+        public PlayerWeapon(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
             : base(pipeline, character, animation, gunHandle)
         {
-            // nothing
+            laserImage_ = TextureMap.fetchTexture(TARGET_TEXTURE_NAME);
+            weaponFired_ = false;
         }
 
-        public override void shoot(Commando.collisiondetection.CollisionDetectorInterface detector)
+        public override void update()
         {
-            if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
+            base.update();
+            laserTarget_ = Raycaster.roughCollision(position_, rotation_, new Height(false, true));
+
+            WorldState.Audial_.Remove(audialStimulusId_);
+            if (weaponFired_)
             {
-                rotation_.Normalize();
-                Vector2 pos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(detector, pos, rotation_);
-                drawPipeline_.Add(bullet);
-                refireCounter_ = TIME_TO_REFIRE;
-                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
+                weaponFired_ = false;
+                WorldState.Audial_.Add(
+                    audialStimulusId_,
+                    new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, SOUND_RADIUS, this.position_)
+                );
             }
+        }
+
+        public override void draw()
+        {
+            base.draw();
+            if (!Settings.getInstance().UsingMouse_)
+                laserImage_.drawImage(0, laserTarget_, Constants.DEPTH_LASER);
         }
     }
 }
