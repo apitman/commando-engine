@@ -21,18 +21,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Commando.collisiondetection;
 
 namespace Commando.objects.weapons
 {
-    public class DroneGun : WeaponAbstract
+    class Shotgun : PlayerWeapon
     {
-        protected const int TIME_TO_REFIRE = 10;
+        protected const string WEAPON_TEXTURE_NAME = "Pistol";
 
-        public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
-            : base(pipeline, character, animation, gunHandle)
+        protected const int TIME_TO_REFIRE = 20;
+        protected const float SHOTGUN_SOUND_RADIUS = 250.0f;
+
+        public Shotgun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
+            : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle)
         {
-            // nothing
+            SOUND_RADIUS = SHOTGUN_SOUND_RADIUS;
         }
 
         public override void shoot(Commando.collisiondetection.CollisionDetectorInterface detector)
@@ -40,11 +42,23 @@ namespace Commando.objects.weapons
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
                 rotation_.Normalize();
-                Vector2 pos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(detector, pos, rotation_);
+                Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
+                Vector2 rotation3 = CommonFunctions.rotate(rotation_, 10 * Math.PI / 180f);
+                rotation2.Normalize();
+                rotation3.Normalize();
+                Vector2 bulletPos = position_ + rotation_ * 15f;
+                Vector2 bulletPos2 = position_ + rotation2 * 15f;
+                Vector2 bulletPos3 = position_ + rotation3 * 15f;
+                Bullet bullet = new Bullet(detector, bulletPos, rotation_);
+                Bullet bullet2 = new Bullet(detector, bulletPos2, rotation2);
+                Bullet bullet3 = new Bullet(detector, bulletPos3, rotation3);
                 drawPipeline_.Add(bullet);
+                drawPipeline_.Add(bullet2);
+                drawPipeline_.Add(bullet3);
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
+
+                weaponFired_ = true;
             }
         }
     }

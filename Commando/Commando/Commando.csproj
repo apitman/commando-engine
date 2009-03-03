@@ -184,10 +184,12 @@
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
     <Compile Include="objects\weapons\Bullet.cs" />
+    <Compile Include="objects\weapons\PlayerWeapon.cs" />
     <Compile Include="objects\weapons\Projectile.cs" />
     <Compile Include="objects\TileObject.cs" />
     <Compile Include="objects\weapons\DroneGun.cs" />
     <Compile Include="objects\weapons\Pistol.cs" />
+    <Compile Include="objects\weapons\Shotgun.cs" />
     <Compile Include="PlayerHelper.cs" />
     <Compile Include="Pool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

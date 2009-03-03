@@ -37,7 +37,7 @@ namespace Commando.objects
 
         protected float radius_;
 
-        CollisionObjectInterface collidedInto_ = null;
+        protected CollisionObjectInterface collidedInto_ = null;
 
         public Projectile() :
             this(null, null, null, 0f)
@@ -72,16 +72,13 @@ namespace Commando.objects
 
         public override void update(GameTime gameTime)
         {
-            Vector2 newPosition = position_+ velocity_;
+            // could put code to update velocity here
+            Vector2 newPosition = position_ + velocity_;
             if (newPosition.X > 400 || newPosition.X < 0 ||
                 newPosition.Y > 330 || newPosition.Y < 0 ||
                 newPosition != collisionDetector_.checkCollisions(this, newPosition))
             {
-                if (collidedInto_ != null && collidedInto_ is CharacterAbstract)
-                {
-                    (collidedInto_ as CharacterAbstract).damage(5, this);
-                }
-                die();
+                handleCollision();
             }
             position_ = newPosition;
         }
@@ -90,6 +87,8 @@ namespace Commando.objects
         {
             texture_.drawImage(0, position_, getRotationAngle(), depth_);
         }
+
+        public abstract void handleCollision();
 
         public void setCollisionDetector(CollisionDetectorInterface detector)
         {

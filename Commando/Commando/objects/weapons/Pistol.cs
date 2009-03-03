@@ -16,46 +16,42 @@
 ***************************************************************************
 */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Commando.collisiondetection;
-using Microsoft.Xna.Framework;
 using Commando.ai;
+using Commando.collisiondetection;
 using Commando.levels;
+using Microsoft.Xna.Framework;
 
 namespace Commando.objects.weapons
 {
-    class Pistol : WeaponAbstract
+    class Pistol : PlayerWeapon
     {
-        protected const string TEXTURE_NAME = "Pistol";
+        protected const string WEAPON_TEXTURE_NAME = "Pistol";
+        protected const string TARGET_TEXTURE_NAME = "laserpointer";
+
+        protected const int TIME_TO_REFIRE = 10;
+        protected const float PISTOL_SOUND_RADIUS = 150.0f;
 
         protected GameTexture laserImage_;
         protected Vector2 laserTarget_;
 
         public Pistol(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
-            : base(pipeline, character, TextureMap.fetchTexture(TEXTURE_NAME), gunHandle)
+            : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle)
         {
-            laserImage_ = TextureMap.fetchTexture("laserpointer");
+            laserImage_ = TextureMap.fetchTexture(TARGET_TEXTURE_NAME);
+            SOUND_RADIUS = PISTOL_SOUND_RADIUS;
         }
 
         public override void shoot(CollisionDetectorInterface detector)
         {
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
-                List<Vector2> points = new List<Vector2>();
-                points.Add(new Vector2(2f, 2f));
-                points.Add(new Vector2(-2f, 2f));
-                points.Add(new Vector2(-2f, -2f));
-                points.Add(new Vector2(2f, -2f));
                 rotation_.Normalize();
-                Vector2 pos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(detector, pos, rotation_);
+                Vector2 bulletPos = position_ + rotation_ * 15f;
+                Bullet bullet = new Bullet(detector, bulletPos, rotation_);
                 drawPipeline_.Add(bullet);
-                refireCounter_ = 10;
+                refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
-
 
                 weaponFired_ = true;
             }
@@ -64,31 +60,11 @@ namespace Commando.objects.weapons
         public override void update()
         {
             base.update();
-
-            // TODO Change/fix how this is done, modularize it, etc.
-            // Essentially, the player updates his visual location in the WorldState
-            // Must remove before adding because Dictionaries don't like duplicate keys
-            // Removing a nonexistent key (for first frame) does no harm
-            // Also, need to make it so the radius isn't hardcoded - probably all
-            //  objects which will have a visual stimulus should have a radius
-            WorldState.Audial_.Remove(audialStimulusId_);
-            if (weaponFired_)
-            {
-                weaponFired_ = false;
-                WorldState.Audial_.Add(
-                    audialStimulusId_,
-                    new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 150.0f, character_.getPosition())
-                );
-            }
-
-            laserTarget_ = Raycaster.roughCollision(position_, rotation_, new Height(false, true));
         }
 
         public override void draw()
         {
             base.draw();
-            if (!Settings.getInstance().UsingMouse_)
-                laserImage_.drawImage(0, laserTarget_, Constants.DEPTH_LASER);
         }
     }
 }
