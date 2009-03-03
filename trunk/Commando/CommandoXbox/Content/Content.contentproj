@@ -430,6 +430,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\Pixel.png">
+      <Link>Sprites\Pixel.png</Link>
+      <Name>Pixel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <None Include="..\..\Commando\Content\XML\Sprites\Pixel.xml">
+      <Link>XML\Sprites\Pixel.xml</Link>
+      <Name>Pixel</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>

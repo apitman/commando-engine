@@ -29,6 +29,8 @@ namespace Commando.objects
 {
     public abstract class Projectile : MovableObjectAbstract, CollisionObjectInterface
     {
+        protected List<DrawableObjectAbstract> drawPipeline_;
+
         protected GameTexture texture_;
 
         protected CollisionDetectorInterface collisionDetector_;
@@ -39,14 +41,11 @@ namespace Commando.objects
 
         protected CollisionObjectInterface collidedInto_ = null;
 
-        public Projectile() :
-            this(null, null, null, 0f)
-        {
-        }
-
-        public Projectile(GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius) :
+        public Projectile(List<DrawableObjectAbstract> pipeline, GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius) :
             base()
         {
+            drawPipeline_ = pipeline;
+            drawPipeline_.Add(this);
             texture_ = texture;
             if (detector != null)
             {
@@ -57,9 +56,11 @@ namespace Commando.objects
             radius_ = radius;
         }
 
-        public Projectile(GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+        public Projectile(List<DrawableObjectAbstract> pipeline, GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(velocity, position, direction, depth)
         {
+            drawPipeline_ = pipeline;
+            drawPipeline_.Add(this);
             texture_ = texture;
             if (detector != null)
             {
