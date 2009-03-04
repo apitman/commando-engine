@@ -37,6 +37,17 @@ namespace Commando.objects
         protected TileObject() { }
 
         /// <summary>
+        /// Create a non-rotated TileObject with the specified image, position, and depth.
+        /// </summary>
+        /// <param name="image">GameTexture for this object.</param>
+        /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
+        /// <param name="depth">Drawing depth of the object</param>
+        public TileObject(List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, float depth) :
+            base(pipeline, image, position, Vector2.Zero, depth)
+        {
+        }
+
+        /// <summary>
         /// Create a TileObject with the specified image, position, direction, and depth.
         /// </summary>
         /// <param name="image">GameTexture for this object.</param>
@@ -47,23 +58,6 @@ namespace Commando.objects
             base(pipeline, image, position, direction, depth)
         {
         }
-
-        /// <summary>
-        /// Draw the tile on the ground.
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void draw(GameTime gameTime)
-        {
-            image_.drawImage(0, position_, depth_);
-        }
-
-        /// <summary>
-        /// Update does nothing, because tiles don't change.
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void update(GameTime gameTime)
-        {
-            
-        }
+ 
     }
 }

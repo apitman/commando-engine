@@ -39,14 +39,14 @@ namespace Commando.levels
         /// </summary>
         /// <param name="tiles">Array of ints representing types of tiles</param>
         /// <returns>List of TileObjects</returns>
-        public static List<TileObject> getTiles(int[,] tiles)
+        public static List<TileObject> getTiles(List<DrawableObjectAbstract> pipeline, int[,] tiles)
         {
             List<TileObject> retList = new List<TileObject>();
             for (int y = 0; y < tiles.GetLength(0); y++)
             {
                 for (int x = 0; x < tiles.GetLength(1); x++)
                 {
-                    retList.Add(new TileObject(null, TextureMap.getInstance().getTexture("Tile_" + tiles[y, x]), new Vector2((float)x * tileSideLength_, (float)y * tileSideLength_), Vector2.Zero, 0.0f));
+                    retList.Add(new TileObject(pipeline, TextureMap.getInstance().getTexture("Tile_" + tiles[y, x]), new Vector2((float)x * tileSideLength_, (float)y * tileSideLength_), Vector2.Zero, 0.0f));
                 }
             }
             return retList;

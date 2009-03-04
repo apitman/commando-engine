@@ -143,7 +143,7 @@ namespace Commando
                         loadedTiles[i, j] = Convert.ToInt32(ele2.GetAttribute("index"));
                     }
                 }
-                tiles_ = Tiler.getTiles(loadedTiles);
+                tiles_ = Tiler.getTiles(drawPipeline_, loadedTiles);
 
                 // Now load the enemies
                 tList = doc.GetElementsByTagName("enemy");
@@ -156,7 +156,7 @@ namespace Commando
             }
             catch (Exception)
             {
-                tiles_ = Tiler.getTiles(defaultTiles_);
+                tiles_ = Tiler.getTiles(drawPipeline_, defaultTiles_);
             }
 
             cursorPosX_ = 2;

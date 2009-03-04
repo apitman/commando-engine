@@ -177,5 +177,14 @@ namespace Commando
         public abstract float getRadius();
 
         public abstract ConvexPolygonInterface getBounds();
+
+        public override void die()
+        {
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.remove(this);
+            }
+            base.die();
+        }
     }
 }
