@@ -90,7 +90,6 @@ namespace Commando
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 
             //Jared's test stuff
-            //player_ = new MainPlayer();
             player_ = new ActuatedMainPlayer(drawPipeline_);
             GlobalHelper.getInstance().getCurrentCamera().setPosition(0,0);
             GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)SCREEN_SIZE_X);
@@ -161,7 +160,7 @@ namespace Commando
                         }
                     }
                 }
-                tiles_ = Tiler.getTiles(loadedTiles);
+                tiles_ = Tiler.getTiles(drawPipeline_, loadedTiles);
 
                 boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
                 GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
@@ -199,7 +198,7 @@ namespace Commando
                         }
                     }
                 }
-                tiles_ = Tiler.getTiles(tiles);
+                tiles_ = Tiler.getTiles(drawPipeline_, tiles);
 
                 boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
                 GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
@@ -250,6 +249,7 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
+            // Check whether to enter pause screen
             if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) || inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
@@ -265,18 +265,10 @@ namespace Commando
             }
             #endif
 
-            //Jared's test stuff
+            // Pass input set to player
             player_.setInputSet(inputs);
-            player_.update(gameTime);
-            for (int i = 0; i < enemyList_.Count; i++)
-            {
-                if (!enemyList_[i].isDead())
-                {
-                    enemyList_[i].update(gameTime);
-                }
-            }
-            //END Jared's test stuff
 
+            // Update all of the objects in the drawing pipeline
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)
             {
                 drawPipeline_[i].update(null);
@@ -285,6 +277,9 @@ namespace Commando
                     drawPipeline_.RemoveAt(i);
                 }
             }
+            // TODO
+            // may want to maintain a separate pipeline for objects whose
+            //  update function doesn't do anything (aka tiles)
 
             return this;
         }
@@ -311,31 +306,25 @@ namespace Commando
             }
             #endif
 
-            //Jared's test stuff
-            //player_.draw(new GameTime());
-            //for (int i = 0; i < enemyList_.Count; i++)
-            //{
-            //    enemyList_[i].draw(new GameTime());
-            //}
-            foreach (TileObject tOb in tiles_)
-            {
-                tOb.draw(new GameTime());
-            }
-
+            // Draw all the DrawableObjectAbstracts in our pipeline
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)
             {
                 drawPipeline_[i].draw(null);
             }
-            //END Jared's test stuff
 
+            // TODO
+            // Clean up this section -
+            //  Most likely, the HUD should be a single object with a .draw()
+            //  or the individual pieces should be in the pipeline.
+            /* begin section */
             healthBar_.draw(new GameTime());
             TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImageAbsolute(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
             weapon_.draw(new GameTime());
             TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, SCREEN_SIZE_X, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
-
             FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
             //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
             ammo_.drawString(AMMO_TEXT, AMMO_REPLACE_TEXT, Color.Black, 0.0f);
+            /* end section*/
         }
 
         #endregion

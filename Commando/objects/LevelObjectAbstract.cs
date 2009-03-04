@@ -62,5 +62,24 @@ namespace Commando.objects
         {
             image_ = image;
         }
+
+        /// <summary>
+        /// Default behavior for level objects is no change.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public override void update(GameTime gameTime)
+        {
+
+        }
+
+        /// <summary>
+        /// Default draw type for level objects is no rotation,
+        /// simple draw of position and depth, frame 0.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public override void draw(GameTime gameTime)
+        {
+            image_.drawImage(0, position_, depth_);
+        }
     }
 }
