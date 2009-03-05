@@ -73,24 +73,21 @@ namespace Commando.ai
             TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
             if (path_ == null || path_.Count == 0 || lastPathfindUpdate_ > PATHFIND_THRESHOLD)
             {
-                IEnumerator<Belief> iter = Memory_.Beliefs_.Values.GetEnumerator();
-                while (iter.MoveNext())
+                List<Belief> list = Memory_.getBeliefs(BeliefType.EnemyLoc);
+                for (int i = 0; i < list.Count; i++)
                 {
-                    Belief b = iter.Current;
-                    if (b.type_ == BeliefType.EnemyLoc)
-                    {
-                        //Character_.moveTo(b.position_);
-                        //Character_.lookAt(b.position_);
-                        Vector2 start = Character_.getPosition();
-                        Vector2 dest = b.position_;
-                        float radius = Character_.getRadius();
-                        Height h = new Height(true, true);
-                        path_ = 
-                            AStarPathfinder.run(grid, start, dest, radius, h);
-                        lastPathfindUpdate_ = 0;
-                        if (path_ != null)
-                            break;
-                    }                   
+                    Belief b = list[i];
+                    //Character_.moveTo(b.position_);
+                    //Character_.lookAt(b.position_);
+                    Vector2 start = Character_.getPosition();
+                    Vector2 dest = b.position_;
+                    float radius = Character_.getRadius();
+                    Height h = new Height(true, true);
+                    path_ = 
+                        AStarPathfinder.run(grid, start, dest, radius, h);
+                    lastPathfindUpdate_ = 0;
+                    if (path_ != null)
+                        break;               
                 }
             }
 
@@ -99,22 +96,19 @@ namespace Commando.ai
             // noise if there is no known enemy location
             if (path_ == null || path_.Count == 0 || lastPathfindUpdate_ > PATHFIND_THRESHOLD)
             {
-                IEnumerator<Belief> iter = Memory_.Beliefs_.Values.GetEnumerator();
-                while (iter.MoveNext())
+                List<Belief> list = Memory_.getBeliefs(BeliefType.SuspiciousNoise);
+                for (int i = 0; i < list.Count; i++ )
                 {
-                    Belief b = iter.Current;
-                    if (b.type_ == BeliefType.SuspiciousNoise)
-                    {
-                        Vector2 start = Character_.getPosition();
-                        Vector2 dest = b.position_;
-                        float radius = Character_.getRadius();
-                        Height h = new Height(true, true);
-                        path_ =
-                            AStarPathfinder.run(grid, start, dest, radius, h);
-                        lastPathfindUpdate_ = 0;
-                        if (path_ != null)
-                            break;
-                    }
+                    Belief b = list[i];
+                    Vector2 start = Character_.getPosition();
+                    Vector2 dest = b.position_;
+                    float radius = Character_.getRadius();
+                    Height h = new Height(true, true);
+                    path_ =
+                        AStarPathfinder.run(grid, start, dest, radius, h);
+                    lastPathfindUpdate_ = 0;
+                    if (path_ != null)
+                        break;
                 }
             }
 

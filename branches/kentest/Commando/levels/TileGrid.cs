@@ -27,7 +27,7 @@ namespace Commando.levels
 {
     public class TileGrid
     {
-        static readonly Tile IMPASSABLE = new Tile(true, true);
+        static readonly Tile IMPASSABLE = new Tile(0, 0);
 
         public const int TILEWIDTH = 15;
 
@@ -83,7 +83,7 @@ namespace Commando.levels
 
         public TileIndex getTileIndex(Vector2 position)
         {
-            return new TileIndex((int)position.X / TILEWIDTH, (int)position.Y / TILEHEIGHT);
+            return new TileIndex((short)(position.X / TILEWIDTH), (short)(position.Y / TILEHEIGHT));
         }
 
         public Vector2 getTileCenter(TileIndex tile)
@@ -96,20 +96,22 @@ namespace Commando.levels
 
     public struct Tile
     {
-        public Tile(bool blocksLow, bool blocksHigh)
+        public Tile(int lowDistance, int highDistance)
         {
-            blocksLow_ = blocksLow;
-            blocksHigh_ = blocksHigh;
+            lowDistance_ = lowDistance;
+            highDistance_ = highDistance;
         }
 
-        public bool collides(Height rhs)
+        public bool collides(Height rhs, float radius)
         {
-            return (this.blocksLow_ && rhs.blocksLow_ || this.blocksHigh_ && rhs.blocksHigh_);
+            bool lowCollision = rhs.blocksLow_ && this.lowDistance_ <= radius;
+            bool highCollision = rhs.blocksHigh_ && this.highDistance_ <= radius;
+            return (lowCollision || highCollision);
         }
 
-        public bool blocksLow_;
+        public int lowDistance_;
 
-        public bool blocksHigh_;
+        public int highDistance_;
     }
 
     public struct Height
@@ -132,10 +134,10 @@ namespace Commando.levels
 
     public struct TileIndex
     {
-        public int x_;
-        public int y_;
+        public short x_;
+        public short y_;
 
-        public TileIndex(int x, int y)
+        public TileIndex(short x, short y)
         {
             x_ = x;
             y_ = y;

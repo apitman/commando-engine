@@ -33,13 +33,15 @@ namespace Commando.ai
         public StimulusType type_;
         public float radius_;
         public Vector2 position_;
+        public Object handle_;
 
-        public Stimulus(StimulusSource source, StimulusType type, float radius, Vector2 pos)
+        public Stimulus(StimulusSource source, StimulusType type, float radius, Vector2 pos, Object handle)
         {
             source_ = source;
             type_ = type;
             radius_ = radius;
             position_ = pos;
+            handle_ = handle;
         }
     }
 

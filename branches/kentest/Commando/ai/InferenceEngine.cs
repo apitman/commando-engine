@@ -45,44 +45,32 @@ namespace Commando.ai
         /// </summary>
         public void update()
         {
-            for (int i = 0; i < AI_.Memory_.Beliefs_.Count; i++)
+            List<Belief> beliefs = AI_.Memory_.getAllBeliefs();
+            for (int i = 0; i < beliefs.Count; i++)
             {
-                KeyValuePair<int, Belief> pair = AI_.Memory_.Beliefs_.ElementAt(i);
-                if (pair.Value.type_ == BeliefType.EnemyLoc)
+                Belief belief = beliefs.ElementAt(i);
+                if (belief.type_ == BeliefType.EnemyLoc)
                 {
                     // Don't care about suspicious noises if we know for sure
                     // where the enemy is, so we remove them from our beliefs
-                    if (pair.Value.confidence_ == 100)
+                    if (belief.confidence_ == 100)
                     {
-                        removeSuspiciousNoiseBeliefs();
+                        AI_.Memory_.removeBeliefs(BeliefType.SuspiciousNoise);
                     }
 
                     // Remove the belief if we have checked out the location
-                    if (CommonFunctions.distance(AI_.Character_.getPosition(), pair.Value.position_) < TOLERANCE)
+                    if (CommonFunctions.distance(AI_.Character_.getPosition(), belief.position_) < TOLERANCE)
                     {
-                        AI_.Memory_.Beliefs_.Remove(pair.Key);
+                        AI_.Memory_.removeBelief(belief);
                     }
                 }
-                if (pair.Value.type_ == BeliefType.SuspiciousNoise)
+                if (belief.type_ == BeliefType.SuspiciousNoise)
                 {
                     // Remove the belief if we have checked out the location
-                    if (CommonFunctions.distance(AI_.Character_.getPosition(), pair.Value.position_) < TOLERANCE)
+                    if (CommonFunctions.distance(AI_.Character_.getPosition(), belief.position_) < TOLERANCE)
                     {
-                        AI_.Memory_.Beliefs_.Remove(pair.Key);
+                        AI_.Memory_.removeBelief(belief);
                     }
-                }
-            }
-        }
-
-        protected void removeSuspiciousNoiseBeliefs()
-        {
-            // Remove the belief if we know for sure where the enemy is
-            for (int i = 0; i < AI_.Memory_.Beliefs_.Count; i++)
-            {
-                KeyValuePair<int, Belief> pair = AI_.Memory_.Beliefs_.ElementAt(i);
-                if (pair.Value.type_ == BeliefType.SuspiciousNoise)
-                {
-                    AI_.Memory_.Beliefs_.Remove(pair.Key);
                 }
             }
         }

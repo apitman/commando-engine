@@ -42,8 +42,8 @@ namespace Commando.objects.weapons
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
                 rotation_.Normalize();
-                Vector2 rotation2 = CommonFunctions.rotate(rotation_, -5 * Math.PI / 180f);
-                Vector2 rotation3 = CommonFunctions.rotate(rotation_, 5 * Math.PI / 180f);
+                Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
+                Vector2 rotation3 = CommonFunctions.rotate(rotation_, 10 * Math.PI / 180f);
                 rotation2.Normalize();
                 rotation3.Normalize();
                 Vector2 bulletPos = position_ + rotation_ * 15f;

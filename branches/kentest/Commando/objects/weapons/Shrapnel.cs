@@ -41,7 +41,7 @@ namespace Commando.objects.weapons
 
         public override void update(GameTime gameTime)
         {
-            //base.update(gameTime);
+            base.update(gameTime);
             lifeLeft_--;
             if (lifeLeft_ <= 0)
                 die();
@@ -49,8 +49,7 @@ namespace Commando.objects.weapons
 
         public override void draw(GameTime gameTime)
         {
-            // TODO figure this crap out
-            //texture_.drawImageWithColor(0, position_, direction_, depth_, color_);
+            texture_.drawImageWithColor(0, position_, direction_, depth_, color_);
         }
     }
 
@@ -80,15 +79,12 @@ namespace Commando.objects.weapons
             //  in a frame will have the same shrapnel generated (or so it seems)
             Random r = new Random((int)pos.X + (int)pos.Y);
             int count = r.Next(DEFAULT_COUNT_RANGE) + DEFAULT_COUNT_MIN;
-            int biggestlife = int.MinValue;
             for (int i = 0; i < count; i++)
             {
                 Vector2 v =
                     new Vector2(r.Next(DEFAULT_VELOCITY_RANGE) + DEFAULT_VELOCITY_MIN,
                                 r.Next(DEFAULT_VELOCITY_RANGE) + DEFAULT_VELOCITY_MIN);
                 int life = r.Next(DEFAULT_LIFE_RANGE) + DEFAULT_LIFE_MIN;
-                if (life > biggestlife)
-                    biggestlife = life;
                 
                 Shrapnel s = new Shrapnel(pipeline, pos, v, depth, color, life);
             }

@@ -52,6 +52,17 @@ namespace Commando
         public NonAnimatedMovableObjectAbstract(List<DrawableObjectAbstract> pipeline, GameTexture texture, int curImage, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(pipeline, velocity, position, direction, depth)
         {
+            texture_ = texture;
+        }
+
+        public override void update(GameTime gameTime)
+        {
+            position_ += velocity_;
+        }
+
+        public override void draw(GameTime gameTime)
+        {
+            texture_.drawImage(0, position_, direction_, depth_);
         }
     }
 }

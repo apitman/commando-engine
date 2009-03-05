@@ -73,8 +73,8 @@ namespace Commando.graphics
             float magnitude = moved_.Length();
 
             rotation_ = newRotation;
-            float rot1 = MathHelper.WrapAngle(getRotationAngle());
-            float rot2 = MathHelper.WrapAngle((float)Math.Atan2((double)newPosition.Y, (double)newPosition.X));
+            float rot1 = MathHelper.WrapAngle(CommonFunctions.getAngle(rotation_));
+            float rot2 = MathHelper.WrapAngle(CommonFunctions.getAngle(newPosition));
             float rotDiff = rot1 - rot2;
             if (magnitude >= frameLengthModifier_)
             {
@@ -100,12 +100,12 @@ namespace Commando.graphics
 
         public void draw()
         {
-            sprites_.drawImage(currentFrame_, position_, getRotationAngle(), depth_);
+            sprites_.drawImage(currentFrame_, position_, rotation_, depth_);
         }
 
         public void draw(Color color)
         {
-            sprites_.drawImageWithColor(currentFrame_, position_, getRotationAngle(), depth_, color);
+            sprites_.drawImageWithColor(currentFrame_, position_, rotation_, depth_, color);
         }
 
         public void reset()
@@ -122,15 +122,6 @@ namespace Commando.graphics
         public void setRotation(Vector2 rotation)
         {
             rotation_ = rotation;
-        }
-
-        /// <summary>
-        /// Convert the direction vector into a float representing the angle of the object
-        /// </summary>
-        /// <returns>Angle of the rotation in radians</returns>
-        protected float getRotationAngle()
-        {
-            return (float)Math.Atan2((double)rotation_.Y, (double)rotation_.X);
         }
     }
 }
