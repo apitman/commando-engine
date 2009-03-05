@@ -69,7 +69,7 @@ namespace Commando.levels
                 tempMergedDims.Add(new List<int[]>());
                 for (int x = 0; x < boxes.GetLength(1); x++)
                 {
-                    if (!started && boxes[y,x].blocksHigh_)
+                    if (!started && boxes[y,x].highDistance_ == 0)
                     {
                         started = true;
                         tempSet[0] = x;
@@ -77,11 +77,11 @@ namespace Commando.levels
                         tempSet[2] = x;
                         tempSet[3] = y;
                     }
-                    else if (started && boxes[y,x].blocksHigh_)
+                    else if (started && boxes[y,x].highDistance_ == 0)
                     {
                         tempSet[2] = x;
                     }
-                    else if (started && !boxes[y,x].blocksHigh_)
+                    else if (started && !(boxes[y,x].highDistance_ == 0))
                     {
                         tempMergedDims[y].Add(tempSet);
                         tempSet = new int[4];

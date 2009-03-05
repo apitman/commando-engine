@@ -67,5 +67,10 @@ namespace Commando
 
             return vector;
         }
+
+        public static float getAngle(Vector2 vector)
+        {
+            return (float)Math.Atan2((double)vector.Y, (double)vector.X);
+        }
     }
 }

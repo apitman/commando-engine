@@ -28,11 +28,71 @@ namespace Commando.ai
     /// </summary>
     public class Memory
     {
-        public Dictionary<int, Belief> Beliefs_ { get; private set; }
+        public Dictionary<BeliefType, List<Belief>> beliefs_;
 
         public Memory()
         {
-            Beliefs_ = new Dictionary<int, Belief>();
+            beliefs_ = new Dictionary<BeliefType, List<Belief>>();
+        }
+
+        public void setBelief(Belief belief)
+        {
+            List<Belief> list;
+            if (!beliefs_.TryGetValue(belief.type_, out list))
+            {
+                beliefs_[belief.type_] = new List<Belief>();
+                beliefs_[belief.type_].Add(belief);
+                return;
+            }
+            Belief temp =
+                list.Find(delegate(Belief b) { return b.handle_ == belief.handle_; });
+            if (temp != null)
+            {
+                temp.replace(belief);
+            }
+            else
+            {
+                list.Add(belief);
+            }
+        }
+
+        public List<Belief> getAllBeliefs()
+        {
+            List<Belief> list = new List<Belief>();
+            beliefs_.Values.ToList<List<Belief>>().ForEach(delegate(List<Belief> b) { list.AddRange(b); });
+            return list;
+        }
+
+        public List<Belief> getBeliefs(BeliefType type)
+        {
+            List<Belief> list;
+            if (!beliefs_.TryGetValue(type, out list))
+            {
+                beliefs_[type] = new List<Belief>();
+                return beliefs_[type];
+            }
+            return list;
+        }
+
+        public List<Belief> getBeliefs(Object handle)
+        {
+            List<Belief> list;
+            throw new NotImplementedException();
+        }
+
+        public bool removeBeliefs(BeliefType type)
+        {
+            return beliefs_.Remove(type);
+        }
+
+        public bool removeBelief(Belief belief)
+        {
+            List<Belief> list;
+            if (!beliefs_.TryGetValue(belief.type_, out list))
+            {
+                return false;
+            }
+            return list.Remove(belief);
         }
     }
 }

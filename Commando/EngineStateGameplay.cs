@@ -148,15 +148,15 @@ namespace Commando
                         {
                             //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
                             boxesToBeAdded[i, j] = true;
-                            tilesForGrid[i, j].blocksHigh_ = true;
-                            tilesForGrid[i, j].blocksLow_ = true;
+                            tilesForGrid[i, j].highDistance_ = 0;
+                            tilesForGrid[i, j].lowDistance_ = 0;
                         }
                         else
                         {
                             //boxesToBeAdded[i, j] = null;
                             boxesToBeAdded[i, j] = false;
-                            tilesForGrid[i, j].blocksHigh_ = false;
-                            tilesForGrid[i, j].blocksLow_ = false;
+                            tilesForGrid[i, j].highDistance_ = 1;
+                            tilesForGrid[i, j].lowDistance_ = 1;
                         }
                     }
                 }
@@ -187,14 +187,14 @@ namespace Commando
                         if (tiles[i, j] != 1)
                         {
                             boxesToBeAdded[i, j] = true;
-                            tilesForGrid[i, j].blocksHigh_ = true;
-                            tilesForGrid[i, j].blocksLow_ = true;
+                            tilesForGrid[i, j].highDistance_ = 0;
+                            tilesForGrid[i, j].lowDistance_ = 0;
                         }
                         else
                         {
                             boxesToBeAdded[i, j] = false;
-                            tilesForGrid[i, j].blocksHigh_ = false;
-                            tilesForGrid[i, j].blocksLow_ = false;
+                            tilesForGrid[i, j].highDistance_ = 1;
+                            tilesForGrid[i, j].lowDistance_ = 1;
                         }
                     }
                 }

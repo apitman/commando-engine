@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Commando.levels;
 
 namespace Commando.ai.planning
 {
@@ -122,6 +123,8 @@ namespace Commando.ai.planning
         internal int i;
         [FieldOffset(0)]
         internal bool b;
+        [FieldOffset(0)]
+        internal TileIndex t;
     }
 
     /// <summary>

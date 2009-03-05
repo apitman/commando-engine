@@ -151,7 +151,7 @@ namespace Commando.objects
             WorldState.Visual_.Remove(visualStimulusId_);
             WorldState.Visual_.Add(
                 visualStimulusId_,
-                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition())
+                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition(), this)
             );
         }
 
