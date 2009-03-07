@@ -43,8 +43,6 @@ namespace Commando.objects
 
         protected DefaultActuator actuator_;
 
-        protected WeaponAbstract weapon_;
-
         /// <summary>
         /// Create the main player of the game.
         /// </summary>
@@ -80,7 +78,7 @@ namespace Commando.objects
             radius_ = RADIUS;
             collisionDetector_ = new CollisionDetector(null);
 
-            weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
         }
 
         /// <summary>
@@ -91,7 +89,7 @@ namespace Commando.objects
         {
             //animations_.drawNextFrame(position_, getRotationAngle(), depth_);
             actuator_.draw();
-            weapon_.draw();
+            Weapon_.draw();
         }
         
         /// <summary>
@@ -118,7 +116,7 @@ namespace Commando.objects
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {
-                weapon_.shoot(collisionDetector_);
+                Weapon_.shoot(collisionDetector_);
                 inputSet_.setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
             }
             
@@ -136,7 +134,7 @@ namespace Commando.objects
 //                }
             }
             actuator_.update();
-            weapon_.update();
+            Weapon_.update();
             collidedInto_.Clear();
             collidedWith_.Clear();
             oldPosition -= position_;

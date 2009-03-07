@@ -108,6 +108,8 @@
     <Compile Include="ai\SensorEars.cs" />
     <Compile Include="ai\SensorEyes.cs" />
     <Compile Include="ai\Stimulus.cs" />
+    <Compile Include="ai\System.cs" />
+    <Compile Include="ai\SystemAiming.cs" />
     <Compile Include="ai\SystemBehavior.cs" />
     <Compile Include="ai\SystemCommunication.cs" />
     <Compile Include="ai\SystemNavigation.cs" />

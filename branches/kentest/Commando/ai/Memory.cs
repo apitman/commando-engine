@@ -80,6 +80,14 @@ namespace Commando.ai
             throw new NotImplementedException();
         }
 
+        public Belief getFirstBelief(BeliefType type)
+        {
+            List<Belief> list = getBeliefs(type);
+            if (list.Count > 0)
+                return list[0];
+            return null;
+        }
+
         public bool removeBeliefs(BeliefType type)
         {
             return beliefs_.Remove(type);
