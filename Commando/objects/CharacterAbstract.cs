@@ -40,6 +40,8 @@ namespace Commando
 
         protected CharacterWeapon weapon_;
 
+        public WeaponAbstract Weapon_ { get; protected set; }
+
         protected string name_;
 
         protected CollisionDetectorInterface collisionDetector_;

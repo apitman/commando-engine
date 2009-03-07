@@ -35,7 +35,8 @@ namespace Commando.ai
 
         public Memory Memory_ { get; private set; }
 
-        protected List<Sensor> sensors_;
+        protected List<Sensor> sensors_ = new List<Sensor>();
+        protected List<System> systems_ = new List<System>();
 
         protected List<TileIndex> path_; // temporary
 
@@ -49,9 +50,9 @@ namespace Commando.ai
         {
             Character_ = npc;
             Memory_ = new Memory();
-            sensors_ = new List<Sensor>();
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorEyes(this));
+            systems_.Add(new SystemAiming(this));
             path_ = new List<TileIndex>();
             lastPathfindUpdate_ = 0;
             inferenceEngine_ = new InferenceEngine(this);
@@ -65,6 +66,11 @@ namespace Commando.ai
             }
 
             inferenceEngine_.update();
+
+            for (int i = 0; i < systems_.Count; i++)
+            {
+                systems_[i].update();
+            }
 
             // TODO Temporary block
             // Tells the AI to proceed to the location of a known enemy

@@ -49,8 +49,6 @@ namespace Commando.objects
 
         protected int drawColorCount_ = 0;
 
-        protected WeaponAbstract weapon_; // TODO figure out this overwriting business
-
         public DummyEnemy(List<DrawableObjectAbstract> pipeline, Vector2 pos) :
             base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
         {
@@ -77,7 +75,7 @@ namespace Commando.objects
             currentDrawColor_ = Color.White;
             health_.update(15);
 
-            weapon_ = new DroneGun(pipeline_, this, position_);
+            Weapon_ = new DroneGun(pipeline_, this, position_);
         }
 
         public override float getRadius()
@@ -99,6 +97,7 @@ namespace Commando.objects
             );*/
 
             actuator_.update();
+            Weapon_.update();
             if (drawColorCount_ > 0)
             {
                 drawColorCount_--;
