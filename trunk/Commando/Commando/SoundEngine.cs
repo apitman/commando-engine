@@ -18,7 +18,13 @@
 
 using Microsoft.Xna.Framework.Audio;
 
-// IMPORTANT NOTICE:
+/* EVEN MORE IMPORTANT NOTICE:
+ * This class is deprecated, and should only be used if the project is
+ * reverted back to using XACT.  Currently, we are using the simple
+ * MediaPlayer and SoundEffect APIs.
+ */
+
+// Important Notice:
 // The techniques used in constructing this class are based on those found
 // at http://www.ziggyware.com/readarticle.php?article_id=40.
 //

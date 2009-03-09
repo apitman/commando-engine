@@ -117,6 +117,9 @@ namespace Commando
             TextureMap.getInstance().loadTextures(TEXTUREMAPXML, spriteBatch_, graphics_.GraphicsDevice);
             FontMap.getInstance().loadFonts("", spriteBatch_, this);
 
+            MediaPlayerHelper.loadSongs(Content);
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(MediaPlayerHelper.getSong("epic"));
         }
 
         /// <summary>

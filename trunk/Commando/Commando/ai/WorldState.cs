@@ -24,8 +24,8 @@ using System.Text;
 namespace Commando.ai
 {
     /// <summary>
-    /// Lists of Stimulus'es (sic) which describe the state of the world, to
-    /// be picked up by sensors.
+    /// Caches pointers to important entities which will be used by Sensors to
+    /// gather data.
     /// </summary>
     internal class WorldState
     {

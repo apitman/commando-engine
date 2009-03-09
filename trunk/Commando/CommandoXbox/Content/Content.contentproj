@@ -445,7 +445,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Audio\" />
+    <Compile Include="..\..\Commando\Content\Audio\music\epic.wav">
+      <Link>Audio\music\epic.wav</Link>
+      <Name>epic</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Audio\effects\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
