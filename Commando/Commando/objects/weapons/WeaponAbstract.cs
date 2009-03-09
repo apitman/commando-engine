@@ -70,7 +70,7 @@ namespace Commando
             Vector2 charPos = character_.getPosition();
             Vector2 newPos = Vector2.Zero;
             rotation_ = character_.getDirection();
-            float angle = getRotationAngle();
+            float angle = CommonFunctions.getAngle(rotation_);
             float cosA = (float)Math.Cos(angle);
             float sinA = (float)Math.Sin(angle);
             newPos.X = (gunHandle_.X) * cosA - (gunHandle_.Y) * sinA + charPos.X;

@@ -106,6 +106,7 @@ namespace Commando.ai
                 for (int i = 0; i < list.Count; i++ )
                 {
                     Belief b = list[i];
+                    Character_.lookAt(b.position_);
                     Vector2 start = Character_.getPosition();
                     Vector2 dest = b.position_;
                     float radius = Character_.getRadius();
@@ -130,13 +131,13 @@ namespace Commando.ai
                 if (path_.Count != 0)
                 {
                     Character_.moveTo(grid.getTileCenter(path_[0]));
-                    Character_.lookAt(grid.getTileCenter(path_[0]));
+                    //Character_.lookAt(grid.getTileCenter(path_[0]));
                 }
             }
             else
             {
                 Character_.moveTo(grid.getTileCenter(path_[0]));
-                Character_.lookAt(grid.getTileCenter(path_[0]));
+                //Character_.lookAt(grid.getTileCenter(path_[0]));
             }
 
             // End test block

@@ -55,24 +55,32 @@ namespace Commando.ai
                                         new Height(true, true)))
             {
                 CharacterAbstract ca = (belief.handle_ as CharacterAbstract);
-                velocities_[countUp % REACTION_TIME] = ca.getVelocity();
-                countUp++;
-                Vector2 target = predictTargetPosition(belief.position_);
-                AI_.Character_.lookAt(target);
-                if (countUp >= REACTION_TIME)
+
+                // if can still see actual character, we might fire
+                if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
+                                        ca.getPosition(),
+                                        new Height(true, true),
+                                        new Height(true, true)))
                 {
-                    AI_.Character_.Weapon_.shoot(AI_.Character_.getCollisionDetector());
+                    velocities_[countUp % REACTION_TIME] = ca.getVelocity();
+                    countUp++;
+                    Vector2 target = predictTargetPosition(belief.position_);
+                    AI_.Character_.lookAt(target);
+                    if (countUp >= REACTION_TIME)
+                    {
+                        AI_.Character_.Weapon_.shoot(AI_.Character_.getCollisionDetector());
+                    }
                 }
-            }
-            else
-            {
-                countDown--;
-                if (countDown == 0)
+                else
                 {
-                    countDown = LOSS_TIME;
-                    countUp = 0;
+                    countDown--;
+                    if (countDown == 0)
+                    {
+                        countDown = LOSS_TIME;
+                        countUp = 0;
+                    }
                 }
-            }                           
+            }     
         }
 
         internal Vector2 calculateAverageVelocity()
