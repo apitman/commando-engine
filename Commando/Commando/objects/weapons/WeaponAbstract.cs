@@ -36,16 +36,32 @@ namespace Commando
         
         protected CharacterAbstract character_;
 
-        protected GameTexture animation_;
+        protected GameTexture texture_;
 
+        /// <summary>
+        /// Position of back-end of gun.
+        /// </summary>
         protected Vector2 position_;
 
+        /// <summary>
+        /// Rotation of weapon.
+        /// </summary>
         protected Vector2 rotation_;
 
+        /// <summary>
+        /// Position of back end of gun when the character is facing right; used to calculate
+        /// position of gun relative to character.
+        /// </summary>
         protected Vector2 gunHandle_;
 
+        /// <summary>
+        /// Distance from back end of gun to front end of gun.
+        /// </summary>
         protected float gunLength_;
 
+        /// <summary>
+        /// Amount of time before the gun can fire again.
+        /// </summary>
         protected int refireCounter_;
 
         protected int audialStimulusId_;
@@ -54,7 +70,7 @@ namespace Commando
         {
             drawPipeline_ = pipeline;
             character_ = character;
-            animation_ = animation;
+            texture_ = animation;
             gunHandle_ = gunHandle;
             position_ = Vector2.Zero;
             rotation_ = Vector2.Zero;
@@ -84,12 +100,9 @@ namespace Commando
         {
             rotation_.Normalize();
             rotation_ *= gunLength_ / 2f;
-            animation_.drawImage(0, position_ + rotation_, getRotationAngle(), 0.6f);
-        }
 
-        protected virtual float getRotationAngle()
-        {
-            return (float)Math.Atan2((double)rotation_.Y, (double)rotation_.X);
+            // TODO make this depth dependent on character depth
+            texture_.drawImage(0, position_ + rotation_, CommonFunctions.getAngle(rotation_), 0.6f);
         }
     }
 }

@@ -225,6 +225,19 @@ namespace Commando
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
         /// <param name="position">Position to draw the image at</param>
+        /// <param name="depth">Drawing depth of the image</param>
+        /// <param name="color">Color to draw the image</param>
+        public void drawImageAbsolute(int imageNumber, Vector2 position, float depth, Color color)
+        {
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], color, 0, originOfImage, 1.0f, SpriteEffects.None, depth);
+        }
+
+        /// <summary>
+        /// Draws the image to the screen with a rotation.
+        /// </summary>
+        /// <param name="imageNumber">Number of the image to draw</param>
+        /// <param name="position">Position to draw the image at</param>
         /// <param name="direction">Direction of the image</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageAbsolute(int imageNumber, Vector2 position, Vector2 direction, float depth)

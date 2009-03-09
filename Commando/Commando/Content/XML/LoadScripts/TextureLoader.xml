@@ -18,18 +18,6 @@
     <handle>TitleScreen</handle>
   </image>
   <image>
-    <key>SamplePlayer</key>
-    <handle>Sprites\\SamplePlayer</handle>
-  </image>
-  <image>
-    <key>SamplePlayer_Small</key>
-    <handle>Sprites\\SamplePlayer_Small</handle>
-  </image>
-  <image>
-    <key>SamplePlayer_XSmall</key>
-    <handle>Sprites\\SamplePlayer_XSmall</handle>
-  </image>
-  <image>
     <key>testMenu</key>
     <handle>Sprites\\testmenu</handle>
   </image>
