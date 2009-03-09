@@ -29,6 +29,10 @@ namespace Commando.objects
     {
         private const float FRAMELENGTHMODIFIER = 4.0f;
 
+        private const float GUNHANDLEX = 11.0f;
+
+        private const float GUNHANDLEY = 0.0f;
+
         protected Vector2 movingToward_;
 
         protected bool atLocation_;
@@ -75,7 +79,7 @@ namespace Commando.objects
             currentDrawColor_ = Color.White;
             health_.update(15);
 
-            Weapon_ = new DroneGun(pipeline_, this, position_);
+            Weapon_ = new DroneGun(pipeline_, this, new Vector2(GUNHANDLEX, GUNHANDLEY));
         }
 
         public override float getRadius()
