@@ -153,6 +153,7 @@
     <Compile Include="graphics\NonLoopAnimation.cs" />
     <Compile Include="levels\TileGrid.cs" />
     <Compile Include="levels\Tileset.cs" />
+    <Compile Include="MediaPlayerHelper.cs" />
     <Compile Include="MenuList.cs" />
     <Compile Include="FontMap.cs" />
     <Compile Include="GameFont.cs" />

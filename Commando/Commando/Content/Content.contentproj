@@ -59,23 +59,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\sounds.xap">
-      <Name>sounds</Name>
-      <Importer>XactImporter</Importer>
-      <Processor>XactProcessor</Processor>
-    </Compile>
-    <None Include="Audio\Win\MainMenuSoundBank.xsb">
-      <Name>MainMenuSoundBank</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Audio\Win\MainMenuWaveBank.xwb">
-      <Name>MainMenuWaveBank</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Audio\Win\sounds.xgs">
-      <Name>sounds</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Compile Include="Sprites\testmenu.PNG">
       <Name>testmenu</Name>
       <Importer>TextureImporter</Importer>
@@ -84,12 +67,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Audio\music\epic.wav">
+    <Compile Include="Audio\music\epic.wav">
       <Name>epic</Name>
       <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
+      <Processor>SongProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="healthBarOutline.png">
@@ -474,7 +457,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Audio\Xbox\" />
+    <Folder Include="Audio\effects\" />
     <Folder Include="XML\Actions\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>
