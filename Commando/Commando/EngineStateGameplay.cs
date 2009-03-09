@@ -60,9 +60,9 @@ namespace Commando
         //Jared's test stuff
         //protected MainPlayer player_;
         protected ActuatedMainPlayer player_;
-        protected List<DummyEnemy> enemyList_;
+        protected List<DummyEnemy> enemyList_ = new List<DummyEnemy>();
         protected CollisionDetectorInterface collisionDetector_;
-        protected List<DrawableObjectAbstract> drawPipeline_;
+        protected List<DrawableObjectAbstract> drawPipeline_ = new List<DrawableObjectAbstract>();
         //END Jared's test stuff
 
         protected Engine engine_;
@@ -85,16 +85,11 @@ namespace Commando
             // Cleanup singletons used by prior EngineStateGameplay
             Commando.ai.WorldState.reset();
 
-            // Stuff
-            drawPipeline_ = new List<DrawableObjectAbstract>();
-            enemyList_ = new List<DummyEnemy>();
-
             // Perform initializations of variables
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 
             //Jared's test stuff
-            //player_ = new MainPlayer();
             player_ = new ActuatedMainPlayer(drawPipeline_);
             GlobalHelper.getInstance().getCurrentCamera().setPosition(0,0);
             GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)SCREEN_SIZE_X);
@@ -153,19 +148,19 @@ namespace Commando
                         {
                             //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
                             boxesToBeAdded[i, j] = true;
-                            tilesForGrid[i, j].blocksHigh_ = true;
-                            tilesForGrid[i, j].blocksLow_ = true;
+                            tilesForGrid[i, j].highDistance_ = 0;
+                            tilesForGrid[i, j].lowDistance_ = 0;
                         }
                         else
                         {
                             //boxesToBeAdded[i, j] = null;
                             boxesToBeAdded[i, j] = false;
-                            tilesForGrid[i, j].blocksHigh_ = false;
-                            tilesForGrid[i, j].blocksLow_ = false;
+                            tilesForGrid[i, j].highDistance_ = 1;
+                            tilesForGrid[i, j].lowDistance_ = 1;
                         }
                     }
                 }
-                tiles_ = Tiler.getTiles(loadedTiles);
+                tiles_ = Tiler.getTiles(drawPipeline_, loadedTiles);
 
                 boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
                 GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
@@ -175,7 +170,7 @@ namespace Commando
                 for (int i = 0; i < Convert.ToInt32(tList.Count); i++)
                 {
                     System.Xml.XmlElement ele2 = (System.Xml.XmlElement)tList[i];
-                    DummyEnemy dum = new DummyEnemy(new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
+                    DummyEnemy dum = new DummyEnemy(drawPipeline_, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
                     enemyList_.Add(dum);
                 }
             }
@@ -192,24 +187,24 @@ namespace Commando
                         if (tiles[i, j] != 1)
                         {
                             boxesToBeAdded[i, j] = true;
-                            tilesForGrid[i, j].blocksHigh_ = true;
-                            tilesForGrid[i, j].blocksLow_ = true;
+                            tilesForGrid[i, j].highDistance_ = 0;
+                            tilesForGrid[i, j].lowDistance_ = 0;
                         }
                         else
                         {
                             boxesToBeAdded[i, j] = false;
-                            tilesForGrid[i, j].blocksHigh_ = false;
-                            tilesForGrid[i, j].blocksLow_ = false;
+                            tilesForGrid[i, j].highDistance_ = 1;
+                            tilesForGrid[i, j].lowDistance_ = 1;
                         }
                     }
                 }
-                tiles_ = Tiler.getTiles(tiles);
+                tiles_ = Tiler.getTiles(drawPipeline_, tiles);
 
                 boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
                 GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
 
                 // Now add an enemy
-                DummyEnemy dumE = new DummyEnemy(new Vector2(250.0f, 250.0f));
+                DummyEnemy dumE = new DummyEnemy(drawPipeline_, new Vector2(250.0f, 250.0f));
                 enemyList_.Add(dumE);
             }
             // Done loading level from XML
@@ -229,8 +224,8 @@ namespace Commando
             weaponIconPos_ = new Vector2(WEAPON_ICON_POS_X, WEAPON_ICON_POS_Y);
             healthTextPos_ = new Vector2(HEALTH_BAR_POS_X + HEALTH_TEXT_OFFSET_X, HEALTH_BAR_POS_Y + HEALTH_TEXT_OFFSET_Y);
             ammoTextPos_ = new Vector2(AMMO_TEXT_POS_X, AMMO_TEXT_POS_Y);
-            healthBar_ = new HeadsUpDisplayObject(TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
-            weapon_ = new HeadsUpDisplayWeapon(TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+            healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+            weapon_ = new HeadsUpDisplayWeapon(drawPipeline_,  TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
             ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay);
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
@@ -254,6 +249,7 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
+            // Check whether to enter pause screen
             if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) || inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
@@ -269,18 +265,10 @@ namespace Commando
             }
             #endif
 
-            //Jared's test stuff
+            // Pass input set to player
             player_.setInputSet(inputs);
-            player_.update(gameTime);
-            for (int i = 0; i < enemyList_.Count; i++)
-            {
-                if (!enemyList_[i].isDead())
-                {
-                    enemyList_[i].update(gameTime);
-                }
-            }
-            //END Jared's test stuff
 
+            // Update all of the objects in the drawing pipeline
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)
             {
                 drawPipeline_[i].update(null);
@@ -289,6 +277,9 @@ namespace Commando
                     drawPipeline_.RemoveAt(i);
                 }
             }
+            // TODO
+            // may want to maintain a separate pipeline for objects whose
+            //  update function doesn't do anything (aka tiles)
 
             return this;
         }
@@ -315,31 +306,25 @@ namespace Commando
             }
             #endif
 
-            //Jared's test stuff
-            player_.draw(new GameTime());
-            for (int i = 0; i < enemyList_.Count; i++)
-            {
-                enemyList_[i].draw(new GameTime());
-            }
-            foreach (TileObject tOb in tiles_)
-            {
-                tOb.draw(new GameTime());
-            }
-
+            // Draw all the DrawableObjectAbstracts in our pipeline
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)
             {
                 drawPipeline_[i].draw(null);
             }
-            //END Jared's test stuff
 
+            // TODO
+            // Clean up this section -
+            //  Most likely, the HUD should be a single object with a .draw()
+            //  or the individual pieces should be in the pipeline.
+            /* begin section */
             healthBar_.draw(new GameTime());
             TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImageAbsolute(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
             weapon_.draw(new GameTime());
             TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, SCREEN_SIZE_X, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
-
             FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
             //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
             ammo_.drawString(AMMO_TEXT, AMMO_REPLACE_TEXT, Color.Black, 0.0f);
+            /* end section*/
         }
 
         #endregion

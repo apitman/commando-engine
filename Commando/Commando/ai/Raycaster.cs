@@ -66,9 +66,9 @@ namespace Commando.ai
             while ((current - dest).LengthSquared() > SAMPLE_LENGTH_SQ)
             {
                 Tile tile = grid.getTile(current);
-                if (tile.blocksHigh_)
+                if (tile.highDistance_ == 0)
                     currentVisionHeight.blocksHigh_ = false;
-                if (tile.blocksLow_)
+                if (tile.lowDistance_ == 0)
                     currentVisionHeight.blocksLow_ = false;
                 if (!currentVisionHeight.collides(visionHeight))
                     return false;
@@ -96,7 +96,7 @@ namespace Commando.ai
             while (true)
             {
                 Tile tile = grid.getTile(current);
-                if (tile.collides(h))
+                if (tile.collides(h, 0))
                 {
                     return current;
                 }

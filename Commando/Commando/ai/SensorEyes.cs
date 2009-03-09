@@ -68,8 +68,11 @@ namespace Commando.ai
                 Raycaster.inFieldOfView(AI_.Character_.getDirection(), AI_.Character_.getPosition(), stim.position_, FIELD_OF_VIEW) &&
                 Raycaster.canSeePoint(AI_.Character_.getPosition(), stim.position_, new Height(true, false), new Height(true, true)))
             {
-                AI_.Memory_.Beliefs_.Remove(id);
-                AI_.Memory_.Beliefs_.Add(id, new Belief(BeliefType.EnemyLoc, 100, stim.position_.X, stim.position_.Y));
+                CharacterAbstract ca = (stim.handle_ as CharacterAbstract);
+                Belief posBelief = new Belief(BeliefType.EnemyLoc, ca, 100, stim.position_, 0);
+                Belief healthBelief = new Belief(BeliefType.EnemyHealth, ca, 100, stim.position_, ca.getHealth().getValue());
+                AI_.Memory_.setBelief(posBelief);
+                AI_.Memory_.setBelief(healthBelief);
             }
         }
 

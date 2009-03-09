@@ -21,32 +21,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Commando.ai
+namespace Commando.levels
 {
-    class SensorEars : Sensor
+    /// <summary>
+    /// Data structure for a tileset read in from an XML file; maps tile index
+    /// numbers to pictures and tile information such as heights.
+    /// </summary>
+    internal class Tileset
     {
-        public SensorEars(AI ai) : base(ai) { }
+        internal Dictionary<int, Height> heights_ { get; private set;}
+        internal Dictionary<int, string> textures_{ get; private set;}
 
-        public override void collect()
+        public static Tileset constructTileset(string filepath)
         {
-            Dictionary<int, Stimulus>.Enumerator cur = WorldState.Audial_.GetEnumerator();
-            for (int i = 0; i < WorldState.Audial_.Count; i++)
-            {
-                cur.MoveNext();
-                int id = cur.Current.Key;
-                Stimulus stim = cur.Current.Value;
-                filter(id, stim);
-            }
+            throw new NotImplementedException("Tileset class not ready");
         }
-
-        private void filter(int id, Stimulus stim)
-        {
-            if (CommonFunctions.distance(AI_.Character_.getPosition(), stim.position_) < (double) stim.radius_)
-            {
-                Belief b = new Belief(BeliefType.SuspiciousNoise, null, 100, stim.position_, 0);
-                AI_.Memory_.setBelief(b);
-            }
-        }
-
     }
 }

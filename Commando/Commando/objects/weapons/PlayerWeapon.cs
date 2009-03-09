@@ -1,4 +1,4 @@
-﻿/*
+/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -26,6 +26,10 @@ using Commando.levels;
 
 namespace Commando.objects.weapons
 {
+    /// <summary>
+    /// Weapon which is usable by the player; controls laser pointer and
+    /// producing suspicious noises.
+    /// </summary>
     abstract class PlayerWeapon : WeaponAbstract
     {
         protected const string TARGET_TEXTURE_NAME = "laserpointer";
@@ -55,7 +59,7 @@ namespace Commando.objects.weapons
                 weaponFired_ = false;
                 WorldState.Audial_.Add(
                     audialStimulusId_,
-                    new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, SOUND_RADIUS, this.position_)
+                    new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, SOUND_RADIUS, this.position_, this)
                 );
             }
         }
