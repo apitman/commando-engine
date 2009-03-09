@@ -25,6 +25,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.collisiondetection;
+using Commando.ai;
 
 namespace Commando
 {
@@ -60,7 +61,7 @@ namespace Commando
         //Jared's test stuff
         //protected MainPlayer player_;
         protected ActuatedMainPlayer player_;
-        protected List<DummyEnemy> enemyList_ = new List<DummyEnemy>();
+        protected List<CharacterAbstract> enemyList_ = new List<CharacterAbstract>();
         protected CollisionDetectorInterface collisionDetector_;
         protected List<DrawableObjectAbstract> drawPipeline_ = new List<DrawableObjectAbstract>();
         //END Jared's test stuff
@@ -235,6 +236,9 @@ namespace Commando
             {
                 enemyList_[i].setCollisionDetector(collisionDetector_);
             }
+
+            WorldState.EnemyList_ = (List<CharacterAbstract>)enemyList_;
+            WorldState.MainPlayer_ = player_;
         }
 
         #region EngineStateInterface Members

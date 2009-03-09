@@ -29,22 +29,22 @@ namespace Commando.ai
     /// </summary>
     internal class WorldState
     {
-        static internal Dictionary<int, Stimulus> Visual_ {get; private set;}
-
         static internal Dictionary<int, Stimulus> Audial_ {get; private set;}
+        static internal List<CharacterAbstract> EnemyList_ { get; set; }
+        static internal CharacterAbstract MainPlayer_ { get; set; }
 
         static WorldState()
         {
-            Visual_ = new Dictionary<int, Stimulus>();
             Audial_ = new Dictionary<int, Stimulus>();
+            EnemyList_ = new List<CharacterAbstract>();
         }
 
         private WorldState() {}
 
         static internal void reset()
         {
-            Visual_.Clear();
             Audial_.Clear();
+            EnemyList_.Clear();
         }
     }
 

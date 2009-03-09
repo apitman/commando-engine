@@ -57,6 +57,8 @@ namespace Commando.ai
     {
         EnemyLoc,
         EnemyHealth,
+        AllyLoc,
+        AllyHealth,
         SuspiciousNoise
     }
 }

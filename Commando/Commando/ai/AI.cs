@@ -51,7 +51,7 @@ namespace Commando.ai
             Character_ = npc;
             Memory_ = new Memory();
             sensors_.Add(new SensorEars(this));
-            sensors_.Add(new SensorEyes(this));
+            sensors_.Add(new SensorSeeCharacter(this));
             systems_.Add(new SystemAiming(this));
             path_ = new List<TileIndex>();
             lastPathfindUpdate_ = 0;

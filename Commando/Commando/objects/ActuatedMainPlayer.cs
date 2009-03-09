@@ -140,17 +140,6 @@ namespace Commando.objects
             oldPosition -= position_;
             GlobalHelper.getInstance().getCurrentCamera().setCenter(position_.X, position_.Y);
 
-            // TODO Change/fix how this is done, modularize it, etc.
-            // Essentially, the player updates his visual location in the WorldState
-            // Must remove before adding because Dictionaries don't like duplicate keys
-            // Removing a nonexistent key (for first frame) does no harm
-            // Also, need to make it so the radius isn't hardcoded - probably all
-            //  objects which will have a visual stimulus should have a radius
-            WorldState.Visual_.Remove(visualStimulusId_);
-            WorldState.Visual_.Add(
-                visualStimulusId_,
-                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition(), this)
-            );
         }
 
         public override float getRadius()
