@@ -88,8 +88,8 @@
     <Compile Include="..\Commando\ai\SensorEars.cs">
       <Link>ai\SensorEars.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\ai\SensorEyes.cs">
-      <Link>ai\SensorEyes.cs</Link>
+    <Compile Include="..\Commando\ai\SensorSeeCharacter.cs">
+      <Link>ai\SensorSeeCharacter.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\Stimulus.cs">
       <Link>ai\Stimulus.cs</Link>
