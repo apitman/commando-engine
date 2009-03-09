@@ -35,6 +35,11 @@ namespace Commando.ai
             beliefs_ = new Dictionary<BeliefType, List<Belief>>();
         }
 
+        /// <summary>
+        /// Replaces a belief with matching type_ and handle_, or adds a new
+        /// belief if a match does not exist.
+        /// </summary>
+        /// <param name="belief">Belief to store in memory.</param>
         public void setBelief(Belief belief)
         {
             List<Belief> list;
@@ -56,6 +61,10 @@ namespace Commando.ai
             }
         }
 
+        /// <summary>
+        /// Combines all beliefs in memory into a single list.
+        /// </summary>
+        /// <returns>List of all current beliefs.</returns>
         public List<Belief> getAllBeliefs()
         {
             List<Belief> list = new List<Belief>();
@@ -63,6 +72,11 @@ namespace Commando.ai
             return list;
         }
 
+        /// <summary>
+        /// Safely fetches all beliefs of a specific type.
+        /// </summary>
+        /// <param name="type">Desired belief type to fetch.</param>
+        /// <returns>A list of all beliefs of that type, or an empty list if there are none.</returns>
         public List<Belief> getBeliefs(BeliefType type)
         {
             List<Belief> list;
@@ -74,12 +88,36 @@ namespace Commando.ai
             return list;
         }
 
+        /// <summary>
+        /// Safely fetches all beliefs of a specific handle.
+        /// Not yet implemented.
+        /// </summary>
+        /// <param name="handle">Desired handle of beliefs.</param>
+        /// <returns>A list of all beliefs with that handle, or an empty list if there are none.</returns>
         public List<Belief> getBeliefs(Object handle)
         {
             List<Belief> list;
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Fetches the first-found belief with a specific type and handle.
+        /// </summary>
+        /// <param name="type">Type of belief to find.</param>
+        /// <param name="handle">Handle of desired belief.</param>
+        /// <returns>The first belief matching these criteria, or null if one is not found.</returns>
+        public Belief getBelief(BeliefType type, Object handle)
+        {
+            List<Belief> list = getBeliefs(type);
+            return
+                list.Find(delegate(Belief b) { return b.handle_ == handle; });
+        }
+
+        /// <summary>
+        /// Fetches the first belief of a specific type.
+        /// </summary>
+        /// <param name="type">Type of belief to be fetched.</param>
+        /// <returns>The first belief of that type in memory, or null.</returns>
         public Belief getFirstBelief(BeliefType type)
         {
             List<Belief> list = getBeliefs(type);
@@ -88,11 +126,22 @@ namespace Commando.ai
             return null;
         }
 
+        /// <summary>
+        /// Removes all beliefs of a certain type.
+        /// </summary>
+        /// <param name="type">Type of beliefs to be deleted.</param>
+        /// <returns>True if a list of that type of belief existed at some time (not
+        ///     whether there actually were any beliefs of that type).</returns>
         public bool removeBeliefs(BeliefType type)
         {
             return beliefs_.Remove(type);
         }
 
+        /// <summary>
+        /// Removes a belief from memory.
+        /// </summary>
+        /// <param name="belief">The exact belief to be removed (not a copy).</param>
+        /// <returns>True if the belief was removed, false if it was not there.</returns>
         public bool removeBelief(Belief belief)
         {
             List<Belief> list;
