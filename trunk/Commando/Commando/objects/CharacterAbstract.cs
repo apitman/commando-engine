@@ -40,6 +40,8 @@ namespace Commando
 
         protected CharacterWeapon weapon_;
 
+        public WeaponAbstract Weapon_ { get; protected set; }
+
         protected string name_;
 
         protected CollisionDetectorInterface collisionDetector_;
@@ -92,8 +94,8 @@ namespace Commando
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface collisionDetector, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
-            base(animations, frameLengthModifier, velocity, position, direction, depth)
+        public CharacterAbstract(List<DrawableObjectAbstract> pipeline, CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface collisionDetector, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, animations, frameLengthModifier, velocity, position, direction, depth)
         {
             health_ = health;
             ammo_ = ammo;
@@ -177,5 +179,14 @@ namespace Commando
         public abstract float getRadius();
 
         public abstract ConvexPolygonInterface getBounds();
+
+        public override void die()
+        {
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.remove(this);
+            }
+            base.die();
+        }
     }
 }

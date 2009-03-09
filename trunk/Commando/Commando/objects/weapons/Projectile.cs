@@ -1,4 +1,4 @@
-﻿/*
+/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -41,26 +41,9 @@ namespace Commando.objects
 
         protected CollisionObjectInterface collidedInto_ = null;
 
-        public Projectile(List<DrawableObjectAbstract> pipeline, GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius) :
-            base()
-        {
-            drawPipeline_ = pipeline;
-            drawPipeline_.Add(this);
-            texture_ = texture;
-            if (detector != null)
-            {
-                detector.register(this);
-                collisionDetector_ = detector;
-            }
-            boundsPolygon_ = bounds;
-            radius_ = radius;
-        }
-
         public Projectile(List<DrawableObjectAbstract> pipeline, GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
-            base(velocity, position, direction, depth)
+            base(pipeline, velocity, position, direction, depth)
         {
-            drawPipeline_ = pipeline;
-            drawPipeline_.Add(this);
             texture_ = texture;
             if (detector != null)
             {

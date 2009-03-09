@@ -35,7 +35,8 @@ namespace Commando.ai
 
         public Memory Memory_ { get; private set; }
 
-        protected List<Sensor> sensors_;
+        protected List<Sensor> sensors_ = new List<Sensor>();
+        protected List<System> systems_ = new List<System>();
 
         protected List<TileIndex> path_; // temporary
 
@@ -49,9 +50,9 @@ namespace Commando.ai
         {
             Character_ = npc;
             Memory_ = new Memory();
-            sensors_ = new List<Sensor>();
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorEyes(this));
+            systems_.Add(new SystemAiming(this));
             path_ = new List<TileIndex>();
             lastPathfindUpdate_ = 0;
             inferenceEngine_ = new InferenceEngine(this);
@@ -66,6 +67,11 @@ namespace Commando.ai
 
             inferenceEngine_.update();
 
+            for (int i = 0; i < systems_.Count; i++)
+            {
+                systems_[i].update();
+            }
+
             // TODO Temporary block
             // Tells the AI to proceed to the location of a known enemy
             //  if it does not currently have a place to go
@@ -73,24 +79,21 @@ namespace Commando.ai
             TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
             if (path_ == null || path_.Count == 0 || lastPathfindUpdate_ > PATHFIND_THRESHOLD)
             {
-                IEnumerator<Belief> iter = Memory_.Beliefs_.Values.GetEnumerator();
-                while (iter.MoveNext())
+                List<Belief> list = Memory_.getBeliefs(BeliefType.EnemyLoc);
+                for (int i = 0; i < list.Count; i++)
                 {
-                    Belief b = iter.Current;
-                    if (b.type_ == BeliefType.EnemyLoc)
-                    {
-                        //Character_.moveTo(b.position_);
-                        //Character_.lookAt(b.position_);
-                        Vector2 start = Character_.getPosition();
-                        Vector2 dest = b.position_;
-                        float radius = Character_.getRadius();
-                        Height h = new Height(true, true);
-                        path_ = 
-                            AStarPathfinder.run(grid, start, dest, radius, h);
-                        lastPathfindUpdate_ = 0;
-                        if (path_ != null)
-                            break;
-                    }                   
+                    Belief b = list[i];
+                    //Character_.moveTo(b.position_);
+                    //Character_.lookAt(b.position_);
+                    Vector2 start = Character_.getPosition();
+                    Vector2 dest = b.position_;
+                    float radius = Character_.getRadius();
+                    Height h = new Height(true, true);
+                    path_ = 
+                        AStarPathfinder.run(grid, start, dest, radius, h);
+                    lastPathfindUpdate_ = 0;
+                    if (path_ != null)
+                        break;               
                 }
             }
 
@@ -99,22 +102,19 @@ namespace Commando.ai
             // noise if there is no known enemy location
             if (path_ == null || path_.Count == 0 || lastPathfindUpdate_ > PATHFIND_THRESHOLD)
             {
-                IEnumerator<Belief> iter = Memory_.Beliefs_.Values.GetEnumerator();
-                while (iter.MoveNext())
+                List<Belief> list = Memory_.getBeliefs(BeliefType.SuspiciousNoise);
+                for (int i = 0; i < list.Count; i++ )
                 {
-                    Belief b = iter.Current;
-                    if (b.type_ == BeliefType.SuspiciousNoise)
-                    {
-                        Vector2 start = Character_.getPosition();
-                        Vector2 dest = b.position_;
-                        float radius = Character_.getRadius();
-                        Height h = new Height(true, true);
-                        path_ =
-                            AStarPathfinder.run(grid, start, dest, radius, h);
-                        lastPathfindUpdate_ = 0;
-                        if (path_ != null)
-                            break;
-                    }
+                    Belief b = list[i];
+                    Vector2 start = Character_.getPosition();
+                    Vector2 dest = b.position_;
+                    float radius = Character_.getRadius();
+                    Height h = new Height(true, true);
+                    path_ =
+                        AStarPathfinder.run(grid, start, dest, radius, h);
+                    lastPathfindUpdate_ = 0;
+                    if (path_ != null)
+                        break;
                 }
             }
 

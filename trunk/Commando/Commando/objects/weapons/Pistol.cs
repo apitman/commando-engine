@@ -1,4 +1,4 @@
-﻿/*
+/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -27,13 +27,9 @@ namespace Commando.objects.weapons
     class Pistol : PlayerWeapon
     {
         protected const string WEAPON_TEXTURE_NAME = "Pistol";
-        protected const string TARGET_TEXTURE_NAME = "laserpointer";
 
         protected const int TIME_TO_REFIRE = 10;
         protected const float PISTOL_SOUND_RADIUS = 150.0f;
-
-        protected GameTexture laserImage_;
-        protected Vector2 laserTarget_;
 
         public Pistol(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle)

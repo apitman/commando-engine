@@ -1,4 +1,4 @@
-﻿/*
+/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -64,7 +64,9 @@ namespace Commando.objects.weapons
             {
                 (collidedInto_ as CharacterAbstract).damage(DAMAGE, this);
             }
-            Shrapnel s = new Shrapnel(drawPipeline_, position_, Microsoft.Xna.Framework.Graphics.Color.Yellow, Constants.DEPTH_DEBUG_LINES);
+            ShrapnelGenerator.createShrapnel(pipeline_, position_,
+                Microsoft.Xna.Framework.Graphics.Color.Yellow,
+                Constants.DEPTH_DEBUG_LINES);
             die();
         }
     }

@@ -55,8 +55,8 @@ namespace Commando.ai
         /// not reallocated with each use of the algorithm.
         /// 
 
-        const int SEARCH_SPACE_HEIGHT = 60;
-        const int SEARCH_SPACE_WIDTH = 60;
+        const short SEARCH_SPACE_HEIGHT = 60;
+        const short SEARCH_SPACE_WIDTH = 60;
 
         // Preallocated search nodes in a 2D grid
         static AStarPathfinderNode[,] searchSpace_ =
@@ -83,7 +83,7 @@ namespace Commando.ai
         protected static TileIndex goal_;
 
         // Radius of the current unit searching for a path, in tiles
-        protected static int searchRadius_;
+        protected static float searchRadius_;
 
         // Height of the current unit searching for a path
         protected static Height searchHeight_;
@@ -93,8 +93,8 @@ namespace Commando.ai
 
         // Since the AStar search space can be superimposed onto a TileGrid
         //  of any size, these offsets are used to adjust the lookup
-        protected static int gridXOffset_;
-        protected static int gridYOffset_;
+        protected static short gridXOffset_;
+        protected static short gridYOffset_;
 
         /*
         /// <summary>
@@ -134,9 +134,9 @@ namespace Commando.ai
             gridYOffset_ = 0;
 
             openlist_.Clear();
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < SEARCH_SPACE_WIDTH; i++)
             {
-                for (int j = 0; j < 60; j++)
+                for (int j = 0; j < SEARCH_SPACE_HEIGHT; j++)
                 {
                     touched_[i, j] = false;
                 }
@@ -155,18 +155,18 @@ namespace Commando.ai
         /// <param name="cost">Cost to reach this position</param>
         protected static void expand(ref TileIndex cur, float cost)
         {
-            int x = cur.x_;
-            int y = cur.y_;
+            short x = cur.x_;
+            short y = cur.y_;
 
             // Mark nodes in 8 directions around the current position
-            mark(x - 1, y - 1, cost + 1.41f, ref cur);
-            mark(x - 1, y, cost + 1.0f, ref cur);
-            mark(x - 1, y + 1, cost + 1.41f, ref cur);
-            mark(x, y - 1, cost + 1.0f, ref cur);
-            mark(x, y + 1, cost + 1.0f, ref cur);
-            mark(x + 1, y - 1, cost + 1.41f, ref cur);
-            mark(x + 1, y, cost + 1.0f, ref cur);
-            mark(x + 1, y + 1, cost + 1.41f, ref cur);
+            mark((short)(x - 1), (short)(y - 1), cost + 1.41f, ref cur);
+            mark((short)(x - 1), y, cost + 1.0f, ref cur);
+            mark((short)(x - 1), (short)(y + 1), cost + 1.41f, ref cur);
+            mark(x, (short)(y - 1), cost + 1.0f, ref cur);
+            mark(x, (short)(y + 1), cost + 1.0f, ref cur);
+            mark((short)(x + 1), (short)(y - 1), cost + 1.41f, ref cur);
+            mark((short)(x + 1), y, cost + 1.0f, ref cur);
+            mark((short)(x + 1), (short)(y + 1), cost + 1.41f, ref cur);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Commando.ai
         /// <param name="y">Y Index of the node to be added</param>
         /// <param name="g">Cost to reach this node</param>
         /// <param name="parent">Node expanded to reach this node</param>
-        protected static void mark(int x, int y, float g, ref TileIndex parent)
+        protected static void mark(short x, short y, float g, ref TileIndex parent)
         {
             // Verify that we are not outside the search space
             if (x < 0 || x >= SEARCH_SPACE_WIDTH || x < 0 || y >= SEARCH_SPACE_HEIGHT)
@@ -219,16 +219,16 @@ namespace Commando.ai
         /// <returns>The next node for A* to expand</returns>
         protected static TileIndex getNext()
         {
-            int bestX = -1;
-            int bestY = -1;
+            short bestX = -1;
+            short bestY = -1;
             int bestIndex = -1;
 
             float bestVal = float.MaxValue;
 
             for (int i = 0; i < openlist_.Count; i++)
             {
-                int curX = openlist_[i].x_;
-                int curY = openlist_[i].y_;
+                short curX = openlist_[i].x_;
+                short curY = openlist_[i].y_;
 
                 if (searchSpace_[curX, curY].f < bestVal && searchSpace_[curX, curY].open)
                 {
@@ -276,7 +276,7 @@ namespace Commando.ai
             start_ = grid.getTileIndex(start);
             goal_ = grid.getTileIndex(destination);
             searchRadius_ =
-                (int)Math.Ceiling(radius / ((TileGrid.TILEWIDTH + TileGrid.TILEHEIGHT) / 2.0f));
+                (float)(radius / ((TileGrid.TILEWIDTH + TileGrid.TILEHEIGHT) / 2.0f));
             grid_ = grid;
             searchHeight_ = height;
 
@@ -338,72 +338,8 @@ namespace Commando.ai
 
         protected static bool collision(Tile tile)
         {
-            return ((tile.blocksHigh_ && searchHeight_.blocksHigh_) ||
-                    (tile.blocksLow_ && searchHeight_.blocksLow_));
+            return tile.collides(searchHeight_, searchRadius_);
         }
-
-        /*
-        public static void Main()
-        {
-
-            TileType[,] map = new TileType[60, 60];
-
-            TileIndex start;
-            TileIndex end;
-
-            Random r = new Random();
-
-            Pathfinder.init();
-
-            for (int i = 0; i < 50; i++)
-            {
-                start.x = r.Next(60);
-                start.y = r.Next(60);
-                end.x = r.Next(60);
-                end.y = r.Next(60);
-
-                System.Console.Write(start.x);
-                System.Console.Write(",");
-                System.Console.Write(start.y);
-                System.Console.Write(" to ");
-                System.Console.Write(end.x);
-                System.Console.Write(",");
-                System.Console.Write(end.y);
-                System.Console.Write(" took ");
-
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                int result = aStar(start, end);
-                sw.Stop();
-
-                System.Console.WriteLine(sw.ElapsedMilliseconds);
-            }
-
-            for (int i = 0; i < 12; i++)
-            {
-                start.x = 0;
-                start.y = 0;
-                end.x = i * 5;
-                end.y = i * 5;
-
-                System.Console.Write(start.x);
-                System.Console.Write(",");
-                System.Console.Write(start.y);
-                System.Console.Write(" to ");
-                System.Console.Write(end.x);
-                System.Console.Write(",");
-                System.Console.Write(end.y);
-                System.Console.Write(" took ");
-
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                int result = aStar(start, end);
-                sw.Stop();
-
-                System.Console.WriteLine(sw.ElapsedMilliseconds);
-            }
-        }
-         */
     }
 
     struct AStarPathfinderNode

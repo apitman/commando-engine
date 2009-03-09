@@ -34,13 +34,9 @@ namespace Commando
         protected Vector2 velocity_;
 
         /// <summary>
-        /// Create a default MovableObject
+        /// Hidden default constructor.
         /// </summary>
-        public MovableObjectAbstract() :
-            base()
-        {
-            velocity_ = Vector2.Zero;
-        }
+        protected MovableObjectAbstract() { }
 
         /// <summary>
         /// Create a MovableObject at the specifed position, direction, and depth.
@@ -48,8 +44,8 @@ namespace Commando
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public MovableObjectAbstract(Vector2 position, Vector2 direction, float depth) :
-            base(position, direction, depth)
+        public MovableObjectAbstract(List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, position, direction, depth)
         {
             velocity_ = Vector2.Zero;
         }
@@ -62,8 +58,8 @@ namespace Commando
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public MovableObjectAbstract(Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
-            base(position, direction, depth)
+        public MovableObjectAbstract(List<DrawableObjectAbstract> pipeline, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, position, direction, depth)
         {
             velocity_ = velocity;
         }

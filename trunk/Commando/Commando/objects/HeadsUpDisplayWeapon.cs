@@ -31,21 +31,9 @@ namespace Commando.objects
     public class HeadsUpDisplayWeapon : HeadsUpDisplayObjectAbstract
     {
         /// <summary>
-        /// Create a default HeadsUpDisplayObject.
+        /// Hidden default constructor.
         /// </summary>
-        public HeadsUpDisplayWeapon()
-            : base()
-        {
-        }
-
-        /// <summary>
-        /// Create a HeadsUpDisplayObject with the specified texture
-        /// </summary>
-        /// <param name="tex">GameTexture for this HeadsUpDisplayObject</param>
-        public HeadsUpDisplayWeapon(GameTexture tex)
-            : base(tex)
-        {
-        }
+        protected HeadsUpDisplayWeapon() { }
 
         /// <summary>
         /// Create a HeadsUpDisplayObject with the specified texture, position, direction, and depth.
@@ -54,8 +42,8 @@ namespace Commando.objects
         /// <param name="pos">Position as a Vector relative to the top left corner</param>
         /// <param name="dir">Direction of the HeadsUpDisplayObject as a Vector</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public HeadsUpDisplayWeapon(GameTexture tex, Vector2 pos, Vector2 dir, float depth)
-            : base(tex, pos, dir, depth)
+        public HeadsUpDisplayWeapon(List<DrawableObjectAbstract> pipeline, GameTexture tex, Vector2 pos, Vector2 dir, float depth)
+            : base(pipeline, tex, pos, dir, depth)
         {
         }
 

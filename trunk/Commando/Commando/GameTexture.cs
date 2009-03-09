@@ -221,6 +221,20 @@ namespace Commando
         }
 
         /// <summary>
+        /// Draws the image to the screen with a rotation.
+        /// </summary>
+        /// <param name="imageNumber">Number of the image to draw</param>
+        /// <param name="position">Position to draw the image at</param>
+        /// <param name="direction">Direction of the image</param>
+        /// <param name="depth">Drawing depth of the image</param>
+        public void drawImageAbsolute(int imageNumber, Vector2 position, Vector2 direction, float depth)
+        {
+            float rotation = CommonFunctions.getAngle(direction);
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], Color.White, rotation, originOfImage, 1.0f, SpriteEffects.None, depth);
+        }
+
+        /// <summary>
         /// Draw the image to the screen with no rotation.
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
@@ -249,6 +263,20 @@ namespace Commando
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
         /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
+        /// <param name="direction">Direction of the image</param>
+        /// <param name="depth">Drawing depth of the image</param>
+        public void drawImageWithDimAbsolute(int imageNumber, Rectangle destinationDims, Vector2 direction, float depth)
+        {
+            float rotation = CommonFunctions.getAngle(direction);
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], Color.White, rotation, originOfImage, SpriteEffects.None, depth);
+        }
+
+        /// <summary>
+        /// Draw the image to the screen with the specified dimensions and a rotation.
+        /// </summary>
+        /// <param name="imageNumber">Number of the image to draw</param>
+        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageWithDimAbsolute(int imageNumber, Rectangle destinationDims, float depth)
         {
@@ -257,6 +285,13 @@ namespace Commando
 
         public void drawImageWithDimAbsolute(int imageNumber, Rectangle destinationDims, float rotation, float depth, Vector2 origin, Color color)
         {
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], color, rotation, origin, SpriteEffects.None, depth);
+        }
+
+        public void drawImageWithDimAbsolute(int imageNumber, Rectangle destinationDims, Vector2 direction, float depth, Vector2 origin, Color color)
+        {
+            float rotation = CommonFunctions.getAngle(direction);
             Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
             spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], color, rotation, origin, SpriteEffects.None, depth);
         }
@@ -273,6 +308,13 @@ namespace Commando
             spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], color, rotation, originOfImage, 1.0f, SpriteEffects.None, depth);
         }
 
+        public void drawImageWithColorAbsolute(int imageNumber, Vector2 position, Vector2 direction, float depth, Color color)
+        {
+            float rotation = CommonFunctions.getAngle(direction);
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], color, rotation, originOfImage, 1.0f, SpriteEffects.None, depth);
+        }
+
         /// <summary>
         /// Draws the image to the screen with a rotation.
         /// </summary>
@@ -282,6 +324,22 @@ namespace Commando
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImage(int imageNumber, Vector2 position, float rotation, float depth)
         {
+            position.X -= helper_.getCurrentCamera().getX();
+            position.Y -= helper_.getCurrentCamera().getY();
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], Color.White, rotation, originOfImage, 1.0f, SpriteEffects.None, depth);
+        }
+
+        /// <summary>
+        /// Draws the image to the screen with a rotation.
+        /// </summary>
+        /// <param name="imageNumber">Number of the image to draw</param>
+        /// <param name="position">Position to draw the image at</param>
+        /// <param name="direction">Direction of the image</param>
+        /// <param name="depth">Drawing depth of the image</param>
+        public void drawImage(int imageNumber, Vector2 position, Vector2 direction, float depth)
+        {
+            float rotation = CommonFunctions.getAngle(direction);
             position.X -= helper_.getCurrentCamera().getX();
             position.Y -= helper_.getCurrentCamera().getY();
             Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
@@ -321,6 +379,22 @@ namespace Commando
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
         /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
+        /// <param name="direction">Direction of the image</param>
+        /// <param name="depth">Drawing depth of the image</param>
+        public void drawImageWithDim(int imageNumber, Rectangle destinationDims, Vector2 direction, float depth)
+        {
+            float rotation = CommonFunctions.getAngle(direction);
+            destinationDims.X -= (int)helper_.getCurrentCamera().getX();
+            destinationDims.Y -= (int)helper_.getCurrentCamera().getY();
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], Color.White, rotation, originOfImage, SpriteEffects.None, depth);
+        }
+
+        /// <summary>
+        /// Draw the image to the screen with the specified dimensions and a rotation.
+        /// </summary>
+        /// <param name="imageNumber">Number of the image to draw</param>
+        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageWithDim(int imageNumber, Rectangle destinationDims, float depth)
         {
@@ -337,8 +411,26 @@ namespace Commando
             spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], color, rotation, origin, SpriteEffects.None, depth);
         }
 
+        public void drawImageWithDim(int imageNumber, Rectangle destinationDims, Vector2 direction, float depth, Vector2 origin, Color color)
+        {
+            float rotation = CommonFunctions.getAngle(direction);
+            destinationDims.X -= (int)helper_.getCurrentCamera().getX();
+            destinationDims.Y -= (int)helper_.getCurrentCamera().getY();
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, destinationDims, imageDimensions_[imageNumber], color, rotation, origin, SpriteEffects.None, depth);
+        }
+
         public void drawImageWithColor(int imageNumber, Vector2 position, float rotation, float depth, Color color)
         {
+            position.X -= helper_.getCurrentCamera().getX();
+            position.Y -= helper_.getCurrentCamera().getY();
+            Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
+            spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], color, rotation, originOfImage, 1.0f, SpriteEffects.None, depth);
+        }
+
+        public void drawImageWithColor(int imageNumber, Vector2 position, Vector2 direction, float depth, Color color)
+        {
+            float rotation = CommonFunctions.getAngle(direction);
             position.X -= helper_.getCurrentCamera().getX();
             position.Y -= helper_.getCurrentCamera().getY();
             Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);

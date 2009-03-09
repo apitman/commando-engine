@@ -1,4 +1,4 @@
-﻿/*
+/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -29,13 +29,13 @@ namespace Commando.objects.weapons
     {
         protected const int TIME_TO_REFIRE = 10;
 
-        public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
-            : base(pipeline, character, animation, gunHandle)
+        public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
+            : base(pipeline, character, TextureMap.fetchTexture("Pistol"), gunHandle)
         {
             // nothing
         }
 
-        public override void shoot(Commando.collisiondetection.CollisionDetectorInterface detector)
+        public override void shoot(CollisionDetectorInterface detector)
         {
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
@@ -45,6 +45,11 @@ namespace Commando.objects.weapons
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
             }
+        }
+
+        public override void draw()
+        {
+            // do nothing - no graphic for the DroneGun
         }
     }
 }

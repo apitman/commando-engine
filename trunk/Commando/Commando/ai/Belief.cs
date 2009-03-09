@@ -28,23 +28,35 @@ namespace Commando.ai
     /// A particular piece of information that an NPC believes about the
     /// current state of the world.
     /// </summary>
-    public struct Belief
+    public class Belief
     {
         public BeliefType type_;
+        public Object handle_;
         public float confidence_;
         public Vector2 position_;
+        public float value_;
 
-        public Belief(BeliefType type, float conf, float x, float y)
+        public Belief(BeliefType type, Object handle, float conf, Vector2 position, float value)
         {
             type_ = type;
+            handle_ = handle;
             confidence_ = conf;
-            position_ = new Vector2(x, y);
+            position_ = position;
+            value_ = value;
+        }
+
+        public void replace(Belief b)
+        {
+            confidence_ = b.confidence_;
+            position_ = b.position_;
+            value_ = b.value_;
         }
     }
 
     public enum BeliefType
     {
         EnemyLoc,
+        EnemyHealth,
         SuspiciousNoise
     }
 }

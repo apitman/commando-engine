@@ -36,22 +36,9 @@ namespace Commando.objects
         //Additional info to be added for passable/unpassable, rooms, level, etc.
 
         /// <summary>
-        /// Create a base LevelObject.
+        /// Hidden default constructor.
         /// </summary>
-        public LevelObjectAbstract() :
-            base()
-        {
-        }
-
-        /// <summary>
-        /// Create a LevelObject with the specified texture.
-        /// </summary>
-        /// <param name="image">GameTexture for this object</param>
-        public LevelObjectAbstract(GameTexture image) :
-            base()
-        {
-            image_ = image;
-        }
+        protected LevelObjectAbstract() { }
 
         /// <summary>
         /// Create a LevelObject with the specified image, position, direction, and depth.
@@ -60,8 +47,8 @@ namespace Commando.objects
         /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
         /// <param name="direction">Direction of the object as a Vector</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public LevelObjectAbstract(GameTexture image, Vector2 position, Vector2 direction, float depth) :
-            base(position, direction, depth)
+        public LevelObjectAbstract(List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, position, direction, depth)
         {
             image_ = image;
         }
@@ -74,6 +61,25 @@ namespace Commando.objects
         public void setImage(GameTexture image)
         {
             image_ = image;
+        }
+
+        /// <summary>
+        /// Default behavior for level objects is no change.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public override void update(GameTime gameTime)
+        {
+
+        }
+
+        /// <summary>
+        /// Default draw type for level objects is no rotation,
+        /// simple draw of position and depth, frame 0.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public override void draw(GameTime gameTime)
+        {
+            image_.drawImage(0, position_, depth_);
         }
     }
 }

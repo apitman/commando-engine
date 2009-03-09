@@ -44,28 +44,9 @@ namespace Commando
         protected Vector2 moved_;
 
         /// <summary>
-        /// Create a default AnimatedObject.
+        /// Hidden default constructor.
         /// </summary>
-        public AnimatedObjectAbstract() :
-            this(new AnimationSet(), 1.0f)
-        {
-            
-        }
-
-        /// <summary>
-        /// Create an AnimatedObject with the specified animations and frameLengthModifier
-        /// </summary>
-        /// <param name="animations">AnimationSet containing all animations for this object</param>
-        /// <param name="frameLengthModifier">Float representing the ratio of frames in an animation to movement along the screen</param>
-        public AnimatedObjectAbstract(AnimationSet animations, float frameLengthModifier) :
-            base()
-        {
-            animations_ = animations;
-            frameLengthModifier_ = frameLengthModifier;
-            currentAnimation_ = 0;
-            currentFrame_ = 0;
-            moved_ = Vector2.Zero;
-        }
+        protected AnimatedObjectAbstract() { }
 
         /// <summary>
         /// Create an AnimatedObject with the specified animations, frameLengthModifier,
@@ -77,8 +58,8 @@ namespace Commando
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public AnimatedObjectAbstract(AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
-            base(velocity, position, direction, depth)
+        public AnimatedObjectAbstract(List<DrawableObjectAbstract> pipeline, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, velocity, position, direction, depth)
         {
             animations_ = animations;
             frameLengthModifier_ = frameLengthModifier;

@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{3C87871D-A99F-46A8-86E0-05CC96B7B058}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -98,6 +98,8 @@
     <Compile Include="ai\InferenceEngine.cs" />
     <Compile Include="ai\Memory.cs" />
     <Compile Include="ai\planning\Action.cs" />
+    <Compile Include="ai\planning\ActionAttackRanged.cs" />
+    <Compile Include="ai\planning\ActionGoto.cs" />
     <Compile Include="ai\planning\ActionType.cs" />
     <Compile Include="ai\planning\IndividualPlanner.cs" />
     <Compile Include="ai\planning\SearchNode.cs" />
@@ -106,6 +108,8 @@
     <Compile Include="ai\SensorEars.cs" />
     <Compile Include="ai\SensorEyes.cs" />
     <Compile Include="ai\Stimulus.cs" />
+    <Compile Include="ai\System.cs" />
+    <Compile Include="ai\SystemAiming.cs" />
     <Compile Include="ai\SystemBehavior.cs" />
     <Compile Include="ai\SystemCommunication.cs" />
     <Compile Include="ai\SystemNavigation.cs" />
@@ -148,6 +152,7 @@
     <Compile Include="graphics\CharacterRunAction.cs" />
     <Compile Include="graphics\NonLoopAnimation.cs" />
     <Compile Include="levels\TileGrid.cs" />
+    <Compile Include="levels\Tileset.cs" />
     <Compile Include="MenuList.cs" />
     <Compile Include="FontMap.cs" />
     <Compile Include="GameFont.cs" />

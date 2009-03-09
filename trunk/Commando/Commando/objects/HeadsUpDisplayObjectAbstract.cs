@@ -40,27 +40,9 @@ namespace Commando.objects
         protected int newValue_;
 
         /// <summary>
-        /// Create a default HeadsUpDisplayObject.
+        /// Hidden default constructor.
         /// </summary>
-        public HeadsUpDisplayObjectAbstract() :
-            base()
-        {
-            modified_ = false;
-            newValue_ = 0;
-            texture_ = TextureMap.getInstance().getTexture("No_Image");
-        }
-
-        /// <summary>
-        /// Create a HeadsUpDisplayObject with the specified texture
-        /// </summary>
-        /// <param name="texture">GameTexture for this HeadsUpDisplayObject</param>
-        public HeadsUpDisplayObjectAbstract(GameTexture texture) :
-            base()
-        {
-            modified_ = false;
-            newValue_ = 0;
-            texture_ = texture;
-        }
+        protected HeadsUpDisplayObjectAbstract() { }
 
         /// <summary>
         /// Create a HeadsUpDisplayObject with the specified texture, position, direction, and depth.
@@ -69,8 +51,8 @@ namespace Commando.objects
         /// <param name="position">Position as a Vector relative to the top left corner</param>
         /// <param name="direction">Direction of the HeadsUpDisplayObject as a Vector</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public HeadsUpDisplayObjectAbstract(GameTexture texture, Vector2 position, Vector2 direction, float depth) :
-            base(position, direction, depth)
+        public HeadsUpDisplayObjectAbstract(List<DrawableObjectAbstract> pipeline, GameTexture texture, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, position, direction, depth)
         {
             modified_ = false;
             newValue_ = 0;

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -43,13 +43,11 @@ namespace Commando.objects
 
         protected DefaultActuator actuator_;
 
-        protected WeaponAbstract weapon_;
-
         /// <summary>
         /// Create the main player of the game.
         /// </summary>
         public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline) :
-            base(new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
+            base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
             PlayerHelper.Player_ = this;
             
@@ -80,7 +78,7 @@ namespace Commando.objects
             radius_ = RADIUS;
             collisionDetector_ = new CollisionDetector(null);
 
-            weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
         }
 
         /// <summary>
@@ -91,7 +89,7 @@ namespace Commando.objects
         {
             //animations_.drawNextFrame(position_, getRotationAngle(), depth_);
             actuator_.draw();
-            weapon_.draw();
+            Weapon_.draw();
         }
         
         /// <summary>
@@ -118,7 +116,7 @@ namespace Commando.objects
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {
-                weapon_.shoot(collisionDetector_);
+                Weapon_.shoot(collisionDetector_);
                 inputSet_.setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
             }
             
@@ -136,7 +134,7 @@ namespace Commando.objects
 //                }
             }
             actuator_.update();
-            weapon_.update();
+            Weapon_.update();
             collidedInto_.Clear();
             collidedWith_.Clear();
             oldPosition -= position_;
@@ -151,7 +149,7 @@ namespace Commando.objects
             WorldState.Visual_.Remove(visualStimulusId_);
             WorldState.Visual_.Add(
                 visualStimulusId_,
-                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition())
+                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, 5, getPosition(), this)
             );
         }
 

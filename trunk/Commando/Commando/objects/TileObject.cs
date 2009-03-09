@@ -32,19 +32,18 @@ namespace Commando.objects
     {
 
         /// <summary>
-        /// Create a default TileObject.
+        /// Hidden default constructor.
         /// </summary>
-        public TileObject() :
-            base()
-        {
-        }
+        protected TileObject() { }
 
         /// <summary>
-        /// Create a TileObject with the specified image.
+        /// Create a non-rotated TileObject with the specified image, position, and depth.
         /// </summary>
-        /// <param name="image">Image of the TileObject</param>
-        public TileObject(GameTexture image) :
-            base(image)
+        /// <param name="image">GameTexture for this object.</param>
+        /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
+        /// <param name="depth">Drawing depth of the object</param>
+        public TileObject(List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, float depth) :
+            base(pipeline, image, position, Vector2.Zero, depth)
         {
         }
 
@@ -55,27 +54,10 @@ namespace Commando.objects
         /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
         /// <param name="direction">Direction of the object as a Vector</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public TileObject(GameTexture image, Vector2 position, Vector2 direction, float depth) :
-            base(image, position, direction, depth)
+        public TileObject(List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, image, position, direction, depth)
         {
         }
-
-        /// <summary>
-        /// Draw the tile on the ground.
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void draw(GameTime gameTime)
-        {
-            image_.drawImage(0, position_, depth_);
-        }
-
-        /// <summary>
-        /// Update does nothing, because tiles don't change.
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void update(GameTime gameTime)
-        {
-            
-        }
+ 
     }
 }

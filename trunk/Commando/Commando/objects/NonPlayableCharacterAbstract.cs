@@ -68,8 +68,8 @@ namespace Commando.objects
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
-        public NonPlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface detector, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
-            base(health, ammo, weapon, name, detector, animations, frameLengthModifier, velocity, position, direction, depth)
+        public NonPlayableCharacterAbstract(List<DrawableObjectAbstract> pipeline, CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface detector, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+            base(pipeline, health, ammo, weapon, name, detector, animations, frameLengthModifier, velocity, position, direction, depth)
         {
             AI_ = new AI(this);
         }
