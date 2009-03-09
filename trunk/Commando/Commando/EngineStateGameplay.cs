@@ -304,9 +304,9 @@ namespace Commando
             if (Settings.getInstance().UsingMouse_)
             {
                 MouseState ms = Mouse.GetState();
-                Vector2 mpos = new Vector2(ms.X, ms.Y);
-                TextureMap.getInstance().getTexture("laserpointer").drawImageAbsolute(
-                    0, mpos, Constants.DEPTH_LASER);
+                Vector2 mpos = new Vector2(ms.X, ms.Y) - new Vector2(2.5f,2.5f);
+                TextureMap.fetchTexture("laserpointer")
+                          .drawImageAbsolute(0, mpos, Constants.DEPTH_LASER, Color.Aquamarine);
             }
             #endif
 

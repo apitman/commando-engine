@@ -213,24 +213,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\SamplePlayer.png">
-      <Link>Sprites\SamplePlayer.png</Link>
-      <Name>SamplePlayer</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\SamplePlayer_Small.png">
-      <Link>Sprites\SamplePlayer_Small.png</Link>
-      <Name>SamplePlayer_Small</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\SamplePlayer_XSmall.png">
-      <Link>Sprites\SamplePlayer_XSmall.png</Link>
-      <Name>SamplePlayer_XSmall</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="..\..\Commando\Content\Sprites\testmenu.PNG">
       <Link>Sprites\testmenu.PNG</Link>
       <Name>testmenu</Name>

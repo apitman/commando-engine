@@ -40,6 +40,7 @@ namespace Commando.objects.weapons
         protected bool weaponFired_;
 
         protected static float SOUND_RADIUS;
+        protected static readonly Vector2 LASER_OFFSET = new Vector2(2.5f, 2.5f);
 
         public PlayerWeapon(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
             : base(pipeline, character, animation, gunHandle)
@@ -51,7 +52,8 @@ namespace Commando.objects.weapons
         public override void update()
         {
             base.update();
-            laserTarget_ = Raycaster.roughCollision(position_, rotation_, new Height(false, true));
+            laserTarget_
+                = Raycaster.roughCollision(position_, rotation_, new Height(false, true)) - LASER_OFFSET;
 
             WorldState.Audial_.Remove(audialStimulusId_);
             if (weaponFired_)
@@ -67,7 +69,7 @@ namespace Commando.objects.weapons
         public override void draw()
         {
             base.draw();
-            if (!Settings.getInstance().UsingMouse_)
+            //if (!Settings.getInstance().UsingMouse_)
                 laserImage_.drawImage(0, laserTarget_, Constants.DEPTH_LASER);
         }
     }
