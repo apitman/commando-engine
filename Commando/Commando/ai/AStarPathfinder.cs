@@ -180,7 +180,7 @@ namespace Commando.ai
         protected static void mark(short x, short y, float g, ref TileIndex parent)
         {
             // Verify that we are not outside the search space
-            if (x < 0 || x >= SEARCH_SPACE_WIDTH || x < 0 || y >= SEARCH_SPACE_HEIGHT)
+            if (x < 0 || x >= SEARCH_SPACE_WIDTH || y < 0 || y >= SEARCH_SPACE_HEIGHT)
             {
                 return;
             }

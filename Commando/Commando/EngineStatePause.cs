@@ -32,8 +32,8 @@ namespace Commando
         static readonly Color BACKGROUND_COLOR = Color.Black;
 
         const FontEnum PAUSE_FONT = FontEnum.Pericles;
-        readonly Color PAUSE_MENU_SELECTED_COLOR = Color.Green;
-        readonly Color PAUSE_MENU_UNSELECTED_COLOR = Color.White;
+        readonly Color PAUSE_MENU_SELECTED_COLOR = Color.White;
+        readonly Color PAUSE_MENU_UNSELECTED_COLOR = Color.Green;
         /*const Vector2 PAUSE_MENU_POSITION =
             new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                         engine_.GraphicsDevice.Viewport.Height / 2.0f + 120.0f);*/
@@ -86,15 +86,14 @@ namespace Commando
             }
             menuString.Add(STR_QUIT_GAME);
             int cursor = (int)Settings.getInstance().getMovementType();
-            pauseMenu_ = new MenuList(menuString,
-                                        PAUSE_FONT,
-                                        new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
-                                            100.0f),
-                                        PAUSE_MENU_SELECTED_COLOR,
-                                        PAUSE_MENU_UNSELECTED_COLOR,
-                                        PAUSE_MENU_DEFAULT_SELECTED_ITEM,
-                                        PAUSE_MENU_SPACING);
-
+            Vector2 pauseMenuPos = new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
+                                            100.0f);
+            pauseMenu_ = new MenuList(menuString, pauseMenuPos);
+            pauseMenu_.Font_ = PAUSE_FONT;
+            pauseMenu_.BaseColor_ = PAUSE_MENU_UNSELECTED_COLOR;
+            pauseMenu_.SelectedColor_ = PAUSE_MENU_SELECTED_COLOR;
+            pauseMenu_.Spacing_ = PAUSE_MENU_SPACING;
+            pauseMenu_.CursorPos_ = PAUSE_MENU_DEFAULT_SELECTED_ITEM;
         }
 
         #region EngineStateInterface Members

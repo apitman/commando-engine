@@ -221,7 +221,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::0cabc3da-2b01-4975-83c3-2626e5172576;
+            Name = 1::81ec3aee-1103-46f0-ad46-f500d6d3cdd1;
             Property = 0;
             Sound = 0;
             Line Color = 4281059395;
@@ -261,7 +261,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = 1::00bd069d-6143-42a2-9cf2-b6fcb7c7a19a;
+            Name = 1::9400db63-62c7-4b35-af1c-4db33f218ac6;
             Property = 0;
             Sound = 0;
             Line Color = 4287200587;
@@ -305,12 +305,10 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 3000700460;
-    PC Bank Last Modified High = 29991240;
-    Bank Last Revised Low = 2859762960;
-    Bank Last Revised High = 29991240;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 608898138;
+    Bank Last Revised High = 29991247;
 
     Wave
     {
@@ -355,7 +353,7 @@ Sound Bank
 
         Category Entry
         {
-            Name = Default;
+            Name = Music;
         }
 
         RPC Entry
@@ -404,13 +402,13 @@ Sound Bank
             RPC Curve Entry
             {
                 RPC Name = Fade Out;
-                RPC Curve Name = 1::0cabc3da-2b01-4975-83c3-2626e5172576;
+                RPC Curve Name = 1::81ec3aee-1103-46f0-ad46-f500d6d3cdd1;
             }
 
             RPC Curve Entry
             {
                 RPC Name = Fade In;
-                RPC Curve Name = 1::00bd069d-6143-42a2-9cf2-b6fcb7c7a19a;
+                RPC Curve Name = 1::9400db63-62c7-4b35-af1c-4db33f218ac6;
             }
         }
     }

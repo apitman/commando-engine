@@ -33,8 +33,8 @@ namespace Commando
         const int SCREEN_SIZE_Y = 600;
 
         protected readonly FontEnum MENU_FONT = FontEnum.Kootenay;
-        protected readonly Color MENU_SELECTED_COLOR = Color.Green;
-        protected readonly Color MENU_UNSELECTED_COLOR = Color.White;
+        protected readonly Color MENU_SELECTED_COLOR = Color.White;
+        protected readonly Color MENU_UNSELECTED_COLOR = Color.Green;
         protected const float MENU_DEPTH = Constants.DEPTH_MENU_TEXT;
         protected const float MENU_ROTATION = 0.0f;
         protected const float MENU_SPACING = 40.0f;
@@ -83,13 +83,13 @@ namespace Commando
             controlTips_ = ""; // currrently refreshed every frame in draw()
             Vector2 menuPos = new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
                                                 engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f);
-            mainMenuList_ = new MenuList(menuString,
-                MENU_FONT,
-                menuPos,
-                MENU_SELECTED_COLOR,
-                MENU_UNSELECTED_COLOR,
-                MENU_DEFAULT_CURSOR_POSITION,
-                MENU_SPACING);
+            mainMenuList_ = new MenuList(menuString, menuPos);
+            mainMenuList_.BaseColor_ = MENU_UNSELECTED_COLOR;
+            mainMenuList_.SelectedColor_ = MENU_SELECTED_COLOR;
+            mainMenuList_.CursorPos_ = MENU_DEFAULT_CURSOR_POSITION;
+            mainMenuList_.Font_ = MENU_FONT;
+            mainMenuList_.Spacing_ = MENU_SPACING;
+            mainMenuList_.LayerDepth_ = MENU_DEPTH;
         }
 
         #region EngineStateInterface Members

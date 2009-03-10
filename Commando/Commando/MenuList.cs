@@ -32,8 +32,10 @@ namespace Commando
     /// highlights a selected item
     /// </summary>
     public class MenuList
-    {    
-
+    {
+        readonly Color DEFAULT_BASE_COLOR = Color.Green;
+        readonly Color DEFAULT_SELECTED_COLOR = Color.White;
+        const float DEFAULT_SPACING = 40.0f;
         const FontEnum DEFAULT_FONT = FontEnum.Kootenay;
         const float DEFAULT_ROTATION = 0.0f;
         const float DEFAULT_SCALE = 1.0f;
@@ -48,84 +50,61 @@ namespace Commando
         protected Vector2 listPos_;
 
         //color of an unselected menu item
-        protected Color baseColor_;
+        public Color BaseColor_ { get; set; }
 
         //color of a selected menu item
-        protected Color selectedColor_;
+        public Color SelectedColor_ { get; set; }
 
         //position of the selected menu item
-        protected int cursorPos_;
+        public int CursorPos_ { get; set; }
 
         //rotation value of individual items
-        protected float rotation_;
+        public float Rotation_ { get; set; }
 
         //scale of printed font with respect to original font
-        protected float scale_;
+        public float Scale_ { get; set; }
 
         //any sprite effects for the menu
-        protected SpriteEffects spriteEffects_;
+        public SpriteEffects SpriteEffects_ { get; set; }
 
         //layer depth of menu
-        protected float layerDepth_;
+        public float LayerDepth_ { get; set; }
 
         //space between each line in the menu
-        protected float spacing_;
+        public float Spacing_ { get; set; }
 
         //font to display menu
+        public FontEnum Font_
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                font_ = FontMap.getInstance().getFont(value);
+            }
+        }
         protected GameFont font_;
 
-        /// <summary>
-        /// Creates a menuList object 
-        /// </summary>
-        /// <param name="stringList">list of menu items</param>
-        /// <param name="font">font to display menu</param>
-        /// <param name="pos">position of menu</param>
-        /// <param name="baseColor">color of unselected item</param>
-        /// <param name="selectedColor">color of selected item</param>
-        /// <param name="cursorPos">initial cursor position</param>
-        /// <param name="scale">scale of printed font with respect to original font</param>
-        /// <param name="spacing">space between each line in the menu</param>
-        public MenuList(List<string> stringList, FontEnum font, Vector2 pos, Color baseColor, Color selectedColor, int cursorPos, float spacing)
+        protected void setDefaults()
         {
-            stringList_ = stringList;
-            font_ = FontMap.getInstance().getFont(font);
-            listPos_ = pos;
-            baseColor_ = baseColor;
-            selectedColor_ = selectedColor;
-            cursorPos_ = cursorPos;
-            rotation_ = DEFAULT_ROTATION;
-            scale_ = DEFAULT_SCALE;
-            spriteEffects_ = DEFAULT_SPRITE_EFFECTS;
-            layerDepth_ = DEFAULT_DEPTH;
-            spacing_ = spacing;
+            this.CursorPos_ = 0;
+            this.BaseColor_ = DEFAULT_BASE_COLOR;
+            this.SelectedColor_ = DEFAULT_SELECTED_COLOR;
+            this.Scale_ = DEFAULT_SCALE;
+            this.Spacing_ = DEFAULT_SPACING;
+            this.SpriteEffects_ = DEFAULT_SPRITE_EFFECTS;
+            this.LayerDepth_ = DEFAULT_DEPTH;
+            this.Font_ = DEFAULT_FONT;
         }
 
-        /// <summary>
-        /// Creates a menuList object 
-        /// </summary>
-        /// <param name="stringList">list of menu items</param>
-        /// <param name="pos">position of </param>
-        /// <param name="baseColor">color of unselected item</param>
-        /// <param name="selectedColor">color of selected item</param>
-        /// <param name="cursorPos">initial cursor position</param>
-        /// <param name="rotation">rotation value of individual items</param>
-        /// <param name="scale">scale of printed font with respect to original font</param>
-        /// <param name="effects">any sprite effects for the menu</param>
-        /// <param name="layerDepth">layer depth of menu</param>
-        /// <param name="spacing">space between each line in the menu</param>
-        public MenuList(List<string> stringList, Vector2 pos, Color baseColor, Color selectedColor, int cursorPos, float rotation, float scale, SpriteEffects effects, float layerDepth, float spacing)
+        public MenuList(List<string> stringList, Vector2 position)
         {
-            stringList_ = stringList;
-            font_ = FontMap.getInstance().getFont(DEFAULT_FONT);
-            listPos_ = pos;
-            baseColor_ = baseColor;
-            selectedColor_ = selectedColor;
-            cursorPos_ = cursorPos;
-            rotation_ = rotation;
-            scale_ = scale;
-            spriteEffects_ = effects;
-            layerDepth_ = layerDepth;
-            spacing_ = spacing;
+            setDefaults();
+            this.stringList_ = stringList;
+            this.listPos_ = position;
         }
 
         #region FontList Members
@@ -142,35 +121,35 @@ namespace Commando
             Color myColor;
             for (int i = 0; i < listLength; i++)
             {
-                if (i == cursorPos_)
+                if (i == CursorPos_)
                 {
-                    myColor = selectedColor_;
+                    myColor = SelectedColor_;
                 }
                 else
                 {
-                    myColor = baseColor_;
+                    myColor = BaseColor_;
                 }
                 string curString = stringList_[i];
 
                 font_.drawStringCentered(curString,
                                           curPos,
                                           myColor,
-                                          rotation_,
-                                          scale_,
-                                          spriteEffects_,
-                                          layerDepth_);
-                curPos.Y = curPos.Y + spacing_;
+                                          Rotation_,
+                                          Scale_,
+                                          SpriteEffects_,
+                                          LayerDepth_);
+                curPos.Y = curPos.Y + Spacing_;
             }
         }
 
         public int getCursorPos()
         {
-            return cursorPos_;
+            return CursorPos_;
         }
 
         public void setCursorPos(int newPos)
         {
-            cursorPos_ = newPos;
+            CursorPos_ = newPos;
         }
 
         /// <summary>
@@ -178,8 +157,8 @@ namespace Commando
         /// </summary>
         public void incrementCursorPos()
         {
-            cursorPos_++;
-            cursorPos_ = cursorPos_ % stringList_.Count;
+            CursorPos_++;
+            CursorPos_ = CursorPos_ % stringList_.Count;
         }
 
         /// <summary>
@@ -187,10 +166,10 @@ namespace Commando
         /// </summary>
         public void decrementCursorPos()
         {
-            cursorPos_--;
-            if (cursorPos_ < 0) 
+            CursorPos_--;
+            if (CursorPos_ < 0) 
             {
-                cursorPos_ = stringList_.Count - 1;
+                CursorPos_ = stringList_.Count - 1;
             }
         }
 
