@@ -30,6 +30,7 @@ namespace Commando.objects
     /// </summary>
     public class TileObject : LevelObjectAbstract
     {
+        protected int tileNumber_;
 
         /// <summary>
         /// Hidden default constructor.
@@ -42,9 +43,10 @@ namespace Commando.objects
         /// <param name="image">GameTexture for this object.</param>
         /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public TileObject(List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, float depth) :
+        public TileObject(int tileNumber, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, float depth) :
             base(pipeline, image, position, Vector2.Zero, depth)
         {
+            tileNumber_ = tileNumber;
         }
 
         /// <summary>
@@ -54,9 +56,15 @@ namespace Commando.objects
         /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
         /// <param name="direction">Direction of the object as a Vector</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public TileObject(List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth) :
+        public TileObject(int tileNumber, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth) :
             base(pipeline, image, position, direction, depth)
         {
+            tileNumber_ = tileNumber;
+        }
+
+        public int getTileNumber()
+        {
+            return tileNumber_;
         }
  
     }
