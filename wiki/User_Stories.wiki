@@ -29,11 +29,11 @@
 
   === Gameplay ===
   # User can load a specific level file for both editing and gameplay(Andrew)
-  # User can play in levels larger than window size with a scrolling camera (Jared)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can play in levels larger than window size with a scrolling camera (Jared)
   # User can move from one level to another via specific entry/exit points (Jared)
   # User's character will turn smoothly to face new positions (Jared)
   # User sees realistic stops when more than 2 objects collide (Jared)
-  # User's character will stop when rotating into a collision instead of translating (Jared)
+  # [http://ed.toton.org/images/red-x.gif]User's character will stop when rotating into a collision instead of translating (Jared) - removed because does not "feel right in play
   # User can pick up ammunition (Andrew, Jared)
   # User can pick up health (Andrew, Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can hide from enemies by staying out of their line of sight (Ken)
