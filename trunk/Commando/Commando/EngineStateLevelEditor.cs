@@ -162,7 +162,7 @@ namespace Commando
             cursorPosX_ = 2;
             cursorPosY_ = 2;
             curTileIndex_ = 0;
-            displayTile_ = new TileObject(drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
+            displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Commando
                 {
                     case (int)pallette_.tile:
                         {
-                            tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                            tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
                             
                             // Edit the XML tile
                             System.Xml.XmlElement tileElement = (System.Xml.XmlElement)doc.GetElementsByTagName("tile")[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW];
@@ -299,7 +299,7 @@ namespace Commando
                             {
                                 int myX = (int)rightD.X / 15;
                                 int myY = (int)rightD.Y / 15;
-                                tiles_[myX + myY * NUM_TILES_PER_ROW] = new TileObject(drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)myX * Tiler.tileSideLength_, (float)myY * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                                tiles_[myX + myY * NUM_TILES_PER_ROW] = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)myX * Tiler.tileSideLength_, (float)myY * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
 
                                 // Edit the XML tile
                                 System.Xml.XmlElement tileElement = (System.Xml.XmlElement) doc.GetElementsByTagName("tile")[myX + myY * NUM_TILES_PER_ROW];
@@ -367,7 +367,7 @@ namespace Commando
             // Finish Outputting to XML
             doc.Save(SAVE_PATH);
 
-            displayTile_ = new TileObject(drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
+            displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
 
             return this;
         }
