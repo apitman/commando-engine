@@ -23,6 +23,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.ai;
 using Commando.levels;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.objects.weapons
 {
@@ -70,7 +71,10 @@ namespace Commando.objects.weapons
         {
             base.draw();
             //if (!Settings.getInstance().UsingMouse_)
-                laserImage_.drawImage(0, laserTarget_, Constants.DEPTH_LASER);
+            TextureDrawer td =
+                laserImage_.getDrawer(laserTarget_, Constants.DEPTH_LASER);
+            td.Color = Color.Red;
+            td.draw();
         }
     }
 }

@@ -274,6 +274,9 @@
     <Compile Include="..\Commando\levels\Tiler.cs">
       <Link>levels\Tiler.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\MediaPlayerHelper.cs">
+      <Link>MediaPlayerHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\MenuList.cs">
       <Link>MenuList.cs</Link>
     </Compile>

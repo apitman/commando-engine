@@ -14,6 +14,10 @@
     <handle>Giant_A</handle>
   </image>
   <image>
+    <key>mouse</key>
+    <handle>Sprites\\mouse</handle>
+  </image>
+  <image>
     <key>TitleScreen</key>
     <handle>TitleScreen</handle>
   </image>
