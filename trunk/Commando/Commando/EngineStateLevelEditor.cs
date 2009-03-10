@@ -108,8 +108,8 @@ namespace Commando
         protected enum pallette_{tile, enemy, misc};
         protected int curPallette_;
         protected int enemyIndex_;
-
-
+        protected bool isObjSelected_;
+        protected int selectedIndex_;
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
         /// </summary>
@@ -123,6 +123,8 @@ namespace Commando
             returnScreenSizeX_ = returnScreenSizeX;
             returnScreenSizeY_ = returnScreenSizeY;
             enemyIndex_ = 0;
+            isObjSelected_ = false;
+            selectedIndex_ = 0;
             myObjects_ = new List<objectRepresentation>(MAX_NUM_ENEMIES);
 
             // Load the user's level from XML
@@ -173,6 +175,21 @@ namespace Commando
         public EngineStateInterface update(GameTime gameTime)
         {
             InputSet inputs = engine_.getInputs();
+
+            for (int i = 0; i < myObjects_.Count(); i++)
+            {
+                objectRepresentation currObject = myObjects_[i];
+                if (currObject.objRotation_ == Vector2.Zero)
+                {
+                    Vector2 newRotation = new Vector2(1.0f, 0.0f);
+
+                    currObject.objRotation_ = newRotation;
+                    myObjects_[i] = currObject;
+                }
+
+            }
+
+
 
             // Prepare to output to XML
             System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
@@ -235,7 +252,7 @@ namespace Commando
                 return returnState_;
             }
 
-            else if (inputs.getButton(InputsEnum.LEFT_BUMPER))
+            else if (inputs.getButton(InputsEnum.LEFT_BUMPER) && isObjSelected_ == false)
             {
                 curTileIndex_ = 0;
                 inputs.setToggle(InputsEnum.LEFT_BUMPER);
@@ -245,13 +262,42 @@ namespace Commando
                     curPallette_ = NUM_PALLETTES - 1;
                 }
             }
-            else if (inputs.getButton(InputsEnum.RIGHT_BUMPER))
+            else if (inputs.getButton(InputsEnum.LEFT_BUMPER) && isObjSelected_ == true)
+            {
+                //inputs.setStick(InputsEnum.LEFT_BUMPER, 5);
+                inputs.setToggle(InputsEnum.LEFT_BUMPER);
+                objectRepresentation currObject = myObjects_[selectedIndex_];
+                currObject.objRotation_ = CommonFunctions.rotate(currObject.objRotation_,(float) (Math.PI / 4)); 
+                //currObject.objRotation_ = curRotation;
+
+                //myObjects_.RemoveAt(selectedIndex_);
+                //myObjects_.Insert(selectedIndex_, currObject);
+                myObjects_[selectedIndex_] = currObject;
+            }
+            
+
+            
+            else if (inputs.getButton(InputsEnum.RIGHT_BUMPER) && isObjSelected_ == false)
             {
                 curTileIndex_ = 0;
                 inputs.setToggle(InputsEnum.RIGHT_BUMPER);
                 curPallette_++;
                 curPallette_ = curPallette_ % NUM_PALLETTES;
             }
+
+            else if (inputs.getButton(InputsEnum.RIGHT_BUMPER) && isObjSelected_)
+            {
+                //inputs.setStick(InputsEnum.LEFT_BUMPER, 5);
+                inputs.setToggle(InputsEnum.RIGHT_BUMPER);
+                objectRepresentation currObject = myObjects_[selectedIndex_];
+
+                currObject.objRotation_ = CommonFunctions.rotate(currObject.objRotation_,(double)( -1 * (Math.PI / 4)));
+                //myObjects_.RemoveAt(selectedIndex_);
+                //myObjects_.Insert(selectedIndex_, currObject);
+                myObjects_[selectedIndex_] = currObject;
+            }
+
+
             else if (inputs.getButton(InputsEnum.CONFIRM_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
@@ -260,7 +306,7 @@ namespace Commando
                     case (int)pallette_.tile:
                         {
                             tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
-                            
+
                             // Edit the XML tile
                             System.Xml.XmlElement tileElement = (System.Xml.XmlElement)doc.GetElementsByTagName("tile")[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW];
                             tileElement.SetAttribute("index", curTileIndex_.ToString());
@@ -268,8 +314,8 @@ namespace Commando
                         }
                     case (int)pallette_.enemy:
                         {
-                            
-                         //to do, add enemy on cursor position
+
+                            //to do, add enemy on cursor position
 
                             break;
                         }
@@ -280,18 +326,16 @@ namespace Commando
                         }
                 }
             }
-            else if (inputs.getButton(InputsEnum.RIGHT_TRIGGER))
+            else if (inputs.getButton(InputsEnum.RIGHT_TRIGGER) && isObjSelected_ == false)
             {
                 if (curPallette_ != (int)pallette_.tile)
                 {
                     inputs.setToggle(InputsEnum.RIGHT_TRIGGER);
-                    
-                   
                 }
-                
+
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
 
-                switch(curPallette_)
+                switch (curPallette_)
                 {
                     case (int)pallette_.tile:
                         {
@@ -302,7 +346,7 @@ namespace Commando
                                 tiles_[myX + myY * NUM_TILES_PER_ROW] = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)myX * Tiler.tileSideLength_, (float)myY * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
 
                                 // Edit the XML tile
-                                System.Xml.XmlElement tileElement = (System.Xml.XmlElement) doc.GetElementsByTagName("tile")[myX + myY * NUM_TILES_PER_ROW];
+                                System.Xml.XmlElement tileElement = (System.Xml.XmlElement)doc.GetElementsByTagName("tile")[myX + myY * NUM_TILES_PER_ROW];
                                 tileElement.SetAttribute("index", curTileIndex_.ToString());
                             }
                             break;
@@ -311,7 +355,8 @@ namespace Commando
                         {
                             if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
                             {
-                                objectRepresentation newObject = new objectRepresentation(DUMMY_ENEMY, rightD, Vector2.Zero, 0.2f);
+                                Vector2 defRotation = new Vector2(1.0f, 0.0f);
+                                objectRepresentation newObject = new objectRepresentation(DUMMY_ENEMY, rightD, defRotation, 0.2f);
                                 if (myObjects_.Count < MAX_NUM_ENEMIES)
                                 {
                                     myObjects_.Add(newObject);
@@ -323,10 +368,10 @@ namespace Commando
                                     enemyIndex_ = enemyIndex_ % MAX_NUM_ENEMIES;
                                 }
 
-                                 // Add an XML enemy
+                                // Add an XML enemy
                                 if (doc.GetElementsByTagName("enemy").Count < MAX_NUM_ENEMIES)
                                 {
-                                    System.Xml.XmlElement enemiesElement = (System.Xml.XmlElement) doc.GetElementsByTagName("enemies")[0];
+                                    System.Xml.XmlElement enemiesElement = (System.Xml.XmlElement)doc.GetElementsByTagName("enemies")[0];
                                     System.Xml.XmlElement enemyElement = doc.CreateElement("enemy");
                                     enemyElement.SetAttribute("name", DUMMY_ENEMY);
                                     enemyElement.SetAttribute("posX", rightD.X.ToString());
@@ -335,7 +380,7 @@ namespace Commando
                                 }
                                 else
                                 {
-                                    System.Xml.XmlElement enemyElement = (System.Xml.XmlElement) doc.GetElementsByTagName("enemy")[(enemyIndex_ + MAX_NUM_ENEMIES - 1) % MAX_NUM_ENEMIES];
+                                    System.Xml.XmlElement enemyElement = (System.Xml.XmlElement)doc.GetElementsByTagName("enemy")[(enemyIndex_ + MAX_NUM_ENEMIES - 1) % MAX_NUM_ENEMIES];
                                     enemyElement.SetAttribute("name", DUMMY_ENEMY);
                                     enemyElement.SetAttribute("posX", rightD.X.ToString());
                                     enemyElement.SetAttribute("posY", rightD.Y.ToString());
@@ -347,7 +392,53 @@ namespace Commando
                         }
                 }
             }
+            else if (inputs.getButton(InputsEnum.RIGHT_TRIGGER) && isObjSelected_)
+            {
+                Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
+                if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
+                {
+                    objectRepresentation currObject = myObjects_[selectedIndex_];
+                    currObject.objPos_ = rightD;
+                    //myObjects_.RemoveAt(selectedIndex_);
+                    //myObjects_.Insert(selectedIndex_, currObject);
+                    myObjects_[selectedIndex_] = currObject;
+                    //moveObject(ref myObjects_[selectedIndex_], rightD);
+                }
 
+            }
+            else if (inputs.getButton(InputsEnum.BUTTON_3) && isObjSelected_)
+            {
+                myObjects_.RemoveAt(selectedIndex_);
+                isObjSelected_ = false;
+                selectedIndex_ = 0;
+            }
+            else if (inputs.getButton(InputsEnum.LEFT_TRIGGER))
+            {
+                inputs.setToggle(InputsEnum.LEFT_TRIGGER);
+                if (isObjSelected_)
+                {
+                    isObjSelected_ = false;
+                    selectedIndex_ = 0;
+                }
+                else
+                {
+                    bool foundObj = false;
+                    Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
+                    for (int i = 0; i < myObjects_.Count() && foundObj == false; i++)
+                    {
+                        if (rightD.Y >= myObjects_[i].objPos_.Y && rightD.Y < myObjects_[i].objPos_.Y + 15.0f
+                            && rightD.X >= myObjects_[i].objPos_.X && rightD.X < myObjects_[i].objPos_.X + 15.0f)
+                        {
+                            selectedIndex_ = i;
+                            isObjSelected_ = true;
+                            foundObj = true;
+                        }
+
+                    }
+                }
+
+
+            }
             else if (inputs.getButton(InputsEnum.BUTTON_1))
             {
                 inputs.setToggle(InputsEnum.BUTTON_1);
@@ -370,6 +461,11 @@ namespace Commando
             displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
 
             return this;
+        }
+
+        public void moveObject(ref objectRepresentation or, Vector2 pos)
+        {
+            or.objPos_ = pos;
         }
 
         /// <summary>
@@ -397,7 +493,8 @@ namespace Commando
                 
                 if (currObject.objName_ == DUMMY_ENEMY)
                 {
-                    TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, currObject.objPos_, currObject.objDepth_);
+                    TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, currObject.objPos_, currObject.objRotation_, currObject.objDepth_);
+                    TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, currObject.objPos_, 0.2f);
                 }
                 
                 
