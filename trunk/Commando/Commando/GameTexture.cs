@@ -36,13 +36,13 @@ namespace Commando
     public class GameTexture
     {
         //Texture image for this GameTexture
-        protected Texture2D texture_;
+        internal Texture2D texture_ { get; set; }
 
         //Each Vector4 is the bounds (x of top right corner, y of top right corner,
         //width, height) of each individual frame, or image in this texture
-        protected Rectangle[] imageDimensions_;
+        internal Rectangle[] imageDimensions_ { get; set; }
 
-        protected SpriteBatch spriteBatch_;
+        internal SpriteBatch spriteBatch_ { get; set; }
 
         protected static GlobalHelper helper_;
 
@@ -444,10 +444,83 @@ namespace Commando
         public void drawImageWithColor(int imageNumber, Vector2 position, Vector2 direction, float depth, Color color)
         {
             float rotation = CommonFunctions.getAngle(direction);
-            position.X -= helper_.getCurrentCamera().getX();
-            position.Y -= helper_.getCurrentCamera().getY();
+            position -= helper_.getCurrentCamera().getPosition();
             Vector2 originOfImage = new Vector2(((float)imageDimensions_[imageNumber].Width) / 2.0f, ((float)imageDimensions_[imageNumber].Height) / 2.0f);
             spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], color, rotation, originOfImage, 1.0f, SpriteEffects.None, depth);
+        }
+
+        internal TextureDrawer getDrawer(Vector2 position, float depth)
+        {
+            TextureDrawer def = new TextureDrawer(this, position, depth);
+            def.Origin =
+                new Vector2(((float)imageDimensions_[def.ImageIndex].Width) / 2.0f, ((float)imageDimensions_[def.ImageIndex].Height) / 2.0f);
+            return def;
+        }
+    }
+
+    internal enum CoordinateTypeEnum
+    {
+        RELATIVE,
+        ABSOLUTE
+    }
+
+    internal class TextureDrawer
+    {
+        internal GameTexture Texture { get; private set; }
+        internal Vector2 Position { get; private set; }
+        internal float Rotation { get; set; }
+        internal Vector2 Direction
+        {
+            get
+            {
+                return CommonFunctions.getVector(Rotation);
+            }
+
+            set
+            {
+                Rotation = CommonFunctions.getAngle(value);
+            }
+        }
+        internal CoordinateTypeEnum CoordinateType { get; set; }
+        internal float Depth { get; private set; }
+        internal Color Color { get; set; }
+        internal int ImageIndex { get; set; }
+        internal SpriteEffects Effects { get; set; }
+        internal Vector2 Origin { get; set; }
+        internal float Scale { get; set; }
+
+        private TextureDrawer() { }
+
+        internal TextureDrawer(GameTexture texture, Vector2 position, float depth)
+        {
+            Texture = texture;
+            Position = position;
+            Depth = depth;
+            Rotation = 0;
+            CoordinateType = CoordinateTypeEnum.RELATIVE;
+            Color = Color.White;
+            ImageIndex = 0;
+            Effects = SpriteEffects.None;
+            Scale = 1.0f;
+        }
+
+        internal void draw()
+        {
+            if (this.CoordinateType == CoordinateTypeEnum.RELATIVE)
+            {
+                GlobalHelper helper = GlobalHelper.getInstance();
+                this.Position -= helper.getCurrentCamera().getPosition();
+            }
+            this.Texture.spriteBatch_.Draw(
+                              this.Texture.texture_,
+                              this.Position,
+                              this.Texture.imageDimensions_[this.ImageIndex],
+                              this.Color,
+                              this.Rotation,
+                              this.Origin,
+                              this.Scale,
+                              this.Effects,
+                              this.Depth);
         }
     }
 }

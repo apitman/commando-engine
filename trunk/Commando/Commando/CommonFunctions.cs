@@ -72,5 +72,13 @@ namespace Commando
         {
             return (float)Math.Atan2((double)vector.Y, (double)vector.X);
         }
+
+        public static Vector2 getVector(float rotation)
+        {
+            double oppOverHyp = Math.Tan(rotation);
+            Vector2 result = new Vector2((float)oppOverHyp, 1);
+            result.Normalize();
+            return result;
+        }
     }
 }

@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.graphics
 {
@@ -56,6 +57,11 @@ namespace Commando.graphics
         {
             curX_ = x - (screenWidth_ / 2f);
             curY_ = y - (screenHeight_ / 2f);
+        }
+
+        public Vector2 getPosition()
+        {
+            return new Vector2(curX_, curY_);
         }
 
         public float getX()

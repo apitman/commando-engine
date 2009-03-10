@@ -435,6 +435,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\mouse.png">
+      <Link>Sprites\mouse.png</Link>
+      <Name>mouse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\effects\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>
