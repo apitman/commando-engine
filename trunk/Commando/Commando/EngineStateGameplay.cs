@@ -86,6 +86,8 @@ namespace Commando
             // Cleanup singletons used by prior EngineStateGameplay
             Commando.ai.WorldState.reset();
 
+            SoundEngine.getInstance().Music.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);
+
             // Perform initializations of variables
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
