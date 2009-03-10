@@ -46,7 +46,7 @@ namespace Commando.levels
             {
                 for (int x = 0; x < tiles.GetLength(1); x++)
                 {
-                    retList.Add(new TileObject(pipeline, TextureMap.getInstance().getTexture("Tile_" + tiles[y, x]), new Vector2((float)x * tileSideLength_, (float)y * tileSideLength_), Vector2.Zero, 0.0f));
+                    retList.Add(new TileObject(tiles[y,x], pipeline, TextureMap.getInstance().getTexture("Tile_" + tiles[y, x]), new Vector2((float)x * tileSideLength_, (float)y * tileSideLength_), Vector2.Zero, 0.0f));
                 }
             }
             return retList;

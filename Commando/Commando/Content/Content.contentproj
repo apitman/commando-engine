@@ -290,6 +290,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\sounds.xap">
+      <Name>sounds</Name>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </Compile>
     <None Include="Tiles\Wall_Bottom.xml">
       <Name>Wall_Bottom</Name>
       <Importer>XmlImporter</Importer>

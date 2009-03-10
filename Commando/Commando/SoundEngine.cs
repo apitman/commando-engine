@@ -17,6 +17,7 @@
 */
 
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 
 /* EVEN MORE IMPORTANT NOTICE:
  * This class is deprecated, and should only be used if the project is
@@ -36,13 +37,15 @@ namespace Commando
     /// A simple class for pulling sounds from a compiled XACT project and
     /// playing them.  Employs the Singleton pattern.
     /// </summary>
-    class SoundEngine
+    internal class SoundEngine
     {
         private static SoundEngine instance_;
 
         private AudioEngine audio_;
         private WaveBank waveBank_;
         private SoundBank soundBank_;
+
+        internal Cue Music { get; set; }
 
         /// <summary>
         /// Private constructor as per the Singleton pattern which reads the
@@ -51,9 +54,11 @@ namespace Commando
         private SoundEngine()
         {
 #if !XBOX
-            audio_ = new AudioEngine(@"Content\Audio\Win\sounds.xgs");
-            waveBank_ = new WaveBank(audio_,@"Content\Audio\Win\MainMenuWaveBank.xwb");
-            soundBank_ = new SoundBank(audio_,@"Content\Audio\Win\MainMenuSoundBank.xsb");
+            // These files are automatically created in the output directory
+            //  matching the relative path of wherever the .xap file is located
+            audio_ = new AudioEngine(@"Content\Audio\sounds.xgs");
+            waveBank_ = new WaveBank(audio_,@"Content\Audio\waves1.xwb");
+            soundBank_ = new SoundBank(audio_,@"Content\Audio\sounds1.xsb");
 #else
             //throw new NotImplementedException();
 #endif
