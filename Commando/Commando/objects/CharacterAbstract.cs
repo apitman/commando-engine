@@ -24,6 +24,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.collisiondetection;
 using Commando.graphics;
+using Commando.levels;
 
 namespace Commando
 {
@@ -49,6 +50,8 @@ namespace Commando
         protected List<CollisionObjectInterface> collidedWith_ = new List<CollisionObjectInterface>();
 
         protected List<CollisionObjectInterface> collidedInto_ = new List<CollisionObjectInterface>();
+
+        protected Height height_;
 
         /// <summary>
         /// Create a default Character
@@ -77,6 +80,7 @@ namespace Commando
             {
                 collisionDetector_.register(this);
             }
+            height_ = new Height(true, true);
         }
 
         /// <summary>
@@ -106,6 +110,7 @@ namespace Commando
             {
                 collisionDetector_.register(this);
             }
+            height_ = new Height(true, true);
         }
 
         public CharacterHealth getHealth()
@@ -131,6 +136,11 @@ namespace Commando
         public CollisionDetectorInterface getCollisionDetector()
         {
             return collisionDetector_;
+        }
+
+        public Height getHeight()
+        {
+            return height_;
         }
 
         public abstract ActuatorInterface getActuator();
@@ -174,11 +184,21 @@ namespace Commando
             collidedInto_.Add(obj);
         }
 
+        public virtual Vector2 checkCollisionWith(CollisionObjectInterface obj, CollisionDetectorInterface detector, HeightEnum height, float radDistance, Vector2 velocity)
+        {
+            return detector.checkCollision(obj.getBounds(height), getBounds(height), radDistance, velocity);
+        }
+
+        public virtual Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
+        {
+            return translate;
+        }
+
         public abstract void damage(int amount, CollisionObjectInterface obj);
 
         public abstract float getRadius();
 
-        public abstract ConvexPolygonInterface getBounds();
+        public abstract ConvexPolygonInterface getBounds(HeightEnum height);
 
         public override void die()
         {

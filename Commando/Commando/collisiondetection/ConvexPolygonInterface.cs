@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Commando.levels;
 
 namespace Commando.collisiondetection
 {
@@ -16,7 +17,7 @@ namespace Commando.collisiondetection
         
         Vector2[] getPoints();
         
-        void projectPolygonOnAxis(Vector2 axis, ref float min, ref float max);
+        void projectPolygonOnAxis(Vector2 axis, Height height, ref float min, ref float max);
         
         void rotate(Vector2 newAxis, Vector2 position);
 

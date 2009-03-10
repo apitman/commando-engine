@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Commando.collisiondetection;
 using Microsoft.Xna.Framework;
+using Commando.levels;
 
 namespace CommandoTest
 {
@@ -74,11 +75,11 @@ namespace CommandoTest
             ConvexPolygon boundsPolygon = new ConvexPolygon(points, Vector2.Zero);
             boundsPolygon.rotate(new Vector2(0.0f, 1.0f), Vector2.Zero);
             float minA = 0, maxA = 0, minB = 0, maxB = 0;
-            boundsPolygon.projectPolygonOnAxis(new Vector2(1.0f, 0.0f), ref minA, ref maxA);
+            boundsPolygon.projectPolygonOnAxis(new Vector2(1.0f, 0.0f), new Height(), ref minA, ref maxA);
             Assert.AreEqual(-15.0f, minA);
             Assert.AreEqual(15.0f, maxA);
             boundsPolygon.rotate(new Vector2(1.0f, 0.0f), Vector2.Zero);
-            boundsPolygon.projectPolygonOnAxis(new Vector2(1.0f, 0.0f), ref minB, ref maxB);
+            boundsPolygon.projectPolygonOnAxis(new Vector2(1.0f, 0.0f), new Height(), ref minB, ref maxB);
             Assert.AreNotEqual(minA, minB);
             Assert.AreNotEqual(minA, minB);
             Assert.AreEqual(-5.0f, minB);

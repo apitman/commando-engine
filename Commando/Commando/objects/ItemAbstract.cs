@@ -27,68 +27,56 @@ using Commando.levels;
 
 namespace Commando.objects
 {
-    public class BoxObject : CollisionObjectInterface
+    abstract class ItemAbstract : LevelObjectAbstract, CollisionObjectInterface
     {
-        protected ConvexPolygonInterface boundsPolygon_;
+        protected float radius_;
 
-        protected Vector2 position_;
+        protected ConvexPolygonInterface bounds_;
 
         protected Height height_;
 
-        public BoxObject(List<Vector2> points, Vector2 center, Height height)
+        public ItemAbstract(List<Vector2> points, Vector2 center, float radius, Height height, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth)
+            : base(pipeline, image, position, direction, depth)
         {
-            position_ = center;
-            boundsPolygon_ = new ConvexPolygon(points, Vector2.Zero);
+            bounds_ = new ConvexPolygon(points, center);
+            radius_ = radius;
             height_ = height;
-        }
-
-        #region CollisionObjectInterface Members
-
-        public Vector2 getPosition()
-        {
-            return position_;
-        }
-
-        public Vector2 getDirection()
-        {
-            return new Vector2(1.0f, 0.0f);
         }
 
         public float getRadius()
         {
-            return boundsPolygon_.getPoint(0).Length();
+            return radius_;
         }
 
         public ConvexPolygonInterface getBounds(HeightEnum height)
         {
-            return boundsPolygon_;
+            return bounds_;
         }
+
+        public virtual Vector2 checkCollisionWith(CollisionObjectInterface obj, CollisionDetectorInterface detector, HeightEnum height, float radDistance, Vector2 velocity)
+        {
+            if (detector.checkCollision(obj.getBounds(height), getBounds(height), radDistance, velocity) != Vector2.Zero)
+            {
+                handleCollision(obj);
+            }
+            return Vector2.Zero;
+        }
+
+        public virtual Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
+        {
+            handleCollision(obj);
+            return Vector2.Zero;
+        }
+
+        public abstract void handleCollision(CollisionObjectInterface obj);
+
+        public abstract void collidedWith(CollisionObjectInterface obj);
+
+        public abstract void collidedInto(CollisionObjectInterface obj);
 
         public Height getHeight()
         {
             return height_;
         }
-
-        public void collidedWith(CollisionObjectInterface obj)
-        {
-            
-        }
-
-        public void collidedInto(CollisionObjectInterface obj)
-        {
-            
-        }
-
-        public Vector2 checkCollisionWith(CollisionObjectInterface obj, CollisionDetectorInterface detector, HeightEnum height, float radDistance, Vector2 velocity)
-        {
-            return detector.checkCollision(obj.getBounds(height), getBounds(height), radDistance, velocity);
-        }
-
-        public Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
-        {
-            return translate;
-        }
-
-        #endregion
     }
 }

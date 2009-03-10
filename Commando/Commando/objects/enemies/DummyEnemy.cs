@@ -22,10 +22,11 @@ using Commando.graphics;
 using Commando.objects.weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.levels;
 
 namespace Commando.objects
 {
-    public class DummyEnemy : NonPlayableCharacterAbstract, CollisionObjectInterface
+    public class DummyEnemy : NonPlayableCharacterAbstract
     {
         private const float FRAMELENGTHMODIFIER = 4.0f;
 
@@ -144,7 +145,7 @@ namespace Commando.objects
             //lookingAt_ = location;
         }
 
-        public override ConvexPolygonInterface getBounds()
+        public override ConvexPolygonInterface getBounds(HeightEnum height)
         {
             return boundsPolygon_;
         }

@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.graphics;
+using Commando.levels;
 
 namespace Commando.collisiondetection
 {
@@ -116,7 +117,7 @@ namespace Commando.collisiondetection
             curAxis_ = newAxis;
         }
 
-        public void projectPolygonOnAxis(Vector2 axis, ref float min, ref float max)
+        public void projectPolygonOnAxis(Vector2 axis, Height height, ref float min, ref float max)
         {
             float dotProd = dotProduct(axis, points_[0]);
             min = dotProd;

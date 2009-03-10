@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.levels;
 
 namespace Commando.collisiondetection
 {
@@ -62,7 +63,7 @@ namespace Commando.collisiondetection
             return null;
         }
 
-        public void projectPolygonOnAxis(Vector2 axis, ref float min, ref float max)
+        public void projectPolygonOnAxis(Vector2 axis, Height height, ref float min, ref float max)
         {
             axis.Normalize();
             min = ConvexPolygon.dotProduct(axis, center_);
