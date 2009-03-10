@@ -42,16 +42,7 @@ namespace CommandoTest
             testStringList.Add("test");
             testStringList.Add("test");
             testStringList.Add("test");
-            testMenuList_ = new MenuList(testStringList,
-                                      Vector2.Zero,
-                                       Color.White,
-                                       Color.White,
-                                       0,
-                                       0.0f,
-                                       1.0f,
-                                       SpriteEffects.None,
-                                       1.0f,
-                                       40.0f);
+            testMenuList_ = new MenuList(testStringList, Vector2.Zero);
             
         }
         private MenuList testMenuList_;

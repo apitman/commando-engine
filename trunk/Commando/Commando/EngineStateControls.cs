@@ -37,7 +37,6 @@ namespace Commando
         protected readonly FontEnum CONTROLS_FONT = FontEnum.Kootenay;
         protected readonly Color CONTROLS_COLOR = Color.Green;
         protected readonly Color CONTROLS_TITLE_COLOR = Color.WhiteSmoke;
-        protected const int CONTROLS_CURSOR_POS = 0;
         protected const float CONTROLS_SPACING = 40.0f;
 
         protected readonly FontEnum HEADER_FONT = FontEnum.Kootenay48;
@@ -75,25 +74,20 @@ namespace Commando
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f - 200.0f,
                             engine_.GraphicsDevice.Viewport.Height / 2.0f - 125.0f);
             gameControlsMenuList_ =
-                new MenuList(gameControlsString,
-                                CONTROLS_FONT,
-                                gameControlsMenuPos,
-                                CONTROLS_COLOR,
-                                CONTROLS_TITLE_COLOR,
-                                CONTROLS_CURSOR_POS,
-                                CONTROLS_SPACING);
+                new MenuList(gameControlsString, gameControlsMenuPos);
+            gameControlsMenuList_.Font_ = CONTROLS_FONT;
+            gameControlsMenuList_.BaseColor_ = CONTROLS_COLOR;
+            gameControlsMenuList_.SelectedColor_ = CONTROLS_TITLE_COLOR;
+            gameControlsMenuList_.Spacing_ = CONTROLS_SPACING;
 
             Vector2 editorControlsMenuPos =
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f + 200.0f,
                             engine_.GraphicsDevice.Viewport.Height / 2.0f - 125.0f);
-            editorControlsMenuList_ =
-                new MenuList(editorControlsString,
-                               CONTROLS_FONT,
-                               editorControlsMenuPos,
-                               CONTROLS_COLOR,
-                               CONTROLS_TITLE_COLOR,
-                               CONTROLS_CURSOR_POS,
-                               CONTROLS_SPACING);
+            editorControlsMenuList_ = new MenuList(editorControlsString, editorControlsMenuPos);
+            editorControlsMenuList_.BaseColor_ = CONTROLS_COLOR;
+            editorControlsMenuList_.SelectedColor_ = CONTROLS_TITLE_COLOR;
+            editorControlsMenuList_.Font_ = CONTROLS_FONT;
+            editorControlsMenuList_.Spacing_ = CONTROLS_SPACING;
         }
 
         #region EngineStateInterface Members
