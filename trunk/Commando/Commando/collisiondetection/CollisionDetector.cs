@@ -25,7 +25,7 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.collisiondetection
 {
-    public class CollisionDetector : CollisionDetectorInterface
+    public class CollisionDetector/*: CollisionDetectorInterface*/
     {
         protected List<BoundingPolygon> bounds_;
         protected List<CollisionObjectInterface> objects_;
@@ -86,6 +86,11 @@ namespace Commando.collisiondetection
 
         public void remove(CollisionObjectInterface obj)
         {
+        }
+
+        public bool checkCollisions(CollisionObjectInterface obj, ref Vector2 velocity, ref Vector2 newDirection)
+        {
+            return true;
         }
     }
 }

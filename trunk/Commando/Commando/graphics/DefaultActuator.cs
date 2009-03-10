@@ -36,6 +36,10 @@ namespace Commando.graphics
 
         protected CharacterAbstract character_;
 
+        protected Vector2 newDirection_;
+
+        protected const float TURNSPEED = 0.3f;
+
         public DefaultActuator(Dictionary<string, Dictionary<string, CharacterActionInterface>> actions, CharacterAbstract character, string initialActionSet)
         {
             if (ActionSetValidator.validate(actions))
@@ -106,14 +110,45 @@ namespace Commando.graphics
         public void lookAt(Vector2 location)
         {
             Vector2 position = character_.getPosition();
-            character_.setDirection(new Vector2(location.X - position.X, location.Y - position.Y));
+            //character_.setDirection(new Vector2(location.X - position.X, location.Y - position.Y));
+            newDirection_ = new Vector2(location.X - position.X, location.Y - position.Y);
+            Vector2 temp = Vector2.Zero;
+            character_.getCollisionDetector().checkCollisions(character_, ref temp, ref newDirection_);
+            character_.setDirection(newDirection_);
+            character_.setPosition(character_.getPosition() + temp);
         }
 
         public void look(Vector2 direction)
         {
             if (direction != Vector2.Zero)
             {
-                character_.setDirection(direction);
+                float rotationDirectional = (float)Math.Atan2(direction.Y, direction.X);
+                float rotAngle = character_.getRotationAngle();
+
+                float rotDiff = MathHelper.WrapAngle(rotAngle - rotationDirectional);
+                if (Math.Abs(rotDiff) <= TURNSPEED || Math.Abs(rotDiff) >= MathHelper.TwoPi - TURNSPEED)
+                {
+                    newDirection_ = direction;
+                }
+                else if (rotDiff < 0f && rotDiff > -MathHelper.Pi)
+                {
+                    rotAngle += TURNSPEED;
+                    newDirection_.X = (float)Math.Cos((double)rotAngle);
+                    newDirection_.Y = (float)Math.Sin((double)rotAngle);
+                }
+                else
+                {
+                    rotAngle -= TURNSPEED;
+                    newDirection_.X = (float)Math.Cos((double)rotAngle);
+                    newDirection_.Y = (float)Math.Sin((double)rotAngle);
+                }
+
+                //character_.setDirection(direction);
+                //newDirection_ = direction;
+                Vector2 temp = Vector2.Zero;
+                character_.getCollisionDetector().checkCollisions(character_, ref temp, ref newDirection_);
+                character_.setDirection(newDirection_);
+                character_.setPosition(character_.getPosition() + temp);
             }
         }
     }

@@ -124,10 +124,12 @@
     <Compile Include="collisiondetection\CollisionDetector.cs" />
     <Compile Include="collisiondetection\CollisionDetectorInterface.cs" />
     <Compile Include="collisiondetection\CollisionObjectInterface.cs" />
+    <Compile Include="collisiondetection\ComplexConvexPolygon.cs" />
     <Compile Include="collisiondetection\ConvexPolygon.cs" />
     <Compile Include="collisiondetection\ConvexPolygonInterface.cs" />
     <Compile Include="collisiondetection\ProjectileConvexPolygon.cs" />
     <Compile Include="collisiondetection\SeparatingAxisCollisionDetector.cs" />
+    <Compile Include="collisiondetection\SolidMovableObjectAbstract.cs" />
     <Compile Include="CommonFunctions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EngineStateControls.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="objects\HeadsUpDisplayObjectAbstract.cs" />
     <Compile Include="objects\HeadsUpDisplayText.cs" />
     <Compile Include="objects\HeadsUpDisplayWeapon.cs" />
+    <Compile Include="objects\ItemAbstract.cs" />
     <Compile Include="objects\LevelObjectAbstract.cs" />
     <Compile Include="objects\MovableObjectAbstract.cs" />
     <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />

@@ -46,7 +46,7 @@ namespace Commando.levels
             {
                 for (int x = 0; x < tiles.GetLength(1); x++)
                 {
-                    retList.Add(new TileObject(tiles[y,x], pipeline, TextureMap.getInstance().getTexture("Tile_" + tiles[y, x]), new Vector2((float)x * tileSideLength_, (float)y * tileSideLength_), Vector2.Zero, 0.0f));
+                    retList.Add(new TileObject(tiles[y, x], pipeline, TextureMap.getInstance().getTexture("Tile_" + tiles[y, x]), new Vector2((float)x * tileSideLength_, (float)y * tileSideLength_), Vector2.Zero, 0.0f));
                 }
             }
             return retList;
@@ -140,8 +140,8 @@ namespace Commando.levels
             points.Add(new Vector2(center.X - x2f, center.Y - y1f));
             points.Add(new Vector2(center.X - x2f, center.Y - y2f));
             points.Add(new Vector2(center.X - x1f, center.Y - y2f));
-            BoxObject temp = new BoxObject(points, center);
-            temp.getBounds().rotate(new Vector2(1.0f, 0.0f), center);
+            BoxObject temp = new BoxObject(points, center, new Height(true, true));
+            temp.getBounds(HeightEnum.LOW).rotate(new Vector2(1.0f, 0.0f), center);
             return temp;
         }
     }

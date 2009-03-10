@@ -73,8 +73,8 @@ namespace Commando.graphics
             moving.Y *= speed_;
 
             Vector2 newPosition = position;
-            newPosition.X += moving.X;
-            newPosition.Y += moving.Y;
+            //newPosition.X += moving.X;
+            //newPosition.Y += moving.Y;
 
             /*
             // TODO: Implement slower movement backwards
@@ -85,9 +85,12 @@ namespace Commando.graphics
             //Console.Out.WriteLine("OldPosBeforeCollision: " + position);
             //Console.Out.WriteLine("NewPosBeforeCollision: " + newPosition);
 
-            newPosition = character_.getCollisionDetector().checkCollisions(character_, newPosition);
-
+            //newPosition = character_.getCollisionDetector().checkCollisions(character_, newPosition);
+            character_.getCollisionDetector().checkCollisions(character_, ref moving, ref direction);
             //Console.Out.WriteLine("NewPosAfterCollision: " + newPosition);
+            
+            newPosition.X += moving.X;
+            newPosition.Y += moving.Y;
 
             animation_.update(newPosition, direction);
             character_.setPosition(newPosition);

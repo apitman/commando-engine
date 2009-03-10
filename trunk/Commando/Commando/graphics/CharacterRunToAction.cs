@@ -74,8 +74,8 @@ namespace Commando.graphics
             }
 
             Vector2 newPosition = position;
-            newPosition.X += moving.X;
-            newPosition.Y += moving.Y;
+            //newPosition.X += moving.X;
+            //newPosition.Y += moving.Y;
 
             /*
             // TODO: Implement slower movement backwards
@@ -84,7 +84,11 @@ namespace Commando.graphics
             moveVector *= (MathHelper.TwoPi - Math.Abs(moveDiff)) / MathHelper.Pi;
             */
 
-            newPosition = character_.getCollisionDetector().checkCollisions(character_, newPosition);
+            //newPosition = character_.getCollisionDetector().checkCollisions(character_, newPosition);
+            character_.getCollisionDetector().checkCollisions(character_, ref moving, ref direction);
+
+            newPosition.X += moving.X;
+            newPosition.Y += moving.Y;
 
             if (newPosition == moveToLocation_)
             {

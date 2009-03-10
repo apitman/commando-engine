@@ -24,6 +24,7 @@ using System.Text;
 using Commando.collisiondetection;
 using Commando.graphics;
 using Microsoft.Xna.Framework;
+using Commando.levels;
 
 namespace Commando.objects
 {
@@ -41,7 +42,9 @@ namespace Commando.objects
 
         protected CollisionObjectInterface collidedInto_ = null;
 
-        public Projectile(List<DrawableObjectAbstract> pipeline, GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
+        protected Height height_;
+
+        public Projectile(List<DrawableObjectAbstract> pipeline, GameTexture texture, CollisionDetectorInterface detector, ConvexPolygonInterface bounds, float radius, Height height, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(pipeline, velocity, position, direction, depth)
         {
             texture_ = texture;
@@ -52,19 +55,22 @@ namespace Commando.objects
             }
             boundsPolygon_ = bounds;
             radius_ = radius;
+            height_ = height;
         }
 
         public override void update(GameTime gameTime)
         {
-            // could put code to update velocity here
-            Vector2 newPosition = position_ + velocity_;
-            if (newPosition.X > 400 || newPosition.X < 0 ||
-                newPosition.Y > 330 || newPosition.Y < 0 ||
-                newPosition != collisionDetector_.checkCollisions(this, newPosition))
+            Vector2 velocity = velocity_;
+            if (collisionDetector_.checkCollisions(this, ref velocity, ref direction_))
             {
+                position_.X += velocity_.X;
+                position_.Y += velocity_.Y;
                 handleCollision();
+                return;
             }
-            position_ = newPosition;
+
+            position_.X += velocity_.X;
+            position_.Y += velocity_.Y;
         }
 
         public override void draw(GameTime gameTime)
@@ -73,6 +79,8 @@ namespace Commando.objects
         }
 
         public abstract void handleCollision();
+
+        public abstract bool objectChangesHeight(CollisionObjectInterface obj);
 
         public void setCollisionDetector(CollisionDetectorInterface detector)
         {
@@ -88,9 +96,14 @@ namespace Commando.objects
             return radius_;
         }
 
-        public ConvexPolygonInterface getBounds()
+        public ConvexPolygonInterface getBounds(HeightEnum height)
         {
             return boundsPolygon_;
+        }
+
+        public Height getHeight()
+        {
+            return height_;
         }
 
         public override void die()
@@ -104,12 +117,52 @@ namespace Commando.objects
 
         public virtual void collidedWith(CollisionObjectInterface obj)
         {
-            //collidedWith_.Add(obj);
+            //
         }
 
         public virtual void collidedInto(CollisionObjectInterface obj)
         {
             collidedInto_ = obj;
+        }
+
+        public virtual Vector2 checkCollisionWith(CollisionObjectInterface obj, CollisionDetectorInterface detector, HeightEnum height, float radDistance, Vector2 velocity)
+        {
+            Vector2 translate = detector.checkCollision(obj.getBounds(height), getBounds(height), radDistance, velocity);
+            if (translate != Vector2.Zero)
+            {
+                obj.collidedInto(this);
+                collidedWith(obj);
+                //return translate;
+            }
+            /*if (objectChangesHeight(obj))
+            {
+                if (height == HeightEnum.HIGH)
+                {
+                    height_.blocksHigh_ = false;
+                }
+                else
+                {
+                    height_.blocksLow_ = false;
+                }
+            }*/
+            return Vector2.Zero;
+        }
+
+        public virtual Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
+        {
+            /*
+            if (objectChangesHeight(obj))
+            {
+                if (height == HeightEnum.HIGH)
+                {
+                    height_.blocksHigh_ = false;
+                }
+                else
+                {
+                    height_.blocksLow_ = false;
+                }
+            }*/
+            return translate;
         }
     }
 }

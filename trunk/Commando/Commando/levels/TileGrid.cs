@@ -127,9 +127,24 @@ namespace Commando.levels
             return (this.blocksLow_ && rhs.blocksLow_ || this.blocksHigh_ && rhs.blocksHigh_);
         }
 
+        public static Height getHeight(HeightEnum height)
+        {
+            if (height == HeightEnum.HIGH)
+            {
+                return new Height(false, true);
+            }
+            return new Height(true, false);
+        }
+
         public bool blocksLow_;
 
         public bool blocksHigh_;
+    }
+
+    public enum HeightEnum
+    {
+        LOW,
+        HIGH
     }
 
     public struct TileIndex

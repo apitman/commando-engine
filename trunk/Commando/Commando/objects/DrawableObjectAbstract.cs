@@ -163,7 +163,7 @@ namespace Commando
         /// Convert the direction vector into a float representing the angle of the object
         /// </summary>
         /// <returns>Angle of the rotation in radians</returns>
-        protected float getRotationAngle()
+        public float getRotationAngle()
         {
             return (float)Math.Atan2((double)direction_.Y, (double)direction_.X);
         }

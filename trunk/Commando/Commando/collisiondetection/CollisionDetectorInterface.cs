@@ -31,6 +31,10 @@ namespace Commando.collisiondetection
 
         Vector2 checkCollisions(CollisionObjectInterface obj, Vector2 newPosition);
 
+        bool checkCollisions(CollisionObjectInterface obj, ref Vector2 velocity, ref Vector2 newDirection);
+
         void remove(CollisionObjectInterface obj);
+
+        Vector2 checkCollision(ConvexPolygonInterface polygonA, ConvexPolygonInterface polygonB, float radDistance, Vector2 velocity);
     }
 }

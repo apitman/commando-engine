@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Commando.collisiondetection;
 using Microsoft.Xna.Framework;
+using Commando.levels;
 
 namespace Commando.objects.weapons
 {
@@ -30,8 +31,9 @@ namespace Commando.objects.weapons
         protected const string TEXTURE_NAME = "Bullet";
         protected const float RADIUS = 2.5f;
         protected const float SPEED = 15.0f;
-        protected const float HEIGHT = 0.5f;
+        protected const float DEPTH = 0.5f;
         protected const int DAMAGE = 5;
+        protected static readonly Height HEIGHT = new Height(true, true);
 
         protected static readonly ConvexPolygon BOUNDS;
 
@@ -46,7 +48,7 @@ namespace Commando.objects.weapons
         }
 
         public Bullet(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
-            : base(pipeline, TextureMap.fetchTexture(TEXTURE_NAME), detector, BOUNDS, RADIUS, direction * SPEED, position, direction, HEIGHT)
+            : base(pipeline, TextureMap.fetchTexture(TEXTURE_NAME), detector, BOUNDS, RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
         {
 
         }
@@ -68,6 +70,20 @@ namespace Commando.objects.weapons
                 Microsoft.Xna.Framework.Graphics.Color.Yellow,
                 Constants.DEPTH_DEBUG_LINES);
             die();
+        }
+
+        public override void collidedInto(CollisionObjectInterface obj)
+        {
+            if (obj is Bullet)
+            {
+                return;
+            }
+            collidedInto_ = obj;
+        }
+
+        public override bool objectChangesHeight(CollisionObjectInterface obj)
+        {
+            return false;
         }
     }
 }

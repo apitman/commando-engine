@@ -26,24 +26,57 @@ using Commando.levels;
 
 namespace Commando.collisiondetection
 {
-    public interface CollisionObjectInterface
+    public class ComplexConvexPolygon : ConvexPolygonInterface
     {
-        Vector2 getPosition();
+        protected ConvexPolygonInterface lowPolygon_;
 
-        Vector2 getDirection();
+        protected ConvexPolygonInterface highPolygon_;
 
-        float getRadius();
+        public ComplexConvexPolygon(ConvexPolygonInterface low, ConvexPolygonInterface high)
+        {
+            lowPolygon_ = low;
+            highPolygon_ = high;
+        }
 
-        ConvexPolygonInterface getBounds(HeightEnum height);
 
-        Vector2 checkCollisionWith(CollisionObjectInterface obj, CollisionDetectorInterface detector, HeightEnum height, float radDistance, Vector2 velocity);
+        public Vector2 getCenter()
+        {
+            return lowPolygon_.getCenter();
+        }
 
-        Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate);
+        public Vector2 getEdge(int edgeNumber)
+        {
+            throw new NotImplementedException();
+        }
 
-        void collidedWith(CollisionObjectInterface obj);
+        public int getNumberOfPoints()
+        {
+            throw new NotImplementedException();
+        }
 
-        void collidedInto(CollisionObjectInterface obj);
+        public Vector2 getPoint(int index)
+        {
+            throw new NotImplementedException();
+        }
 
-        Height getHeight();
+        public Vector2[] getPoints()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void projectPolygonOnAxis(Vector2 axis, Height height, ref float min, ref float max)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void rotate(Vector2 newAxis, Vector2 position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void translate(Vector2 translation)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

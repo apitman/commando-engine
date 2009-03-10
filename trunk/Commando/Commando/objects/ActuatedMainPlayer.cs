@@ -26,6 +26,7 @@ using Microsoft.Xna.Framework;
 using Commando.graphics;
 using Commando.ai;
 using Commando.objects.weapons;
+using Commando.levels;
 
 namespace Commando.objects
 {
@@ -76,9 +77,11 @@ namespace Commando.objects
             anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
             animations_ = new AnimationSet(anims);
             radius_ = RADIUS;
-            collisionDetector_ = new CollisionDetector(null);
+            collisionDetector_ = new SeparatingAxisCollisionDetector();
 
             Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            height_ = new Height(true, false);
         }
 
         /// <summary>
@@ -147,7 +150,7 @@ namespace Commando.objects
             return radius_;
         }
 
-        public override ConvexPolygonInterface getBounds()
+        public override ConvexPolygonInterface getBounds(HeightEnum height)
         {
             return boundsPolygon_;
         }

@@ -26,24 +26,30 @@ using Commando.levels;
 
 namespace Commando.collisiondetection
 {
-    public interface CollisionObjectInterface
+    abstract class SolidMovableObjectAbstract : CollisionObjectInterface
     {
-        Vector2 getPosition();
+        public abstract Vector2 getPosition();
 
-        Vector2 getDirection();
+        public abstract Vector2 getDirection();
 
-        float getRadius();
+        public abstract float getRadius();
 
-        ConvexPolygonInterface getBounds(HeightEnum height);
+        public abstract ConvexPolygonInterface getBounds(HeightEnum height);
 
-        Vector2 checkCollisionWith(CollisionObjectInterface obj, CollisionDetectorInterface detector, HeightEnum height, float radDistance, Vector2 velocity);
+        public virtual Vector2 checkCollisionWith(CollisionObjectInterface obj, CollisionDetectorInterface detector, HeightEnum height, float radDistance, Vector2 velocity)
+        {
+            return detector.checkCollision(obj.getBounds(height), getBounds(height), radDistance, velocity);
+        }
 
-        Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate);
+        public virtual Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
+        {
+            return translate;
+        }
 
-        void collidedWith(CollisionObjectInterface obj);
+        public abstract void collidedWith(CollisionObjectInterface obj);
 
-        void collidedInto(CollisionObjectInterface obj);
+        public abstract void collidedInto(CollisionObjectInterface obj);
 
-        Height getHeight();
+        public abstract Height getHeight();
     }
 }
