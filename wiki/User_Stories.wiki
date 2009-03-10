@@ -2,28 +2,44 @@
 
 = Stories by Build =
 
-== Future User Stories by End of Semester ==
+== Build 7: Apr. 13 - Apr. 22 ==
 
   === Gameplay ===
-  # User can fire bullets at both high and low heights
-  # User's character will flash and be momentarily invincible upon being hit (if desired)
+  # User hears footsteps, gunfire, etc. (all sound effects)
+  # User can fight at least four different types of enemies
+  # User can participate in a "boss battle"
+  # User can play through several linked areas
+
+== Build 6: Mar. 31 - Apr. 8 ==
+
+  === Gameplay ===
+  # User's enemies will create dynamic plans to combat the player
+  # User's enemies will create dynamic squad-based plans to combat the player
+  # User can either hear or see enemy agents communicating (either via sound or text)
+  # User can hear some sound effects
+  # User can view slides telling the story between areas
+
+  === Level Editor ===
+  # User can create overlay sprites for different layers of the map
+  # User can load in different tilesets
+
+== Build 5: Mar. 17 - Mar. 26 ==
+
+  === Gameplay ===
   # User's character can crouch
   # User's character can attach to cover
   # User's character can throw grenades
-  # User hears footsteps, gunfire, etc. (all sound effects)
-  # User's character can pickup and switch between pistol, machine gun, and shotgun
-  # User can fight at least four different types of enemies
-  # User's enemies will create dynamic plans to combat the player
-  # User's enemies will create dynamic squad-based plans to combat the player
+  # User's character can reload
+  # User can fight enemies which crouch
+  # User can fight enemies which attach to cover
+  # User can fight enemies which throw grenades
+  # User can fight enemies which can reload
   # User's enemies move intelligently around obstacles without unnecessary wall-hugging
-  # User can participate in a "boss battle"
-  # User can either hear or see enemy agents communicating (either via sound or text)
+  # User's character can pickup and switch between pistol, machine gun, and shotgun
+  # User can fire bullets at both high and low heights
 
   === Level Editor ===
   # User can link levels together with waypoints
-  # User can create overlay sprites for different layers of the map
-  # User can load in different tilesets
-  # User can change level size
 
 == Build 4: Feb. 24 - Mar. 12 ==
 
