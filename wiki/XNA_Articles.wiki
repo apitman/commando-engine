@@ -59,6 +59,9 @@ Sharing and Distributing a Game
 Creators Club Peer Review Process
   * http://creators.xna.com/en-US/community_spotlight_peer_review
 
+Fading out a Sound in XACT
+  * http://forums.xna.com/forums/t/12660.aspx
+
 == PC Specific ==
 
 Pressing Multiple Keys at once on the Keyboard
