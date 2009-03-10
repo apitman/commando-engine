@@ -27,6 +27,10 @@ Toward More Realistic Pathfinding
 
 == XNA General ==
 
+Best Practices for Community Games
+  * http://creators.xna.com/en-US/education/bestpractices
+  * note: This article is pretty important!
+
 Pixel perfect collision detection using GPU occlusion queries
   * http://blogs.msdn.com/shawnhar/archive/2008/12/31/pixel-perfect-collision-detection-using-gpu-occlusion-queries.aspx
 
