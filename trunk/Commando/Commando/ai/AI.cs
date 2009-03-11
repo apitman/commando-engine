@@ -87,6 +87,11 @@ namespace Commando.ai
                     //Character_.lookAt(b.position_);
                     Vector2 start = Character_.getPosition();
                     Vector2 dest = b.position_;
+                    if (TileIndex.equals(grid.getTileIndex(start), grid.getTileIndex(dest)))
+                    {
+                        Memory_.removeBelief(b);
+                        continue;
+                    }
                     float radius = Character_.getRadius();
                     Height h = new Height(true, true);
                     path_ = 
