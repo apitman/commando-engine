@@ -66,6 +66,17 @@ namespace Commando.objects
         {
             return tileNumber_;
         }
+
+        /// <summary>
+        /// Sets the tile number and changes the TileObject's image so that
+        /// it draws itself appropriately
+        /// </summary>
+        /// <param name="newTileNumber">The new tile you want to replace the old one with</param>
+        public void setTileNumber(int newTileNumber)
+        {
+            tileNumber_ = newTileNumber;
+            base.setImage(TextureMap.fetchTexture("Tile_" + newTileNumber.ToString()));
+        }
  
     }
 }

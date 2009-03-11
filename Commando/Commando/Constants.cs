@@ -36,5 +36,9 @@ namespace Commando
         public const float DEPTH_DEBUG_LINES = 0.95f;
         public const float DEPTH_OUT_OF_FOCUS_OVERLAY = 0.99f;
         public const float DEPTH_OUT_OF_FOCUS_TEXT = 1.0f;
+        public const int MIN_NUM_TILES_X = 0;
+        public const int MIN_NUM_TILES_Y = 0;
+        public const int MAX_NUM_TILES_X = 100;
+        public const int MAX_NUM_TILES_Y = 100;
     }
 }

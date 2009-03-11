@@ -133,6 +133,7 @@
     <Compile Include="CommonFunctions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EngineStateControls.cs" />
+    <Compile Include="EngineStateGameOver.cs" />
     <Compile Include="EngineStateLevelEditor.cs" />
     <Compile Include="EngineStateOutofFocus.cs" />
     <Compile Include="EngineStatePause.cs" />

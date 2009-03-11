@@ -68,12 +68,35 @@ namespace Commando
             return vector;
         }
 
+        /// <summary>
+        /// Returns the angle of a direction or rotation vector in radians
+        /// </summary>
+        /// <param name="vector">The direction or rotation vector</param>
+        /// <returns></returns>
         public static float getAngle(Vector2 vector)
         {
             return (float)Math.Atan2((double)vector.Y, (double)vector.X);
         }
 
+        /// <summary>
+        /// Returns the unit vector corresponding to the rotation
+        /// </summary>
+        /// <param name="rotation">The rotation in radians</param>
+        /// <returns></returns>
         public static Vector2 getVector(float rotation)
+        {
+            double oppOverHyp = Math.Tan(rotation);
+            Vector2 result = new Vector2((float)oppOverHyp, 1);
+            result.Normalize();
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the unit vector corresponding to the rotation
+        /// </summary>
+        /// <param name="rotation">The rotation in radians</param>
+        /// <returns></returns>
+        public static Vector2 getVector(double rotation)
         {
             double oppOverHyp = Math.Tan(rotation);
             Vector2 result = new Vector2((float)oppOverHyp, 1);

@@ -179,6 +179,11 @@ namespace Commando.objects
         public override void damage(int amount, CollisionObjectInterface obj)
         {
             health_.update(health_.getValue() - amount);
+
+            if (health_.getValue() <= 0)
+            {
+                this.die();
+            }
         }
     }
 }
