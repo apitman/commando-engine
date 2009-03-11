@@ -62,6 +62,11 @@ namespace Commando
         const string DUMMY_ENEMY = "dummyEnemy";
         const string SAVE_PATH = "user level.xml";
         const float DISP_TILE_DEPTH = 0.1f;
+        const int SCREEN_SIZE_X = 375;
+        const int SCREEN_SIZE_Y = 375;
+        const int HUD_BAR_HEIGHT = 45;
+        const int HUD_BAR_DRAW_Y = SCREEN_SIZE_Y - HUD_BAR_HEIGHT;
+        const int HUD_BAR_DRAW_X = 0;
 
         List<DrawableObjectAbstract> drawPipeline_ = new List<DrawableObjectAbstract>();
 
@@ -105,8 +110,6 @@ namespace Commando
         protected int enemyIndex_;
         protected bool isObjSelected_;
         protected int selectedIndex_;
-        protected int screenSizeX_ = 375;
-        protected int screenSizeY_ = 375;
         protected int numTilesWide_ = 25;
         protected int numTilesTall_ = 22;
         protected int maxCursorX;
@@ -121,7 +124,7 @@ namespace Commando
         {
             PlayerHelper.Player_ = null; // Necessary to have mouse input if the player has entered EngineStateGameplay before entering the level editor
             engine_ = engine;
-            engine_.setScreenSize(screenSizeX_, screenSizeY_);
+            engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             engine_.IsMouseVisible = true;
             returnState_ = returnState;
             returnScreenSizeX_ = returnScreenSizeX;
@@ -134,14 +137,16 @@ namespace Commando
             myLevel_ = new Level(new Tileset(), null);
             myLevel_.getLevelFromFile(SAVE_PATH, drawPipeline_);
 
-            GlobalHelper.getInstance().getCurrentCamera().setPosition(0, 0);
-            GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)screenSizeX_);
-            GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)screenSizeY_);
-
             maxCursorX = numTilesWide_ - 3;
             maxCursorY = numTilesTall_ - 3;
-            cursorPosX_ = 2;
-            cursorPosY_ = 2;
+            cursorPosX_ = SCREEN_SIZE_X / 30;
+            cursorPosY_ = SCREEN_SIZE_Y / 30;
+
+            // Initialize the camera
+            GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)SCREEN_SIZE_X);
+            GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)SCREEN_SIZE_Y);
+            GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
+
             curTileIndex_ = 0;
             displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
         }
@@ -188,7 +193,7 @@ namespace Commando
                 {
                     cursorPosY_++;
                 }
-                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
+                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
             }
             else if (inputs.getLeftDirectionalY() > 0)
             {
@@ -197,7 +202,7 @@ namespace Commando
                 {
                     cursorPosY_--;
                 }
-                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
+                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
             }
             else if (inputs.getLeftDirectionalX() > 0)
             {
@@ -206,7 +211,7 @@ namespace Commando
                 {
                     cursorPosX_++;
                 }
-                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
+                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
             }
             else if (inputs.getLeftDirectionalX() < 0)
             {
@@ -215,7 +220,7 @@ namespace Commando
                 {
                     cursorPosX_--;
                 }
-                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
+                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
             }
             else if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
@@ -337,7 +342,8 @@ namespace Commando
                             if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
                                 && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
                                 && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
-                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
+                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
+                                && rightD.Y < HUD_BAR_DRAW_Y)
                             {
                                 int myX = (int)(mousePos.X) / 15;
                                 int myY = (int)(mousePos.Y) / 15;
@@ -354,7 +360,8 @@ namespace Commando
                             if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
                                 && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
                                 && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
-                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
+                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
+                                && rightD.Y < HUD_BAR_DRAW_Y)
                             {
                                 // ERIC
                                 //Vector2 defRotation = new Vector2(1.0f, 0.0f);
@@ -392,7 +399,8 @@ namespace Commando
                 if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
                     && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
                     && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
-                    && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
+                    && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
+                    && rightD.Y < HUD_BAR_DRAW_Y)
                 {
                     myLevel_.getEnemies()[selectedIndex_].setPosition(mousePos);
                     // TODO: AMP Fix it so we don't have to do this next line of code
@@ -526,19 +534,20 @@ namespace Commando
             // END
 
             // Draw the palette
+            TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, SCREEN_SIZE_X, HUD_BAR_HEIGHT), Constants.DEPTH_HUD - 0.01f, Color.Azure);
             switch (curPallette_)
             {
                 case (int)pallette_.tile:
                     for (int i = 0; i < NUM_TILES; i++)
                     {
-                        TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), 0.2f);
+                        TextureMap.getInstance().getTexture("Tile_" + i).drawImageAbsolute(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
                         if(i == curTileIndex_)
-                            TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), 0.2f);
+                            TextureMap.getInstance().getTexture("TileHighlight").drawImageAbsolute(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
                     }
                     break;
                 case (int)pallette_.enemy:
                     {
-                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, new Vector2(10.0f , (((10* 20) / 365) * 20.0f) + 335.0f), 0.2f);
+                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImageAbsolute(0, new Vector2(10.0f, (((10 * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
                         break;
                     }
                 case (int)pallette_.misc:
