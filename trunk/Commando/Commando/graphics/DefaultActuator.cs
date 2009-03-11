@@ -112,6 +112,7 @@ namespace Commando.graphics
             Vector2 position = character_.getPosition();
             //character_.setDirection(new Vector2(location.X - position.X, location.Y - position.Y));
             newDirection_ = new Vector2(location.X - position.X, location.Y - position.Y);
+            //setSlowRotationAngle(new Vector2(location.X - position.X, location.Y - position.Y));
             Vector2 temp = Vector2.Zero;
             character_.getCollisionDetector().checkCollisions(character_, ref temp, ref newDirection_);
             character_.setDirection(newDirection_);
@@ -122,6 +123,7 @@ namespace Commando.graphics
         {
             if (direction != Vector2.Zero)
             {
+                /*
                 float rotationDirectional = (float)Math.Atan2(direction.Y, direction.X);
                 float rotAngle = character_.getRotationAngle();
 
@@ -142,6 +144,8 @@ namespace Commando.graphics
                     newDirection_.X = (float)Math.Cos((double)rotAngle);
                     newDirection_.Y = (float)Math.Sin((double)rotAngle);
                 }
+                */
+                setSlowRotationAngle(direction);
 
                 //character_.setDirection(direction);
                 //newDirection_ = direction;
@@ -149,6 +153,30 @@ namespace Commando.graphics
                 character_.getCollisionDetector().checkCollisions(character_, ref temp, ref newDirection_);
                 character_.setDirection(newDirection_);
                 character_.setPosition(character_.getPosition() + temp);
+            }
+        }
+
+        protected void setSlowRotationAngle(Vector2 newDirection)
+        {
+            float rotationDirectional = (float)Math.Atan2(newDirection.Y, newDirection.X);
+            float rotAngle = character_.getRotationAngle();
+
+            float rotDiff = MathHelper.WrapAngle(rotAngle - rotationDirectional);
+            if (Math.Abs(rotDiff) <= TURNSPEED || Math.Abs(rotDiff) >= MathHelper.TwoPi - TURNSPEED)
+            {
+                newDirection_ = newDirection;
+            }
+            else if (rotDiff < 0f && rotDiff > -MathHelper.Pi)
+            {
+                rotAngle += TURNSPEED;
+                newDirection_.X = (float)Math.Cos((double)rotAngle);
+                newDirection_.Y = (float)Math.Sin((double)rotAngle);
+            }
+            else
+            {
+                rotAngle -= TURNSPEED;
+                newDirection_.X = (float)Math.Cos((double)rotAngle);
+                newDirection_.Y = (float)Math.Sin((double)rotAngle);
             }
         }
     }

@@ -10,6 +10,38 @@
   <texture>.\\Content\\XML\\Sprites\\PlayerWalk.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerWalkNoPistol.xml</texture>
   <image>
+    <key>BulletMedium</key>
+    <handle>Sprites\\BulletMedium</handle>
+  </image>
+  <image>
+    <key>BulletSmall</key>
+    <handle>Sprites\\BulletSmall</handle>
+  </image>
+  <image>
+    <key>AmmoBox</key>
+    <handle>Sprites\\AmmoBox</handle>
+  </image>
+  <image>
+    <key>AmmoBoxPistol</key>
+    <handle>Sprites\\AmmoBoxPistol</handle>
+  </image>
+  <image>
+    <key>AmmoBoxRifle</key>
+    <handle>Sprites\\AmmoBoxRifle</handle>
+  </image>
+  <image>
+    <key>AmmoBoxShotgun</key>
+    <handle>Sprites\\AmmoBoxShotgun</handle>
+  </image>
+  <image>
+    <key>AmmoBoxSmall</key>
+    <handle>Sprites\\AmmoBoxSmall</handle>
+  </image>
+  <image>
+    <key>HealthBox</key>
+    <handle>Sprites\\HealthBox</handle>
+  </image>
+  <image>
     <key>Woger_Ru</key>
     <handle>Giant_A</handle>
   </image>

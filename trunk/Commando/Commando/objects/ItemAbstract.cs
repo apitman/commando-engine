@@ -35,12 +35,20 @@ namespace Commando.objects
 
         protected Height height_;
 
-        public ItemAbstract(List<Vector2> points, Vector2 center, float radius, Height height, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth)
+        protected CollisionDetectorInterface detector_;
+
+        public ItemAbstract(CollisionDetectorInterface detector, List<Vector2> points, Vector2 center, float radius, Height height, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth)
             : base(pipeline, image, position, direction, depth)
         {
             bounds_ = new ConvexPolygon(points, center);
+            bounds_.rotate(direction_, position_);
             radius_ = radius;
             height_ = height;
+            if (detector != null)
+            {
+                detector.register(this);
+            }
+            detector_ = detector;
         }
 
         public float getRadius()
@@ -77,6 +85,15 @@ namespace Commando.objects
         public Height getHeight()
         {
             return height_;
+        }
+
+        public override void die()
+        {
+            base.die();
+            if (detector_ != null)
+            {
+                detector_.remove(this);
+            }
         }
     }
 }

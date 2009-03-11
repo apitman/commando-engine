@@ -28,7 +28,7 @@ namespace Commando.objects.weapons
 {
     class Bullet : Projectile
     {
-        protected const string TEXTURE_NAME = "Bullet";
+        protected const string TEXTURE_NAME = "BulletMedium";
         protected const float RADIUS = 2.5f;
         protected const float SPEED = 15.0f;
         protected const float DEPTH = 0.5f;
@@ -40,10 +40,10 @@ namespace Commando.objects.weapons
         static Bullet()
         {
             List<Vector2> points = new List<Vector2>();
-            points.Add(new Vector2(2f, 2f));
-            points.Add(new Vector2(-2f, 2f));
-            points.Add(new Vector2(-2f, -2f));
-            points.Add(new Vector2(2f, -2f));
+            points.Add(new Vector2(1f, 1f));
+            points.Add(new Vector2(-1f, 1f));
+            points.Add(new Vector2(-1f, -1f));
+            points.Add(new Vector2(1f, -1f));
             BOUNDS = new ConvexPolygon(points, Vector2.Zero);
         }
 

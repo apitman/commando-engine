@@ -238,6 +238,8 @@ namespace Commando
             {
                 enemyList_[i].setCollisionDetector(collisionDetector_);
             }
+            AmmoBox ammo = new AmmoBox(collisionDetector_, drawPipeline_, new Vector2(250, 250), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
+            HealthBox health = new HealthBox(collisionDetector_, drawPipeline_, new Vector2(150, 200), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
 
             WorldState.EnemyList_ = (List<CharacterAbstract>)enemyList_;
             WorldState.MainPlayer_ = player_;
