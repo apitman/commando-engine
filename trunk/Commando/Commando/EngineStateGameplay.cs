@@ -76,6 +76,7 @@ namespace Commando
         protected Vector2 healthTextPos_;
         protected Vector2 ammoTextPos_;
 
+        protected Level myLevel_;
 
         /// <summary>
         /// Constructs a state of gameplay
@@ -130,88 +131,34 @@ namespace Commando
             //BoxObject[,] boxesToBeAdded;
             bool[,] boxesToBeAdded;
             List<BoxObject> boxesToBeAddedForReal = new List<BoxObject>();
-            try
-            {
-                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                doc.Load(SAVE_PATH);
 
-                // First load the tiles
-                System.Xml.XmlElement ele = (System.Xml.XmlElement)doc.GetElementsByTagName("level")[0];
-                int[,] loadedTiles = new int[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
-                boxesToBeAdded = new bool[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
-                tilesForGrid = new Tile[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
-                System.Xml.XmlNodeList tList = doc.GetElementsByTagName("tile");
-                for (int i = 0; i < Convert.ToInt32(ele.GetAttribute("numTilesTall")); i++)
+            // Load the level and create bounding boxes
+            myLevel_ = new Level(new Tileset(), null);
+            myLevel_.getLevelFromFile("user level.xml", drawPipeline_);
+            boxesToBeAdded = new bool[myLevel_.getHeight(), myLevel_.getWidth()];
+            tilesForGrid = new Tile[myLevel_.getHeight(), myLevel_.getWidth()];
+            for (int i = 0; i < myLevel_.getHeight(); i++)
+            {
+                for (int j = 0; j < myLevel_.getWidth(); j++)
                 {
-                    for (int j = 0; j < Convert.ToInt32(ele.GetAttribute("numTilesWide")); j++)
+                    if (myLevel_.getTiles()[i, j].getTileNumber() != 1)
                     {
-                        System.Xml.XmlElement ele2 = (System.Xml.XmlElement)tList[j + i * Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
-                        loadedTiles[i, j] = Convert.ToInt32(ele2.GetAttribute("index"));
-                        if (loadedTiles[i, j] != 1)
-                        {
-                            //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
-                            boxesToBeAdded[i, j] = true;
-                            tilesForGrid[i, j].highDistance_ = 0;
-                            tilesForGrid[i, j].lowDistance_ = 0;
-                        }
-                        else
-                        {
-                            //boxesToBeAdded[i, j] = null;
-                            boxesToBeAdded[i, j] = false;
-                            tilesForGrid[i, j].highDistance_ = 1;
-                            tilesForGrid[i, j].lowDistance_ = 1;
-                        }
+                        //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
+                        boxesToBeAdded[i, j] = true;
+                        tilesForGrid[i, j].highDistance_ = 0;
+                        tilesForGrid[i, j].lowDistance_ = 0;
+                    }
+                    else
+                    {
+                        //boxesToBeAdded[i, j] = null;
+                        boxesToBeAdded[i, j] = false;
+                        tilesForGrid[i, j].highDistance_ = 1;
+                        tilesForGrid[i, j].lowDistance_ = 1;
                     }
                 }
-                tiles_ = Tiler.getTiles(drawPipeline_, loadedTiles);
-
-                boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
-                GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
-
-                // Now load the enemies
-                tList = doc.GetElementsByTagName("enemy");
-                for (int i = 0; i < Convert.ToInt32(tList.Count); i++)
-                {
-                    System.Xml.XmlElement ele2 = (System.Xml.XmlElement)tList[i];
-                    DummyEnemy dum = new DummyEnemy(drawPipeline_, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
-                    enemyList_.Add(dum);
-                }
             }
-            catch (Exception)
-            {
-                int numTilesTall = 22;
-                int numTilesWide = 25;
-                boxesToBeAdded = new bool[numTilesTall, numTilesWide];
-                tilesForGrid = new Tile[numTilesTall, numTilesWide];
-                for (int i = 0; i < numTilesTall; i++)
-                {
-                    for (int j = 0; j < numTilesWide; j++)
-                    {
-                        if (tiles[i, j] != 1)
-                        {
-                            boxesToBeAdded[i, j] = true;
-                            tilesForGrid[i, j].highDistance_ = 0;
-                            tilesForGrid[i, j].lowDistance_ = 0;
-                        }
-                        else
-                        {
-                            boxesToBeAdded[i, j] = false;
-                            tilesForGrid[i, j].highDistance_ = 1;
-                            tilesForGrid[i, j].lowDistance_ = 1;
-                        }
-                    }
-                }
-                tiles_ = Tiler.getTiles(drawPipeline_, tiles);
-
-                boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
-                GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
-
-                // Now add an enemy
-                DummyEnemy dumE = new DummyEnemy(drawPipeline_, new Vector2(250.0f, 250.0f));
-                enemyList_.Add(dumE);
-            }
-            // Done loading level from XML
-            
+            boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
+            GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
             
             //collisionDetector_ = new CollisionDetector(polygons);
             collisionDetector_ = new SeparatingAxisCollisionDetector();
@@ -234,14 +181,14 @@ namespace Commando
             player_.getWeapon().addObserver(weapon_);
             player_.getAmmo().addObserver(ammo_);
             player_.setCollisionDetector(collisionDetector_);
-            for (int i = 0; i < enemyList_.Count; i++)
+            for (int i = 0; i < myLevel_.getEnemies().Count; i++)
             {
-                enemyList_[i].setCollisionDetector(collisionDetector_);
+                myLevel_.getEnemies()[i].setCollisionDetector(collisionDetector_);
             }
             AmmoBox ammo = new AmmoBox(collisionDetector_, drawPipeline_, new Vector2(250, 250), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
             HealthBox health = new HealthBox(collisionDetector_, drawPipeline_, new Vector2(150, 200), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
 
-            WorldState.EnemyList_ = (List<CharacterAbstract>)enemyList_;
+            WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;
         }
 
@@ -289,7 +236,14 @@ namespace Commando
             // may want to maintain a separate pipeline for objects whose
             //  update function doesn't do anything (aka tiles)
 
-            return this;
+            if (player_.isDead())
+            {
+                return new EngineStateGameOver(engine_);
+            }
+            else
+            {
+                return this;
+            }
         }
 
         /// <summary>

@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.controls;
@@ -49,18 +50,12 @@ namespace Commando
     /// </summary>
     public class EngineStateLevelEditor : EngineStateInterface
     {
-        const int SCREEN_SIZE_X = 375;
-        const int SCREEN_SIZE_Y = 375;
         const int NUM_TILES = 23;
-        const int NUM_TILES_PER_ROW = 25;
-        const int NUM_TILES_PER_COL = 22;
         const int NUM_PALLETTES = 3;
         const int MAX_MOUSE_X = 345;
         const int MAX_MOUSE_Y = 300;
         const int MIN_MOUSE_X = 30;
         const int MIN_MOUSE_Y = 30;
-        const int MAX_CURSOR_X = NUM_TILES_PER_ROW - 3;
-        const int MAX_CURSOR_Y = NUM_TILES_PER_COL - 3;
         const int MIN_CURSOR_X = 2;
         const int MIN_CURSOR_Y = 2;
         const int MAX_NUM_ENEMIES = 3;
@@ -68,7 +63,7 @@ namespace Commando
         const string SAVE_PATH = "user level.xml";
         const float DISP_TILE_DEPTH = 0.1f;
 
-        List<DrawableObjectAbstract> drawPipeline_;
+        List<DrawableObjectAbstract> drawPipeline_ = new List<DrawableObjectAbstract>();
 
         protected int[,] defaultTiles_ = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -110,6 +105,15 @@ namespace Commando
         protected int enemyIndex_;
         protected bool isObjSelected_;
         protected int selectedIndex_;
+        protected int screenSizeX_ = 375;
+        protected int screenSizeY_ = 375;
+        protected int numTilesWide_ = 25;
+        protected int numTilesTall_ = 22;
+        protected int maxCursorX;
+        protected int maxCursorY;
+
+        protected Level myLevel_;
+
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
         /// </summary>
@@ -117,7 +121,7 @@ namespace Commando
         {
             PlayerHelper.Player_ = null; // Necessary to have mouse input if the player has entered EngineStateGameplay before entering the level editor
             engine_ = engine;
-            engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            engine_.setScreenSize(screenSizeX_, screenSizeY_);
             engine_.IsMouseVisible = true;
             returnState_ = returnState;
             returnScreenSizeX_ = returnScreenSizeX;
@@ -127,40 +131,15 @@ namespace Commando
             selectedIndex_ = 0;
             myObjects_ = new List<objectRepresentation>(MAX_NUM_ENEMIES);
 
-            // Load the user's level from XML
-            try
-            {
-                System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-                doc.Load(SAVE_PATH);
-                
-                // First load the tiles
-                System.Xml.XmlElement ele = (System.Xml.XmlElement) doc.GetElementsByTagName("level")[0];
-                int[,] loadedTiles = new int[Convert.ToInt32(ele.GetAttribute("numTilesTall")), Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
-                System.Xml.XmlNodeList tList = doc.GetElementsByTagName("tile");
-                for (int i = 0; i < Convert.ToInt32(ele.GetAttribute("numTilesTall")); i++)
-                {
-                    for (int j = 0; j < Convert.ToInt32(ele.GetAttribute("numTilesWide")); j++)
-                    {
-                        System.Xml.XmlElement ele2 = (System.Xml.XmlElement) tList[j + i * Convert.ToInt32(ele.GetAttribute("numTilesWide"))];
-                        loadedTiles[i, j] = Convert.ToInt32(ele2.GetAttribute("index"));
-                    }
-                }
-                tiles_ = Tiler.getTiles(drawPipeline_, loadedTiles);
+            myLevel_ = new Level(new Tileset(), null);
+            myLevel_.getLevelFromFile(SAVE_PATH, drawPipeline_);
 
-                // Now load the enemies
-                tList = doc.GetElementsByTagName("enemy");
-                for (int i = 0; i < Convert.ToInt32(tList.Count); i++)
-                {
-                    System.Xml.XmlElement ele2 = (System.Xml.XmlElement) tList[i];
-                    objectRepresentation newObject = new objectRepresentation(ele2.GetAttribute("name"), new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))), Vector2.Zero, 0.2f);
-                    myObjects_.Add(newObject);
-                }
-            }
-            catch (Exception)
-            {
-                tiles_ = Tiler.getTiles(drawPipeline_, defaultTiles_);
-            }
+            GlobalHelper.getInstance().getCurrentCamera().setPosition(0, 0);
+            GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)screenSizeX_);
+            GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)screenSizeY_);
 
+            maxCursorX = numTilesWide_ - 3;
+            maxCursorY = numTilesTall_ - 3;
             cursorPosX_ = 2;
             cursorPosY_ = 2;
             curTileIndex_ = 0;
@@ -176,78 +155,73 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            for (int i = 0; i < myObjects_.Count(); i++)
+            // ERIC ?
+            //for (int i = 0; i < myObjects_.Count; i++)
+            //{
+            //    objectRepresentation currObject = myObjects_[i];
+            //    if (currObject.objRotation_ == Vector2.Zero)
+            //    {
+            //        Vector2 newRotation = new Vector2(1.0f, 0.0f);
+            //        currObject.objRotation_ = newRotation;
+            //        myObjects_[i] = currObject;
+            //    }
+            //}
+
+            // AMP
+            for (int i = 0; i < myLevel_.getEnemies().Count; i++)
             {
-                objectRepresentation currObject = myObjects_[i];
-                if (currObject.objRotation_ == Vector2.Zero)
+                if (myLevel_.getEnemies()[i].getDirection() == Vector2.Zero)
                 {
-                    Vector2 newRotation = new Vector2(1.0f, 0.0f);
-
-                    currObject.objRotation_ = newRotation;
-                    myObjects_[i] = currObject;
+                    // I don't think this line should ever get run, but tell
+                    // Andrew if the code ever stops on this breakpoint.
+                    // The direction vector should be initialized properly elsewhere.
+                    myLevel_.getEnemies()[i].setDirection(new Vector2(1.0f, 0.0f));
                 }
-
             }
-
-
-
-            // Prepare to output to XML
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-            try
-            {
-                doc.Load(SAVE_PATH);
-            }
-            catch (Exception)
-            {
-                System.Xml.XmlElement ele = doc.CreateElement("level");
-                ele.SetAttribute("numTilesWide", NUM_TILES_PER_ROW.ToString());
-                ele.SetAttribute("numTilesTall", NUM_TILES_PER_COL.ToString());
-                ele.SetAttribute("screenSizeX", SCREEN_SIZE_X.ToString());
-                ele.SetAttribute("screenSizeY", SCREEN_SIZE_Y.ToString());
-                doc.AppendChild(ele);
-
-                ele = doc.CreateElement("tiles");
-                System.Xml.XmlElement ele2;
-                foreach (int i in defaultTiles_)
-                {
-                    ele2 = doc.CreateElement("tile");
-                    ele2.SetAttribute("index", i.ToString());
-                    ele.AppendChild(ele2);
-                }
-                doc.GetElementsByTagName("level")[0].AppendChild(ele);
-
-                ele = doc.CreateElement("enemies");
-                doc.GetElementsByTagName("level")[0].AppendChild(ele);
-            }
+            // END
 
             // Check the inputs
             if (inputs.getLeftDirectionalY() < 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosY_ < MAX_CURSOR_Y)
+                if (cursorPosY_ < Constants.MAX_NUM_TILES_Y)
+                {
                     cursorPosY_++;
+                }
+                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
             }
             else if (inputs.getLeftDirectionalY() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosY_ > MIN_CURSOR_Y)
+                if (cursorPosY_ > Constants.MIN_NUM_TILES_Y)
+                {
                     cursorPosY_--;
+                }
+                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
             }
             else if (inputs.getLeftDirectionalX() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosX_ < MAX_CURSOR_X)
+                if (cursorPosX_ < Constants.MAX_NUM_TILES_X)
+                {
                     cursorPosX_++;
+                }
+                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
             }
             else if (inputs.getLeftDirectionalX() < 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                if (cursorPosX_ > MIN_CURSOR_X)
+                if (cursorPosX_ > Constants.MIN_NUM_TILES_X)
+                {
                     cursorPosX_--;
+                }
+                GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
             }
             else if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
+                // Save Level to XML before exiting
+                myLevel_.writeLevelToFile(SAVE_PATH);
                 engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
                 return returnState_;
             }
@@ -264,15 +238,24 @@ namespace Commando
             }
             else if (inputs.getButton(InputsEnum.LEFT_BUMPER) && isObjSelected_ == true)
             {
-                //inputs.setStick(InputsEnum.LEFT_BUMPER, 5);
-                inputs.setToggle(InputsEnum.LEFT_BUMPER);
-                objectRepresentation currObject = myObjects_[selectedIndex_];
-                currObject.objRotation_ = CommonFunctions.rotate(currObject.objRotation_,(float) (Math.PI / 4)); 
-                //currObject.objRotation_ = curRotation;
+                // ERIC
+                ////inputs.setStick(InputsEnum.LEFT_BUMPER, 5);
+                //inputs.setToggle(InputsEnum.LEFT_BUMPER);
+                //objectRepresentation currObject = myObjects_[selectedIndex_];
+                //currObject.objRotation_ = CommonFunctions.rotate(currObject.objRotation_,(float) (Math.PI / 4)); 
+                ////currObject.objRotation_ = curRotation;
 
-                //myObjects_.RemoveAt(selectedIndex_);
-                //myObjects_.Insert(selectedIndex_, currObject);
-                myObjects_[selectedIndex_] = currObject;
+                ////myObjects_.RemoveAt(selectedIndex_);
+                ////myObjects_.Insert(selectedIndex_, currObject);
+                //myObjects_[selectedIndex_] = currObject;
+
+                // AMP
+                inputs.setToggle(InputsEnum.LEFT_BUMPER);
+                CharacterAbstract currEnemy = myLevel_.getEnemies()[selectedIndex_];
+                currEnemy.setDirection(CommonFunctions.rotate(currEnemy.getDirection(), (float)(-1 * (Math.PI / 4))));
+                // TODO: AMP Fix it so we don't have to do this next line of code
+                currEnemy.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                // END
             }
             
 
@@ -287,14 +270,23 @@ namespace Commando
 
             else if (inputs.getButton(InputsEnum.RIGHT_BUMPER) && isObjSelected_)
             {
-                //inputs.setStick(InputsEnum.LEFT_BUMPER, 5);
-                inputs.setToggle(InputsEnum.RIGHT_BUMPER);
-                objectRepresentation currObject = myObjects_[selectedIndex_];
+                // ERIC
+                ////inputs.setStick(InputsEnum.LEFT_BUMPER, 5);
+                //inputs.setToggle(InputsEnum.RIGHT_BUMPER);
+                //objectRepresentation currObject = myObjects_[selectedIndex_];
 
-                currObject.objRotation_ = CommonFunctions.rotate(currObject.objRotation_,(double)( -1 * (Math.PI / 4)));
-                //myObjects_.RemoveAt(selectedIndex_);
-                //myObjects_.Insert(selectedIndex_, currObject);
-                myObjects_[selectedIndex_] = currObject;
+                //currObject.objRotation_ = CommonFunctions.rotate(currObject.objRotation_,(double)( -1 * (Math.PI / 4)));
+                ////myObjects_.RemoveAt(selectedIndex_);
+                ////myObjects_.Insert(selectedIndex_, currObject);
+                //myObjects_[selectedIndex_] = currObject;
+
+                // AMP
+                inputs.setToggle(InputsEnum.RIGHT_BUMPER);
+                CharacterAbstract currEnemy = myLevel_.getEnemies()[selectedIndex_];
+                currEnemy.setDirection(CommonFunctions.rotate(currEnemy.getDirection(), (double) (Math.PI / 4)));
+                // TODO: AMP Fix it so we don't have to do this next line of code
+                currEnemy.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                // END
             }
 
 
@@ -305,23 +297,24 @@ namespace Commando
                 {
                     case (int)pallette_.tile:
                         {
-                            tiles_[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW] = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
-
-                            // Edit the XML tile
-                            System.Xml.XmlElement tileElement = (System.Xml.XmlElement)doc.GetElementsByTagName("tile")[cursorPosX_ + cursorPosY_ * NUM_TILES_PER_ROW];
-                            tileElement.SetAttribute("index", curTileIndex_.ToString());
+                            // Edit the Level
+                            myLevel_.changeTile(curTileIndex_, cursorPosX_, cursorPosY_, drawPipeline_);
                             break;
                         }
                     case (int)pallette_.enemy:
                         {
-
                             //to do, add enemy on cursor position
+                            Vector2 pos = new Vector2((float) cursorPosX_ * Tiler.tileSideLength_, (float) cursorPosY_ * Tiler.tileSideLength_);
+                            DummyEnemy dumE = new DummyEnemy(drawPipeline_, pos);
+                            // TODO: AMP Fix it so we don't have to do this next line of code
+                            dumE.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                            
+                            myLevel_.getEnemies().Add(dumE);
 
                             break;
                         }
                     case (int)pallette_.misc:
                         {
-
                             break;
                         }
                 }
@@ -339,55 +332,42 @@ namespace Commando
                 {
                     case (int)pallette_.tile:
                         {
-                            if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
+                            Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
+                            Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                            if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
+                                && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
+                                && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
+                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
                             {
-                                int myX = (int)rightD.X / 15;
-                                int myY = (int)rightD.Y / 15;
-                                tiles_[myX + myY * NUM_TILES_PER_ROW] = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)myX * Tiler.tileSideLength_, (float)myY * Tiler.tileSideLength_), Vector2.Zero, 0.0f);
+                                int myX = (int)(mousePos.X) / 15;
+                                int myY = (int)(mousePos.Y) / 15;
 
-                                // Edit the XML tile
-                                System.Xml.XmlElement tileElement = (System.Xml.XmlElement)doc.GetElementsByTagName("tile")[myX + myY * NUM_TILES_PER_ROW];
-                                tileElement.SetAttribute("index", curTileIndex_.ToString());
+                                // Edit the Level
+                                myLevel_.changeTile(curTileIndex_, myX, myY, drawPipeline_);
                             }
                             break;
                         }
                     case (int)pallette_.enemy:
                         {
-                            if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
+                            Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
+                            Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                            if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
+                                && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
+                                && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
+                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
                             {
-                                Vector2 defRotation = new Vector2(1.0f, 0.0f);
-                                objectRepresentation newObject = new objectRepresentation(DUMMY_ENEMY, rightD, defRotation, 0.2f);
-                                if (myObjects_.Count < MAX_NUM_ENEMIES)
-                                {
-                                    myObjects_.Add(newObject);
-                                }
-                                else
-                                {
-                                    myObjects_[enemyIndex_] = newObject;
-                                    enemyIndex_++;
-                                    enemyIndex_ = enemyIndex_ % MAX_NUM_ENEMIES;
-                                }
+                                // ERIC
+                                //Vector2 defRotation = new Vector2(1.0f, 0.0f);
+                                //objectRepresentation newObject = new objectRepresentation(DUMMY_ENEMY, rightD, defRotation, 0.2f);
 
-                                // Add an XML enemy
-                                if (doc.GetElementsByTagName("enemy").Count < MAX_NUM_ENEMIES)
-                                {
-                                    System.Xml.XmlElement enemiesElement = (System.Xml.XmlElement)doc.GetElementsByTagName("enemies")[0];
-                                    System.Xml.XmlElement enemyElement = doc.CreateElement("enemy");
-                                    enemyElement.SetAttribute("name", DUMMY_ENEMY);
-                                    enemyElement.SetAttribute("posX", rightD.X.ToString());
-                                    enemyElement.SetAttribute("posY", rightD.Y.ToString());
-                                    enemiesElement.AppendChild(enemyElement);
-                                }
-                                else
-                                {
-                                    System.Xml.XmlElement enemyElement = (System.Xml.XmlElement)doc.GetElementsByTagName("enemy")[(enemyIndex_ + MAX_NUM_ENEMIES - 1) % MAX_NUM_ENEMIES];
-                                    enemyElement.SetAttribute("name", DUMMY_ENEMY);
-                                    enemyElement.SetAttribute("posX", rightD.X.ToString());
-                                    enemyElement.SetAttribute("posY", rightD.Y.ToString());
-                                }
+                                // AMP
+                                DummyEnemy dumE = new DummyEnemy(drawPipeline_, mousePos);
+                                // TODO: AMP Fix it so we don't have to do this next line of code
+                                dumE.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+
+                                myLevel_.getEnemies().Add(dumE);
+                                // END
                             }
-
-
                             break;
                         }
                 }
@@ -395,20 +375,39 @@ namespace Commando
             else if (inputs.getButton(InputsEnum.RIGHT_TRIGGER) && isObjSelected_)
             {
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
-                if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
-                {
-                    objectRepresentation currObject = myObjects_[selectedIndex_];
-                    currObject.objPos_ = rightD;
-                    //myObjects_.RemoveAt(selectedIndex_);
-                    //myObjects_.Insert(selectedIndex_, currObject);
-                    myObjects_[selectedIndex_] = currObject;
-                    //moveObject(ref myObjects_[selectedIndex_], rightD);
-                }
+                // ERIC
+                //if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
+                //{
+                //    objectRepresentation currObject = myObjects_[selectedIndex_];
+                //    currObject.objPos_ = rightD;
+                //    //myObjects_.RemoveAt(selectedIndex_);
+                //    //myObjects_.Insert(selectedIndex_, currObject);
+                //    myObjects_[selectedIndex_] = currObject;
+                //    //moveObject(ref myObjects_[selectedIndex_], rightD);
+                //}
 
+                // AMP
+                Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
+                Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
+                    && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
+                    && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
+                    && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
+                {
+                    myLevel_.getEnemies()[selectedIndex_].setPosition(mousePos);
+                    // TODO: AMP Fix it so we don't have to do this next line of code
+                    myLevel_.getEnemies()[selectedIndex_].getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                }
+                // END
             }
             else if (inputs.getButton(InputsEnum.BUTTON_3) && isObjSelected_)
             {
-                myObjects_.RemoveAt(selectedIndex_);
+                // ERIC
+                //myObjects_.RemoveAt(selectedIndex_);
+                // AMP
+                drawPipeline_.Remove(myLevel_.getEnemies()[selectedIndex_]);
+                myLevel_.getEnemies().RemoveAt(selectedIndex_);
+                // END
                 isObjSelected_ = false;
                 selectedIndex_ = 0;
             }
@@ -424,17 +423,35 @@ namespace Commando
                 {
                     bool foundObj = false;
                     Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
-                    for (int i = 0; i < myObjects_.Count() && foundObj == false; i++)
+                    // ERIC
+                    //for (int i = 0; i < myObjects_.Count() && foundObj == false; i++)
+                    //{
+                    //    if (rightD.Y >= myObjects_[i].objPos_.Y && rightD.Y < myObjects_[i].objPos_.Y + 15.0f
+                    //        && rightD.X >= myObjects_[i].objPos_.X && rightD.X < myObjects_[i].objPos_.X + 15.0f)
+                    //    {
+                    //        selectedIndex_ = i;
+                    //        isObjSelected_ = true;
+                    //        foundObj = true;
+                    //    }
+
+                    //}
+
+                    // AMP
+                    Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
+                    Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                    List<CharacterAbstract> myEnemies = myLevel_.getEnemies();
+                    for (int i = 0; i < myEnemies.Count && foundObj == false; i++)
                     {
-                        if (rightD.Y >= myObjects_[i].objPos_.Y && rightD.Y < myObjects_[i].objPos_.Y + 15.0f
-                            && rightD.X >= myObjects_[i].objPos_.X && rightD.X < myObjects_[i].objPos_.X + 15.0f)
+                        if (mousePos.Y >= myEnemies[i].getPosition().Y - Tiler.tileSideLength_ && mousePos.Y < myEnemies[i].getPosition().Y + Tiler.tileSideLength_
+                            && mousePos.X >= myEnemies[i].getPosition().X - Tiler.tileSideLength_ && mousePos.X < myEnemies[i].getPosition().X + Tiler.tileSideLength_)
                         {
                             selectedIndex_ = i;
                             isObjSelected_ = true;
                             foundObj = true;
                         }
-
                     }
+
+                    // END
                 }
 
 
@@ -455,9 +472,7 @@ namespace Commando
                 curTileIndex_ = curTileIndex_ - 1;
             }
 
-            // Finish Outputting to XML
-            doc.Save(SAVE_PATH);
-
+            drawPipeline_.Remove(displayTile_);
             displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
 
             return this;
@@ -475,9 +490,10 @@ namespace Commando
         {
             engine_.GraphicsDevice.Clear(Color.Firebrick);
 
-            foreach (TileObject tO in tiles_)
+            // Draw all the DrawableObjectAbstracts in our pipeline
+            for (int i = drawPipeline_.Count - 1; i >= 0; i--)
             {
-                tO.draw(new GameTime());
+                drawPipeline_[i].draw(null);
             }
 
             displayTile_.draw(new GameTime());
@@ -485,20 +501,29 @@ namespace Commando
             TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((cursorPosX_ *Tiler.tileSideLength_ - 1 ), (cursorPosY_ * Tiler.tileSideLength_ - 1)), 0.2f);
 
 
-           // Draw  objects (ie enemies/misc)
-            for (int i = 0; i < myObjects_.Count(); i++)
+            // ERIC
+            //// Draw  objects (ie enemies/misc)
+            // for (int i = 0; i < myObjects_.Count(); i++)
+            // {
+                
+            //     objectRepresentation currObject = myObjects_[i];
+                
+            //     if (currObject.objName_ == DUMMY_ENEMY)
+            //     {
+            //         TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, currObject.objPos_, currObject.objRotation_, currObject.objDepth_);
+            //         TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, currObject.objPos_, 0.2f);
+            //     }
+                
+                
+            // }
+
+            // AMP
+            if (isObjSelected_)
             {
-                
-                objectRepresentation currObject = myObjects_[i];
-                
-                if (currObject.objName_ == DUMMY_ENEMY)
-                {
-                    TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, currObject.objPos_, currObject.objRotation_, currObject.objDepth_);
-                    TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, currObject.objPos_, 0.2f);
-                }
-                
-                
+                Vector2 highlightPos = myLevel_.getEnemies()[selectedIndex_].getPosition();
+                TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, highlightPos, 0.2f);
             }
+            // END
 
             // Draw the palette
             switch (curPallette_)

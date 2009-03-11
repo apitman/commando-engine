@@ -16,25 +16,51 @@
  ***************************************************************************
 */
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Commando.controls;
 
-namespace Commando.levels
+namespace Commando
 {
-    /// <summary>
-    /// Data structure for a tileset read in from an XML file; maps tile index
-    /// numbers to pictures and tile information such as heights.
-    /// </summary>
-    public class Tileset
+    public class EngineStateGameOver : EngineStateInterface
     {
-        protected Dictionary<int, Height> heights_ { get; private set;}
-        protected Dictionary<int, string> textures_{ get; private set;}
+        protected const int LENGTH_OF_GAME_OVER = 5;
+        protected const string STR_GAME_OVER_TEXT = "Game Over.";
 
-        public static Tileset constructTileset(string filepath)
+        protected Engine engine_;
+        protected TimeSpan duration_;
+
+        public EngineStateGameOver(Engine engine)
         {
-            throw new NotImplementedException("Tileset class not ready");
+            engine_ = engine;
+            duration_ = new TimeSpan();
+        }
+
+        public EngineStateInterface update(GameTime gameTime)
+        {
+            duration_ = duration_.Add(gameTime.ElapsedGameTime);
+
+            if (duration_.Seconds >= LENGTH_OF_GAME_OVER || InputSet.getInstance().getButton(InputsEnum.CONFIRM_BUTTON))
+            {
+                return new EngineStateMenu(engine_);
+            }
+
+            return this;
+        }
+
+        public void draw()
+        {
+            engine_.GraphicsDevice.Clear(Color.Azure);
+            FontMap.getInstance().getFont(FontEnum.PescaderoBold).drawStringCentered(STR_GAME_OVER_TEXT,
+                new Vector2((float)engine_.GraphicsDevice.Viewport.Width / 2, (float)engine_.GraphicsDevice.Viewport.Height / 2),
+                Color.Black,
+                0.0f,
+                0.9f);
         }
     }
 }
