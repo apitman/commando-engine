@@ -275,6 +275,28 @@ namespace Commando.ai
 
             start_ = grid.getTileIndex(start);
             goal_ = grid.getTileIndex(destination);
+
+            // Project our start and goal nodes into the search space, if possible
+            // TODO
+            // For now, if they are farther apart than the size of the search space in
+            // any dimension, we give up - in the future, they will try to get as close
+            // as possible
+            short manhattanX = (short)Math.Abs(start_.x_ - goal_.x_);
+            short manhattanY = (short)Math.Abs(start_.y_ - goal_.y_);
+            short leftOffset = (short)Math.Floor((SEARCH_SPACE_WIDTH - manhattanX) / 2.0f);
+            short rightOffset = (short)Math.Ceiling((SEARCH_SPACE_WIDTH - manhattanX) / 2.0f);
+            short bottomOffset = (short)Math.Floor((SEARCH_SPACE_HEIGHT - manhattanY) / 2.0f);
+            short topOffset = (short)Math.Ceiling((SEARCH_SPACE_HEIGHT - manhattanY) / 2.0f);
+            gridXOffset_ = (short)(Math.Min(start_.x_, goal_.x_) - leftOffset);
+            gridYOffset_ = (short)(Math.Min(start_.y_, goal_.y_) - topOffset);
+
+            if (gridXOffset_ < 0) gridXOffset_ = 0;
+            if (gridYOffset_ < 0) gridYOffset_ = 0;
+            start_.x_ -= gridXOffset_;
+            start_.y_ -= gridYOffset_;
+            goal_.x_ -= gridXOffset_;
+            goal_.y_ -= gridYOffset_;
+
             searchRadius_ =
                 (float)(radius / ((TileGrid.TILEWIDTH + TileGrid.TILEHEIGHT) / 2.0f));
             grid_ = grid;
@@ -322,8 +344,8 @@ namespace Commando.ai
             while (!TileIndex.equals(cur, start_))
             {
                 TileIndex adjusted = cur;
-                adjusted.x_ -= gridXOffset_;
-                adjusted.y_ -= gridYOffset_;
+                adjusted.x_ += gridXOffset_;
+                adjusted.y_ += gridYOffset_;
                 path.Insert(0, adjusted);
                 cur = searchSpace_[cur.x_, cur.y_].parent;
             }

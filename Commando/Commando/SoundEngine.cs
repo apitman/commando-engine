@@ -19,12 +19,6 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 
-/* EVEN MORE IMPORTANT NOTICE:
- * This class is deprecated, and should only be used if the project is
- * reverted back to using XACT.  Currently, we are using the simple
- * MediaPlayer and SoundEffect APIs.
- */
-
 // Important Notice:
 // The techniques used in constructing this class are based on those found
 // at http://www.ziggyware.com/readarticle.php?article_id=40.
@@ -53,15 +47,11 @@ namespace Commando
         /// </summary>
         private SoundEngine()
         {
-#if !XBOX
             // These files are automatically created in the output directory
             //  matching the relative path of wherever the .xap file is located
             audio_ = new AudioEngine(@"Content\Audio\sounds.xgs");
             waveBank_ = new WaveBank(audio_,@"Content\Audio\waves1.xwb");
             soundBank_ = new SoundBank(audio_,@"Content\Audio\sounds1.xsb");
-#else
-            //throw new NotImplementedException();
-#endif
         }
 
         /// <summary>
