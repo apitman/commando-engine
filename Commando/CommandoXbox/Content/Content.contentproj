@@ -443,6 +443,56 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBox.bmp">
+      <Link>Sprites\AmmoBox.bmp</Link>
+      <Name>AmmoBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBoxPistol.png">
+      <Link>Sprites\AmmoBoxPistol.png</Link>
+      <Name>AmmoBoxPistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBoxRifle.png">
+      <Link>Sprites\AmmoBoxRifle.png</Link>
+      <Name>AmmoBoxRifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBoxShotgun.png">
+      <Link>Sprites\AmmoBoxShotgun.png</Link>
+      <Name>AmmoBoxShotgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBoxSmall.png">
+      <Link>Sprites\AmmoBoxSmall.png</Link>
+      <Name>AmmoBoxSmall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\BulletMedium.png">
+      <Link>Sprites\BulletMedium.png</Link>
+      <Name>BulletMedium</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\BulletSmall.png">
+      <Link>Sprites\BulletSmall.png</Link>
+      <Name>BulletSmall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\HealthBox.bmp">
+      <Link>Sprites\HealthBox.bmp</Link>
+      <Name>HealthBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\effects\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>

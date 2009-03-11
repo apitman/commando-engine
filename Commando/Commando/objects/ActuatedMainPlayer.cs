@@ -44,6 +44,8 @@ namespace Commando.objects
 
         protected DefaultActuator actuator_;
 
+        protected bool pistol_ = false;
+
         /// <summary>
         /// Create the main player of the game.
         /// </summary>
@@ -115,6 +117,20 @@ namespace Commando.objects
                 float Y = leftD.X;
                 leftD.X = (float)Math.Cos((double)rotAngle) * X - (float)Math.Sin((double)rotAngle) * Y;
                 leftD.Y = (float)Math.Sin((double)rotAngle) * X + (float)Math.Cos((double)rotAngle) * Y;
+            }
+
+            if (inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_BUMPER))
+            {
+                if (pistol_)
+                {
+                    Weapon_ = new Shotgun(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+                    pistol_ = false;
+                }
+                else
+                {
+                    Weapon_ = new Pistol(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+                    pistol_ = true;
+                }
             }
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))

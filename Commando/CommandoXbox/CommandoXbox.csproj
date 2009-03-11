@@ -286,6 +286,9 @@
     <Compile Include="..\Commando\objects\ActuatedMainPlayer.cs">
       <Link>objects\ActuatedMainPlayer.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\AmmoBox.cs">
+      <Link>objects\AmmoBox.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\AnimatedObjectAbstract.cs">
       <Link>objects\AnimatedObjectAbstract.cs</Link>
     </Compile>
@@ -315,6 +318,12 @@
     </Compile>
     <Compile Include="..\Commando\objects\HeadsUpDisplayWeapon.cs">
       <Link>objects\HeadsUpDisplayWeapon.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\HealthBox.cs">
+      <Link>objects\HealthBox.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\ItemAbstract.cs">
+      <Link>objects\ItemAbstract.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\LevelObjectAbstract.cs">
       <Link>objects\LevelObjectAbstract.cs</Link>
