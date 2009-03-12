@@ -30,6 +30,8 @@ namespace Commando.ai
 
         protected AI AI_ { get; set; }
 
+        protected int key_;
+
         /// <summary>
         /// Basic constructor
         /// </summary>
@@ -37,6 +39,7 @@ namespace Commando.ai
         {
             AI_ = ai;
             broadcastRadius_ = broadcastRadius;
+            key_ = StimulusIDGenerator.getNext();
         }
 
         /// <summary>
@@ -54,7 +57,9 @@ namespace Commando.ai
         /// <param name="belief"></param>
         protected void broadcastBelief(Belief belief)
         {
-            // TODO Fill out this function
+            WorldState.Audial_.Remove(key_);
+            WorldState.Audial_.Add(key_,
+                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, broadcastRadius_, AI_.Character_.getPosition(), this));
         }
 
         /// <summary>
@@ -62,7 +67,10 @@ namespace Commando.ai
         /// </summary>
         protected void decideWhatToBroadcast()
         {
-            // TODO Fill out this function
+            for (int i = 0; i < AI_.Memory_.beliefs_[BeliefType.EnemyLoc].Count; i++)
+            {
+                broadcastBelief(AI_.Memory_.beliefs_[BeliefType.EnemyLoc][i]);
+            }
         }
     }
 }
