@@ -32,12 +32,29 @@ namespace Commando
 {
     public class EngineStateLevelLoad : EngineStateInterface
     {
+        protected const string INSTRUCTIONS_MESSAGE = "Please select a level to load: ";
+        protected const float INSTRUCTIONS_DEPTH = Constants.DEPTH_MENU_TEXT;
+        protected const FontEnum INSTRUCTIONS_FONT = FontEnum.Kootenay;
+        protected static readonly Color INSTRUCTIONS_COLOR = Color.Yellow;
+        protected Vector2 INSTRUCTIONS_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return new Vector2(r.X + r.Width / 2, r.Y + 50.0f);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
         protected Vector2 MENU_POSITION
         {
             get
             {
                 Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
-                return new Vector2(r.X + r.Width / 2, r.Y + 100.0f);
+                return new Vector2(r.X + r.Width / 2, r.Y + 150.0f);
             }
 
             set
@@ -50,6 +67,9 @@ namespace Commando
         protected MenuList menuList_;
         protected StorageContainer container_;
         protected EngineStateTarget target_;
+        protected List<string> filepaths_;
+        protected GameFont instructions_;
+        protected bool cancelFlag_;
 
         public enum EngineStateTarget
         {
@@ -61,6 +81,8 @@ namespace Commando
         {
             engine_ = engine;
             target_ = target;
+            instructions_ = FontMap.getInstance().getFont(INSTRUCTIONS_FONT);
+            cancelFlag_ = false;
 
             IAsyncResult result =
                     Guide.BeginShowStorageDeviceSelector(findStorageDevice, "loadRequest");
@@ -74,32 +96,57 @@ namespace Commando
                 if ((string)result.AsyncState == "loadRequest")
                     loadList(storageDevice);
             }
+            else
+            {
+                cancelFlag_ = true;
+            }
         }
 
         private void loadList(StorageDevice storageDevice)
         {
-            container_ = storageDevice.OpenContainer("CommandoXbox");
-            string directory = Path.Combine(container_.Path, "levels");
+            container_ = storageDevice.OpenContainer(EngineStateLevelSave.CONTAINER_NAME);
+            string directory = Path.Combine(container_.Path, EngineStateLevelSave.DIRECTORY_NAME);
             Directory.CreateDirectory(directory);
             string[] files = Directory.GetFiles(directory);
-            if (files.Length == 0)
+
+            filepaths_ = new List<string>();
+            List<string> fileList = new List<string>();
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (Path.GetExtension(files[i]) == EngineStateLevelSave.LEVEL_EXTENSION)
+                {
+                    filepaths_.Add(files[i]);
+                    fileList.Add(Path.GetFileNameWithoutExtension(files[i]));
+                }
+            }
+            if (filepaths_.Count == 0)
             {
                 XmlTextReader reader = new XmlTextReader(@".\Content\XML\defaultlevel.xml");
                 XmlDocument document = new XmlDocument();
                 document.Load(reader);
-                document.Save(Path.Combine(directory, "defaultlevel.xml"));
+                document.Save(Path.Combine(directory, "defaultlevel" + EngineStateLevelSave.LEVEL_EXTENSION));
                 files = Directory.GetFiles(directory);
-            }
-            List<string> fileList = new List<string>();
-            for (int i = 0; i < files.Length; i++)
-            {
-                fileList.Add(files[i]);
+
+                // TODO Extract this C&P'd code into function
+                for (int i = 0; i < files.Length; i++)
+                {
+                    if (Path.GetExtension(files[i]) == EngineStateLevelSave.LEVEL_EXTENSION)
+                    {
+                        filepaths_.Add(files[i]);
+                        fileList.Add(Path.GetFileNameWithoutExtension(files[i]));
+                    }
+                }
             }
             menuList_ = new MenuList(fileList, MENU_POSITION);
         }
 
-        public EngineStateInterface update(Microsoft.Xna.Framework.GameTime gameTime)
+        public EngineStateInterface update(GameTime gameTime)
         {
+            if (cancelFlag_)
+            {
+                return new EngineStateMenu(engine_);
+            }
+
             InputSet inputs = InputSet.getInstance();
             if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) ||
                 inputs.getButton(InputsEnum.BUTTON_1))
@@ -108,7 +155,7 @@ namespace Commando
                 inputs.setToggle(InputsEnum.BUTTON_1);
 
                 int cursorPos = menuList_.getCursorPos();
-                string filepath = menuList_.StringList_[cursorPos];
+                string filepath = filepaths_[cursorPos];
                 switch (target_)
                 {
                     case EngineStateTarget.GAMEPLAY:
@@ -147,6 +194,13 @@ namespace Commando
 
             if (menuList_ != null)
                 menuList_.draw();
+
+            instructions_.drawStringCentered(
+                INSTRUCTIONS_MESSAGE,
+                INSTRUCTIONS_POSITION,
+                INSTRUCTIONS_COLOR,
+                0,
+                INSTRUCTIONS_DEPTH);
         }
     }
 }
