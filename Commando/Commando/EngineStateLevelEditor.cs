@@ -274,17 +274,7 @@ namespace Commando
 
             else if (inputs.getButton(InputsEnum.RIGHT_BUMPER) && isObjSelected_ == true)
             {
-                // ERIC
-                ////inputs.setStick(InputsEnum.LEFT_BUMPER, 5);
-                //inputs.setToggle(InputsEnum.RIGHT_BUMPER);
-                //objectRepresentation currObject = myObjects_[selectedIndex_];
-
-                //currObject.objRotation_ = CommonFunctions.rotate(currObject.objRotation_,(double)( -1 * (Math.PI / 4)));
-                ////myObjects_.RemoveAt(selectedIndex_);
-                ////myObjects_.Insert(selectedIndex_, currObject);
-                //myObjects_[selectedIndex_] = currObject;
-
-                // AMP
+             
                 inputs.setToggle(InputsEnum.RIGHT_BUMPER);
                 switch (typeSelected_)
                 {
@@ -332,6 +322,36 @@ namespace Commando
                         }
                     case (int)pallette_.misc:
                         {
+                            Vector2 mousePos = new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
+                            if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
+                                   && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
+                                   && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
+                                   && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
+                            {
+                                
+                                switch (curTileIndex_)
+                                {
+                                    case 0:
+                                        {
+                                            AmmoBox myAmmo = new AmmoBox(null, drawPipeline_, mousePos, new Vector2(1.0f, 0.0f), 0.2f);
+                                            myLevel_.getItems().Add(myAmmo);
+                                            break;
+                                        }
+                                    case 1:
+                                        {
+                                            HealthBox myHealth = new HealthBox(null, drawPipeline_, mousePos, new Vector2(1.0f, 0.0f), 0.2f);
+                                            myLevel_.getItems().Add(myHealth);
+                                            break;
+                                        }
+                                    case 2:
+                                        {
+                                            myLevel_.setPlayerStartLocation(mousePos);
+
+                                            break;
+                                        }
+                                }
+                                
+                            }
                             break;
                         }
                 }
@@ -344,18 +364,28 @@ namespace Commando
                 }
 
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
+                Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
+                Vector2 mousePos;
+                if (Settings.getInstance().UsingMouse_)
+                {
+                    mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                }
+                else
+                {
+
+                    mousePos = new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
+                }
 
                 switch (curPallette_)
                 {
                     case (int)pallette_.tile:
                         {
-                            Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
-                            Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+
                             if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
-                                && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
-                                && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
-                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
-                                && rightD.Y < HUD_BAR_DRAW_Y)
+                            && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
+                            && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
+                            && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
+                            && rightD.Y < HUD_BAR_DRAW_Y)
                             {
                                 int myX = (int)(mousePos.X) / 15;
                                 int myY = (int)(mousePos.Y) / 15;
@@ -367,13 +397,11 @@ namespace Commando
                         }
                     case (int)pallette_.enemy:
                         {
-                            Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
-                            Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
                             if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
-                                && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
-                                && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
-                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
-                                && rightD.Y < HUD_BAR_DRAW_Y)
+                               && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
+                               && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
+                               && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
+                               && rightD.Y < HUD_BAR_DRAW_Y)
                             {
                                 // ERIC
                                 //Vector2 defRotation = new Vector2(1.0f, 0.0f);
@@ -391,8 +419,6 @@ namespace Commando
                         }
                     case (int)pallette_.misc:
                         {
-                            Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
-                            Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
                             if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
                                    && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
                                    && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
@@ -428,7 +454,15 @@ namespace Commando
             {
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
                 Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
-                Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                Vector2 mousePos;
+                if (Settings.getInstance().UsingMouse_)
+                {
+                    mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                }
+                else
+                {
+                    mousePos = new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
+                }
                 if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
                     && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
                     && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
@@ -482,7 +516,15 @@ namespace Commando
                     Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
 
                     Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
-                    Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                    Vector2 mousePos;
+                    if (Settings.getInstance().UsingMouse_)
+                    {
+                        mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                    }
+                    else
+                    {
+                        mousePos = new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
+                    }
                     List<CharacterAbstract> myEnemies = myLevel_.getEnemies();
                     for (int i = 0; i < myEnemies.Count && foundObj == false; i++)
                     {
@@ -582,6 +624,7 @@ namespace Commando
 
             return this;
         }
+        
 
         public void moveObject(ref objectRepresentation or, Vector2 pos)
         {
