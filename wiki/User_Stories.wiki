@@ -44,16 +44,16 @@
 == Build 4: Feb. 24 - Mar. 12 ==
 
   === Gameplay ===
-  # User can load a specific level file for both editing and gameplay(Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can load a specific level file for both editing and gameplay(Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can play in levels larger than window size with a scrolling camera (Jared)
-  # User can move from one level to another via specific entry/exit points (Jared)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can move from one level to another via specific entry/exit points (Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character will turn smoothly to face new positions (Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User sees realistic stops when more than 2 objects collide (Jared)
   # [http://www.plixer.com/manual/images/redX.jpg]User's character will stop when rotating into a collision instead of translating (Jared) - removed because does not "feel right in play"
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can pick up ammunition (Andrew, Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can pick up health (Andrew, Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can hide from enemies by staying out of their line of sight (Ken)
-  # User can see enemies communicating rudimentary information regarding the player's location (Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see enemies communicating rudimentary information regarding the player's location (Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User hears background music looping throughout the game (Ken, Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's mouse cursor is a crosshair (Ken)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]When using gamepad, user has a laser sight to show approx. where shots will go (Ken)
@@ -62,7 +62,7 @@
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fight enemies who shoot at his character (Ken, Jared)
 
   === Level Editor ===
-  # User can save a level to a specific file name on the Xbox 360 (Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can save a level to a specific file name on the Xbox 360 (Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can create larger levels in the level editor to make use of moving camera (Andrew, Eric)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can select existing objects in the level editor using Right Trigger / LMB (Eric, Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can move existing objects in the level editor (Eric)
