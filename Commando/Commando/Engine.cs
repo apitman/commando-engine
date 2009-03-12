@@ -90,7 +90,7 @@ namespace Commando
                 Math.Max(this.GraphicsDevice.DisplayMode.Width, SCREEN_MIN_WIDTH);
             this.graphics_.PreferredBackBufferHeight =
                 Math.Max(this.GraphicsDevice.DisplayMode.Height, SCREEN_MIN_HEIGHT);
-            //this.graphics_.IsFullScreen = true;
+            this.graphics_.IsFullScreen = true;
             this.graphics_.ApplyChanges();
         }
 

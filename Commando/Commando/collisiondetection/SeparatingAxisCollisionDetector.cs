@@ -176,6 +176,7 @@ namespace Commando.collisiondetection
             Height translationHeight;
 
             Vector2 translate = Vector2.Zero, translateHigh = Vector2.Zero, translateLow = Vector2.Zero;
+            Vector2 translateTot = Vector2.Zero;
             float dist;
             List<Vector2> collisions = new List<Vector2>();
             foreach (CollisionObjectInterface cObj in objects_)
@@ -216,6 +217,9 @@ namespace Commando.collisiondetection
                         translate = obj.checkCollisionInto(cObj, this, translationHeight, dist, translate);
                         if (translate != Vector2.Zero)
                         {
+                            translateTot += translate;
+                            movingObjectPolygonLow.rotate(newDirection, position + translateTot);
+                            movingObjectPolygonHigh.rotate(newDirection, position + translateTot);
                             collisions.Add(translate);
                         }
                     }
@@ -231,19 +235,26 @@ namespace Commando.collisiondetection
                 for (int i = 0; i < collisions.Count; i++)
                 {
                     Vector2 colVector = collisions[i];
-                    for (int j = i; j < collisions.Count; j++)
+                    for (int j = i + 1; j < collisions.Count; j++)
                     {
                         if (ConvexPolygon.dotProduct(colVector, collisions[j]) / (colVector.Length() * collisions[j].Length()) < 0)
                         {
+                            Console.Out.Write("double:");
+                            Console.Out.Write(colVector);
+                            Console.Out.Write(collisions[j]);
+                            Console.Out.WriteLine(ConvexPolygon.dotProduct(colVector, collisions[j]) / (colVector.Length() * collisions[j].Length()));
                             newDirection = oldDirection;
                             movingObjectPolygonLow.rotate(oldDirection, position);
                             movingObjectPolygonHigh.rotate(oldDirection, position);
                             return Vector2.Zero;
                         }
+                        Console.Out.Write(colVector);
+                        Console.Out.Write(collisions[j]);
+                        Console.Out.WriteLine(ConvexPolygon.dotProduct(colVector, collisions[j]) / (colVector.Length() * collisions[j].Length()));
                     }
                     translate += colVector;
                 }
-                return translate;
+                return translateTot;
             }
             return Vector2.Zero;
         }
