@@ -43,6 +43,7 @@ namespace Commando.levels
 
         protected List<LevelObjectAbstract> items_;
 
+        protected Vector2 playerStartLocation_;
         public Level(Tileset tileSet, TileObject[,] tiles)
         {
             //tileSet_ = tileSet;
@@ -55,7 +56,14 @@ namespace Commando.levels
             enemies_ = new List<CharacterAbstract>();
             items_ = new List<LevelObjectAbstract>();
         }
-
+        public void setPlayerStartLocation(Vector2 pos)
+        {
+            playerStartLocation_ = pos;
+        }
+        public Vector2 getPlayerStartLocation()
+        {
+            return playerStartLocation_;
+        }
         public int getHeight()
         {
             return height_;
@@ -153,9 +161,9 @@ namespace Commando.levels
                 }
 
                 //TODO: get from XML
-                player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
+                //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
                 //
-
+                player_ = null;
             }
             catch (Exception)
             {
