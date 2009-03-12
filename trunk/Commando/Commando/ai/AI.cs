@@ -46,6 +46,8 @@ namespace Commando.ai
 
         protected InferenceEngine inferenceEngine_;
 
+        protected SystemCommunication communicationSystem_;
+
         public AI(NonPlayableCharacterAbstract npc)
         {
             Character_ = npc;
@@ -56,6 +58,7 @@ namespace Commando.ai
             path_ = new List<TileIndex>();
             lastPathfindUpdate_ = 0;
             inferenceEngine_ = new InferenceEngine(this);
+            communicationSystem_ = new SystemCommunication(this, 100);
         }
 
         public void update()
@@ -145,6 +148,7 @@ namespace Commando.ai
                 //Character_.lookAt(grid.getTileCenter(path_[0]));
             }
 
+            communicationSystem_.update();
             // End test block
         }
     }
