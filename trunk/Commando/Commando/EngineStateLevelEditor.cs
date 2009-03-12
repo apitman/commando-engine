@@ -590,8 +590,7 @@ namespace Commando
                             {
                                 curTileIndex_ = NUM_TILES;
                             }
-                            else
-                                curTileIndex_ = curTileIndex_ - 1;
+                            curTileIndex_ = curTileIndex_ - 1;
                             break;
                         }
                     case (int)pallette_.enemy:
@@ -605,8 +604,7 @@ namespace Commando
                             {
                                 curTileIndex_ = NUM_MISC;
                             }
-                            else
-                                curTileIndex_ = curTileIndex_ - 1;
+                            curTileIndex_ = curTileIndex_ - 1;
                             break;
                         }
                 }
