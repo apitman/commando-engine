@@ -169,7 +169,7 @@ namespace Commando
         /// <param name="engine">Reference to the engine running the state</param>
         public EngineStateGameplay(Engine engine, string filepath, StorageContainer container)
         {
-            SoundEngine.getInstance().Music.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);
+            //SoundEngine.getInstance().Music.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);
 
             engine_ = engine;
 
