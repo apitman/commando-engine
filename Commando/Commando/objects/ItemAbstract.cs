@@ -95,5 +95,18 @@ namespace Commando.objects
                 detector_.remove(this);
             }
         }
+
+        public override void setCollisionDetector(CollisionDetectorInterface collisionDetector)
+        {
+            if (detector_ != null)
+            {
+                detector_.remove(this);
+            }
+            detector_ = collisionDetector;
+            if (detector_ != null)
+            {
+                detector_.register(this);
+            }
+        }
     }
 }

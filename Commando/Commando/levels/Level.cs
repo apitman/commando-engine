@@ -39,11 +39,15 @@ namespace Commando.levels
 
         protected List<CharacterAbstract> enemies_;
 
+        /// <summary>
+        /// Right now, we're not gonna use this.
+        /// </summary>
         protected PlayableCharacterAbstract player_;
+
+        protected Vector2 playerStartLocation_;
 
         protected List<LevelObjectAbstract> items_;
 
-        protected Vector2 playerStartLocation_;
         public Level(Tileset tileSet, TileObject[,] tiles)
         {
             //tileSet_ = tileSet;
@@ -53,6 +57,7 @@ namespace Commando.levels
             height_ = 22;
             width_ = 25;
             player_ = null;
+            playerStartLocation_ = new Vector2(100.0f, 200.0f);
             enemies_ = new List<CharacterAbstract>();
             items_ = new List<LevelObjectAbstract>();
         }
@@ -147,9 +152,11 @@ namespace Commando.levels
 
                 // Now load the enemies
                 tList = doc.GetElementsByTagName("enemy");
-                for (int i = 0; i < Convert.ToInt32(tList.Count); i++)
+                for (int i = 0; i < tList.Count; i++)
                 {
                     XmlElement ele2 = (XmlElement)tList[i];
+                    // TODO: Check the "name" attribute of the enemy and instantiate
+                    // other enemies if they are specified.
                     DummyEnemy dumDum = new DummyEnemy(pipeline, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
                     //Vector2 rotation = CommonFunctions.getVector(Convert.ToInt32(ele2.GetAttribute("rotation")) * Math.PI / 180);
                     Vector2 rotation = new Vector2(Convert.ToInt32(ele2.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(ele2.GetAttribute("rotationY")) / 100.0f);
@@ -159,6 +166,27 @@ namespace Commando.levels
 
                     enemies_.Add(dumDum);
                 }
+
+                // Now load the healthBoxes and ammoBoxes
+                tList = doc.GetElementsByTagName("item");
+                for (int i = 0; i < tList.Count; i++)
+                {
+                    XmlElement itemElement = (XmlElement)tList[i];
+                    if (itemElement.GetAttribute("type") == "hBox")
+                    {
+                        Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
+                        items_.Add(new HealthBox(null, pipeline, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW));
+                    }
+                    else if (itemElement.GetAttribute("type") == "aBox")
+                    {
+                        Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
+                        items_.Add(new AmmoBox(null, pipeline, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW));
+                    }
+                }
+
+                // Load player location from file
+                XmlElement playerLocation = (XmlElement)doc.GetElementsByTagName("playerLocation")[0];
+                playerStartLocation_ = new Vector2((float)Convert.ToInt32(playerLocation.GetAttribute("x")), (float)Convert.ToInt32(playerLocation.GetAttribute("y")));
 
                 //TODO: get from XML
                 //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
@@ -251,6 +279,38 @@ namespace Commando.levels
                 enemiesElement.AppendChild(enemyElement);
             }
             levelElement.AppendChild(enemiesElement);
+
+            // Add HealthBoxes
+            // Add AmmoBoxes
+            XmlElement itemsElement = doc.CreateElement("items");
+            for (int i = 0; i < items_.Count; i++)
+            {
+                if (items_[i] is HealthBox)
+                {
+                    // HealthBox
+                    XmlElement hBoxElement = doc.CreateElement("item");
+                    hBoxElement.SetAttribute("type", "hBox");
+                    hBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
+                    hBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
+                    itemsElement.AppendChild(hBoxElement);
+                }
+                else if (items_[i] is AmmoBox)
+                {
+                    // AmmoBox
+                    XmlElement aBoxElement = doc.CreateElement("item");
+                    aBoxElement.SetAttribute("type", "aBox");
+                    aBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
+                    aBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
+                    itemsElement.AppendChild(aBoxElement);
+                }
+            }
+            levelElement.AppendChild(itemsElement);
+
+            // Add playerLocation
+            XmlElement playerLocElement = doc.CreateElement("playerLocation");
+            playerLocElement.SetAttribute("x", playerStartLocation_.X.ToString());
+            playerLocElement.SetAttribute("y", playerStartLocation_.Y.ToString());
+            levelElement.AppendChild(playerLocElement);
 
             // Finish up and save the document
             doc.AppendChild(levelElement);

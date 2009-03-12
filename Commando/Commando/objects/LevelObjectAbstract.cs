@@ -81,5 +81,14 @@ namespace Commando.objects
         {
             image_.drawImage(0, position_, depth_);
         }
+
+        /// <summary>
+        /// Dummy function, overridden in ItemAbstract
+        /// </summary>
+        /// <param name="collisionDetector"></param>
+        public virtual void setCollisionDetector(Commando.collisiondetection.CollisionDetectorInterface collisionDetector)
+        {
+            // Dummy function, overridden in ItemAbstract
+        }
     }
 }
