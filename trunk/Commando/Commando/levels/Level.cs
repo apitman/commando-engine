@@ -91,12 +91,12 @@ namespace Commando.levels
             enemies_ = enemies;
         }
 
-        public void getItems(List<LevelObjectAbstract> items)
+        public void setItems(List<LevelObjectAbstract> items)
         {
             items_ = items;
         }
 
-        public void getPlayer(PlayableCharacterAbstract player)
+        public void setPlayer(PlayableCharacterAbstract player)
         {
             player_ = player;
         }
@@ -151,6 +151,11 @@ namespace Commando.levels
 
                     enemies_.Add(dumDum);
                 }
+
+                //TODO: get from XML
+                player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
+                //
+
             }
             catch (Exception)
             {

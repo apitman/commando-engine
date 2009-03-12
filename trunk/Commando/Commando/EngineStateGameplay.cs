@@ -84,20 +84,25 @@ namespace Commando
         /// <param name="engine">Reference to the engine running the state</param>
         public EngineStateGameplay(Engine engine)
         {
-            // Cleanup singletons used by prior EngineStateGameplay
-            Commando.ai.WorldState.reset();
-
             SoundEngine.getInstance().Music.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);
 
             // Perform initializations of variables
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 
-            //Jared's test stuff
-            player_ = new ActuatedMainPlayer(drawPipeline_);
-            GlobalHelper.getInstance().getCurrentCamera().setPosition(0,0);
+            GlobalHelper.getInstance().setGameplayState(this);
+
+            loadLevel("user level.xml");
+        }
+
+        public void loadLevel(string filename)
+        {
+            // Cleanup singletons used by prior EngineStateGameplay
+            WorldState.reset();
+
             GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)SCREEN_SIZE_X);
             GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)SCREEN_SIZE_Y);
+            
             //List<BoxObject> boxesToBeAdded = new List<BoxObject>();
             Tile[,] tilesForGrid;
             List<Vector2> tileBox = new List<Vector2>();
@@ -134,7 +139,11 @@ namespace Commando
 
             // Load the level and create bounding boxes
             myLevel_ = new Level(new Tileset(), null);
-            myLevel_.getLevelFromFile("user level.xml", drawPipeline_);
+            myLevel_.getLevelFromFile(filename, drawPipeline_);
+            player_ = (ActuatedMainPlayer)myLevel_.getPlayer();
+
+            GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
+
             boxesToBeAdded = new bool[myLevel_.getHeight(), myLevel_.getWidth()];
             tilesForGrid = new Tile[myLevel_.getHeight(), myLevel_.getWidth()];
             for (int i = 0; i < myLevel_.getHeight(); i++)
@@ -159,7 +168,7 @@ namespace Commando
             }
             boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
             GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
-            
+
             //collisionDetector_ = new CollisionDetector(polygons);
             collisionDetector_ = new SeparatingAxisCollisionDetector();
 
@@ -175,7 +184,7 @@ namespace Commando
             healthTextPos_ = new Vector2(HEALTH_BAR_POS_X + HEALTH_TEXT_OFFSET_X, HEALTH_BAR_POS_Y + HEALTH_TEXT_OFFSET_Y);
             ammoTextPos_ = new Vector2(AMMO_TEXT_POS_X, AMMO_TEXT_POS_Y);
             healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
-            weapon_ = new HeadsUpDisplayWeapon(drawPipeline_,  TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+            weapon_ = new HeadsUpDisplayWeapon(drawPipeline_, TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
             ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay);
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
@@ -186,7 +195,8 @@ namespace Commando
                 myLevel_.getEnemies()[i].setCollisionDetector(collisionDetector_);
             }
             AmmoBox ammo = new AmmoBox(collisionDetector_, drawPipeline_, new Vector2(250, 250), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
-            HealthBox health = new HealthBox(collisionDetector_, drawPipeline_, new Vector2(150, 200), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
+            HealthBox health = new HealthBox(collisionDetector_, drawPipeline_, new Vector2(250, 200), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
+            LevelTransitionObject transition = new LevelTransitionObject("user level.xml", collisionDetector_, tileBox, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(150f, 200f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
 
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;

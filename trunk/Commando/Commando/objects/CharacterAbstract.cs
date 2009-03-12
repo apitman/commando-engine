@@ -167,6 +167,10 @@ namespace Commando
 
         public void setCollisionDetector(CollisionDetectorInterface collisionDetector)
         {
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.remove(this);
+            }
             collisionDetector_ = collisionDetector;
             if (collisionDetector_ != null)
             {
