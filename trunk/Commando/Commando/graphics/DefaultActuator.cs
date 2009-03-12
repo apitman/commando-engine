@@ -53,6 +53,7 @@ namespace Commando.graphics
             character_ = character;
             currentActionSet_ = initialActionSet;
             currentAction_ = actions_[currentActionSet_]["rest"];
+            currentAction_.update();
         }
 
         public void update()

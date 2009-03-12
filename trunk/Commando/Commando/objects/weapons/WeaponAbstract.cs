@@ -79,6 +79,11 @@ namespace Commando
             audialStimulusId_ = StimulusIDGenerator.getNext();
         }
 
+        public void setDrawPipeline(List<DrawableObjectAbstract> pipeline)
+        {
+            drawPipeline_ = pipeline;
+        }
+
         public abstract void shoot(CollisionDetectorInterface detector);
 
         public virtual void update()

@@ -55,64 +55,92 @@ namespace Commando.levels
         public static List<BoxObject> mergeBoxes(Tile[,] boxes)
         {
             //List<List<BoxObject>> tempMergedBoxes = new List<List<BoxObject>>();
-            List<List<int[]>> tempMergedDims = new List<List<int[]>>();
+            List<List<int[]>> tempMergedDimsHigh = new List<List<int[]>>();
+            List<List<int[]>> tempMergedDimsLow = new List<List<int[]>>();
             List<Vector2> tempPoints = new List<Vector2>();
             tempPoints.Add(new Vector2(-7.5f, -7.5f));
             tempPoints.Add(new Vector2(7.5f, -7.5f));
             tempPoints.Add(new Vector2(7.5f, 7.5f));
             tempPoints.Add(new Vector2(-7.5f, 7.5f));
-            int[] tempSet = new int[4];
-            bool started = false;
+            int[] tempSetHigh = new int[4];
+            int[] tempSetLow = new int[4];
+            bool startedHigh = false;
+            bool startedLow = false;
             List<BoxObject> returnBoxes = new List<BoxObject>();
             for (int y = 0; y < boxes.GetLength(0); y++)
             {
-                tempMergedDims.Add(new List<int[]>());
+                tempMergedDimsHigh.Add(new List<int[]>());
+                tempMergedDimsLow.Add(new List<int[]>());
                 for (int x = 0; x < boxes.GetLength(1); x++)
                 {
-                    if (!started && boxes[y,x].highDistance_ == 0)
+                    if (!startedHigh && boxes[y,x].highDistance_ == 0)
                     {
-                        started = true;
-                        tempSet[0] = x;
-                        tempSet[1] = y;
-                        tempSet[2] = x;
-                        tempSet[3] = y;
+                        startedHigh = true;
+                        tempSetHigh[0] = x;
+                        tempSetHigh[1] = y;
+                        tempSetHigh[2] = x;
+                        tempSetHigh[3] = y;
                     }
-                    else if (started && boxes[y,x].highDistance_ == 0)
+                    else if (startedHigh && boxes[y,x].highDistance_ == 0)
                     {
-                        tempSet[2] = x;
+                        tempSetHigh[2] = x;
                     }
-                    else if (started && !(boxes[y,x].highDistance_ == 0))
+                    else if (startedHigh && !(boxes[y,x].highDistance_ == 0))
                     {
-                        tempMergedDims[y].Add(tempSet);
-                        tempSet = new int[4];
-                        started = false;
+                        tempMergedDimsHigh[y].Add(tempSetHigh);
+                        tempSetHigh = new int[4];
+                        startedHigh = false;
+                    }
+                    if (!startedLow && boxes[y, x].lowDistance_ == 0)
+                    {
+                        startedLow = true;
+                        tempSetLow[0] = x;
+                        tempSetLow[1] = y;
+                        tempSetLow[2] = x;
+                        tempSetLow[3] = y;
+                    }
+                    else if (startedLow && boxes[y, x].lowDistance_ == 0)
+                    {
+                        tempSetLow[2] = x;
+                    }
+                    else if (startedLow && !(boxes[y, x].lowDistance_ == 0))
+                    {
+                        tempMergedDimsLow[y].Add(tempSetLow);
+                        tempSetLow = new int[4];
+                        startedLow = false;
                     }
                 }
-                if (started)
+                if (startedHigh)
                 {
-                    tempMergedDims[y].Add(tempSet);
-                    tempSet = new int[4];
-                    started = false;
+                    tempMergedDimsHigh[y].Add(tempSetHigh);
+                    tempSetHigh = new int[4];
+                    startedHigh = false;
+                }
+                if (startedLow)
+                {
+                    tempMergedDimsLow[y].Add(tempSetLow);
+                    tempSetLow = new int[4];
+                    startedLow = false;
                 }
             }
             for (int i = 0; i < boxes.GetLength(0); i++)
             {
-                for (int j = tempMergedDims[i].Count - 1; j >= 0; j--)
+                for (int j = tempMergedDimsHigh[i].Count - 1; j >= 0; j--)
                 {
                     bool finished = false;
-                    int[] tempCheckingSet = tempMergedDims[i][j];
-                    tempMergedDims[i].RemoveAt(j);
+                    int[] tempCheckingSet = tempMergedDimsHigh[i][j];
+                    tempMergedDimsHigh[i].RemoveAt(j);
                     for (int k = i + 1; k < boxes.GetLength(0); k++)
                     {
                         finished = true;
-                        for (int l = tempMergedDims[k].Count - 1; l >= 0; l--)
+                        for (int l = tempMergedDimsHigh[k].Count - 1; l >= 0; l--)
                         {
-                            int[] temp = tempMergedDims[k][l];
+                            int[] temp = tempMergedDimsHigh[k][l];
                             if (temp[0] == tempCheckingSet[0] && temp[2] == tempCheckingSet[2])
                             {
                                 tempCheckingSet[3] = temp[3];
                                 finished = false;
-                                tempMergedDims[k].RemoveAt(l);
+                                tempMergedDimsHigh[k].RemoveAt(l);
                                 break;
                             }
                         }
@@ -121,14 +149,40 @@ namespace Commando.levels
                             break;
                         }
                     }
-                    returnBoxes.Add(createBox(tempCheckingSet[0], tempCheckingSet[1], tempCheckingSet[2], tempCheckingSet[3]));
+                    returnBoxes.Add(createBox(tempCheckingSet[0], tempCheckingSet[1], tempCheckingSet[2], tempCheckingSet[3], HeightEnum.HIGH));
+                }
+                for (int j = tempMergedDimsLow[i].Count - 1; j >= 0; j--)
+                {
+                    bool finished = false;
+                    int[] tempCheckingSet = tempMergedDimsLow[i][j];
+                    tempMergedDimsLow[i].RemoveAt(j);
+                    for (int k = i + 1; k < boxes.GetLength(0); k++)
+                    {
+                        finished = true;
+                        for (int l = tempMergedDimsLow[k].Count - 1; l >= 0; l--)
+                        {
+                            int[] temp = tempMergedDimsLow[k][l];
+                            if (temp[0] == tempCheckingSet[0] && temp[2] == tempCheckingSet[2])
+                            {
+                                tempCheckingSet[3] = temp[3];
+                                finished = false;
+                                tempMergedDimsLow[k].RemoveAt(l);
+                                break;
+                            }
+                        }
+                        if (finished)
+                        {
+                            break;
+                        }
+                    }
+                    returnBoxes.Add(createBox(tempCheckingSet[0], tempCheckingSet[1], tempCheckingSet[2], tempCheckingSet[3], HeightEnum.LOW));
                 }
             }
             return returnBoxes;
 
         }
 
-        public static BoxObject createBox(int x1, int y1, int x2, int y2)
+        public static BoxObject createBox(int x1, int y1, int x2, int y2, HeightEnum height)
         {
             float x1f = (float)x1 * 15f;
             float x2f = (float)(x2 + 1) * 15f;
@@ -140,8 +194,8 @@ namespace Commando.levels
             points.Add(new Vector2(center.X - x2f, center.Y - y1f));
             points.Add(new Vector2(center.X - x2f, center.Y - y2f));
             points.Add(new Vector2(center.X - x1f, center.Y - y2f));
-            BoxObject temp = new BoxObject(points, center, new Height(true, true));
-            temp.getBounds(HeightEnum.LOW).rotate(new Vector2(1.0f, 0.0f), center);
+            BoxObject temp = new BoxObject(points, center, Height.getHeight(height));
+            temp.getBounds(height).rotate(new Vector2(1.0f, 0.0f), center);
             return temp;
         }
     }

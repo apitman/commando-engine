@@ -119,7 +119,12 @@ namespace Commando.collisiondetection
             foreach (CollisionObjectInterface cObj in objects_)
             {
                 ConvexPolygonInterface poly = cObj.getBounds(HeightEnum.LOW);
-                if (poly is ConvexPolygon)
+                if (poly != null && poly is ConvexPolygon)
+                {
+                    (poly as ConvexPolygon).draw();
+                }
+                poly = cObj.getBounds(HeightEnum.HIGH);
+                if (poly != null && poly is ConvexPolygon)
                 {
                     (poly as ConvexPolygon).draw();
                 }
@@ -352,9 +357,9 @@ namespace Commando.collisiondetection
                     {
                         translateLow = cObj.checkCollisionWith(obj, this, HeightEnum.LOW, dist, velocity);
                     }
-                    if (otherObjectHeight.blocksLow_)
+                    if (otherObjectHeight.blocksHigh_)
                     {
-                        translateHigh = cObj.checkCollisionWith(obj, this, HeightEnum.LOW, dist, velocity);
+                        translateHigh = cObj.checkCollisionWith(obj, this, HeightEnum.HIGH, dist, velocity);
                     }
                     if (translateLow.LengthSquared() > translateHigh.LengthSquared())
                     {

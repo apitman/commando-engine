@@ -40,23 +40,35 @@ namespace Commando.objects
 
         protected float radius_;
 
-        protected ConvexPolygonInterface boundsPolygon_;
+        protected ConvexPolygonInterface boundsPolygonHigh_;
+
+        protected ConvexPolygonInterface boundsPolygonLow_;
 
         protected DefaultActuator actuator_;
 
         protected bool pistol_ = false;
 
-        protected static readonly List<Vector2> BOUNDSPOINTS;
+        protected static readonly List<Vector2> BOUNDSPOINTSHIGH;
+
+        protected static readonly List<Vector2> BOUNDSPOINTSLOW;
 
         static ActuatedMainPlayer()
         {
-            BOUNDSPOINTS = new List<Vector2>();
-            BOUNDSPOINTS.Add(new Vector2(-5.0f, 0f));
-            BOUNDSPOINTS.Add(new Vector2(-1.0f, -15.0f));
-            BOUNDSPOINTS.Add(new Vector2(7.0f, -15.0f));
-            BOUNDSPOINTS.Add(new Vector2(10.0f, 0f));
-            BOUNDSPOINTS.Add(new Vector2(7.0f, 15.0f));
-            BOUNDSPOINTS.Add(new Vector2(-1.0f, 15.0f));
+            BOUNDSPOINTSHIGH = new List<Vector2>();
+            BOUNDSPOINTSHIGH.Add(new Vector2(-5.0f, 0f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(-1.0f, -15.0f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(7.0f, -15.0f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(34.0f, 0f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(7.0f, 15.0f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(-1.0f, 15.0f));
+
+            BOUNDSPOINTSLOW = new List<Vector2>();
+            BOUNDSPOINTSLOW.Add(new Vector2(-5.0f, 0f));
+            BOUNDSPOINTSLOW.Add(new Vector2(-1.0f, -15.0f));
+            BOUNDSPOINTSLOW.Add(new Vector2(7.0f, -15.0f));
+            BOUNDSPOINTSLOW.Add(new Vector2(10.0f, -3.0f));
+            BOUNDSPOINTSLOW.Add(new Vector2(7.0f, 15.0f));
+            BOUNDSPOINTSLOW.Add(new Vector2(-1.0f, 15.0f));
         }
 
         public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
@@ -64,8 +76,9 @@ namespace Commando.objects
         {
             PlayerHelper.Player_ = this;
 
-            boundsPolygon_ = new ConvexPolygon(BOUNDSPOINTS, Vector2.Zero);
-            //ENDTEMP
+            boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
+
+            boundsPolygonLow_ = new ConvexPolygon(BOUNDSPOINTSLOW, Vector2.Zero);
 
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
@@ -82,10 +95,15 @@ namespace Commando.objects
             animations_ = new AnimationSet(anims);
             radius_ = RADIUS;
             //collisionDetector_ = new SeparatingAxisCollisionDetector();
+            collisionDetector_ = detector;
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.register(this);
+            }
 
             Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-            height_ = new Height(true, false);
+            height_ = new Height(true, true);
         }
 
         /// <summary>
@@ -96,7 +114,7 @@ namespace Commando.objects
         {
             PlayerHelper.Player_ = this;
 
-            boundsPolygon_ = new ConvexPolygon(BOUNDSPOINTS, Vector2.Zero);
+            boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
             //ENDTEMP
             
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
@@ -116,6 +134,7 @@ namespace Commando.objects
             collisionDetector_ = new SeparatingAxisCollisionDetector();
 
             Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            Weapon_.update();
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             height_ = new Height(true, false);
         }
@@ -202,7 +221,11 @@ namespace Commando.objects
 
         public override ConvexPolygonInterface getBounds(HeightEnum height)
         {
-            return boundsPolygon_;
+            if (height == HeightEnum.HIGH)
+            {
+                return boundsPolygonHigh_;
+            }
+            return boundsPolygonLow_;
         }
 
         public override ActuatorInterface getActuator()
@@ -217,6 +240,16 @@ namespace Commando.objects
             if (health_.getValue() <= 0)
             {
                 this.die();
+            }
+        }
+
+        public void setDrawPipeline(List<DrawableObjectAbstract> pipeline)
+        {
+            pipeline_ = pipeline;
+            if (pipeline_ != null)
+            {
+                pipeline_.Add(this);
+                Weapon_.setDrawPipeline(pipeline_);
             }
         }
     }

@@ -96,6 +96,11 @@ namespace Commando.objects
             }
         }
 
+        public override void draw(GameTime gameTime)
+        {
+            image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
+        }
+
         public override void setCollisionDetector(CollisionDetectorInterface collisionDetector)
         {
             if (detector_ != null)

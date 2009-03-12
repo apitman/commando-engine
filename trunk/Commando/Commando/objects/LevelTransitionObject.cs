@@ -83,7 +83,7 @@ namespace Commando.objects
         {
             if (obj is PlayableCharacterAbstract)
             {
-                GlobalHelper.getInstance().getGameplayState().loadLevel(nextLevel_);
+                GlobalHelper.getInstance().getGameplayState().moveToNextLevel(nextLevel_);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Commando.objects
         {
             if (image_ != null)
             {
-                base.draw(gameTime);
+                image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
             }
         }
 

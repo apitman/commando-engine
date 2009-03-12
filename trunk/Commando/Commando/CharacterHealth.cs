@@ -47,6 +47,7 @@ namespace Commando
         public void addObserver(CharacterStatusObserverInterface obs)
         {
             observers_.Add(obs);
+            obs.notifyOfChange(health_value_);
         }
 
         /// <summary>
