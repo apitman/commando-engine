@@ -52,6 +52,7 @@ namespace Commando
     {
         const int NUM_TILES = 23;
         const int NUM_PALLETTES = 3;
+        const int NUM_MISC = 3;
         const int MAX_MOUSE_X = 345;
         const int MAX_MOUSE_Y = 300;
         const int MIN_MOUSE_X = 30;
@@ -109,6 +110,7 @@ namespace Commando
         protected int curPallette_;
         protected int enemyIndex_;
         protected bool isObjSelected_;
+        protected int typeSelected_;
         protected int selectedIndex_;
         protected int numTilesWide_ = 25;
         protected int numTilesTall_ = 22;
@@ -131,6 +133,7 @@ namespace Commando
             returnScreenSizeY_ = returnScreenSizeY;
             enemyIndex_ = 0;
             isObjSelected_ = false;
+            typeSelected_ = 0;
             selectedIndex_ = 0;
             myObjects_ = new List<objectRepresentation>(MAX_NUM_ENEMIES);
 
@@ -160,19 +163,7 @@ namespace Commando
         {
             InputSet inputs = engine_.getInputs();
 
-            // ERIC ?
-            //for (int i = 0; i < myObjects_.Count; i++)
-            //{
-            //    objectRepresentation currObject = myObjects_[i];
-            //    if (currObject.objRotation_ == Vector2.Zero)
-            //    {
-            //        Vector2 newRotation = new Vector2(1.0f, 0.0f);
-            //        currObject.objRotation_ = newRotation;
-            //        myObjects_[i] = currObject;
-            //    }
-            //}
 
-            // AMP
             for (int i = 0; i < myLevel_.getEnemies().Count; i++)
             {
                 if (myLevel_.getEnemies()[i].getDirection() == Vector2.Zero)
@@ -230,7 +221,11 @@ namespace Commando
                 engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
                 return returnState_;
             }
-
+            else if (inputs.getButton(InputsEnum.BUTTON_4))
+            {
+                engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
+                return new EngineStateEditorControls(engine_, this, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            }
             else if (inputs.getButton(InputsEnum.LEFT_BUMPER) && isObjSelected_ == false)
             {
                 curTileIndex_ = 0;
@@ -243,18 +238,6 @@ namespace Commando
             }
             else if (inputs.getButton(InputsEnum.LEFT_BUMPER) && isObjSelected_ == true)
             {
-                // ERIC
-                ////inputs.setStick(InputsEnum.LEFT_BUMPER, 5);
-                //inputs.setToggle(InputsEnum.LEFT_BUMPER);
-                //objectRepresentation currObject = myObjects_[selectedIndex_];
-                //currObject.objRotation_ = CommonFunctions.rotate(currObject.objRotation_,(float) (Math.PI / 4)); 
-                ////currObject.objRotation_ = curRotation;
-
-                ////myObjects_.RemoveAt(selectedIndex_);
-                ////myObjects_.Insert(selectedIndex_, currObject);
-                //myObjects_[selectedIndex_] = currObject;
-
-                // AMP
                 inputs.setToggle(InputsEnum.LEFT_BUMPER);
                 CharacterAbstract currEnemy = myLevel_.getEnemies()[selectedIndex_];
                 currEnemy.setDirection(CommonFunctions.rotate(currEnemy.getDirection(), (float)(-1 * (Math.PI / 4))));
@@ -287,13 +270,26 @@ namespace Commando
 
                 // AMP
                 inputs.setToggle(InputsEnum.RIGHT_BUMPER);
-                CharacterAbstract currEnemy = myLevel_.getEnemies()[selectedIndex_];
-                currEnemy.setDirection(CommonFunctions.rotate(currEnemy.getDirection(), (double) (Math.PI / 4)));
-                // TODO: AMP Fix it so we don't have to do this next line of code
-                currEnemy.getActuator().update(); // Makes it so the enemies are drawn in the correct position
-                // END
-            }
+                switch(typeSelected_)
+                {
 
+                    case 1:
+                        {
+                            CharacterAbstract currEnemy = myLevel_.getEnemies()[selectedIndex_];
+                            currEnemy.setDirection(CommonFunctions.rotate(currEnemy.getDirection(), (double)(Math.PI / 4)));
+                            // TODO: AMP Fix it so we don't have to do this next line of code
+                            currEnemy.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                            break;
+                        }
+                        case 2:
+                        {
+                            //LevelObjectAbstract currItem = myLevel_.getItems()[selectedIndex_];
+                            //currItem.setDirection(CommonFunctions.rotate(currItem.getDirection(), (double) (Math.PI/ 4)));
+                            // END
+                            break;
+                        }
+                 }
+             }
 
             else if (inputs.getButton(InputsEnum.CONFIRM_BUTTON))
             {
@@ -377,23 +373,43 @@ namespace Commando
                             }
                             break;
                         }
+                    case (int)pallette_.misc:
+                        {
+                            Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
+                            Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                            if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
+                                   && mousePos.X > Constants.MIN_NUM_TILES_X * Tiler.tileSideLength_
+                                   && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
+                                   && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
+                            {
+                                switch (curTileIndex_)
+                                {
+                                    case 0:
+                                        {
+                                            AmmoBox myAmmo = new AmmoBox(null, drawPipeline_, mousePos, new Vector2(1.0f, 0.0f), 0.2f);
+                                            myLevel_.getItems().Add(myAmmo);
+                                            break;
+                                        }
+                                    case 1:
+                                        {
+                                            HealthBox myHealth = new HealthBox(null, drawPipeline_, mousePos, new Vector2(1.0f, 0.0f), 0.2f);
+                                            myLevel_.getItems().Add(myHealth);
+                                            break;
+                                        }
+                                    case 2:
+                                        {
+                                            //myLevel_.getPlayer().setPosition(mousePos);
+                                            break;
+                                        }
+                                }
+                            }
+                            break;
+                            }
                 }
             }
             else if (inputs.getButton(InputsEnum.RIGHT_TRIGGER) && isObjSelected_)
             {
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
-                // ERIC
-                //if (rightD.X < MAX_MOUSE_X && rightD.X > MIN_MOUSE_X && rightD.Y < MAX_MOUSE_Y && rightD.Y > MIN_MOUSE_Y)
-                //{
-                //    objectRepresentation currObject = myObjects_[selectedIndex_];
-                //    currObject.objPos_ = rightD;
-                //    //myObjects_.RemoveAt(selectedIndex_);
-                //    //myObjects_.Insert(selectedIndex_, currObject);
-                //    myObjects_[selectedIndex_] = currObject;
-                //    //moveObject(ref myObjects_[selectedIndex_], rightD);
-                //}
-
-                // AMP
                 Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
                 Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
                 if (mousePos.X <= Constants.MAX_NUM_TILES_X * Tiler.tileSideLength_
@@ -402,10 +418,23 @@ namespace Commando
                     && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
                     && rightD.Y < HUD_BAR_DRAW_Y)
                 {
-                    myLevel_.getEnemies()[selectedIndex_].setPosition(mousePos);
-                    // TODO: AMP Fix it so we don't have to do this next line of code
-                    myLevel_.getEnemies()[selectedIndex_].getActuator().update(); // Makes it so the enemies are drawn in the correct position
-                }
+                    switch (typeSelected_)
+                    {
+                        case 1:
+                        {
+                            myLevel_.getEnemies()[selectedIndex_].setPosition(mousePos);
+                                // TODO: AMP Fix it so we don't have to do this next line of code
+                            myLevel_.getEnemies()[selectedIndex_].getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                            break;
+                        }
+                        case 2:
+                        {
+                            myLevel_.getItems()[selectedIndex_].setPosition(mousePos);
+                            
+                            break;
+                        }
+                    }
+                            }
                 // END
             }
             else if (inputs.getButton(InputsEnum.BUTTON_3) && isObjSelected_)
@@ -418,33 +447,23 @@ namespace Commando
                 // END
                 isObjSelected_ = false;
                 selectedIndex_ = 0;
+                
             }
             else if (inputs.getButton(InputsEnum.LEFT_TRIGGER))
             {
                 inputs.setToggle(InputsEnum.LEFT_TRIGGER);
+                pickTile();
                 if (isObjSelected_)
                 {
                     isObjSelected_ = false;
                     selectedIndex_ = 0;
+                    typeSelected_ = 0;
                 }
                 else
                 {
                     bool foundObj = false;
                     Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
-                    // ERIC
-                    //for (int i = 0; i < myObjects_.Count() && foundObj == false; i++)
-                    //{
-                    //    if (rightD.Y >= myObjects_[i].objPos_.Y && rightD.Y < myObjects_[i].objPos_.Y + 15.0f
-                    //        && rightD.X >= myObjects_[i].objPos_.X && rightD.X < myObjects_[i].objPos_.X + 15.0f)
-                    //    {
-                    //        selectedIndex_ = i;
-                    //        isObjSelected_ = true;
-                    //        foundObj = true;
-                    //    }
-
-                    //}
-
-                    // AMP
+                    
                     Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
                     Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
                     List<CharacterAbstract> myEnemies = myLevel_.getEnemies();
@@ -453,12 +472,27 @@ namespace Commando
                         if (mousePos.Y >= myEnemies[i].getPosition().Y - Tiler.tileSideLength_ && mousePos.Y < myEnemies[i].getPosition().Y + Tiler.tileSideLength_
                             && mousePos.X >= myEnemies[i].getPosition().X - Tiler.tileSideLength_ && mousePos.X < myEnemies[i].getPosition().X + Tiler.tileSideLength_)
                         {
+                            typeSelected_ = 1;
                             selectedIndex_ = i;
                             isObjSelected_ = true;
                             foundObj = true;
                         }
                     }
-
+                    if (foundObj == false)
+                    {
+                        List<LevelObjectAbstract> myItems = myLevel_.getItems();
+                        for (int i = 0; i < myItems.Count && foundObj == false; i++)
+                        {
+                            if (mousePos.Y >= myItems[i].getPosition().Y - Tiler.tileSideLength_ && mousePos.Y < myItems[i].getPosition().Y + Tiler.tileSideLength_
+                                  && mousePos.X >= myItems[i].getPosition().X - Tiler.tileSideLength_ && mousePos.X < myItems[i].getPosition().X + Tiler.tileSideLength_)
+                            {
+                                typeSelected_ = 2;
+                                selectedIndex_ = i;
+                                isObjSelected_ = true;
+                                foundObj = true;
+                            }
+                        }
+                    }
                     // END
                 }
 
@@ -466,18 +500,64 @@ namespace Commando
             }
             else if (inputs.getButton(InputsEnum.BUTTON_1))
             {
-                inputs.setToggle(InputsEnum.BUTTON_1);
-                curTileIndex_ = (curTileIndex_ + 1) % NUM_TILES;
+                switch (curPallette_)
+                {
+                    case (int)pallette_.tile:
+                    {
+                        inputs.setToggle(InputsEnum.BUTTON_1);
+                        curTileIndex_ = (curTileIndex_ + 1) % NUM_TILES;
+                        break;
+                    }
+                    case (int)pallette_.enemy:
+                    {
+                        break;
+                    }
+                    case (int)pallette_.misc:
+                    {
+                        inputs.setToggle(InputsEnum.BUTTON_1);
+                        curTileIndex_ = (curTileIndex_ + 1) % NUM_MISC;
+                        break;
+                    }
+                }
             }
 
             else if (inputs.getButton(InputsEnum.BUTTON_2))
             {
                 inputs.setToggle(InputsEnum.BUTTON_2);
-                if (curTileIndex_ == 0)
+               
+
+                switch (curPallette_)
                 {
-                    curTileIndex_ = NUM_TILES;
+                    case (int)pallette_.tile:
+                    {
+                        inputs.setToggle(InputsEnum.BUTTON_1);
+                        if (curTileIndex_ == 0)
+                        {
+                             curTileIndex_ = NUM_TILES;
+                        }
+                        else
+                        curTileIndex_ = curTileIndex_ - 1;
+                        break;
+                    }
+                    case (int)pallette_.enemy:
+                    {
+                        break;
+                    }
+                    case (int)pallette_.misc:
+                    {
+                        inputs.setToggle(InputsEnum.BUTTON_1);
+                        if (curTileIndex_ == 0)
+                        {
+                             curTileIndex_ = NUM_MISC;
+                        }
+                        else
+                        curTileIndex_ = curTileIndex_ - 1;
+                        break;
+                    }
                 }
-                curTileIndex_ = curTileIndex_ - 1;
+
+
+
             }
 
             drawPipeline_.Remove(displayTile_);
@@ -490,7 +570,53 @@ namespace Commando
         {
             or.objPos_ = pos;
         }
+        public void pickTile()
+        {
+            InputSet inputs = engine_.getInputs();
+            Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
+            Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
+            Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+            switch (curPallette_)
+            {
+                case (int)pallette_.tile:
+                    {
+                        bool foundTile = false;
+                        for (int i = 0; i < NUM_TILES && foundTile == false; i++)
+                        {
+                            
+                            Vector2 tilePos = new Vector2(((10.0f + i * 20.0f) % 365.0f + camOffset.X), (((((10 + i * 20) / 365) * 20.0f) + 335.0f) + camOffset.Y));
+                            if (mousePos.Y >= tilePos.Y - Tiler.tileSideLength_ && mousePos.Y < tilePos.Y + Tiler.tileSideLength_
+                                  && mousePos.X >= tilePos.X - Tiler.tileSideLength_ && mousePos.X < tilePos.X + Tiler.tileSideLength_)
+                                {
+                                    curTileIndex_ = i;
+                                    foundTile = true;
+                                }
 
+                        }
+                        break;
+                       }
+                case (int)pallette_.misc:
+                    {
+                        bool foundTile = false;
+                        for (int i = 0; i < NUM_TILES && foundTile == false; i++)
+                        {
+
+                            Vector2 tilePos = new Vector2(((10.0f + i * 35.0f) % 365.0f + camOffset.X), (((((10 + i * 35.0f) / 365) * 20.0f) + 335.0f) + camOffset.Y));
+                            if (mousePos.Y >= tilePos.Y - Tiler.tileSideLength_ && mousePos.Y < tilePos.Y + Tiler.tileSideLength_
+                                  && mousePos.X >= tilePos.X - Tiler.tileSideLength_ && mousePos.X < tilePos.X + Tiler.tileSideLength_)
+                            {
+                                curTileIndex_ = i;
+                                foundTile = true;
+                            }
+
+                        }
+                        break;
+                    }
+            }
+        }
+
+
+        
         /// <summary>
         /// Draws the level that is currently being edited
         /// </summary>
@@ -509,49 +635,71 @@ namespace Commando
             TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((cursorPosX_ *Tiler.tileSideLength_ - 1 ), (cursorPosY_ * Tiler.tileSideLength_ - 1)), 0.2f);
 
 
-            // ERIC
-            //// Draw  objects (ie enemies/misc)
-            // for (int i = 0; i < myObjects_.Count(); i++)
-            // {
-                
-            //     objectRepresentation currObject = myObjects_[i];
-                
-            //     if (currObject.objName_ == DUMMY_ENEMY)
-            //     {
-            //         TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, currObject.objPos_, currObject.objRotation_, currObject.objDepth_);
-            //         TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, currObject.objPos_, 0.2f);
-            //     }
-                
-                
-            // }
-
-            // AMP
+            
+            
             if (isObjSelected_)
             {
-                Vector2 highlightPos = myLevel_.getEnemies()[selectedIndex_].getPosition();
-                TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, highlightPos, 0.2f);
+                Vector2 highlightPos = new Vector2();
+                switch (typeSelected_)
+                {
+                    case 1:
+                        {
+                            highlightPos = myLevel_.getEnemies()[selectedIndex_].getPosition();
+                            break;
+                        }
+                    case 2:
+                        {
+                            highlightPos = myLevel_.getItems()[selectedIndex_].getPosition();
+                            break;
+                        }
+                }  
+                        TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, highlightPos, 0.2f);
             }
-            // END
-
+            
+            
+     
             // Draw the palette
+
+            Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
+
             TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, SCREEN_SIZE_X, HUD_BAR_HEIGHT), Constants.DEPTH_HUD - 0.01f, Color.Azure);
+
             switch (curPallette_)
             {
+                
                 case (int)pallette_.tile:
                     for (int i = 0; i < NUM_TILES; i++)
                     {
+
+                        TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2(((10.0f + i * 20.0f) % 365.0f + camOffset.X), ((((10 + i * 20) / 365) * 20.0f) + 335.0f) + camOffset.Y), 0.2f);
+
                         TextureMap.getInstance().getTexture("Tile_" + i).drawImageAbsolute(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
+
                         if(i == curTileIndex_)
+
+
                             TextureMap.getInstance().getTexture("TileHighlight").drawImageAbsolute(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
+
                     }
                     break;
                 case (int)pallette_.enemy:
                     {
+
+                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, new Vector2(10.0f + camOffset.X, (((10* 20) / 365) * 20.0f) + 335.0f + camOffset.Y), 0.2f);
+
                         TextureMap.getInstance().getTexture("basic_enemy_walk").drawImageAbsolute(0, new Vector2(10.0f, (((10 * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
+
                         break;
                     }
                 case (int)pallette_.misc:
                     {
+                        int i = 0;
+                        TextureMap.fetchTexture("AmmoBox").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i , (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        i++;
+                        TextureMap.fetchTexture("HealthBox").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i , (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        i++;
+                        TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i, (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * curTileIndex_, (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
                         break;
                     }
             }

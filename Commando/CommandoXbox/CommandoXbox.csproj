@@ -187,6 +187,9 @@
     <Compile Include="..\Commando\EngineStateControls.cs">
       <Link>EngineStateControls.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateEditorControls.cs">
+      <Link>EngineStateEditorControls.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\EngineStateGameOver.cs">
       <Link>EngineStateGameOver.cs</Link>
     </Compile>

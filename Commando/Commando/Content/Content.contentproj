@@ -480,6 +480,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\PlayerStartPos.png">
+      <Name>PlayerStartPos</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="XML\Sprites\Pixel.xml">
       <Name>Pixel</Name>
       <Importer>XmlImporter</Importer>

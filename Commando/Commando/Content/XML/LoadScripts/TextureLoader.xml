@@ -42,6 +42,10 @@
     <handle>Sprites\\HealthBox</handle>
   </image>
   <image>
+    <key>PlayerStartPos</key>
+    <handle>Sprites\\PlayerStartPos</handle>
+  </image>
+  <image>
     <key>Woger_Ru</key>
     <handle>Giant_A</handle>
   </image>
