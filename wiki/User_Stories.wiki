@@ -71,9 +71,9 @@
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can deselect a selected object in the level editor using Left Trigger / RMB (Eric)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can select an object from the palette using the mouse (Eric, Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see currently selected object as it follows the mouse (Eric)
-  [http://1sync.ontuet.com/images/layout/check_mark.gif]# User can place enemies and objects using the gamepad (Eric)
-  [http://1sync.ontuet.com/images/layout/check_mark.gif]# User has access to an ammunition and health drop in the level editor palette (Eric)
-  [http://1sync.ontuet.com/images/layout/check_mark.gif]# User has access to a "player starting point" drop in the level editor palette (Eric)
+  #[http://1sync.ontuet.com/images/layout/check_mark.gif] User can place enemies and objects using the gamepad (Eric)
+  #[http://1sync.ontuet.com/images/layout/check_mark.gif] User has access to an ammunition and health drop in the level editor palette (Eric)
+  #[http://1sync.ontuet.com/images/layout/check_mark.gif] User has access to a "player starting point" drop in the level editor palette (Eric)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can access a list of controls from inside the level editor using a "Help" hotkey (Eric)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see a hint on the main level editor screen for the Help hotkey (Eric)
 
