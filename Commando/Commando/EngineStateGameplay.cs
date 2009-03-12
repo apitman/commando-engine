@@ -91,7 +91,7 @@ namespace Commando
         {
             get
             {
-                return new Vector2(HUD_BAR_DRAW_X + 100.0f, HUD_BAR_DRAW_Y + 30.0f);
+                return new Vector2(HUD_BAR_DRAW_X + 100.0f, HUD_BAR_DRAW_Y + 20.0f);
             }
 
             set
@@ -103,7 +103,7 @@ namespace Commando
         {
             get
             {
-                return new Vector2(HUD_BAR_DRAW_X + 100.0f, HUD_BAR_DRAW_Y + 30.0f);
+                return new Vector2(HUD_BAR_DRAW_X + 100.0f, HUD_BAR_DRAW_Y + 20.0f);
             }
 
             set
@@ -115,7 +115,7 @@ namespace Commando
         {
             get
             {
-                return new Vector2(HUD_BAR_DRAW_X + HUD_BAR_WIDTH - 250.0f, HUD_BAR_DRAW_Y + 30.0f);
+                return new Vector2(HUD_BAR_DRAW_X + HUD_BAR_WIDTH - 250.0f, HUD_BAR_DRAW_Y + 15.0f);
             }
 
             set
@@ -127,7 +127,7 @@ namespace Commando
         {
             get
             {
-                return new Vector2(HUD_BAR_DRAW_X + HUD_BAR_WIDTH - 150.0f, HUD_BAR_DRAW_Y + 30.0f);
+                return new Vector2(HUD_BAR_DRAW_X + HUD_BAR_WIDTH - 150.0f, HUD_BAR_DRAW_Y + 20.0f);
             }
 
             set
