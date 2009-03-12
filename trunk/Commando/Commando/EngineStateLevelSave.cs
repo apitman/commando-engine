@@ -23,12 +23,16 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Storage;
+using Commando.controls;
+using System.IO;
 
 namespace Commando
 {
     public class EngineStateLevelSave : EngineStateInterface
     {
-        protected const string MESSAGE = "Please enter a filename to save as (no extension):";
+        protected const string MESSAGE = "Please enter a filename to save as :";
         protected const FontEnum MESSAGE_FONT = FontEnum.Kootenay;
         protected Vector2 MESSAGE_POSITION
         {
@@ -48,81 +52,81 @@ namespace Commando
         protected static readonly Color FILENAME_COLOR = Color.Green;
         protected static readonly Vector2 FILENAME_OFFSET = new Vector2(0, 50);
 
-        protected const int STICKY_TIME = 5;
-
         protected Engine engine_;
         protected EngineStateLevelEditor state_;
+        protected EngineStateInterface returnState_;
+        protected bool saved_ = false;
 
         protected GameFont mainMessage_;
         protected string currentFilename_ = "";
-        protected Dictionary<Keys, int> stickies_ = new Dictionary<Keys,int>();
 
-        public EngineStateLevelSave(Engine engine/*, EngineStateLevelEditor state*/)
+        public EngineStateLevelSave(Engine engine, EngineStateLevelEditor state)
         {
             engine_ = engine;
-            //state_ = state;
+            state_ = state;
+            returnState_ = this;
             mainMessage_ = FontMap.getInstance().getFont(MESSAGE_FONT);
-            stickies_[Keys.Enter] = STICKY_TIME * 10;
 
         }
 
         public EngineStateInterface update(GameTime gameTime)
         {
 
-#if !XBOX
-            KeyboardState ks = Keyboard.GetState();
-            if (ks.IsKeyDown(Keys.Enter) && safeKeyTest(Keys.Enter))
+            if (currentFilename_ == "")
             {
-                // TODO Actually save level
-                return new EngineStateMenu(engine_);
+                IAsyncResult result =
+                    Guide.BeginShowKeyboardInput(
+                        PlayerIndex.One,
+                        "Enter a name for this level",
+                        "Or else you die",
+                        "level1.xml",
+                        enterFilename,
+                        "enterFilename");
             }
 
-            if (ks.IsKeyDown(Keys.Back) && safeKeyTest(Keys.Back))
+            if (currentFilename_ != "" && !Guide.IsVisible && !saved_)
             {
-                stickies_[Keys.Back] = STICKY_TIME;
-                if (currentFilename_.Length > 0)
+                try
                 {
-                    currentFilename_ = currentFilename_.Remove(currentFilename_.Length - 1);
+                    saved_ = true;
+                    IAsyncResult result2 =
+                        Guide.BeginShowStorageDeviceSelector(findStorageDevice, "saveRequest");
                 }
-                return this;
+                catch (GuideAlreadyVisibleException e)
+                {
+                    saved_ = false;
+                }
             }
 
-            Keys[] keys = ks.GetPressedKeys();
-            for (int i = 0; i < keys.Length; i++)
+            return returnState_;
+
+        }
+
+        private void enterFilename(IAsyncResult result)
+        {
+            string filename = Guide.EndShowKeyboardInput(result);
+            currentFilename_ = filename;
+        }
+
+        private void findStorageDevice(IAsyncResult result)
+        {
+            StorageDevice storageDevice = Guide.EndShowStorageDeviceSelector(result);
+            if (storageDevice != null)
             {
-                if (!safeKeyTest(keys[i]))
-                {
-                    // do nothing
-                    continue;
-                }
-                if (keys[i].ToString().Length > 1)
-                {
-                    continue;
-                }
-                if (ks.IsKeyDown(Keys.LeftShift) || ks.IsKeyDown(Keys.RightShift))
-                {
-                    currentFilename_ += keys[i].ToString().ToUpper();
-                }
-                else
-                {
-                    currentFilename_ += keys[i].ToString().ToLower();
-                }
-                stickies_[keys[i]] = STICKY_TIME;
+                if ((string)result.AsyncState == "saveRequest")
+                    saveGame(storageDevice);
+                returnState_ = new EngineStateMenu(engine_);
             }
+        }
 
-            Dictionary<Keys, int>.KeyCollection keyCollection = stickies_.Keys;
-            List<Keys> stuckKeys = new List<Keys>(keyCollection);
-            for (int i = 0; i < stickies_.Keys.Count; i++)
-            {
-                if (stickies_[stuckKeys[i]] >= 0)
-                    stickies_[stuckKeys[i]] -= 1;
-            }
-
-            return this;
-#else
-
-#endif
-
+        private void saveGame(StorageDevice storageDevice)
+        {
+            StorageContainer container = storageDevice.OpenContainer("CommandoXbox");
+            string directory = Path.Combine(container.Path, "levels");
+            System.IO.Directory.CreateDirectory(directory);
+            string fileName = Path.Combine(directory, currentFilename_);
+            state_.myLevel_.writeLevelToFile(fileName);
+            container.Dispose();
         }
 
         public void draw()
@@ -133,11 +137,6 @@ namespace Commando
 
             Vector2 fileNamePos = MESSAGE_POSITION + FILENAME_OFFSET;
             mainMessage_.drawStringCentered(currentFilename_, fileNamePos, FILENAME_COLOR, 0, MESSAGE_DEPTH);
-        }
-
-        private bool safeKeyTest(Keys key)
-        {
-            return (!(stickies_.ContainsKey(key) && stickies_[key] > 0));
         }
 
     }

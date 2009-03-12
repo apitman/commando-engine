@@ -515,6 +515,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
+      <Link>XML\defaultlevel.xml</Link>
+      <Name>defaultlevel</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\effects\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>

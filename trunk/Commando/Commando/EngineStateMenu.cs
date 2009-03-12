@@ -103,9 +103,7 @@ namespace Commando
             List<string> menuString = new List<string>();
             menuString.Add(STR_MENU_START_GAME);
             menuString.Add(STR_MENU_CONTROLS);
-#if !XBOX
             menuString.Add(STR_MENU_LEVEL_EDITOR);
-#endif
             menuString.Add(STR_MENU_QUIT);
 
             GlobalHelper.getInstance().setCurrentCamera(new Camera());
@@ -143,19 +141,16 @@ namespace Commando
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 inputs.setToggle(InputsEnum.BUTTON_1);
-                //get position of cursor from mainMenuList_
+                
                 int cursorPos = mainMenuList_.getCursorPos();
-#if XBOX
-                if (cursorPos == 2) cursorPos = 3;
-#endif
                 switch(cursorPos)
                 {
                     case 0:
-                        return new EngineStateGameplay(engine_);
+                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.GAMEPLAY);
                     case 1:
                         return new EngineStateControls(engine_);
                     case 2:
-                        return new EngineStateLevelEditor(engine_, this);
+                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_EDITOR);
                     case 3:
                         engine_.Exit();
                         break;
