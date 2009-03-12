@@ -96,8 +96,6 @@ namespace Commando
                                                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 
         protected EngineStateInterface returnState_;
-        protected int returnScreenSizeX_;
-        protected int returnScreenSizeY_;
         protected List<TileObject> tiles_;
         protected Engine engine_;
         protected int cursorPosX_;
@@ -123,15 +121,13 @@ namespace Commando
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
         /// </summary>
-        public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState, int returnScreenSizeX, int returnScreenSizeY)
+        public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState)
         {
             PlayerHelper.Player_ = null; // Necessary to have mouse input if the player has entered EngineStateGameplay before entering the level editor
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             engine_.IsMouseVisible = true;
             returnState_ = returnState;
-            returnScreenSizeX_ = returnScreenSizeX;
-            returnScreenSizeY_ = returnScreenSizeY;
             enemyIndex_ = 0;
             isObjSelected_ = false;
             typeSelected_ = 0;
@@ -219,12 +215,10 @@ namespace Commando
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
                 // Save Level to XML before exiting
                 myLevel_.writeLevelToFile(SAVE_PATH);
-                engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
                 return returnState_;
             }
             else if (inputs.getButton(InputsEnum.BUTTON_4))
             {
-                engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
                 return new EngineStateEditorControls(engine_, this, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             }
             else if (inputs.getButton(InputsEnum.LEFT_BUMPER) && isObjSelected_ == false)

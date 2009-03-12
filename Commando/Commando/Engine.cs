@@ -37,7 +37,7 @@ namespace Commando
     /// </summary>
     public class Engine : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics_;
+        public GraphicsDeviceManager graphics_;
         SpriteBatch spriteBatch_;
         EngineStateInterface engineState_;
         ControllerInputInterface controls_;
@@ -100,7 +100,10 @@ namespace Commando
 
             base.Initialize();
             engineState_ = new EngineStateMenu(this);
-
+            this.graphics_.PreferredBackBufferWidth = Math.Max(this.GraphicsDevice.DisplayMode.Width, 800);
+            this.graphics_.PreferredBackBufferHeight = Math.Max(this.GraphicsDevice.DisplayMode.Height, 600);
+            this.graphics_.IsFullScreen = true;
+            this.graphics_.ApplyChanges();
         }
 
         /// <summary>

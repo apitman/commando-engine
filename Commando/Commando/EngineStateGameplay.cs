@@ -35,16 +35,6 @@ namespace Commando
     /// </summary>
     public class EngineStateGameplay : EngineStateInterface
     {
-        const int SCREEN_SIZE_X = 375;
-        const int SCREEN_SIZE_Y = 375;
-        const float HEALTH_BAR_POS_X = 100.0f;
-        const float HEALTH_BAR_POS_Y = 350.0f;
-        const float WEAPON_ICON_POS_X = 200.0f;
-        const float WEAPON_ICON_POS_Y = 350.0f;
-        const float HEALTH_TEXT_OFFSET_X = -27.0f;
-        const float HEALTH_TEXT_OFFSET_Y = -12.0f;
-        const float AMMO_TEXT_POS_X = 300.0f;
-        const float AMMO_TEXT_POS_Y = 350.0f;
         const string HEALTH_BAR_OUTLINE_TEX_NAME = "healthBarOutline";
         const string HEALTH_BAR_FILL_TEX_NAME = "healthBarFiller";
         const string WEAPON_TEX_NAME = "pistol";
@@ -54,9 +44,100 @@ namespace Commando
         const string SAVE_PATH = "user level.xml";
         const float HUD_DRAW_DEPTH = Constants.DEPTH_HUD;
         const float FONT_DRAW_DEPTH = Constants.DEPTH_HUD_TEXT;
-        const int HUD_BAR_DRAW_Y = SCREEN_SIZE_Y - HUD_BAR_HEIGHT;
-        const int HUD_BAR_DRAW_X = 0;
+
+        #region HUD POSITIONING CALCULATIONS AND CONSTANTS
+        protected int HUD_BAR_DRAW_X
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return (r.X);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected int HUD_BAR_DRAW_Y
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return (r.Y + r.Height - HUD_BAR_HEIGHT);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected int HUD_BAR_WIDTH
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return (r.Width);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
         const int HUD_BAR_HEIGHT = 45;
+
+        protected Vector2 HEALTH_BAR_POSITION
+        {
+            get
+            {
+                return new Vector2(HUD_BAR_DRAW_X + 100.0f, HUD_BAR_DRAW_Y + 30.0f);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected Vector2 HEALTH_TEXT_POSITION
+        {
+            get
+            {
+                return new Vector2(HUD_BAR_DRAW_X + 100.0f, HUD_BAR_DRAW_Y + 30.0f);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected Vector2 WEAPON_ICON_POSITION
+        {
+            get
+            {
+                return new Vector2(HUD_BAR_DRAW_X + HUD_BAR_WIDTH - 250.0f, HUD_BAR_DRAW_Y + 30.0f);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected Vector2 AMMO_TEXT_POSITION
+        {
+            get
+            {
+                return new Vector2(HUD_BAR_DRAW_X + HUD_BAR_WIDTH - 150.0f, HUD_BAR_DRAW_Y + 30.0f);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        const float HEALTH_TEXT_OFFSET_X = -27.0f;
+        const float HEALTH_TEXT_OFFSET_Y = -12.0f;
+        #endregion
 
         //Jared's test stuff
         //protected MainPlayer player_;
@@ -88,7 +169,7 @@ namespace Commando
 
             // Perform initializations of variables
             engine_ = engine;
-            engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            //engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 
             GlobalHelper.getInstance().setGameplayState(this);
 
@@ -100,10 +181,10 @@ namespace Commando
             // Cleanup singletons used by prior EngineStateGameplay
             WorldState.reset();
 
-            drawPipeline_ = new List<DrawableObjectAbstract>();
+            GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)engine_.graphics_.PreferredBackBufferWidth);
+            GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)engine_.graphics_.PreferredBackBufferHeight);
 
-            GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)SCREEN_SIZE_X);
-            GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)SCREEN_SIZE_Y);
+            drawPipeline_ = new List<DrawableObjectAbstract>();
             
             //List<BoxObject> boxesToBeAdded = new List<BoxObject>();
             Tile[,] tilesForGrid;
@@ -181,10 +262,10 @@ namespace Commando
             }
             //END Jared's test stuff
 
-            healthBarPos_ = new Vector2(HEALTH_BAR_POS_X, HEALTH_BAR_POS_Y);
-            weaponIconPos_ = new Vector2(WEAPON_ICON_POS_X, WEAPON_ICON_POS_Y);
-            healthTextPos_ = new Vector2(HEALTH_BAR_POS_X + HEALTH_TEXT_OFFSET_X, HEALTH_BAR_POS_Y + HEALTH_TEXT_OFFSET_Y);
-            ammoTextPos_ = new Vector2(AMMO_TEXT_POS_X, AMMO_TEXT_POS_Y);
+            healthBarPos_ = HEALTH_BAR_POSITION;
+            weaponIconPos_ = WEAPON_ICON_POSITION;
+            healthTextPos_ = new Vector2(healthBarPos_.X + HEALTH_TEXT_OFFSET_X, healthBarPos_.Y + HEALTH_TEXT_OFFSET_Y);
+            ammoTextPos_ = AMMO_TEXT_POSITION;
             healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
             weapon_ = new HeadsUpDisplayWeapon(drawPipeline_, TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
             ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay);
@@ -299,7 +380,7 @@ namespace Commando
             healthBar_.draw(new GameTime());
             TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImageAbsolute(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
             weapon_.draw(new GameTime());
-            TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, SCREEN_SIZE_X, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
+            TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, HUD_BAR_WIDTH, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
             FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
             //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
             ammo_.drawString(AMMO_TEXT, AMMO_REPLACE_TEXT, Color.Black, 0.0f);

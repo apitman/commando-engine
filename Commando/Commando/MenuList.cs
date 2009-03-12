@@ -47,7 +47,7 @@ namespace Commando
         protected List<string> stringList_;
 
         //position of the first menu item
-        protected Vector2 listPos_;
+        public Vector2 Position_ { get; set; }
 
         //color of an unselected menu item
         public Color BaseColor_ { get; set; }
@@ -104,7 +104,7 @@ namespace Commando
         {
             setDefaults();
             this.stringList_ = stringList;
-            this.listPos_ = position;
+            this.Position_ = position;
         }
 
         #region FontList Members
@@ -117,7 +117,7 @@ namespace Commando
         public void draw()
         {
             int listLength = stringList_.Count;
-            Vector2 curPos = listPos_;
+            Vector2 curPos = Position_;
             Color myColor;
             for (int i = 0; i < listLength; i++)
             {

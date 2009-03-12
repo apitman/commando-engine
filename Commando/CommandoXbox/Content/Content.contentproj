@@ -418,6 +418,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Audio\sounds.xap">
+      <Link>Audio\sounds.xap</Link>
+      <Name>sounds</Name>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </Compile>
     <None Include="..\..\Commando\Content\XML\Sprites\Pixel.xml">
       <Link>XML\Sprites\Pixel.xml</Link>
       <Name>Pixel</Name>
@@ -488,6 +494,14 @@
     <Compile Include="..\..\Commando\Content\Sprites\HealthBox.bmp">
       <Link>Sprites\HealthBox.bmp</Link>
       <Name>HealthBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerStartPos.png">
+      <Link>Sprites\PlayerStartPos.png</Link>
+      <Name>PlayerStartPos</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
