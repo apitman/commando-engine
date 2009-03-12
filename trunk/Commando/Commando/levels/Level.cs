@@ -229,11 +229,11 @@ namespace Commando.levels
                 }
 
                 // We no longer have a default enemy
-                //DummyEnemy dumDum = new DummyEnemy(pipeline, new Vector2(100.0f, 200.0f));
+                DummyEnemy dumDum = new DummyEnemy(pipeline, new Vector2(200.0f, 150.0f));
                 //// TODO: AMP Fix it so we don't have to do this next line of code
-                //dumDum.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                dumDum.getActuator().update(); // Makes it so the enemies are drawn in the correct position
 
-                //enemies_.Add(dumDum);
+                enemies_.Add(dumDum);
             }
 
             return this;

@@ -102,6 +102,7 @@ namespace Commando.objects
             }
 
             Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            //Weapon_.update();
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             height_ = new Height(true, true);
         }
@@ -134,7 +135,7 @@ namespace Commando.objects
             collisionDetector_ = new SeparatingAxisCollisionDetector();
 
             Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-            Weapon_.update();
+            //Weapon_.update();
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             height_ = new Height(true, false);
         }
