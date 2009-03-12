@@ -21,6 +21,7 @@ using Commando.controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.graphics;
+using System;
 
 namespace Commando
 {
@@ -29,9 +30,6 @@ namespace Commando
     /// </summary>
     class EngineStateMenu : EngineStateInterface
     {
-        const int SCREEN_SIZE_X = 800;
-        const int SCREEN_SIZE_Y = 600;
-
         protected readonly FontEnum MENU_FONT = FontEnum.Kootenay;
         protected readonly Color MENU_SELECTED_COLOR = Color.White;
         protected readonly Color MENU_UNSELECTED_COLOR = Color.Green;
@@ -39,11 +37,49 @@ namespace Commando
         protected const float MENU_ROTATION = 0.0f;
         protected const float MENU_SPACING = 40.0f;
         protected const int MENU_DEFAULT_CURSOR_POSITION = 0;
+        protected Vector2 MENU_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return new Vector2(r.X + r.Width / 2.0f, r.Y + r.Height / 2.0f + 50.0f);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         protected const FontEnum CONTROL_TIPS_FONT = FontEnum.Kootenay;
         protected readonly Color CONTROL_TIPS_COLOR = Color.White;
         protected const float CONTROL_TIPS_ROTATION = 0.0f;
         protected const float CONTROL_TIPS_DEPTH = Constants.DEPTH_MENU_TEXT;
+        protected Vector2 CONTROL_TIPS_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return new Vector2(r.X + r.Width / 2.0f, r.Y + r.Height / 2.0f + 10.0f);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        protected Vector2 LOGO_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return new Vector2(r.X + (r.Width - logo_.getImageDimensions()[0].Width) / 2, r.Y);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected const float LOGO_DEPTH = Constants.DEPTH_LOW;
 
         protected const string STR_MENU_START_GAME = "Start Game";
         protected const string STR_MENU_CONTROLS = "Controls";
@@ -51,7 +87,7 @@ namespace Commando
         protected const string STR_MENU_QUIT = "Quit";
 
         protected Engine engine_;
-        protected GameTexture menu_;
+        protected GameTexture logo_;
         protected MenuList mainMenuList_;
         protected string controlTips_;
 
@@ -62,7 +98,7 @@ namespace Commando
         public EngineStateMenu(Engine engine)
         {
             engine_ = engine;
-            engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            logo_ = TextureMap.fetchTexture("TitleScreen");
 
             List<string> menuString = new List<string>();
             menuString.Add(STR_MENU_START_GAME);
@@ -81,9 +117,7 @@ namespace Commando
                             "Cancel: " +
                             inputs.getControlName(InputsEnum.CANCEL_BUTTON);*/
             controlTips_ = ""; // currrently refreshed every frame in draw()
-            Vector2 menuPos = new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
-                                                engine_.GraphicsDevice.Viewport.Height / 2.0f + 50.0f);
-            mainMenuList_ = new MenuList(menuString, menuPos);
+            mainMenuList_ = new MenuList(menuString, MENU_POSITION);
             mainMenuList_.BaseColor_ = MENU_UNSELECTED_COLOR;
             mainMenuList_.SelectedColor_ = MENU_SELECTED_COLOR;
             mainMenuList_.CursorPos_ = MENU_DEFAULT_CURSOR_POSITION;
@@ -121,7 +155,7 @@ namespace Commando
                     case 1:
                         return new EngineStateControls(engine_);
                     case 2:
-                        return new EngineStateLevelEditor(engine_, this , SCREEN_SIZE_X, SCREEN_SIZE_Y);
+                        return new EngineStateLevelEditor(engine_, this);
                     case 3:
                         engine_.Exit();
                         break;
@@ -148,26 +182,19 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-
-            if (menu_ == null)
-            {
-                menu_ = TextureMap.getInstance().getTexture("TitleScreen");
-            }
-         
             engine_.GraphicsDevice.Clear(Color.Black);
 
-            menu_.drawImageAbsolute(0, new Vector2((engine_.GraphicsDevice.Viewport.Width - menu_.getImageDimensions()[0].Width) / 2, 0), 0.0f);
+            logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
 
             //print control Tips for main menu
             GameFont myFont = FontMap.getInstance().getFont(CONTROL_TIPS_FONT);
-            Vector2 controlTipsPos =
-                new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
-                            engine_.GraphicsDevice.Viewport.Height / 2.0f - 10.0f);
             myFont.drawStringCentered(controlTips_,
-                                        controlTipsPos,
+                                        CONTROL_TIPS_POSITION,
                                         CONTROL_TIPS_COLOR,
                                         CONTROL_TIPS_ROTATION,
                                         CONTROL_TIPS_DEPTH);
+
+            mainMenuList_.Position_ = MENU_POSITION;
             mainMenuList_.draw();
         }
 
