@@ -485,6 +485,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Tiles\LevelExit.bmp">
+      <Name>LevelExit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="XML\Sprites\Pixel.xml">
       <Name>Pixel</Name>
       <Importer>XmlImporter</Importer>

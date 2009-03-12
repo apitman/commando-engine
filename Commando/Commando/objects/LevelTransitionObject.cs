@@ -83,7 +83,7 @@ namespace Commando.objects
         {
             if (obj is PlayableCharacterAbstract)
             {
-                //GlobalHelper.getInstance().getGameplayState().loadLevel(nextLevel_);
+                GlobalHelper.getInstance().getGameplayState().loadLevel(nextLevel_);
             }
         }
 
@@ -104,7 +104,10 @@ namespace Commando.objects
 
         public override void draw(GameTime gameTime)
         {
-            //Nothing to draw here....right now that is
+            if (image_ != null)
+            {
+                base.draw(gameTime);
+            }
         }
 
         public override void die()
