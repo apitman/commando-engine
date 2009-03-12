@@ -44,7 +44,7 @@ namespace Commando
 
         //list of strings used to make each menu item
         //each string in the list makes up a different line
-        protected List<string> stringList_;
+        public List<string> StringList_ { get; private set; }
 
         //position of the first menu item
         public Vector2 Position_ { get; set; }
@@ -103,7 +103,7 @@ namespace Commando
         public MenuList(List<string> stringList, Vector2 position)
         {
             setDefaults();
-            this.stringList_ = stringList;
+            this.StringList_ = stringList;
             this.Position_ = position;
         }
 
@@ -116,7 +116,7 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            int listLength = stringList_.Count;
+            int listLength = StringList_.Count;
             Vector2 curPos = Position_;
             Color myColor;
             for (int i = 0; i < listLength; i++)
@@ -129,7 +129,7 @@ namespace Commando
                 {
                     myColor = BaseColor_;
                 }
-                string curString = stringList_[i];
+                string curString = StringList_[i];
 
                 font_.drawStringCentered(curString,
                                           curPos,
@@ -158,7 +158,7 @@ namespace Commando
         public void incrementCursorPos()
         {
             CursorPos_++;
-            CursorPos_ = CursorPos_ % stringList_.Count;
+            CursorPos_ = CursorPos_ % StringList_.Count;
         }
 
         /// <summary>
@@ -169,13 +169,13 @@ namespace Commando
             CursorPos_--;
             if (CursorPos_ < 0) 
             {
-                CursorPos_ = stringList_.Count - 1;
+                CursorPos_ = StringList_.Count - 1;
             }
         }
 
         public void setString(int index, string replacement)
         {
-            stringList_[index] = replacement;
+            StringList_[index] = replacement;
         }
 
         #endregion

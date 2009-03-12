@@ -202,6 +202,12 @@
     <Compile Include="..\Commando\EngineStateLevelEditor.cs">
       <Link>EngineStateLevelEditor.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateLevelLoad.cs">
+      <Link>EngineStateLevelLoad.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\EngineStateLevelSave.cs">
+      <Link>EngineStateLevelSave.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\EngineStateMenu.cs">
       <Link>EngineStateMenu.cs</Link>
     </Compile>

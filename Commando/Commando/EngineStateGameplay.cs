@@ -26,6 +26,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.collisiondetection;
 using Commando.ai;
+using Microsoft.Xna.Framework.Storage;
 
 namespace Commando
 {
@@ -163,17 +164,17 @@ namespace Commando
         /// Constructs a state of gameplay
         /// </summary>
         /// <param name="engine">Reference to the engine running the state</param>
-        public EngineStateGameplay(Engine engine)
+        public EngineStateGameplay(Engine engine, string filepath, StorageContainer container)
         {
             SoundEngine.getInstance().Music.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);
 
-            // Perform initializations of variables
             engine_ = engine;
-            //engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 
             GlobalHelper.getInstance().setGameplayState(this);
 
-            loadLevel("user level.xml");
+            loadLevel(filepath);
+
+            container.Dispose();
         }
 
         public void loadLevel(string filename)

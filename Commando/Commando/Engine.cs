@@ -114,6 +114,9 @@ namespace Commando
 
             base.Initialize();
             engineState_ = new EngineStateMenu(this);
+            GamerServicesComponent gsc = new GamerServicesComponent(this);
+            this.Components.Add(gsc);
+            gsc.Initialize();
             initializeScreen();
         }
 

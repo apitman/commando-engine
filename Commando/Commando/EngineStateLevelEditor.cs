@@ -26,6 +26,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Commando.controls;
 using Commando.levels;
 using Commando.objects;
+using Microsoft.Xna.Framework.Storage;
 
 namespace Commando
 {
@@ -61,7 +62,6 @@ namespace Commando
         const int MIN_CURSOR_Y = 2;
         const int MAX_NUM_ENEMIES = 3;
         const string DUMMY_ENEMY = "dummyEnemy";
-        const string SAVE_PATH = "user level.xml";
        
         const float DISP_TILE_DEPTH = 0.1f;
         public const int SCREEN_SIZE_X = 375;
@@ -116,12 +116,12 @@ namespace Commando
         protected int maxCursorX;
         protected int maxCursorY;
 
-        protected Level myLevel_;
+        public Level myLevel_;
 
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
         /// </summary>
-        public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState)
+        public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState, string filepath, StorageContainer container)
         {
             PlayerHelper.Player_ = null; // Necessary to have mouse input if the player has entered EngineStateGameplay before entering the level editor
             engine_ = engine;
@@ -135,7 +135,8 @@ namespace Commando
             myObjects_ = new List<objectRepresentation>(MAX_NUM_ENEMIES);
 
             myLevel_ = new Level(new Tileset(), null);
-            myLevel_.getLevelFromFile(SAVE_PATH, drawPipeline_);
+            myLevel_.getLevelFromFile(filepath, drawPipeline_);
+            container.Dispose();
 
             maxCursorX = numTilesWide_ - 3;
             maxCursorY = numTilesTall_ - 3;
@@ -213,10 +214,8 @@ namespace Commando
             else if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
-                // Save Level to XML before exiting
-                myLevel_.writeLevelToFile(SAVE_PATH);
                 engine_.initializeScreen();
-                return returnState_;
+                return new EngineStateLevelSave(engine_, this);
             }
             else if (inputs.getButton(InputsEnum.BUTTON_4))
             {
