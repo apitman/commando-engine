@@ -64,8 +64,8 @@ namespace Commando
         const string SAVE_PATH = "user level.xml";
        
         const float DISP_TILE_DEPTH = 0.1f;
-        const int SCREEN_SIZE_X = 375;
-        const int SCREEN_SIZE_Y = 375;
+        public const int SCREEN_SIZE_X = 375;
+        public const int SCREEN_SIZE_Y = 375;
         const int HUD_BAR_HEIGHT = 45;
         const int HUD_BAR_DRAW_Y = SCREEN_SIZE_Y - HUD_BAR_HEIGHT;
         const int HUD_BAR_DRAW_X = 0;
@@ -215,10 +215,12 @@ namespace Commando
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
                 // Save Level to XML before exiting
                 myLevel_.writeLevelToFile(SAVE_PATH);
+                engine_.initializeScreen();
                 return returnState_;
             }
             else if (inputs.getButton(InputsEnum.BUTTON_4))
             {
+                engine_.initializeScreen();
                 return new EngineStateEditorControls(engine_, this, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             }
             else if (inputs.getButton(InputsEnum.LEFT_BUMPER) && isObjSelected_ == false)

@@ -46,6 +46,9 @@ namespace Commando
         const int FRAMERATE = 30;
         const string TEXTUREMAPXML = ".\\Content\\XML\\LoadScripts\\TextureLoader.xml";
 
+        const int SCREEN_MIN_WIDTH = 800;
+        const int SCREEN_MIN_HEIGHT = 600;
+
         public Engine()
         {
             graphics_ = new GraphicsDeviceManager(this);
@@ -81,10 +84,21 @@ namespace Commando
             return Content;
         }
 
+        public void initializeScreen()
+        {
+            this.graphics_.PreferredBackBufferWidth =
+                Math.Max(this.GraphicsDevice.DisplayMode.Width, SCREEN_MIN_WIDTH);
+            this.graphics_.PreferredBackBufferHeight =
+                Math.Max(this.GraphicsDevice.DisplayMode.Height, SCREEN_MIN_HEIGHT);
+            this.graphics_.IsFullScreen = true;
+            this.graphics_.ApplyChanges();
+        }
+
         public void setScreenSize(int x, int y)
         {
             graphics_.PreferredBackBufferHeight = y;
             graphics_.PreferredBackBufferWidth = x;
+            graphics_.IsFullScreen = false;
             graphics_.ApplyChanges();
         }
 
@@ -100,10 +114,7 @@ namespace Commando
 
             base.Initialize();
             engineState_ = new EngineStateMenu(this);
-            this.graphics_.PreferredBackBufferWidth = Math.Max(this.GraphicsDevice.DisplayMode.Width, 800);
-            this.graphics_.PreferredBackBufferHeight = Math.Max(this.GraphicsDevice.DisplayMode.Height, 600);
-            this.graphics_.IsFullScreen = true;
-            this.graphics_.ApplyChanges();
+            initializeScreen();
         }
 
         /// <summary>
