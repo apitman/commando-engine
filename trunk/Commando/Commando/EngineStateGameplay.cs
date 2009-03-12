@@ -142,8 +142,8 @@ namespace Commando
             // Load the level and create bounding boxes
             myLevel_ = new Level(new Tileset(), null);
             myLevel_.getLevelFromFile(filename, drawPipeline_);
-            player_ = (ActuatedMainPlayer)myLevel_.getPlayer();
-
+            //player_ = (ActuatedMainPlayer)myLevel_.getPlayer();
+            player_ = new ActuatedMainPlayer(drawPipeline_, collisionDetector_, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
             GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
 
             boxesToBeAdded = new bool[myLevel_.getHeight(), myLevel_.getWidth()];
