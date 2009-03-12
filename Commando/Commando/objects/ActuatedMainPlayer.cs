@@ -46,6 +46,48 @@ namespace Commando.objects
 
         protected bool pistol_ = false;
 
+        protected static readonly List<Vector2> BOUNDSPOINTS;
+
+        static ActuatedMainPlayer()
+        {
+            BOUNDSPOINTS = new List<Vector2>();
+            BOUNDSPOINTS.Add(new Vector2(-5.0f, 0f));
+            BOUNDSPOINTS.Add(new Vector2(-1.0f, -15.0f));
+            BOUNDSPOINTS.Add(new Vector2(7.0f, -15.0f));
+            BOUNDSPOINTS.Add(new Vector2(10.0f, 0f));
+            BOUNDSPOINTS.Add(new Vector2(7.0f, 15.0f));
+            BOUNDSPOINTS.Add(new Vector2(-1.0f, 15.0f));
+        }
+
+        public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
+            : base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", detector, null, 8.0f, Vector2.Zero, position, direction, 0.5f)
+        {
+            PlayerHelper.Player_ = this;
+
+            boundsPolygon_ = new ConvexPolygon(BOUNDSPOINTS, Vector2.Zero);
+            //ENDTEMP
+
+            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
+            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
+            Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
+            actions.Add("default", new Dictionary<string, CharacterActionInterface>());
+            actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
+            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
+            actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
+            actuator_ = new DefaultActuator(actions, this, "default");
+
+            List<GameTexture> anims = new List<GameTexture>();
+            anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
+            animations_ = new AnimationSet(anims);
+            radius_ = RADIUS;
+            //collisionDetector_ = new SeparatingAxisCollisionDetector();
+
+            Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            height_ = new Height(true, false);
+        }
+
         /// <summary>
         /// Create the main player of the game.
         /// </summary>
@@ -53,16 +95,8 @@ namespace Commando.objects
             base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
             PlayerHelper.Player_ = this;
-            
-            //TEMP create bounds polygon
-            List<Vector2> points = new List<Vector2>();
-            points.Add(new Vector2(-5.0f, 0f));
-            points.Add(new Vector2(-1.0f, -15.0f));
-            points.Add(new Vector2(7.0f, -15.0f));
-            points.Add(new Vector2(10.0f, 0f));
-            points.Add(new Vector2(7.0f, 15.0f));
-            points.Add(new Vector2(-1.0f, 15.0f));
-            boundsPolygon_ = new ConvexPolygon(points, Vector2.Zero);
+
+            boundsPolygon_ = new ConvexPolygon(BOUNDSPOINTS, Vector2.Zero);
             //ENDTEMP
             
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);

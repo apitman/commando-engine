@@ -34,6 +34,8 @@ namespace Commando
 
         protected Camera currentCamera_;
 
+        protected EngineStateGameplay currentGameplayState_;
+
         private GlobalHelper()
         {
             curLevelTileGrid_ = null;
@@ -66,6 +68,16 @@ namespace Commando
         public Camera getCurrentCamera()
         {
             return currentCamera_;
+        }
+
+        public EngineStateGameplay getGameplayState()
+        {
+            return currentGameplayState_;
+        }
+
+        public void setGameplayState(EngineStateGameplay state)
+        {
+            currentGameplayState_ = state;
         }
     }
 }
