@@ -63,7 +63,7 @@ namespace Commando
         protected ActuatedMainPlayer player_;
         protected List<CharacterAbstract> enemyList_ = new List<CharacterAbstract>();
         protected CollisionDetectorInterface collisionDetector_;
-        protected List<DrawableObjectAbstract> drawPipeline_ = new List<DrawableObjectAbstract>();
+        protected List<DrawableObjectAbstract> drawPipeline_;
         //END Jared's test stuff
 
         protected Engine engine_;
@@ -99,6 +99,8 @@ namespace Commando
         {
             // Cleanup singletons used by prior EngineStateGameplay
             WorldState.reset();
+
+            drawPipeline_ = new List<DrawableObjectAbstract>();
 
             GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)SCREEN_SIZE_X);
             GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)SCREEN_SIZE_Y);
@@ -196,7 +198,7 @@ namespace Commando
             }
             AmmoBox ammo = new AmmoBox(collisionDetector_, drawPipeline_, new Vector2(250, 250), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
             HealthBox health = new HealthBox(collisionDetector_, drawPipeline_, new Vector2(250, 200), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
-            LevelTransitionObject transition = new LevelTransitionObject("user level.xml", collisionDetector_, tileBox, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(150f, 200f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
+            //LevelTransitionObject transition = new LevelTransitionObject("user level.xml", collisionDetector_, tileBox, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(150f, 200f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
 
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;

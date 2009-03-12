@@ -493,6 +493,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Tiles\LevelExit.bmp">
+      <Link>Tiles\LevelExit.bmp</Link>
+      <Name>LevelExit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\effects\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>
