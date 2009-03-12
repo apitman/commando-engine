@@ -64,6 +64,7 @@ namespace Commando
         protected EngineStateLevelEditor state_;
         protected EngineStateInterface returnState_;
         protected bool saved_ = false;
+        protected bool cancelFlag_ = false;
 
         protected GameFont mainMessage_;
         protected string currentFilename_ = "";
@@ -79,6 +80,10 @@ namespace Commando
 
         public EngineStateInterface update(GameTime gameTime)
         {
+            if (cancelFlag_)
+            {
+                return returnState_;
+            }
 
             if (currentFilename_ == "")
             {
@@ -118,12 +123,11 @@ namespace Commando
             if (filename == null)
             {
                 returnState_ = state_;
-                currentFilename_ = "FAILUREFLAG";
+                cancelFlag_ = true;
                 return;
             }
 
             currentFilename_ = filename + LEVEL_EXTENSION;
-            returnState_ = new EngineStateMenu(engine_);
         }
 
         private void findStorageDevice(IAsyncResult result)
@@ -133,6 +137,11 @@ namespace Commando
             {
                 if ((string)result.AsyncState == "saveRequest")
                     saveGame(storageDevice);
+            }
+            else
+            {
+                returnState_ = state_;
+                cancelFlag_ = true;
             }
         }
 
@@ -144,6 +153,8 @@ namespace Commando
             string filename = Path.Combine(directory, currentFilename_);
             state_.myLevel_.writeLevelToFile(filename);
             container.Dispose();
+
+            returnState_ = new EngineStateMenu(engine_);
         }
 
         public void draw()
