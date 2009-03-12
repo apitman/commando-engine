@@ -32,6 +32,14 @@ namespace Commando
 {
     public class EngineStateLevelSave : EngineStateInterface
     {
+#if !XBOX
+        public const string CONTAINER_NAME = "Commando";
+#else
+        public const string CONTAINER_NAME = "CommandoXbox";
+#endif
+        public const string DIRECTORY_NAME = "levels";
+        public const string LEVEL_EXTENSION = ".commandolevel";
+
         protected const string MESSAGE = "Please enter a filename to save as :";
         protected const FontEnum MESSAGE_FONT = FontEnum.Kootenay;
         protected Vector2 MESSAGE_POSITION
@@ -79,7 +87,7 @@ namespace Commando
                         PlayerIndex.One,
                         "Enter a name for this level",
                         "Or else you die",
-                        "level1.xml",
+                        "defaultlevel",
                         enterFilename,
                         "enterFilename");
             }
@@ -88,9 +96,9 @@ namespace Commando
             {
                 try
                 {
-                    saved_ = true;
                     IAsyncResult result2 =
                         Guide.BeginShowStorageDeviceSelector(findStorageDevice, "saveRequest");
+                    saved_ = true;
                 }
                 catch (GuideAlreadyVisibleException e)
                 {
@@ -105,7 +113,17 @@ namespace Commando
         private void enterFilename(IAsyncResult result)
         {
             string filename = Guide.EndShowKeyboardInput(result);
-            currentFilename_ = filename;
+
+            // If they cancelled, go back to LevelEditor
+            if (filename == null)
+            {
+                returnState_ = state_;
+                currentFilename_ = "FAILUREFLAG";
+                return;
+            }
+
+            currentFilename_ = filename + LEVEL_EXTENSION;
+            returnState_ = new EngineStateMenu(engine_);
         }
 
         private void findStorageDevice(IAsyncResult result)
@@ -115,17 +133,16 @@ namespace Commando
             {
                 if ((string)result.AsyncState == "saveRequest")
                     saveGame(storageDevice);
-                returnState_ = new EngineStateMenu(engine_);
             }
         }
 
         private void saveGame(StorageDevice storageDevice)
         {
-            StorageContainer container = storageDevice.OpenContainer("CommandoXbox");
-            string directory = Path.Combine(container.Path, "levels");
+            StorageContainer container = storageDevice.OpenContainer(CONTAINER_NAME);
+            string directory = Path.Combine(container.Path, DIRECTORY_NAME);
             System.IO.Directory.CreateDirectory(directory);
-            string fileName = Path.Combine(directory, currentFilename_);
-            state_.myLevel_.writeLevelToFile(fileName);
+            string filename = Path.Combine(directory, currentFilename_);
+            state_.myLevel_.writeLevelToFile(filename);
             container.Dispose();
         }
 
