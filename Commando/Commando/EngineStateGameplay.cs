@@ -45,6 +45,7 @@ namespace Commando
         const string SAVE_PATH = "user level.xml";
         const float HUD_DRAW_DEPTH = Constants.DEPTH_HUD;
         const float FONT_DRAW_DEPTH = Constants.DEPTH_HUD_TEXT;
+        const string NEXT_LEVEL = "C:\\Documents and Settings\\segalj\\My Documents\\SavedGames\\CommandoXbox\\AllPlayers\\levels\\defaultlevel.xml";
 
         #region HUD POSITIONING CALCULATIONS AND CONSTANTS
         protected int HUD_BAR_DRAW_X
@@ -157,6 +158,8 @@ namespace Commando
         protected Vector2 weaponIconPos_;
         protected Vector2 healthTextPos_;
         protected Vector2 ammoTextPos_;
+        protected bool moveToNextLevel_ = false;
+        protected string nextLevel_;
 
         protected Level myLevel_;
 
@@ -175,6 +178,12 @@ namespace Commando
             loadLevel(filepath);
 
             container.Dispose();
+        }
+
+        public void moveToNextLevel(string filename)
+        {
+            moveToNextLevel_ = true;
+            nextLevel_ = filename;
         }
 
         public void loadLevel(string filename)
@@ -225,7 +234,15 @@ namespace Commando
             myLevel_ = new Level(new Tileset(), null);
             myLevel_.getLevelFromFile(filename, drawPipeline_);
             //player_ = (ActuatedMainPlayer)myLevel_.getPlayer(); // AMP: I don't like this in the Level class
-            player_ = new ActuatedMainPlayer(drawPipeline_, collisionDetector_, myLevel_.getPlayerStartLocation(), new Vector2(1.0f, 0.0f));
+            if (moveToNextLevel_)
+            {
+                player_.setPosition(myLevel_.getPlayerStartLocation());
+                player_.setDrawPipeline(drawPipeline_);
+            }
+            else
+            {
+                player_ = new ActuatedMainPlayer(drawPipeline_, collisionDetector_, myLevel_.getPlayerStartLocation(), new Vector2(1.0f, 0.0f));
+            }
             GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
 
             boxesToBeAdded = new bool[myLevel_.getHeight(), myLevel_.getWidth()];
@@ -234,7 +251,14 @@ namespace Commando
             {
                 for (int j = 0; j < myLevel_.getWidth(); j++)
                 {
-                    if (myLevel_.getTiles()[i, j].getTileNumber() != 1)
+                    if (myLevel_.getTiles()[i, j].getTileNumber() >= 10 && myLevel_.getTiles()[i, j].getTileNumber() <= 18)
+                    {
+                        //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
+                        boxesToBeAdded[i, j] = true;
+                        tilesForGrid[i, j].highDistance_ = 1;
+                        tilesForGrid[i, j].lowDistance_ = 0;
+                    }
+                    else if (myLevel_.getTiles()[i, j].getTileNumber() != 1)
                     {
                         //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
                         boxesToBeAdded[i, j] = true;
@@ -282,7 +306,7 @@ namespace Commando
             {
                 myLevel_.getItems()[i].setCollisionDetector(collisionDetector_);
             }
-            //LevelTransitionObject transition = new LevelTransitionObject("user level.xml", collisionDetector_, tileBox, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(150f, 200f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
+            LevelTransitionObject transition = new LevelTransitionObject(NEXT_LEVEL, collisionDetector_, tileBox, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(172.5f, 277.5f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
 
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;
@@ -298,6 +322,12 @@ namespace Commando
         /// <returns>The state of the game for the next frame</returns>
         public EngineStateInterface update(GameTime gameTime)
         {
+            if (moveToNextLevel_)
+            {
+                loadLevel(nextLevel_);
+                moveToNextLevel_ = false;
+                return this;
+            }
             InputSet inputs = engine_.getInputs();
 
             // Check whether to enter pause screen

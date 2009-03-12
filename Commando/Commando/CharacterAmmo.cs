@@ -40,6 +40,7 @@ namespace Commando
         public void addObserver(CharacterStatusObserverInterface obs)
         {
             observers_.Add(obs);
+            obs.notifyOfChange(ammoRemaining_);
         }
 
         /// <summary>
