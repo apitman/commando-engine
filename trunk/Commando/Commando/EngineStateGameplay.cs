@@ -142,8 +142,8 @@ namespace Commando
             // Load the level and create bounding boxes
             myLevel_ = new Level(new Tileset(), null);
             myLevel_.getLevelFromFile(filename, drawPipeline_);
-            //player_ = (ActuatedMainPlayer)myLevel_.getPlayer();
-            player_ = new ActuatedMainPlayer(drawPipeline_, collisionDetector_, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
+            //player_ = (ActuatedMainPlayer)myLevel_.getPlayer(); // AMP: I don't like this in the Level class
+            player_ = new ActuatedMainPlayer(drawPipeline_, collisionDetector_, myLevel_.getPlayerStartLocation(), new Vector2(1.0f, 0.0f));
             GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
 
             boxesToBeAdded = new bool[myLevel_.getHeight(), myLevel_.getWidth()];
@@ -196,8 +196,10 @@ namespace Commando
             {
                 myLevel_.getEnemies()[i].setCollisionDetector(collisionDetector_);
             }
-            AmmoBox ammo = new AmmoBox(collisionDetector_, drawPipeline_, new Vector2(250, 250), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
-            HealthBox health = new HealthBox(collisionDetector_, drawPipeline_, new Vector2(250, 200), new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW);
+            for (int i = 0; i < myLevel_.getItems().Count; i++)
+            {
+                myLevel_.getItems()[i].setCollisionDetector(collisionDetector_);
+            }
             //LevelTransitionObject transition = new LevelTransitionObject("user level.xml", collisionDetector_, tileBox, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(150f, 200f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
 
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
