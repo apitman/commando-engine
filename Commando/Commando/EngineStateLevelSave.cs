@@ -32,6 +32,9 @@ namespace Commando
 {
     public class EngineStateLevelSave : EngineStateInterface
     {
+        protected const string KEYBOARD_MESSAGE = "Name Your Level";
+        protected const string KEYBOARD_DESCRIPTION = "Enter a name for this level.";
+
 #if !XBOX
         public const string CONTAINER_NAME = "Commando";
 #else
@@ -40,7 +43,7 @@ namespace Commando
         public const string DIRECTORY_NAME = "levels";
         public const string LEVEL_EXTENSION = ".commandolevel";
 
-        protected const string MESSAGE = "Please enter a filename to save as :";
+        protected const string MESSAGE = "Please do not interrupt this process.";
         protected const FontEnum MESSAGE_FONT = FontEnum.Kootenay;
         protected Vector2 MESSAGE_POSITION
         {
@@ -65,6 +68,7 @@ namespace Commando
         protected EngineStateInterface returnState_;
         protected bool saved_ = false;
         protected bool cancelFlag_ = false;
+        protected bool tryingToSave_ = false;
 
         protected GameFont mainMessage_;
         protected string currentFilename_ = "";
@@ -85,29 +89,24 @@ namespace Commando
                 return returnState_;
             }
 
-            if (currentFilename_ == "")
+            if (!tryingToSave_ && !cancelFlag_)
             {
-                IAsyncResult result =
-                    Guide.BeginShowKeyboardInput(
-                        PlayerIndex.One,
-                        "Enter a name for this level",
-                        "Or else you die",
-                        "defaultlevel",
-                        enterFilename,
-                        "enterFilename");
-            }
-
-            if (currentFilename_ != "" && !Guide.IsVisible && !saved_)
-            {
-                try
+                tryingToSave_ = true;
+                if (Settings.getInstance().IsGamerServicesAllowed_)
                 {
-                    IAsyncResult result2 =
-                        Guide.BeginShowStorageDeviceSelector(findStorageDevice, "saveRequest");
-                    saved_ = true;
+                    IAsyncResult result =
+                        Guide.BeginShowKeyboardInput(
+                            Settings.getInstance().CurrentPlayer_,
+                            KEYBOARD_MESSAGE,
+                            KEYBOARD_DESCRIPTION,
+                            Path.GetFileNameWithoutExtension(state_.currentFilepath_),
+                            enterFilename,
+                            "enterFilename");
                 }
-                catch (GuideAlreadyVisibleException e)
+                else
                 {
-                    saved_ = false;
+                    // TODO
+                    // Create Windows filename dialog box here if on PC
                 }
             }
 
@@ -128,24 +127,14 @@ namespace Commando
             }
 
             currentFilename_ = filename + LEVEL_EXTENSION;
+
+            // TODO
+            // Must ensure that if KeyboardInput works, this will always
+            //  have a valid storage device
+            saveLevel(Settings.getInstance().StorageDevice_);
         }
 
-        private void findStorageDevice(IAsyncResult result)
-        {
-            StorageDevice storageDevice = Guide.EndShowStorageDeviceSelector(result);
-            if (storageDevice != null)
-            {
-                if ((string)result.AsyncState == "saveRequest")
-                    saveGame(storageDevice);
-            }
-            else
-            {
-                returnState_ = state_;
-                cancelFlag_ = true;
-            }
-        }
-
-        private void saveGame(StorageDevice storageDevice)
+        private void saveLevel(StorageDevice storageDevice)
         {
             StorageContainer container = storageDevice.OpenContainer(CONTAINER_NAME);
             string directory = Path.Combine(container.Path, DIRECTORY_NAME);

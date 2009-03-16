@@ -27,6 +27,7 @@ using Commando.controls;
 using Commando.levels;
 using Commando.objects;
 using Microsoft.Xna.Framework.Storage;
+using System.IO;
 
 namespace Commando
 {
@@ -117,12 +118,15 @@ namespace Commando
         protected int maxCursorY;
 
         public Level myLevel_;
+        public string currentFilepath_;
 
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
         /// </summary>
         public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState, string filepath, StorageContainer container)
         {
+            currentFilepath_ = filepath;
+
             PlayerHelper.Player_ = null; // Necessary to have mouse input if the player has entered EngineStateGameplay before entering the level editor
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
@@ -159,7 +163,7 @@ namespace Commando
         /// <returns>Returns itself if user wants to stay in this mode. Returns EngineStateMenu otherwise.</returns>
         public EngineStateInterface update(GameTime gameTime)
         {
-            InputSet inputs = engine_.getInputs();
+            InputSet inputs = InputSet.getInstance();
 
 
             for (int i = 0; i < myLevel_.getEnemies().Count; i++)
@@ -361,7 +365,7 @@ namespace Commando
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
                 Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
                 Vector2 mousePos;
-                if (Settings.getInstance().UsingMouse_)
+                if (Settings.getInstance().IsUsingMouse_)
                 {
                     mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
                 }
@@ -450,7 +454,7 @@ namespace Commando
                 Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
                 Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
                 Vector2 mousePos;
-                if (Settings.getInstance().UsingMouse_)
+                if (Settings.getInstance().IsUsingMouse_)
                 {
                     mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
                 }
@@ -512,7 +516,7 @@ namespace Commando
 
                     Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
                     Vector2 mousePos;
-                    if (Settings.getInstance().UsingMouse_)
+                    if (Settings.getInstance().IsUsingMouse_)
                     {
                         mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
                     }
@@ -625,7 +629,7 @@ namespace Commando
         }
         public void pickTile()
         {
-            InputSet inputs = engine_.getInputs();
+            InputSet inputs = InputSet.getInstance();
             Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
             Vector2 rightD = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
             Vector2 mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
@@ -675,7 +679,7 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            InputSet inputs = engine_.getInputs();
+            InputSet inputs = InputSet.getInstance();
             engine_.GraphicsDevice.Clear(Color.Firebrick);
 
             // Draw all the DrawableObjectAbstracts in our pipeline

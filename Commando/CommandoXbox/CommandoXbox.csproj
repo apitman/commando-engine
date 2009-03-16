@@ -217,6 +217,9 @@
     <Compile Include="..\Commando\EngineStatePause.cs">
       <Link>EngineStatePause.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateStart.cs">
+      <Link>EngineStateStart.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\FontEnum.cs">
       <Link>FontEnum.cs</Link>
     </Compile>

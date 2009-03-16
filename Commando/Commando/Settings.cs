@@ -20,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework;
 
 namespace Commando
 {
@@ -32,9 +34,15 @@ namespace Commando
 
         protected MovementType movementType_;
 
-        internal bool UsingMouse_ { get; set; }
+        internal PlayerIndex CurrentPlayer_ { get; set; }
 
-        internal bool DebugMode_ { get; set; }
+        internal bool IsUsingMouse_ { get; set; }
+
+        internal bool IsInDebugMode_ { get; set; }
+
+        internal bool IsGamerServicesAllowed_ { get; set; }
+
+        internal StorageDevice StorageDevice_ { get; set; }
 
         static Settings()
         {
@@ -42,7 +50,7 @@ namespace Commando
 
             instance_ = new Settings();
             instance_.movementType_ = MovementType.ABSOLUTE;
-            instance_.DebugMode_ = false;
+            instance_.IsInDebugMode_ = false;
         }
 
         private Settings()

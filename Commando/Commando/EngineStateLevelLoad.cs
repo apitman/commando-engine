@@ -32,6 +32,8 @@ namespace Commando
 {
     public class EngineStateLevelLoad : EngineStateInterface
     {
+        protected const string PATH_TO_DEFAULT_LEVEL = @".\Content\XML\defaultlevel.xml";
+
         protected const string INSTRUCTIONS_MESSAGE = "Please select a level to load: ";
         protected const float INSTRUCTIONS_DEPTH = Constants.DEPTH_MENU_TEXT;
         protected const FontEnum INSTRUCTIONS_FONT = FontEnum.Kootenay;
@@ -84,21 +86,15 @@ namespace Commando
             instructions_ = FontMap.getInstance().getFont(INSTRUCTIONS_FONT);
             cancelFlag_ = false;
 
-            IAsyncResult result =
-                    Guide.BeginShowStorageDeviceSelector(findStorageDevice, "loadRequest");
-        }
-
-        private void findStorageDevice(IAsyncResult result)
-        {
-            StorageDevice storageDevice = Guide.EndShowStorageDeviceSelector(result);
-            if (storageDevice != null)
+            StorageDevice sd = Settings.getInstance().StorageDevice_;
+            if (sd != null)
             {
-                if ((string)result.AsyncState == "loadRequest")
-                    loadList(storageDevice);
+                loadList(sd);
             }
             else
             {
-                cancelFlag_ = true;
+                // Create Windows form here if PC, otherwise force Storage reload
+                
             }
         }
 
@@ -119,9 +115,11 @@ namespace Commando
                     fileList.Add(Path.GetFileNameWithoutExtension(files[i]));
                 }
             }
+
+            // if there are no levels found, store the default level
             if (filepaths_.Count == 0)
             {
-                XmlTextReader reader = new XmlTextReader(@".\Content\XML\defaultlevel.xml");
+                XmlTextReader reader = new XmlTextReader(PATH_TO_DEFAULT_LEVEL);
                 XmlDocument document = new XmlDocument();
                 document.Load(reader);
                 document.Save(Path.Combine(directory, "defaultlevel" + EngineStateLevelSave.LEVEL_EXTENSION));
