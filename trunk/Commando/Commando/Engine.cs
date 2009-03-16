@@ -40,7 +40,7 @@ namespace Commando
         public GraphicsDeviceManager graphics_;
         SpriteBatch spriteBatch_;
         EngineStateInterface engineState_;
-        ControllerInputInterface controls_;
+        public ControllerInputInterface Controls_ { get; set; }
 
         const float GLOBALSPEEDMULTIPLIER = 2.5F;
         const int FRAMERATE = 30;
@@ -55,28 +55,20 @@ namespace Commando
             Content.RootDirectory = "Content";
 
 #if XBOX
-            controls_ = new X360ControllerInput(this);
-            Settings.getInstance().UsingMouse_ = false;
+            Settings.getInstance().IsUsingMouse_ = false;
 #else
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {
-                controls_ = new X360ControllerInput(this);
-                Settings.getInstance().UsingMouse_ = false;
+                Settings.getInstance().IsUsingMouse_ = false;
             }
             else
             {
-                controls_ = new PCControllerInput(this);
-                Settings.getInstance().UsingMouse_ = true;
+                Settings.getInstance().IsUsingMouse_ = true;
             }
 #endif
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, (1000 / FRAMERATE));
            
-        }
-
-        public InputSet getInputs()
-        {
-            return controls_.getInputSet();
         }
 
         public ContentManager getContent()
@@ -86,12 +78,10 @@ namespace Commando
 
         public void initializeScreen()
         {
-            this.graphics_.PreferredBackBufferWidth =
-                Math.Max(this.GraphicsDevice.DisplayMode.Width, SCREEN_MIN_WIDTH);
-            this.graphics_.PreferredBackBufferHeight =
-                Math.Max(this.GraphicsDevice.DisplayMode.Height, SCREEN_MIN_HEIGHT);
-            this.graphics_.IsFullScreen = true;
-            this.graphics_.ApplyChanges();
+            setScreenSize(
+                Math.Max(this.GraphicsDevice.DisplayMode.Width, SCREEN_MIN_WIDTH),
+                Math.Max(this.GraphicsDevice.DisplayMode.Height, SCREEN_MIN_HEIGHT)
+                );
         }
 
         public void setScreenSize(int x, int y)
@@ -113,11 +103,26 @@ namespace Commando
             // TODO: Add your initialization logic here
 
             base.Initialize();
-            engineState_ = new EngineStateMenu(this);
-            GamerServicesComponent gsc = new GamerServicesComponent(this);
-            this.Components.Add(gsc);
-            gsc.Initialize();
             initializeScreen();
+
+            try
+            {
+                // Debugging
+                throw new Exception();
+
+                GamerServicesComponent gsc = new GamerServicesComponent(this);
+                this.Components.Add(gsc);
+                gsc.Initialize();
+                Settings.getInstance().IsGamerServicesAllowed_ = true;
+            }
+            catch
+            {
+                Settings.getInstance().IsGamerServicesAllowed_ = false;
+            }
+
+            // creating EngineStateStart must come AFTER setting the
+            //  IsGamerServicesAllowed_ member of Settings
+            this.engineState_ = new EngineStateStart(this);
         }
 
         /// <summary>
@@ -168,7 +173,8 @@ namespace Commando
                 engineState_ = new EngineStateOutofFocus(this, engineState_);
             }
 
-            controls_.updateInputSet();
+            if (Controls_ != null)
+                Controls_.updateInputSet();
 
             engineState_ = engineState_.update(gameTime);
 
@@ -186,7 +192,7 @@ namespace Commando
             spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
             engineState_.draw();
             spriteBatch_.End();
-            //GraphicsDevice.Clear(Color.CornflowerBlue);
+
             base.Draw(gameTime);
         }
 

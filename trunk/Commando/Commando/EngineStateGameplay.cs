@@ -328,7 +328,8 @@ namespace Commando
                 moveToNextLevel_ = false;
                 return this;
             }
-            InputSet inputs = engine_.getInputs();
+
+            InputSet inputs = InputSet.getInstance();
 
             // Check whether to enter pause screen
             if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) || inputs.getButton(InputsEnum.CANCEL_BUTTON))
@@ -380,12 +381,12 @@ namespace Commando
             engine_.GraphicsDevice.Clear(Color.DarkOrange);
 
             // Draw Debug Lines
-            if (Settings.getInstance().DebugMode_)
+            if (Settings.getInstance().IsInDebugMode_)
                 (collisionDetector_ as SeparatingAxisCollisionDetector).draw();
             
             // Draw Laser Pointer at Cursor Position if using a mouse
             #if !XBOX
-            if (Settings.getInstance().UsingMouse_)
+            if (Settings.getInstance().IsUsingMouse_)
             {
                 MouseState ms = Mouse.GetState();
                 Vector2 mpos = new Vector2(ms.X, ms.Y) - new Vector2(2.5f,2.5f);

@@ -97,7 +97,7 @@ namespace Commando.controls
         /// <returns>The InputSet for Player One.</returns>
         static public InputSet getInstance()
         {
-            return instances_[0];
+            return instances_[(int)Settings.getInstance().CurrentPlayer_];
         }
 
         /// <summary>

@@ -109,7 +109,7 @@ namespace Commando
         public EngineStateInterface update(GameTime gameTime)
         {
 
-            InputSet inputs = engine_.getInputs();
+            InputSet inputs = InputSet.getInstance();
 
             if (inputs.getButton(InputsEnum.CONFIRM_BUTTON) ||
                 inputs.getButton(InputsEnum.CANCEL_BUTTON) ||
