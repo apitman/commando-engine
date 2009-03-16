@@ -107,8 +107,10 @@ namespace Commando
 
             try
             {
-                // Debugging
-                throw new Exception();
+                // Debugging - Uncomment this line to try PC version as if it
+                //  were running with the Redistributable runtime in which
+                //  GamerServices is not available
+                // throw new Exception();
 
                 GamerServicesComponent gsc = new GamerServicesComponent(this);
                 this.Components.Add(gsc);
