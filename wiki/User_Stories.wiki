@@ -26,25 +26,30 @@
 == Build 5: Mar. 17 - Mar. 26 ==
 
   === Gameplay ===
-  # User's character can crouch
-  # User's character can attach to cover
-  # User's character can throw grenades
-  # User's character can reload
-  # User can fight enemies which crouch
-  # User can fight enemies which attach to cover
-  # User can fight enemies which throw grenades
-  # User can fight enemies which can reload
-  # User's enemies move intelligently around obstacles without unnecessary wall-hugging
-  # User's character can pickup and switch between pistol, machine gun, and shotgun
-  # User can fire bullets at both high and low heights
+  # User's character can crouch (Jared)
+  # User's character can attach to cover (Jared)
+  # User's character can throw grenades (Ken)
+  # User's character can reload (Andrew)
+  # User can fight enemies which crouch (Ken)
+  # User can fight enemies which attach to cover (Ken)
+  # User can fight enemies which throw grenades (Ken)
+  # User can fight enemies which can reload (Andrew)
+  # User's enemies move intelligently around obstacles without unnecessary wall-hugging (Ken)
+  # User's can see what the enemies are communicating to each other (Andrew)
+  # User's character can pickup and switch between pistol, machine gun, and shotgun (Ken)
+  # User can fire bullets at both high and low heights (Jared)
+  # User can see an options screen that shows the controls and has screen resolution, muting, and possibly debug mode and change storage device options (Ken)
 
   === Level Editor ===
-  # User can link levels together with waypoints
+  # User can link levels together with waypoints (Eric)
+  # User can place pistols, machine guns, and shotguns in the level editor (Eric, Andrew)
+  # User can see a level editor menu that will allow the user to choose whether to save the game or not when quitting (Ken)
+  # User can save levels on the PC using a Windows form or dialog box (Andrew, Ken)
 
 == Build 4: Feb. 24 - Mar. 12 ==
 
   === Gameplay ===
-  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can load a specific level file for both editing and gameplay(Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can load a specific level file for both editing and gameplay(Ken, Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can play in levels larger than window size with a scrolling camera (Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can move from one level to another via specific entry/exit points (Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character will turn smoothly to face new positions (Jared)
@@ -62,7 +67,7 @@
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fight enemies who shoot at his character (Ken, Jared)
 
   === Level Editor ===
-  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can save a level to a specific file name on the Xbox 360 (Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can save a level to a specific file name on the Xbox 360 (Ken, Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can create larger levels in the level editor to make use of moving camera (Andrew, Eric)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can select existing objects in the level editor using Right Trigger / LMB (Eric, Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can move existing objects in the level editor (Eric)
