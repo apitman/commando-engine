@@ -255,26 +255,38 @@ namespace Commando
                     {
                         //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
                         boxesToBeAdded[i, j] = true;
-                        tilesForGrid[i, j].highDistance_ = 1;
-                        tilesForGrid[i, j].lowDistance_ = 0;
+                        tilesForGrid[i, j].highDistance_ = 1f;
+                        tilesForGrid[i, j].lowDistance_ = 0f;
                     }
                     else if (myLevel_.getTiles()[i, j].getTileNumber() != 1)
                     {
                         //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
                         boxesToBeAdded[i, j] = true;
-                        tilesForGrid[i, j].highDistance_ = 0;
-                        tilesForGrid[i, j].lowDistance_ = 0;
+                        tilesForGrid[i, j].highDistance_ = 0f;
+                        tilesForGrid[i, j].lowDistance_ = 0f;
                     }
                     else
                     {
                         //boxesToBeAdded[i, j] = null;
                         boxesToBeAdded[i, j] = false;
-                        tilesForGrid[i, j].highDistance_ = 1;
-                        tilesForGrid[i, j].lowDistance_ = 1;
+                        tilesForGrid[i, j].highDistance_ = 1f;
+                        tilesForGrid[i, j].lowDistance_ = 1f;
                     }
                 }
             }
             boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
+            tilesForGrid = CoverGenerator.generateRealTileDistances(tilesForGrid);
+            //DEBUG PRINT
+            for (int i = 0; i < tilesForGrid.GetLength(0); i++)
+            {
+                for (int j = 0; j < tilesForGrid.GetLength(1); j++)
+                {
+                    Console.Write(tilesForGrid[i, j].highDistance_.ToString("F1"));
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+            //END
             GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
 
             //collisionDetector_ = new CollisionDetector(polygons);

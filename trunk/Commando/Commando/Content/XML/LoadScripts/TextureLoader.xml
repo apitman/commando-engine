@@ -9,6 +9,7 @@
   <texture>.\\Content\\XML\\Sprites\\basic_enemy_walk.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerWalk.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerWalkNoPistol.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk.xml</texture>
   <image>
     <key>LevelExit</key>
     <handle>Tiles\\LevelExit</handle>

@@ -27,7 +27,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.controls;
 using System.Xml;
-
+#if !XBOX
+using System.Windows.Forms;
+#endif
 namespace Commando
 {
     public class EngineStateLevelLoad : EngineStateInterface
@@ -72,6 +74,8 @@ namespace Commando
         protected List<string> filepaths_;
         protected GameFont instructions_;
         protected bool cancelFlag_;
+        protected string windowsFileName_;
+        protected bool windows_;
 
         public enum EngineStateTarget
         {
@@ -93,8 +97,14 @@ namespace Commando
             }
             else
             {
-                // Create Windows form here if PC, otherwise force Storage reload
-                
+#if !XBOX
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "Commando Level Files (*.commandolevel)|*.commandolevel";
+                dialog.Multiselect = false;
+                dialog.ShowDialog();
+                windowsFileName_ = dialog.FileName;
+                windows_ = true;
+#endif
             }
         }
 

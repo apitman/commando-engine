@@ -65,6 +65,8 @@ namespace Commando.objects
             atLocation_ = false;
             collisionDetector_ = null;
             radius_ = RADIUS;
+
+            height_ = new Height(true, false);
             boundsPolygon_ = new CircularConvexPolygon(radius_, position_);
 
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_);
@@ -148,7 +150,11 @@ namespace Commando.objects
 
         public override ConvexPolygonInterface getBounds(HeightEnum height)
         {
-            return boundsPolygon_;
+            if (Height.getHeight(height).collides(height_))
+            {
+                return boundsPolygon_;
+            }
+            return null;
         }
 
         public override ActuatorInterface getActuator()

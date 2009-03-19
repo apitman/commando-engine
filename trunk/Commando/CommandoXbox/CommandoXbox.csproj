@@ -274,6 +274,9 @@
     <Compile Include="..\Commando\graphics\MoveToActionInterface.cs">
       <Link>graphics\MoveToActionInterface.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\levels\CoverGenerator.cs">
+      <Link>levels\CoverGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\levels\Level.cs">
       <Link>levels\Level.cs</Link>
     </Compile>

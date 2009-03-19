@@ -61,6 +61,8 @@ namespace Commando.objects
         public override void update(GameTime gameTime)
         {
             Vector2 velocity = velocity_;
+            bool colHappened = collisionDetector_.checkCollisions(this, ref velocity, ref direction_);
+            /*
             if (collisionDetector_.checkCollisions(this, ref velocity, ref direction_))
             {
                 position_.X += velocity_.X;
@@ -68,9 +70,13 @@ namespace Commando.objects
                 handleCollision();
                 return;
             }
-
+            */
             position_.X += velocity_.X;
             position_.Y += velocity_.Y;
+            if (((!height_.blocksHigh_) && (!height_.blocksLow_)) || (colHappened && collidedInto_ != null && !objectChangesHeight(collidedInto_)))
+            {
+                handleCollision();
+            }
         }
 
         public override void draw(GameTime gameTime)
@@ -117,7 +123,7 @@ namespace Commando.objects
 
         public virtual void collidedWith(CollisionObjectInterface obj)
         {
-            //
+            collidedInto_ = obj;
         }
 
         public virtual void collidedInto(CollisionObjectInterface obj)
@@ -134,23 +140,6 @@ namespace Commando.objects
                 collidedWith(obj);
                 //return translate;
             }
-            /*if (objectChangesHeight(obj))
-            {
-                if (height == HeightEnum.HIGH)
-                {
-                    height_.blocksHigh_ = false;
-                }
-                else
-                {
-                    height_.blocksLow_ = false;
-                }
-            }*/
-            return Vector2.Zero;
-        }
-
-        public virtual Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
-        {
-            /*
             if (objectChangesHeight(obj))
             {
                 if (height == HeightEnum.HIGH)
@@ -161,7 +150,23 @@ namespace Commando.objects
                 {
                     height_.blocksLow_ = false;
                 }
-            }*/
+            }
+            return Vector2.Zero;
+        }
+
+        public virtual Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
+        {
+            if (objectChangesHeight(obj))
+            {
+                if (height.blocksHigh_)
+                {
+                    height_.blocksHigh_ = false;
+                }
+                if(height.blocksLow_)
+                {
+                    height_.blocksLow_ = false;
+                }
+            }
             return translate;
         }
     }
