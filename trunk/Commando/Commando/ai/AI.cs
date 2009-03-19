@@ -55,10 +55,10 @@ namespace Commando.ai
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorSeeCharacter(this));
             systems_.Add(new SystemAiming(this));
+            systems_.Add(new SystemCommunication(this, 100));
             path_ = new List<TileIndex>();
             lastPathfindUpdate_ = 0;
             inferenceEngine_ = new InferenceEngine(this);
-            communicationSystem_ = new SystemCommunication(this, 100);
         }
 
         public void update()
@@ -148,8 +148,15 @@ namespace Commando.ai
                 //Character_.lookAt(grid.getTileCenter(path_[0]));
             }
 
-            communicationSystem_.update();
             // End test block
+        }
+
+        public void draw()
+        {
+            foreach (System sys in systems_)
+            {
+                sys.draw();
+            }
         }
     }
 }

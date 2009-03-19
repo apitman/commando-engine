@@ -130,6 +130,7 @@ namespace Commando.objects
         public override void draw(GameTime gameTime)
         {
             actuator_.draw(currentDrawColor_);
+            AI_.draw();
         }
 
         public override void moveTo(Vector2 position)

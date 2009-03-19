@@ -21,34 +21,68 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai
 {
-    public class SystemCommunication
+    public class SystemCommunication : System
     {
+        public bool isBroadcasting_;
+
+        public string broadcastMessage_;
+
+        protected int framesLeftToBroadcast_;
+
         protected int broadcastRadius_;
 
-        protected AI AI_ { get; set; }
-
         protected int key_;
+
+        public bool talkative_;
 
         /// <summary>
         /// Basic constructor
         /// </summary>
-        public SystemCommunication(AI ai, int broadcastRadius)
+        public SystemCommunication(AI ai, int broadcastRadius) : base(ai)
         {
-            AI_ = ai;
             broadcastRadius_ = broadcastRadius;
+            isBroadcasting_ = false;
+            broadcastMessage_ = "Default Message";
+            framesLeftToBroadcast_ = 0;
             key_ = StimulusIDGenerator.getNext();
+            talkative_ = true;
         }
 
         /// <summary>
         /// Decides what, if anything, to broadcast, and broadcasts
         /// it
         /// </summary>
-        public void update()
+        public override void update()
         {
-            decideWhatToBroadcast();
+            if (isBroadcasting_)
+            {
+                if (framesLeftToBroadcast_ <= 0)
+                {
+                    isBroadcasting_ = false;
+                }
+                framesLeftToBroadcast_--;
+            }
+            else
+            {
+                decideWhatToBroadcast();
+            }
+        }
+
+        public override void draw()
+        {
+            if (isBroadcasting_)
+            {
+                Vector2 prettyOffset = new Vector2(0.0f, -15.0f);
+                Vector2 drawPosition = new Vector2(AI_.Character_.getPosition().X, AI_.Character_.getPosition().Y);
+                drawPosition.X -= GlobalHelper.getInstance().getCurrentCamera().getX();
+                drawPosition.Y -= GlobalHelper.getInstance().getCurrentCamera().getY();
+                drawPosition += prettyOffset;
+                FontMap.getInstance().getFont(FontEnum.MiramonteBold).drawStringCentered(broadcastMessage_, drawPosition, Microsoft.Xna.Framework.Graphics.Color.White, 0.0f, 0.9f);
+            }
         }
 
         /// <summary>
@@ -57,9 +91,13 @@ namespace Commando.ai
         /// <param name="belief"></param>
         protected void broadcastBelief(Belief belief)
         {
+            isBroadcasting_ = true;
+            framesLeftToBroadcast_ = 60;
+            broadcastMessage_ = belief.ToString();
+            // Resume here
             WorldState.Audial_.Remove(key_);
             WorldState.Audial_.Add(key_,
-                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Position, broadcastRadius_, AI_.Character_.getPosition(), this));
+                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Message, broadcastRadius_, AI_.Character_.getPosition(), this, belief));
         }
 
         /// <summary>
@@ -67,9 +105,19 @@ namespace Commando.ai
         /// </summary>
         protected void decideWhatToBroadcast()
         {
-            for (int i = 0; i < AI_.Memory_.beliefs_[BeliefType.EnemyLoc].Count; i++)
+            List<Belief> bList = AI_.Memory_.getBeliefs(BeliefType.EnemyLoc);
+            for (int i = 0; i < bList.Count; i++)
             {
-                broadcastBelief(AI_.Memory_.beliefs_[BeliefType.EnemyLoc][i]);
+                broadcastBelief(bList[i]);
+                return; // Only broadcast one thing at a time
+            }
+            if (talkative_)
+            {
+                List<Belief> bList2 = AI_.Memory_.getBeliefs(BeliefType.SuspiciousNoise);
+                if (bList2.Count > 0)
+                {
+                    broadcastBelief(bList2[0]);
+                }
             }
         }
     }

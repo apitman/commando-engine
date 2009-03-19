@@ -15,5 +15,7 @@ namespace Commando.ai
         }
 
         abstract public void update();
+
+        abstract public void draw();
     }
 }
