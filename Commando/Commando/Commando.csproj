@@ -158,6 +158,7 @@
     <Compile Include="graphics\MoveToActionInterface.cs" />
     <Compile Include="graphics\CharacterRunAction.cs" />
     <Compile Include="graphics\NonLoopAnimation.cs" />
+    <Compile Include="levels\CoverGenerator.cs" />
     <Compile Include="levels\TileGrid.cs" />
     <Compile Include="levels\Tileset.cs" />
     <Compile Include="MediaPlayerHelper.cs" />

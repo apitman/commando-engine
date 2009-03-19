@@ -392,7 +392,33 @@ namespace Commando.collisiondetection
                         translate = obj.checkCollisionInto(cObj, this, translationHeight, dist, translate);
                         if (translate != Vector2.Zero)
                         {
-                            collisions.Add(translate);
+                            bool isInCollisions = false;
+                            for (int i = 0; i < collisions.Count; i++ )
+                            {
+                                if (translate.Equals(collisions[i]))
+                                {
+                                    isInCollisions = true;
+                                    break;
+                                }
+                                /*
+                                float cos = ConvexPolygon.dotProduct(translate, collisions[i]) / (translate.Length() * collisions[i].Length());
+                                if (cos >= 0.99f && cos <= 1.01f)
+                                {
+                                    if (collisions[i].LengthSquared() < translate.LengthSquared())
+                                    {
+                                        collisions[i] = translate;
+                                    }
+                                    isInCollisions = true;
+                                    break;
+                                }
+                                */
+                            }
+                            if (!isInCollisions)
+                            {
+                                collisions.Add(translate);
+                                movingObjectPolygonHigh.translate(translate);
+                                movingObjectPolygonLow.translate(translate);
+                            }
                         }
                     }
                 }

@@ -58,6 +58,7 @@ namespace Commando.graphics
 
         public void update()
         {
+            Vector2 oldPos = character_.getPosition();
             if (!currentAction_.isFinished())
             {
                 currentAction_.update();
@@ -67,6 +68,7 @@ namespace Commando.graphics
                 currentAction_ = actions_[currentActionSet_]["rest"];
                 currentAction_.update();
             }
+            character_.setVelocity(character_.getPosition() - oldPos);
         }
 
         public void addAction(CharacterActionInterface action)

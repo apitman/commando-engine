@@ -83,7 +83,8 @@ namespace Commando.objects.weapons
 
         public override bool objectChangesHeight(CollisionObjectInterface obj)
         {
-            return false;
+            //return false;
+            return !((obj is Bullet) || (obj is CharacterAbstract) || (obj is ItemAbstract) || (obj is LevelTransitionObject));
         }
     }
 }

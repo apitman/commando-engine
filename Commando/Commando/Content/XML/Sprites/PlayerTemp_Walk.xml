@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
+    <ImageDefinition>
+      <Key>PlayerTemp_Walk</Key>
+      <ImageFilename>Sprites\PlayerTemp_Walk</ImageFilename>
+      <ImageDimensions>
+        <NumberOfImages>8</NumberOfImages>
+        <Image>
+          <x>0</x>
+          <y>0</y>
+          <w>100</w>
+          <h>100</h>
+        </Image>
+        <Image>
+          <x>101</x>
+          <y>0</y>
+          <w>100</w>
+          <h>100</h>
+        </Image>
+        <Image>
+          <x>202</x>
+          <y>0</y>
+          <w>100</w>
+          <h>100</h>
+        </Image>
+        <Image>
+          <x>101</x>
+          <y>0</y>
+          <w>100</w>
+          <h>100</h>
+        </Image>
+        <Image>
+          <x>0</x>
+          <y>0</y>
+          <w>100</w>
+          <h>100</h>
+        </Image>
+        <Image>
+          <x>303</x>
+          <y>0</y>
+          <w>100</w>
+          <h>100</h>
+        </Image>
+        <Image>
+          <x>404</x>
+          <y>0</y>
+          <w>100</w>
+          <h>100</h>
+        </Image>
+        <Image>
+          <x>303</x>
+          <y>0</y>
+          <w>100</w>
+          <h>100</h>
+        </Image>
+      </ImageDimensions>
+    </ImageDefinition>
+  </Asset>
+</XnaContent>

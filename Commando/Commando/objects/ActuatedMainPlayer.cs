@@ -77,12 +77,14 @@ namespace Commando.objects
             PlayerHelper.Player_ = this;
 
             boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
+            boundsPolygonHigh_.rotate(direction_, position_);
 
             boundsPolygonLow_ = new ConvexPolygon(BOUNDSPOINTSLOW, Vector2.Zero);
+            boundsPolygonLow_.rotate(direction_, position_);
 
-            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
-            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
-            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
+            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
+            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
             Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
             actions.Add("default", new Dictionary<string, CharacterActionInterface>());
             actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
@@ -197,20 +199,12 @@ namespace Commando.objects
             {
                 actuator_.move(leftD);
             }
-            else if(direction_ != oldDirection)
-            {
-//                Vector2 pos = position_;
-                position_ = collisionDetector_.checkCollisions(this, position_);
-//                if (position_ == pos && collidedInto_.Count != 0)
-//                {
-//                    actuator_.look(oldDirection);
-//                }
-            }
             actuator_.update();
             Weapon_.update();
             collidedInto_.Clear();
             collidedWith_.Clear();
             oldPosition -= position_;
+            //Console.WriteLine(oldPosition);
             GlobalHelper.getInstance().getCurrentCamera().setCenter(position_.X, position_.Y);
 
         }

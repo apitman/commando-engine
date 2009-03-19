@@ -96,7 +96,7 @@ namespace Commando.levels
 
     public struct Tile
     {
-        public Tile(int lowDistance, int highDistance)
+        public Tile(float lowDistance, float highDistance)
         {
             lowDistance_ = lowDistance;
             highDistance_ = highDistance;
@@ -109,9 +109,9 @@ namespace Commando.levels
             return (lowCollision || highCollision);
         }
 
-        public int lowDistance_;
+        public float lowDistance_;
 
-        public int highDistance_;
+        public float highDistance_;
     }
 
     public struct Height
