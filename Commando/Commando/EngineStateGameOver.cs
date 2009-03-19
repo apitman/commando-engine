@@ -29,7 +29,7 @@ namespace Commando
 {
     public class EngineStateGameOver : EngineStateInterface
     {
-        protected const int LENGTH_OF_GAME_OVER = 5;
+        protected const int LENGTH_OF_GAME_OVER = 2;
         protected const string STR_GAME_OVER_TEXT = "Game Over.";
 
         protected Engine engine_;

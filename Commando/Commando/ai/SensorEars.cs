@@ -43,8 +43,16 @@ namespace Commando.ai
         {
             if (CommonFunctions.distance(AI_.Character_.getPosition(), stim.position_) < (double) stim.radius_)
             {
-                Belief b = new Belief(BeliefType.SuspiciousNoise, null, 100, stim.position_, 0);
-                AI_.Memory_.setBelief(b);
+                if (stim.type_ == StimulusType.Position)
+                {
+                    Belief b = new Belief(BeliefType.SuspiciousNoise, null, 100, stim.position_, 0);
+                    AI_.Memory_.setBelief(b);
+                }
+                else if (stim.type_ == StimulusType.Message)
+                {
+                    // For now, we believe messages that we receive with 100% certainty
+                    AI_.Memory_.setBelief(stim.message_);
+                }
             }
         }
 

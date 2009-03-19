@@ -51,6 +51,14 @@ namespace Commando.ai
             position_ = b.position_;
             value_ = b.value_;
         }
+
+        public override string ToString()
+        {
+            string retVal = type_.ToString();
+            retVal += " at ";
+            retVal += position_.ToString();
+            return retVal;
+        }
     }
 
     public enum BeliefType

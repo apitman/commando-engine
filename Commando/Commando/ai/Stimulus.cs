@@ -34,6 +34,7 @@ namespace Commando.ai
         public float radius_;
         public Vector2 position_;
         public Object handle_;
+        public Belief message_;
 
         public Stimulus(StimulusSource source, StimulusType type, float radius, Vector2 pos, Object handle)
         {
@@ -42,6 +43,26 @@ namespace Commando.ai
             radius_ = radius;
             position_ = pos;
             handle_ = handle;
+            message_ = null;
+        }
+
+        /// <summary>
+        /// When using this constructor, don't forget to set type to Message and pass in a Belief
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="type"></param>
+        /// <param name="radius"></param>
+        /// <param name="pos"></param>
+        /// <param name="handle"></param>
+        /// <param name="message"></param>
+        public Stimulus(StimulusSource source, StimulusType type, float radius, Vector2 pos, Object handle, Belief message)
+        {
+            source_ = source;
+            type_ = type;
+            radius_ = radius;
+            position_ = pos;
+            handle_ = handle;
+            message_ = message;
         }
     }
 
@@ -52,7 +73,8 @@ namespace Commando.ai
 
     enum StimulusType
     {
-        Position
+        Position,
+        Message
     }
 
     // key so that objects can update the stimuli they produce

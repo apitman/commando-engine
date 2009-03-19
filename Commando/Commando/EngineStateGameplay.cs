@@ -378,7 +378,7 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.DarkOrange);
+            engine_.GraphicsDevice.Clear(Color.Black);
 
             // Draw Debug Lines
             if (Settings.getInstance().IsInDebugMode_)
