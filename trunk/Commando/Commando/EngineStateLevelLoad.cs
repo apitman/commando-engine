@@ -91,7 +91,6 @@ namespace Commando
             cancelFlag_ = false;
 
             StorageDevice sd = Settings.getInstance().StorageDevice_;
-            sd = null;
             if (sd != null)
             {
                 loadList(sd);
