@@ -27,6 +27,7 @@ using Commando.graphics;
 using Commando.ai;
 using Commando.objects.weapons;
 using Commando.levels;
+using Commando.controls;
 
 namespace Commando.objects
 {
@@ -96,8 +97,6 @@ namespace Commando.objects
         public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
             : base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", detector, null, 8.0f, Vector2.Zero, position, direction, 0.5f)
         {
-            PlayerHelper.Player_ = this;
-
             boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
             boundsPolygonHigh_.rotate(direction_, position_);
 
@@ -152,8 +151,6 @@ namespace Commando.objects
         public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline) :
             base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
         {
-            PlayerHelper.Player_ = this;
-
             boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
             //ENDTEMP
             
@@ -198,6 +195,18 @@ namespace Commando.objects
         /// <param name="gameTime"></param>
         public override void update(GameTime gameTime)
         {
+            if (Settings.getInstance().IsUsingMouse_)
+            {
+                float centerX = GlobalHelper.getInstance().getCurrentCamera().getScreenWidth() / 2f;
+                float centerY = GlobalHelper.getInstance().getCurrentCamera().getScreenHeight() / 2f;
+                Vector2 rightDirectional =
+                    new Vector2(inputSet_.getRightDirectionalX() - centerX,
+                                inputSet_.getRightDirectionalY() - centerY);
+                rightDirectional.Normalize();
+                inputSet_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL,
+                                    rightDirectional.X, rightDirectional.Y);
+            }
+
             if (inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_3))
             {
                 actuator_.crouch();
