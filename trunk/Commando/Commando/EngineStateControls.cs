@@ -30,6 +30,7 @@ namespace Commando
     class EngineStateControls : EngineStateInterface
     {
         protected Engine engine_;
+        protected EngineStateInterface returnState_;
         protected MenuList gameControlsMenuList_;
         protected MenuList editorControlsMenuList_;
         protected string controlTitle_;
@@ -59,9 +60,6 @@ namespace Commando
 
             List<string> editorControlsString = new List<string>();
             editorControlsString.Add("EDITOR CONTROLS");
-#if XBOX
-            editorControlsString.Add("(Coming Soon)");
-#endif
             editorControlsString.Add("Move Cursor: " + inputs.getControlName(InputsEnum.LEFT_DIRECTIONAL));
             editorControlsString.Add("Next Tile: " + inputs.getControlName(InputsEnum.BUTTON_1));
             editorControlsString.Add("Prev Tile: " + inputs.getControlName(InputsEnum.BUTTON_2));
@@ -90,6 +88,12 @@ namespace Commando
             editorControlsMenuList_.Spacing_ = CONTROLS_SPACING;
         }
 
+        public EngineStateControls(Engine engine, EngineStateInterface returnState)
+            : this(engine)
+        {
+            returnState_ = returnState;
+        }
+
         #region EngineStateInterface Members
 
         /// <summary>
@@ -107,7 +111,10 @@ namespace Commando
                 inputs.getButton(InputsEnum.BUTTON_1))
             {
                 inputs.setAllToggles();
-                return new EngineStateMenu(engine_);
+                if (returnState_ == null)
+                    return new EngineStateMenu(engine_);
+                else
+                    return returnState_;
             }
 
             return this;

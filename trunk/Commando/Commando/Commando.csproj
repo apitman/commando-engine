@@ -138,6 +138,7 @@
     <Compile Include="EngineStateLevelEditor.cs" />
     <Compile Include="EngineStateLevelLoad.cs" />
     <Compile Include="EngineStateLevelSave.cs" />
+    <Compile Include="EngineStateOptions.cs" />
     <Compile Include="EngineStateOutofFocus.cs" />
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />

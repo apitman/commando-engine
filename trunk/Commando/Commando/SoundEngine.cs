@@ -101,5 +101,11 @@ namespace Commando
             }
             instance_ = null;
         }
+
+        public void changeAllVolume(float amount)
+        {
+            AudioCategory cat = audio_.GetCategory("Music");
+            cat.SetVolume(amount);
+        }
     }
 }

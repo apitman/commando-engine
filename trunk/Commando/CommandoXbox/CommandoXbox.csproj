@@ -211,6 +211,9 @@
     <Compile Include="..\Commando\EngineStateMenu.cs">
       <Link>EngineStateMenu.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateOptions.cs">
+      <Link>EngineStateOptions.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\EngineStateOutofFocus.cs">
       <Link>EngineStateOutofFocus.cs</Link>
     </Compile>

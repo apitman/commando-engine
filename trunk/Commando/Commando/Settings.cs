@@ -42,15 +42,71 @@ namespace Commando
 
         internal bool IsGamerServicesAllowed_ { get; set; }
 
+        protected bool isSoundAllowed_;
+        internal bool IsSoundAllowed_
+        {
+            get
+            {
+                return isSoundAllowed_;
+            }
+
+            set
+            {
+                isSoundAllowed_ = value;
+                if (value)
+                    SoundEngine.getInstance().changeAllVolume(1.0f);
+                else
+                    SoundEngine.getInstance().changeAllVolume(0.0f);
+            }
+        }
+
+        internal Engine EngineHandle_ { get; set; }
+
+        internal protected Resolution resolution_;
+        internal Resolution Resolution_
+        {
+            get
+            {
+                return resolution_;
+            }
+
+            set
+            {
+                resolution_ = value;
+                switch (value)
+                {
+                    case Resolution.auto:
+                        EngineHandle_.initializeScreen();
+                        break;
+                    case Resolution.s640x480:
+                        EngineHandle_.setScreenSize(640, 480);
+                        break;
+                    case Resolution.s800x600:
+                        EngineHandle_.setScreenSize(800, 600);
+                        break;
+                    case Resolution.s1024x768:
+                        EngineHandle_.setScreenSize(1024, 768);
+                        break;
+                    case Resolution.s1152x864:
+                        EngineHandle_.setScreenSize(1152, 864);
+                        break;
+                    case Resolution.h1280x720:
+                        EngineHandle_.setScreenSize(1280, 720);
+                        break;
+                }
+            }
+        }
+
         internal StorageDevice StorageDevice_ { get; set; }
 
-        static Settings()
+        internal static void initialize(Engine engine_)
         {
-            // TODO Read from settings file here?
-
             instance_ = new Settings();
+            instance_.EngineHandle_ = engine_;
             instance_.movementType_ = MovementType.ABSOLUTE;
             instance_.IsInDebugMode_ = false;
+            instance_.IsSoundAllowed_ = true;
+            instance_.Resolution_ = Resolution.auto;
         }
 
         private Settings()
@@ -93,5 +149,16 @@ namespace Commando
     {
         RELATIVE,
         ABSOLUTE
+    }
+
+    public enum Resolution
+    {
+        auto,
+        s640x480,
+        s800x600,
+        s1024x768,
+        s1152x864,
+        h1280x720,
+        LENGTH
     }
 }

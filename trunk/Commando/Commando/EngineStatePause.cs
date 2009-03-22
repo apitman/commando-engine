@@ -20,6 +20,7 @@ using Commando.controls;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Commando
 {
@@ -34,20 +35,26 @@ namespace Commando
         const FontEnum PAUSE_FONT = FontEnum.Pericles;
         readonly Color PAUSE_MENU_SELECTED_COLOR = Color.White;
         readonly Color PAUSE_MENU_UNSELECTED_COLOR = Color.Green;
-        /*const Vector2 PAUSE_MENU_POSITION =
-            new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
-                        engine_.GraphicsDevice.Viewport.Height / 2.0f + 120.0f);*/
-        const int PAUSE_MENU_DEFAULT_SELECTED_ITEM = MENU_OPTION_RETURN;
+        protected Vector2 PAUSE_MENU_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return new Vector2(r.X + r.Width/2, r.Y + r.Height/2 - PAUSE_MENU_SPACING * 2);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        const int PAUSE_MENU_DEFAULT_SELECTED_ITEM = 0;
         const float PAUSE_MENU_SPACING = 50.0f;
 
         const string STR_RETURN_TO_GAME = "Return to Game";
-        const string STR_MOVEMENT_TYPE_ABSOLUTE = "Movement Type: Absolute";
-        const string STR_MOVEMENT_TYPE_RELATIVE = "Movement Type: Relative";
+        const string STR_CONTROLS = "View Controls";
+        const string STR_GAME_OPTIONS = "Adjust Game Settings";
         const string STR_QUIT_GAME = "Quit to Main Menu";
-
-        const int MENU_OPTION_RETURN = 0;
-        const int MENU_OPTION_MOVEMENT_TYPE = 1;
-        const int MENU_OPTION_QUIT_GAME = 2;
 
         /// <summary>
         /// The main engine class
@@ -62,7 +69,7 @@ namespace Commando
         /// <summary>
         /// Settings which can be changed from the pause menu
         /// </summary>
-        protected MenuList pauseMenu_;
+        protected MenuList menuList_;
 
         /// <summary>
         /// Creates a pause state which waits for the user to resume play
@@ -76,24 +83,16 @@ namespace Commando
 
             List<string> menuString = new List<string>();
             menuString.Add(STR_RETURN_TO_GAME);
-            if (Settings.getInstance().getMovementType() == MovementType.ABSOLUTE)
-            {
-                menuString.Add(STR_MOVEMENT_TYPE_ABSOLUTE);
-            }
-            else
-            {
-                menuString.Add(STR_MOVEMENT_TYPE_RELATIVE);
-            }
+            menuString.Add(STR_CONTROLS);
+            menuString.Add(STR_GAME_OPTIONS);
             menuString.Add(STR_QUIT_GAME);
             int cursor = (int)Settings.getInstance().getMovementType();
-            Vector2 pauseMenuPos = new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f,
-                                            100.0f);
-            pauseMenu_ = new MenuList(menuString, pauseMenuPos);
-            pauseMenu_.Font_ = PAUSE_FONT;
-            pauseMenu_.BaseColor_ = PAUSE_MENU_UNSELECTED_COLOR;
-            pauseMenu_.SelectedColor_ = PAUSE_MENU_SELECTED_COLOR;
-            pauseMenu_.Spacing_ = PAUSE_MENU_SPACING;
-            pauseMenu_.CursorPos_ = PAUSE_MENU_DEFAULT_SELECTED_ITEM;
+            menuList_ = new MenuList(menuString, PAUSE_MENU_POSITION);
+            menuList_.Font_ = PAUSE_FONT;
+            menuList_.BaseColor_ = PAUSE_MENU_UNSELECTED_COLOR;
+            menuList_.SelectedColor_ = PAUSE_MENU_SELECTED_COLOR;
+            menuList_.Spacing_ = PAUSE_MENU_SPACING;
+            menuList_.CursorPos_ = PAUSE_MENU_DEFAULT_SELECTED_ITEM;
         }
 
         #region EngineStateInterface Members
@@ -112,24 +111,20 @@ namespace Commando
             {
                 inputs.setToggle(InputsEnum.CONFIRM_BUTTON);
                 inputs.setToggle(InputsEnum.BUTTON_1);
-                switch (pauseMenu_.getCursorPos())
+                int currentPos = menuList_.CursorPos_;
+                string currentSelection = menuList_.getCurrentString();
+                switch (currentSelection)
                 {
-                    case MENU_OPTION_RETURN:
+                    case STR_RETURN_TO_GAME:
                         return savedState_;
 
-                    case MENU_OPTION_MOVEMENT_TYPE:
-                        Settings.getInstance().swapMovementType();
-                        if (Settings.getInstance().getMovementType() == MovementType.ABSOLUTE)
-                        {
-                            pauseMenu_.setString(MENU_OPTION_MOVEMENT_TYPE, STR_MOVEMENT_TYPE_ABSOLUTE);
-                        }
-                        else
-                        {
-                            pauseMenu_.setString(MENU_OPTION_MOVEMENT_TYPE, STR_MOVEMENT_TYPE_RELATIVE);
-                        }
-                        break;
+                    case STR_CONTROLS:
+                        return new EngineStateControls(engine_, this);
 
-                    case MENU_OPTION_QUIT_GAME:
+                    case STR_GAME_OPTIONS:
+                        return new EngineStateOptions(engine_, this);
+
+                    case STR_QUIT_GAME:
                         return new EngineStateMenu(engine_);
                 }
             }
@@ -143,12 +138,12 @@ namespace Commando
             if (inputs.getLeftDirectionalY() > 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                pauseMenu_.decrementCursorPos();
+                menuList_.decrementCursorPos();
             }
             else if (inputs.getLeftDirectionalY() < 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
-                pauseMenu_.incrementCursorPos();
+                menuList_.incrementCursorPos();
             }
 
             return this;
@@ -160,7 +155,7 @@ namespace Commando
         public void draw()
         {
             engine_.GraphicsDevice.Clear(BACKGROUND_COLOR);
-            pauseMenu_.draw();
+            menuList_.draw();
         }
 
         #endregion
