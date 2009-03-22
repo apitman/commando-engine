@@ -54,6 +54,7 @@ namespace Commando.objects
 
         static ActuatedMainPlayer()
         {
+            /*
             BOUNDSPOINTSHIGH = new List<Vector2>();
             BOUNDSPOINTSHIGH.Add(new Vector2(-5.0f, 0f));
             BOUNDSPOINTSHIGH.Add(new Vector2(-1.0f, -15.0f));
@@ -69,6 +70,27 @@ namespace Commando.objects
             BOUNDSPOINTSLOW.Add(new Vector2(10.0f, -3.0f));
             BOUNDSPOINTSLOW.Add(new Vector2(7.0f, 15.0f));
             BOUNDSPOINTSLOW.Add(new Vector2(-1.0f, 15.0f));
+            */
+            BOUNDSPOINTSLOW = new List<Vector2>();
+            BOUNDSPOINTSLOW.Add(new Vector2(98f - 113.5f, 51f - 37.5f));
+            BOUNDSPOINTSLOW.Add(new Vector2(96f - 113.5f, 44f - 37.5f));
+            BOUNDSPOINTSLOW.Add(new Vector2(105f - 113.5f, 32f - 37.5f));
+            BOUNDSPOINTSLOW.Add(new Vector2(116f - 113.5f, 23f - 37.5f));
+            BOUNDSPOINTSLOW.Add(new Vector2(125f - 113.5f, 22f - 37.5f));
+            BOUNDSPOINTSLOW.Add(new Vector2(126f - 113.5f, 29f - 37.5f));
+            BOUNDSPOINTSLOW.Add(new Vector2(116f - 113.5f, 41f - 37.5f));
+            BOUNDSPOINTSLOW.Add(new Vector2(102f - 113.5f, 52f - 37.5f));
+
+            BOUNDSPOINTSHIGH = new List<Vector2>();
+            BOUNDSPOINTSHIGH.Add(new Vector2(96f - 113.5f, 53f - 37.5f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(96f - 113.5f, 44f - 37.5f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(105f - 113.5f, 32f - 37.5f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(116f - 113.5f, 23f - 37.5f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(125f - 113.5f, 22f - 37.5f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(131f - 113.5f, 32f - 37.5f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(134f - 113.5f, 46f - 37.5f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(130f - 113.5f, 51f - 37.5f));
+            BOUNDSPOINTSHIGH.Add(new Vector2(110f - 113.5f, 54f - 37.5f));
         }
 
         public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
@@ -82,9 +104,9 @@ namespace Commando.objects
             boundsPolygonLow_ = new ConvexPolygon(BOUNDSPOINTSLOW, Vector2.Zero);
             boundsPolygonLow_.rotate(direction_, position_);
 
-            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
-            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
-            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalk"), frameLengthModifier_, depth_);
+            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
+            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
             Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
             actions.Add("default", new Dictionary<string, CharacterActionInterface>());
             actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
@@ -103,7 +125,7 @@ namespace Commando.objects
                 collisionDetector_.register(this);
             }
 
-            Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            Weapon_ = new MachineGun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f));
             //Weapon_.update();
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             height_ = new Height(true, true);
@@ -136,7 +158,7 @@ namespace Commando.objects
             radius_ = RADIUS;
             collisionDetector_ = new SeparatingAxisCollisionDetector();
 
-            Weapon_ = new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            Weapon_ = new MachineGun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             //Weapon_.update();
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             height_ = new Height(true, false);
@@ -192,7 +214,7 @@ namespace Commando.objects
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {
                 Weapon_.shoot(collisionDetector_);
-                inputSet_.setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
+                
             }
             
             if (leftD.LengthSquared() > 0.2f)

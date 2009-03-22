@@ -39,7 +39,6 @@
       <Name>Giant_A</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -47,7 +46,6 @@
       <Name>menuStartReg</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +53,6 @@
       <Name>menuStartDown</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +60,6 @@
       <Name>testmenu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +75,6 @@
       <Name>healthBarOutline</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="SpriteFonts\Kootenay.spritefont">
       <Name>Kootenay</Name>
@@ -92,7 +87,6 @@
       <Name>healthBarFiller</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +94,6 @@
       <Name>pistol</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -108,109 +101,91 @@
       <Name>Crate_0_0</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Crate_0_1.bmp">
       <Name>Crate_0_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Crate_0_2.bmp">
       <Name>Crate_0_2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Crate_1_0.bmp">
       <Name>Crate_1_0</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Crate_1_1.bmp">
       <Name>Crate_1_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Crate_1_2.bmp">
       <Name>Crate_1_2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Crate_2_0.bmp">
       <Name>Crate_2_0</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Crate_2_1.bmp">
       <Name>Crate_2_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Crate_2_2.bmp">
       <Name>Crate_2_2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Floor_Tile.bmp">
       <Name>Floor_Tile</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Bottom.bmp">
       <Name>Wall_Bottom</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Corner_Bottom_Left.bmp">
       <Name>Wall_Corner_Bottom_Left</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Corner_Bottom_Right.bmp">
       <Name>Wall_Corner_Bottom_Right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Corner_Top_Left.bmp">
       <Name>Wall_Corner_Top_Left</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Corner_Top_Right.bmp">
       <Name>Wall_Corner_Top_Right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Left.bmp">
       <Name>Wall_Left</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Right.bmp">
       <Name>Wall_Right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Top.bmp">
       <Name>Wall_Top</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -218,7 +193,6 @@
       <Name>Blank</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -268,25 +242,21 @@
       <Name>Wall_Corner_I_Bottom_Left</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Corner_I_Bottom_Right.bmp">
       <Name>Wall_Corner_I_Bottom_Right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Corner_I_Top_Left.bmp">
       <Name>Wall_Corner_I_Top_Left</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Tiles\Wall_Corner_I_Top_Right.bmp">
       <Name>Wall_Corner_I_Top_Right</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -295,19 +265,12 @@
       <Importer>XactImporter</Importer>
       <Processor>XactProcessor</Processor>
     </Compile>
-    <None Include="Tiles\Wall_Bottom.xml">
-      <Name>Wall_Bottom</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TitleScreen.png">
       <Name>TitleScreen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -345,7 +308,6 @@
       <Name>TileHighlight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -391,7 +353,6 @@
       <Name>Bullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -432,13 +393,11 @@
       <Name>overlay</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Sprites\mouse.png">
       <Name>mouse</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Sprites\BulletMedium.png">
       <Name>BulletMedium</Name>
@@ -495,6 +454,16 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\MachineGun.png">
+      <Name>MachineGun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\PlayerTemp_Walk_Red.png">
+      <Name>PlayerTemp_Walk_Red</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="XML\defaultlevel.xml">
       <Name>defaultlevel</Name>
       <Importer>XmlImporter</Importer>
@@ -509,6 +478,12 @@
     </Content>
     <Content Include="XML\Sprites\PlayerTemp_Walk.xml">
       <Name>PlayerTemp_Walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML\Sprites\PlayerTemp_Walk_Red.xml">
+      <Name>PlayerTemp_Walk_Red</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

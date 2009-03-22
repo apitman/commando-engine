@@ -376,6 +376,9 @@
     <Compile Include="..\Commando\objects\weapons\DroneGun.cs">
       <Link>objects\weapons\DroneGun.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\weapons\MachineGun.cs">
+      <Link>objects\weapons\MachineGun.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\Pistol.cs">
       <Link>objects\weapons\Pistol.cs</Link>
     </Compile>

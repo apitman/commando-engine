@@ -1,4 +1,4 @@
-/*
+﻿/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -21,21 +21,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Commando.controls;
 
 namespace Commando.objects.weapons
 {
-    class Shotgun : PlayerWeapon
+    class MachineGun : PlayerWeapon
     {
-        protected const string WEAPON_TEXTURE_NAME = "Pistol";
+        protected const string WEAPON_TEXTURE_NAME = "MachineGun";
+        protected const float DRAW_OFFSET = 5f;
 
-        protected const int TIME_TO_REFIRE = 20;
-        protected const float SHOTGUN_SOUND_RADIUS = 250.0f;
+        protected const int TIME_TO_REFIRE = 5;
+        protected const float MACHINE_GUN_SOUND_RADIUS = 250.0f;
+        protected static readonly GameTexture BULLET_TEXTURE;
 
-        public Shotgun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
+        static MachineGun()
+        {
+            BULLET_TEXTURE = TextureMap.fetchTexture("BulletSmall");
+        }
+
+        public MachineGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle)
         {
-            SOUND_RADIUS = SHOTGUN_SOUND_RADIUS;
+            SOUND_RADIUS = MACHINE_GUN_SOUND_RADIUS;
+            drawOffset_ = DRAW_OFFSET;
+            gunTip_ = gunLength_ / 2f + DRAW_OFFSET;
         }
 
         public override void shoot(Commando.collisiondetection.CollisionDetectorInterface detector)
@@ -43,20 +51,10 @@ namespace Commando.objects.weapons
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
                 rotation_.Normalize();
-                Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
-                Vector2 rotation3 = CommonFunctions.rotate(rotation_, 10 * Math.PI / 180f);
-                rotation2.Normalize();
-                rotation3.Normalize();
-                Vector2 bulletPos = position_ + rotation_ * 15f;
-                Vector2 bulletPos2 = position_ + rotation2 * 15f;
-                Vector2 bulletPos3 = position_ + rotation3 * 15f;
+                Vector2 bulletPos = position_ + rotation_ * gunTip_;
                 Bullet bullet = new Bullet(drawPipeline_, detector, bulletPos, rotation_);
-                Bullet bullet2 = new Bullet(drawPipeline_, detector, bulletPos2, rotation2);
-                Bullet bullet3 = new Bullet(drawPipeline_, detector, bulletPos3, rotation3);
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
-
-                InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
 
                 weaponFired_ = true;
             }

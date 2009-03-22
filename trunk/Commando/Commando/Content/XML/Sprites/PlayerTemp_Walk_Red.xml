@@ -3,8 +3,8 @@
   <!-- TODO: replace this Asset with your own XML asset data. -->
   <Asset Type="System.String">
     <ImageDefinition>
-      <Key>PlayerTemp_Walk</Key>
-      <ImageFilename>Sprites\PlayerTemp_Walk</ImageFilename>
+      <Key>PlayerTemp_Walk_Red</Key>
+      <ImageFilename>Sprites\PlayerTemp_Walk_Red</ImageFilename>
       <ImageDimensions>
         <NumberOfImages>8</NumberOfImages>
         <Image>

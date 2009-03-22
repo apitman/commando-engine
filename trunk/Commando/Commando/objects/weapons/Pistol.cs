@@ -21,6 +21,7 @@ using Commando.ai;
 using Commando.collisiondetection;
 using Commando.levels;
 using Microsoft.Xna.Framework;
+using Commando.controls;
 
 namespace Commando.objects.weapons
 {
@@ -47,6 +48,8 @@ namespace Commando.objects.weapons
                 Bullet bullet = new Bullet(drawPipeline_, detector, bulletPos, rotation_);
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
+
+                InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
 
                 weaponFired_ = true;
             }

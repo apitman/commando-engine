@@ -521,6 +521,18 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\MachineGun.png">
+      <Link>Sprites\MachineGun.png</Link>
+      <Name>MachineGun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_Walk_Red.png">
+      <Link>Sprites\PlayerTemp_Walk_Red.png</Link>
+      <Name>PlayerTemp_Walk_Red</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
       <Link>XML\defaultlevel.xml</Link>
       <Name>defaultlevel</Name>
@@ -531,6 +543,13 @@
     <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk.xml">
       <Link>XML\Sprites\PlayerTemp_Walk.xml</Link>
       <Name>PlayerTemp_Walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk_Red.xml">
+      <Link>XML\Sprites\PlayerTemp_Walk_Red.xml</Link>
+      <Name>PlayerTemp_Walk_Red</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -59,10 +59,14 @@ namespace Commando
         /// </summary>
         protected float gunLength_;
 
+        protected float gunTip_;
+
         /// <summary>
         /// Amount of time before the gun can fire again.
         /// </summary>
         protected int refireCounter_;
+
+        protected float drawOffset_;
 
         protected int audialStimulusId_;
 
@@ -77,6 +81,8 @@ namespace Commando
             gunLength_ = animation.getImageDimensions()[0].Width;
             refireCounter_ = 0;
             audialStimulusId_ = StimulusIDGenerator.getNext();
+            drawOffset_ = gunLength_ / 2f;
+            gunTip_ = gunLength_;
         }
 
         public void setDrawPipeline(List<DrawableObjectAbstract> pipeline)
@@ -104,7 +110,7 @@ namespace Commando
         public virtual void draw()
         {
             rotation_.Normalize();
-            rotation_ *= gunLength_ / 2f;
+            rotation_ *= drawOffset_;
 
             // TODO make this depth dependent on character depth
             texture_.drawImage(0, position_ + rotation_, CommonFunctions.getAngle(rotation_), 0.6f);
