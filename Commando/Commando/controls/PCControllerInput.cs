@@ -106,14 +106,8 @@ namespace Commando.controls
 
             inputs_.setDirectional(InputsEnum.LEFT_DIRECTIONAL, leftDir.X, leftDir.Y);
 
-            /* This code will cause the mouse to only respond when inside the window.
-            if (ms.X < 0 || ms.Y < 0 ||
-                ms.X > engine_.GraphicsDevice.Viewport.X + engine_.GraphicsDevice.Viewport.Width ||
-                ms.Y > engine_.GraphicsDevice.Viewport.Y + engine_.GraphicsDevice.Viewport.Height)
-            {
-                inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, 0, 0);
-            }
-            else*/if (PlayerHelper.Player_ != null)
+            /*
+            if (PlayerHelper.Player_ != null)
             {
                 //Vector2 playerCenter = PlayerHelper.Player_.getPosition();
                 float centerX = GlobalHelper.getInstance().getCurrentCamera().getScreenWidth() / 2f;
@@ -124,11 +118,10 @@ namespace Commando.controls
                 inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL,
                                     rightDirectional.X, rightDirectional.Y);
             }
-            else
-            {
-                inputs_.clearToggle(InputsEnum.RIGHT_DIRECTIONAL);
-                inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, ms.X, ms.Y);
-            }
+            */
+
+            inputs_.clearToggle(InputsEnum.RIGHT_DIRECTIONAL);
+            inputs_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL, ms.X, ms.Y);
 
             inputs_.setButton(InputsEnum.CONFIRM_BUTTON,
                                 ks.IsKeyDown(CONFIRM));

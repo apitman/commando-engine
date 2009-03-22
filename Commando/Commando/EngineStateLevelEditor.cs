@@ -127,7 +127,6 @@ namespace Commando
         {
             currentFilepath_ = filepath;
 
-            PlayerHelper.Player_ = null; // Necessary to have mouse input if the player has entered EngineStateGameplay before entering the level editor
             engine_ = engine;
             engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
             engine_.IsMouseVisible = true;
