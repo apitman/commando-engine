@@ -43,6 +43,7 @@ namespace Commando.ai
         {
             if (CommonFunctions.distance(AI_.Character_.getPosition(), stim.position_) < (double) stim.radius_)
             {
+                AI_.CommunicationSystem_.isListening_ = true;
                 if (stim.type_ == StimulusType.Position)
                 {
                     Belief b = new Belief(BeliefType.SuspiciousNoise, null, 100, stim.position_, 0);

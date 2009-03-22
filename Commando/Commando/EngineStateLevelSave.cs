@@ -27,6 +27,9 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
 using System.IO;
+#if !XBOX
+using System.Windows.Forms;
+#endif
 
 namespace Commando
 {
@@ -79,7 +82,30 @@ namespace Commando
             state_ = state;
             returnState_ = this;
             mainMessage_ = FontMap.getInstance().getFont(MESSAGE_FONT);
-
+            StorageDevice sd = Settings.getInstance().StorageDevice_;
+            sd = null;
+            if (sd == null)
+            {
+#if !XBOX
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "Commando Level Files (*" + LEVEL_EXTENSION + ")|*" + LEVEL_EXTENSION;
+                dialog.RestoreDirectory = true;
+                dialog.Title = "Fucking Commando Engine Save Prompt";
+                InputSet.getInstance().setToggle(InputsEnum.CONFIRM_BUTTON);
+                InputSet.getInstance().setToggle(InputsEnum.RIGHT_TRIGGER);
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    state_.myLevel_.writeLevelToFile(dialog.FileName);
+                    returnState_ = new EngineStateMenu(engine_);
+                    cancelFlag_ = true;
+                }
+                else
+                {
+                    returnState_ = state_;
+                    cancelFlag_ = true;
+                }
+#endif
+            }
         }
 
         public EngineStateInterface update(GameTime gameTime)

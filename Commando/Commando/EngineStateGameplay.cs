@@ -177,7 +177,10 @@ namespace Commando
 
             loadLevel(filepath);
 
-            container.Dispose();
+            if (container != null)
+            {
+                container.Dispose();
+            }
         }
 
         public void moveToNextLevel(string filename)

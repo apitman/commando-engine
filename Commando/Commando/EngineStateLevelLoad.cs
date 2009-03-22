@@ -91,6 +91,7 @@ namespace Commando
             cancelFlag_ = false;
 
             StorageDevice sd = Settings.getInstance().StorageDevice_;
+            sd = null;
             if (sd != null)
             {
                 loadList(sd);
@@ -99,10 +100,19 @@ namespace Commando
             {
 #if !XBOX
                 OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "Commando Level Files (*.commandolevel)|*.commandolevel";
+                //dialog.InitialDirectory = EngineStateLevelSave.DIRECTORY_NAME;
+                dialog.Filter = "Commando Level Files (*" + EngineStateLevelSave.LEVEL_EXTENSION + ")|*" + EngineStateLevelSave.LEVEL_EXTENSION;
                 dialog.Multiselect = false;
-                dialog.ShowDialog();
-                windowsFileName_ = dialog.FileName;
+                InputSet.getInstance().setToggle(InputsEnum.CONFIRM_BUTTON);
+                InputSet.getInstance().setToggle(InputsEnum.RIGHT_TRIGGER);
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    windowsFileName_ = dialog.FileName;
+                }
+                else
+                {
+                    cancelFlag_ = true;
+                }
                 windows_ = true;
 #endif
             }
@@ -153,6 +163,19 @@ namespace Commando
             if (cancelFlag_)
             {
                 return new EngineStateMenu(engine_);
+            }
+
+            if (windows_)
+            {
+                switch (target_)
+                {
+                    case EngineStateTarget.GAMEPLAY:
+                        return new EngineStateGameplay(engine_, windowsFileName_, null);
+                        break;
+                    case EngineStateTarget.LEVEL_EDITOR:
+                        return new EngineStateLevelEditor(engine_, this, windowsFileName_, null);
+                        break;
+                }
             }
 
             InputSet inputs = InputSet.getInstance();

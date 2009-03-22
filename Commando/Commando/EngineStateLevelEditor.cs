@@ -140,7 +140,10 @@ namespace Commando
 
             myLevel_ = new Level(new Tileset(), null);
             myLevel_.getLevelFromFile(filepath, drawPipeline_);
-            container.Dispose();
+            if (container != null)
+            {
+                container.Dispose();
+            }
 
             maxCursorX = numTilesWide_ - 3;
             maxCursorY = numTilesTall_ - 3;

@@ -78,5 +78,10 @@ namespace Commando.objects
 
         public abstract void lookAt(Vector2 location);
 
+        public override void die()
+        {
+            AI_.die();
+            base.die();
+        }
     }
 }

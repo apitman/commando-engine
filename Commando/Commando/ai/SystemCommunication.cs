@@ -31,13 +31,15 @@ namespace Commando.ai
 
         public string broadcastMessage_;
 
+        public bool talkative_;
+
+        public bool isListening_;
+
         protected int framesLeftToBroadcast_;
 
         protected int broadcastRadius_;
 
         protected int key_;
-
-        public bool talkative_;
 
         /// <summary>
         /// Basic constructor
@@ -50,6 +52,7 @@ namespace Commando.ai
             framesLeftToBroadcast_ = 0;
             key_ = StimulusIDGenerator.getNext();
             talkative_ = true;
+            isListening_ = false;
         }
 
         /// <summary>
@@ -66,7 +69,7 @@ namespace Commando.ai
                 }
                 framesLeftToBroadcast_--;
             }
-            else
+            else if (!isListening_)
             {
                 decideWhatToBroadcast();
             }
@@ -81,8 +84,26 @@ namespace Commando.ai
                 drawPosition.X -= GlobalHelper.getInstance().getCurrentCamera().getX();
                 drawPosition.Y -= GlobalHelper.getInstance().getCurrentCamera().getY();
                 drawPosition += prettyOffset;
-                FontMap.getInstance().getFont(FontEnum.MiramonteBold).drawStringCentered(broadcastMessage_, drawPosition, Microsoft.Xna.Framework.Graphics.Color.White, 0.0f, 0.9f);
+                FontMap.getInstance().getFont(FontEnum.Miramonte).drawStringCentered(broadcastMessage_, drawPosition, Microsoft.Xna.Framework.Graphics.Color.White, 0.0f, 0.9f);
             }
+
+            // DEBUG STUFF
+            //string debugOut = "I believe:\n";
+            //List<Belief> bList = AI_.Memory_.getAllBeliefs();
+            //foreach (Belief b in bList)
+            //{
+            //    debugOut += b.ToString() + "\n";
+            //}
+            //debugOut += "World State's Audial Stimulus messages:\n";
+            //foreach (KeyValuePair<int, Stimulus> kvp in WorldState.Audial_)
+            //{
+            //    if (kvp.Value.type_ == StimulusType.Message && kvp.Value.message_ != null)
+            //    {
+            //        debugOut += kvp.Value.message_.ToString() + "\n";                    
+            //    }
+            //}
+            //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(debugOut, Vector2.One, Microsoft.Xna.Framework.Graphics.Color.Black);
+            // END DEBUG STUFF
         }
 
         /// <summary>
@@ -106,19 +127,24 @@ namespace Commando.ai
         protected void decideWhatToBroadcast()
         {
             List<Belief> bList = AI_.Memory_.getBeliefs(BeliefType.EnemyLoc);
-            for (int i = 0; i < bList.Count; i++)
+            if (bList.Count > 0)
             {
-                broadcastBelief(bList[i]);
+                broadcastBelief(bList[0]);
                 return; // Only broadcast one thing at a time
             }
             if (talkative_)
             {
-                List<Belief> bList2 = AI_.Memory_.getBeliefs(BeliefType.SuspiciousNoise);
-                if (bList2.Count > 0)
+                bList = AI_.Memory_.getBeliefs(BeliefType.SuspiciousNoise);
+                if (bList.Count > 0)
                 {
-                    broadcastBelief(bList2[0]);
+                    broadcastBelief(bList[0]);
                 }
             }
+        }
+
+        public void die()
+        {
+            WorldState.Audial_.Remove(key_);
         }
     }
 }
