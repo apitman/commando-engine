@@ -46,7 +46,7 @@ namespace Commando.ai
 
         protected InferenceEngine inferenceEngine_;
 
-        protected SystemCommunication communicationSystem_;
+        public SystemCommunication CommunicationSystem_ { get; private set; }
 
         public AI(NonPlayableCharacterAbstract npc)
         {
@@ -55,14 +55,15 @@ namespace Commando.ai
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorSeeCharacter(this));
             systems_.Add(new SystemAiming(this));
-            systems_.Add(new SystemCommunication(this, 100));
             path_ = new List<TileIndex>();
             lastPathfindUpdate_ = 0;
             inferenceEngine_ = new InferenceEngine(this);
+            CommunicationSystem_ = new SystemCommunication(this, 100);
         }
 
         public void update()
         {
+            CommunicationSystem_.isListening_ = false;
             for (int i = 0; i < sensors_.Count; i++)
             {
                 sensors_[i].collect();
@@ -74,6 +75,8 @@ namespace Commando.ai
             {
                 systems_[i].update();
             }
+
+            CommunicationSystem_.update();
 
             // TODO Temporary block
             // Tells the AI to proceed to the location of a known enemy
@@ -157,6 +160,12 @@ namespace Commando.ai
             {
                 sys.draw();
             }
+            CommunicationSystem_.draw();
+        }
+
+        public void die()
+        {
+            CommunicationSystem_.die();
         }
     }
 }

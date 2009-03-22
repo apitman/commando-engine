@@ -45,8 +45,20 @@ namespace Commando
         {
             duration_ = duration_.Add(gameTime.ElapsedGameTime);
 
-            if (duration_.Seconds >= LENGTH_OF_GAME_OVER || InputSet.getInstance().getButton(InputsEnum.CONFIRM_BUTTON))
+            if (duration_.Seconds >= LENGTH_OF_GAME_OVER)
             {
+                return new EngineStateMenu(engine_);
+            }
+
+            if (InputSet.getInstance().getButton(InputsEnum.CONFIRM_BUTTON))
+            {
+                InputSet.getInstance().setToggle(InputsEnum.CONFIRM_BUTTON);
+                return new EngineStateMenu(engine_);
+            }
+
+            if (InputSet.getInstance().getButton(InputsEnum.CANCEL_BUTTON))
+            {
+                InputSet.getInstance().setToggle(InputsEnum.CANCEL_BUTTON);
                 return new EngineStateMenu(engine_);
             }
 
