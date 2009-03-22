@@ -37,8 +37,43 @@ namespace Commando
     /// </summary>
     class EngineStateStart : EngineStateInterface
     {
+        protected const FontEnum TEXT_FONT = FontEnum.Kootenay;
+        protected readonly Color TEXT_COLOR = Color.White;
+        protected const float TEXT_ROTATION = 0.0f;
+        protected const float TEXT_DEPTH = Constants.DEPTH_MENU_TEXT;
+        protected Vector2 TEXT_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                float topEmptySpace = logo_.imageDimensions_[0].Height;
+                float y = r.Y + (r.Height - topEmptySpace) / 2 + topEmptySpace;
+                return new Vector2(r.X + r.Width / 2.0f, y);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        protected Vector2 LOGO_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return new Vector2(r.X + (r.Width - logo_.getImageDimensions()[0].Width) / 2, r.Y);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected const float LOGO_DEPTH = Constants.DEPTH_LOW;
+
+        protected string TEXT_MESSAGE = "Press START to Continue";
 
         protected Engine engine_;
+        protected GameTexture logo_;
         protected bool returnFlag_;
 
         /// <summary>
@@ -55,6 +90,7 @@ namespace Commando
         public EngineStateStart(Engine engine)
         {
             engine_ = engine;
+            logo_ = TextureMap.fetchTexture("TitleScreen");
 
             #if !XBOX
             {
@@ -63,20 +99,24 @@ namespace Commando
                 {
                     engine_.Controls_ = new PCControllerInput(engine_);
                     settings.CurrentPlayer_ = PlayerIndex.One;
+                    TEXT_MESSAGE = "Press " + engine_.Controls_.getControlName(InputsEnum.CONFIRM_BUTTON).ToUpper() + " to Continue";
                 }
                 else
                 {
                     engine_.Controls_ = new X360ControllerInput(engine_, PlayerIndex.One);
                     settings.CurrentPlayer_ = PlayerIndex.One;
+                    TEXT_MESSAGE = "Press " + engine_.Controls_.getControlName(InputsEnum.CONFIRM_BUTTON).ToUpper() + " to Continue";
                 }
                 prepareStorageDevice();
                 returnFlag_ = true;
             }
             #else
             {
+                engine_.Controls_ = null; // reset controls if they are coming back to this
                 returnFlag_ = false;
             }
             #endif
+
         }
 
         /// <summary>
@@ -111,10 +151,16 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Yellow);
+            engine_.GraphicsDevice.Clear(Color.Black);
 
-            // TODO
-            // Add graphics here!
+            logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
+
+            GameFont myFont = FontMap.getInstance().getFont(TEXT_FONT);
+            myFont.drawStringCentered(TEXT_MESSAGE,
+                                        TEXT_POSITION,
+                                        TEXT_COLOR,
+                                        TEXT_ROTATION,
+                                        TEXT_DEPTH);
         }
 
         /// <summary>

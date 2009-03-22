@@ -186,10 +186,10 @@ namespace Commando
                 menuList_.incrementCursorPos();
             }
             if (inputs.getButton(InputsEnum.CANCEL_BUTTON) ||
-                inputs.getButton(InputsEnum.BUTTON_3))
+                inputs.getButton(InputsEnum.BUTTON_2))
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
-                inputs.setToggle(InputsEnum.BUTTON_3);
+                inputs.setToggle(InputsEnum.BUTTON_2);
                 return new EngineStateMenu(engine_);
             }
 

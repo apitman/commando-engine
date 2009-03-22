@@ -46,8 +46,8 @@ namespace Commando
         const int FRAMERATE = 30;
         const string TEXTUREMAPXML = ".\\Content\\XML\\LoadScripts\\TextureLoader.xml";
 
-        const int SCREEN_MIN_WIDTH = 640;
-        const int SCREEN_MIN_HEIGHT = 480;
+        const int SCREEN_MIN_WIDTH = 800;
+        const int SCREEN_MIN_HEIGHT = 600;
 
         public Engine()
         {
