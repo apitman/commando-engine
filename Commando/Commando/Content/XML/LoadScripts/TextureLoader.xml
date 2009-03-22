@@ -11,6 +11,7 @@
   <texture>.\\Content\\XML\\Sprites\\PlayerWalkNoPistol.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk_Red.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk_Green.xml</texture>
   <image>
     <key>MachineGun</key>
     <handle>Sprites\\MachineGun</handle>

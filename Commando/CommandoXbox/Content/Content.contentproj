@@ -547,6 +547,13 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk_Green.xml">
+      <Link>XML\Sprites\PlayerTemp_Walk_Green.xml</Link>
+      <Name>PlayerTemp_Walk_Green</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk_Red.xml">
       <Link>XML\Sprites\PlayerTemp_Walk_Red.xml</Link>
       <Name>PlayerTemp_Walk_Red</Name>

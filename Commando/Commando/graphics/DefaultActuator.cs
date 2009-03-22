@@ -71,6 +71,14 @@ namespace Commando.graphics
             character_.setVelocity(character_.getPosition() - oldPos);
         }
 
+        public void setCurrentActionSet(String actionSet)
+        {
+            if (actions_.ContainsKey(actionSet))
+            {
+                currentActionSet_ = actionSet;
+            }
+        }
+
         public void addAction(CharacterActionInterface action)
         {
             throw new NotImplementedException();
@@ -84,6 +92,12 @@ namespace Commando.graphics
         public void draw(Color color)
         {
             currentAction_.draw(color);
+        }
+
+        public void crouch()
+        {
+            CrouchAction crouch = (CrouchAction)actions_[currentActionSet_]["crouch"];
+            currentAction_ = currentAction_.interrupt(crouch);
         }
 
         public void move(Vector2 direction)

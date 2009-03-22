@@ -262,6 +262,9 @@
     <Compile Include="..\Commando\graphics\CharacterStayStillAction.cs">
       <Link>graphics\CharacterStayStillAction.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\CrouchAction.cs">
+      <Link>graphics\CrouchAction.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\DefaultActuator.cs">
       <Link>graphics\DefaultActuator.cs</Link>
     </Compile>
@@ -321,6 +324,9 @@
     </Compile>
     <Compile Include="..\Commando\objects\CharacterStatusObserverInterface.cs">
       <Link>objects\CharacterStatusObserverInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\CoverObject.cs">
+      <Link>objects\CoverObject.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\DrawableObjectAbstract.cs">
       <Link>objects\DrawableObjectAbstract.cs</Link>

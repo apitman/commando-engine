@@ -107,12 +107,27 @@ namespace Commando.objects
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
             AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
+            AnimationInterface crouch = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
+            AnimationInterface crouch_run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface crouch_runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface crouch_rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface crouch_crouch = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
             Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
-            actions.Add("default", new Dictionary<string, CharacterActionInterface>());
-            actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
-            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
-            actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
-            actuator_ = new DefaultActuator(actions, this, "default");
+            //actions.Add("default", new Dictionary<string, CharacterActionInterface>());
+            //actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
+            //actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
+            //actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
+            actions.Add("crouch", new Dictionary<string, CharacterActionInterface>());
+            actions["crouch"].Add("move", new CharacterRunAction(this, crouch_run, 3.0f));
+            actions["crouch"].Add("moveTo", new CharacterRunToAction(this, crouch_runTo, 3.0f));
+            actions["crouch"].Add("rest", new CharacterStayStillAction(this, crouch_rest));
+            actions["crouch"].Add("crouch", new CrouchAction(this, crouch, "stand", new Height(true, true)));
+            actions.Add("stand", new Dictionary<string, CharacterActionInterface>());
+            actions["stand"].Add("move", new CharacterRunAction(this, run, 3.0f));
+            actions["stand"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
+            actions["stand"].Add("rest", new CharacterStayStillAction(this, rest));
+            actions["stand"].Add("crouch", new CrouchAction(this, crouch_crouch, "crouch", new Height(true, false)));
+            actuator_ = new DefaultActuator(actions, this, "stand");
 
             List<GameTexture> anims = new List<GameTexture>();
             anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
@@ -150,6 +165,7 @@ namespace Commando.objects
             actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
             actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
             actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
+
             actuator_ = new DefaultActuator(actions, this, "default");
 
             List<GameTexture> anims = new List<GameTexture>();
@@ -182,6 +198,12 @@ namespace Commando.objects
         /// <param name="gameTime"></param>
         public override void update(GameTime gameTime)
         {
+            if (inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_3))
+            {
+                actuator_.crouch();
+                inputSet_.setToggle(Commando.controls.InputsEnum.BUTTON_3);
+            }
+
             Vector2 rightD = new Vector2(inputSet_.getRightDirectionalX(), inputSet_.getRightDirectionalY());
             Vector2 leftD = new Vector2(inputSet_.getLeftDirectionalX(), -inputSet_.getLeftDirectionalY());
             Vector2 oldDirection = direction_;
