@@ -83,7 +83,6 @@ namespace Commando
             returnState_ = this;
             mainMessage_ = FontMap.getInstance().getFont(MESSAGE_FONT);
             StorageDevice sd = Settings.getInstance().StorageDevice_;
-            sd = null;
             if (sd == null)
             {
 #if !XBOX
