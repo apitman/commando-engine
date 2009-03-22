@@ -167,6 +167,16 @@ namespace Commando
                 mainMenuList_.incrementCursorPos();
             }
 
+            if (inputs.getButton(InputsEnum.CANCEL_BUTTON) ||
+                inputs.getButton(InputsEnum.BUTTON_2))
+            {
+                #if XBOX
+                    inputs.setToggle(InputsEnum.CANCEL_BUTTON);
+                    inputs.setToggle(InputsEnum.BUTTON_2);
+                    return new EngineStateStart(engine_);
+                #endif
+            }
+
             controlTips_ = "Press " + inputs.getControlName(InputsEnum.CONFIRM_BUTTON) + " to select an option";
 
             return this;

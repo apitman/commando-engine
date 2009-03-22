@@ -81,6 +81,14 @@ Global
 		{294E1CD7-6C19-47DB-BABC-EDEC58A0B1EB}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{294E1CD7-6C19-47DB-BABC-EDEC58A0B1EB}.Release|x86.ActiveCfg = Release|x86
 		{294E1CD7-6C19-47DB-BABC-EDEC58A0B1EB}.Release|Xbox 360.ActiveCfg = Release|x86
+		{B87B80B3-4B26-44E4-B537-86D63F0E053F}.Debug|Any CPU.ActiveCfg = Debug|Xbox 360
+		{B87B80B3-4B26-44E4-B537-86D63F0E053F}.Debug|Mixed Platforms.ActiveCfg = Debug|Xbox 360
+		{B87B80B3-4B26-44E4-B537-86D63F0E053F}.Debug|x86.ActiveCfg = Debug|Xbox 360
+		{B87B80B3-4B26-44E4-B537-86D63F0E053F}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
+		{B87B80B3-4B26-44E4-B537-86D63F0E053F}.Release|Any CPU.ActiveCfg = Release|Xbox 360
+		{B87B80B3-4B26-44E4-B537-86D63F0E053F}.Release|Mixed Platforms.ActiveCfg = Release|Xbox 360
+		{B87B80B3-4B26-44E4-B537-86D63F0E053F}.Release|x86.ActiveCfg = Release|Xbox 360
+		{B87B80B3-4B26-44E4-B537-86D63F0E053F}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

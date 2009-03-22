@@ -40,7 +40,7 @@ namespace Commando
             get
             {
                 Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
-                return new Vector2(r.X + r.Width / 2, r.Y + r.Height / 2 - OPTIONS_MENU_SPACING * 2);
+                return new Vector2(r.X + r.Width / 2, r.Y + r.Height / 2 - OPTIONS_MENU_SPACING * 3);
             }
 
             set
@@ -198,8 +198,10 @@ namespace Commando
                 }
             }
 
-            if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
+            if (inputs.getButton(InputsEnum.CANCEL_BUTTON) ||
+                inputs.getButton(InputsEnum.BUTTON_2))
             {
+                inputs.setToggle(InputsEnum.BUTTON_2);
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
                 return savedState_;
             }
