@@ -53,6 +53,12 @@ namespace Commando.objects.weapons
 
         }
 
+        public Bullet(GameTexture texture, List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
+            : base(pipeline, texture, detector, BOUNDS, RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
+        {
+
+        }
+
         public override void update(GameTime gameTime)
         {
             base.update(gameTime);
