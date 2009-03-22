@@ -515,9 +515,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_Walk.png">
+      <Link>Sprites\PlayerTemp_Walk.png</Link>
+      <Name>PlayerTemp_Walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
       <Link>XML\defaultlevel.xml</Link>
       <Name>defaultlevel</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk.xml">
+      <Link>XML\Sprites\PlayerTemp_Walk.xml</Link>
+      <Name>PlayerTemp_Walk</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

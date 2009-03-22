@@ -173,6 +173,11 @@ namespace Commando
             }
         }
 
+        public string getCurrentString()
+        {
+            return StringList_[CursorPos_];
+        }
+
         public void setString(int index, string replacement)
         {
             StringList_[index] = replacement;

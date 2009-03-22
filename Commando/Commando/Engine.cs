@@ -46,26 +46,14 @@ namespace Commando
         const int FRAMERATE = 30;
         const string TEXTUREMAPXML = ".\\Content\\XML\\LoadScripts\\TextureLoader.xml";
 
-        const int SCREEN_MIN_WIDTH = 800;
-        const int SCREEN_MIN_HEIGHT = 600;
+        const int SCREEN_MIN_WIDTH = 640;
+        const int SCREEN_MIN_HEIGHT = 480;
 
         public Engine()
         {
             graphics_ = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-#if XBOX
-            Settings.getInstance().IsUsingMouse_ = false;
-#else
-            if (GamePad.GetState(PlayerIndex.One).IsConnected)
-            {
-                Settings.getInstance().IsUsingMouse_ = false;
-            }
-            else
-            {
-                Settings.getInstance().IsUsingMouse_ = true;
-            }
-#endif
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, (1000 / FRAMERATE));
            
@@ -104,12 +92,29 @@ namespace Commando
 
             base.Initialize();
             initializeScreen();
+            Settings.initialize(this);
+
+#if XBOX
+            Settings.getInstance().IsUsingMouse_ = false;
+#else
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                Settings.getInstance().IsUsingMouse_ = false;
+            }
+            else
+            {
+                Settings.getInstance().IsUsingMouse_ = true;
+            }
+#endif
 
             try
             {
                 // Debugging - Uncomment this line to try PC version as if it
                 //  were running with the Redistributable runtime in which
                 //  GamerServices is not available
+                // Note that this is not a truly accurate test, as there could
+                //  be lurking calls to GamerServices outside of a block which
+                //  tests Settings.IsGamerServicesAllowed_ prior to using
                 // throw new Exception();
 
                 GamerServicesComponent gsc = new GamerServicesComponent(this);
