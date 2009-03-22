@@ -152,6 +152,7 @@
     <Compile Include="graphics\AnimationInterface.cs" />
     <Compile Include="graphics\CharacterRunToAction.cs" />
     <Compile Include="graphics\CharacterStayStillAction.cs" />
+    <Compile Include="graphics\CrouchAction.cs" />
     <Compile Include="graphics\DefaultActuator.cs" />
     <Compile Include="graphics\Illustrator.cs" />
     <Compile Include="graphics\LoopAnimation.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="objects\ActuatedMainPlayer.cs" />
     <Compile Include="objects\AmmoBox.cs" />
     <Compile Include="objects\BoxObject.cs" />
+    <Compile Include="objects\CoverObject.cs" />
     <Compile Include="objects\enemies\DummyEnemy.cs" />
     <Compile Include="objects\HeadsUpDisplayObject.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />

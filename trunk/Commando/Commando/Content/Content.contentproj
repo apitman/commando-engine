@@ -464,11 +464,22 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\PlayerTemp_Walk_Green.png">
+      <Name>PlayerTemp_Walk_Green</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="XML\defaultlevel.xml">
       <Name>defaultlevel</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML\Sprites\PlayerTemp_Walk_Green.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>PlayerTemp_Walk_Green</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
     </Content>
     <Content Include="XML\Sprites\Pixel.xml">
       <Name>Pixel</Name>

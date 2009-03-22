@@ -160,6 +160,11 @@ namespace Commando
             weapon_ = weapon;
         }
 
+        public void setHeight(Height height)
+        {
+            height_ = height;
+        }
+
         public void setName(string name)
         {
             name_ = name;
