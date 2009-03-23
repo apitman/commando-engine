@@ -35,5 +35,15 @@ namespace Commando.ai.planning
             parent.resolved[Variable.Location] = false;
             return parent;
         }
+
+        internal override void reserve()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void register(Dictionary<int, Action> actionMap)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

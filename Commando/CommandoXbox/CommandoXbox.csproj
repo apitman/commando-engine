@@ -95,10 +95,10 @@
       <Link>ai\Stimulus.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\System.cs">
-      <Link>System.cs</Link>
+      <Link>ai\System.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\SystemAiming.cs">
-      <Link>SystemAiming.cs</Link>
+      <Link>ai\SystemAiming.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\SystemBehavior.cs">
       <Link>ai\SystemBehavior.cs</Link>

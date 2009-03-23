@@ -29,8 +29,27 @@ namespace Commando
 {
     public class EngineStateGameOver : EngineStateInterface
     {
+        protected static readonly Color BACKGROUND_COLOR = Color.Black;
+
+        protected static readonly Color GAME_OVER_COLOR = Color.White;
+        protected Vector2 GAME_OVER_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return new Vector2(r.X + r.Width / 2.0f, r.Y + r.Height / 2.0f - 50.0f);
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected FontEnum GAME_OVER_FONT = FontEnum.Kootenay48;
+        protected float GAME_OVER_ROTATION = 0f;
+        protected float GAME_OVER_DEPTH = Constants.DEPTH_MENU_TEXT;
+
         protected const int LENGTH_OF_GAME_OVER = 2;
-        protected const string STR_GAME_OVER_TEXT = "Game Over.";
+        protected const string STR_GAME_OVER_TEXT = "GAME OVER";
 
         protected Engine engine_;
         protected TimeSpan duration_;
@@ -67,12 +86,12 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Azure);
-            FontMap.getInstance().getFont(FontEnum.PescaderoBold).drawStringCentered(STR_GAME_OVER_TEXT,
-                new Vector2((float)engine_.GraphicsDevice.Viewport.Width / 2, (float)engine_.GraphicsDevice.Viewport.Height / 2),
-                Color.Black,
-                0.0f,
-                0.9f);
+            engine_.GraphicsDevice.Clear(BACKGROUND_COLOR);
+            FontMap.getInstance().getFont(GAME_OVER_FONT).drawStringCentered(STR_GAME_OVER_TEXT,
+                GAME_OVER_POSITION,
+                GAME_OVER_COLOR,
+                GAME_OVER_ROTATION,
+                GAME_OVER_DEPTH);
         }
     }
 }

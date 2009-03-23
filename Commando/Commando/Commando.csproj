@@ -205,6 +205,9 @@
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
     <Compile Include="objects\weapons\Bullet.cs" />
+    <Compile Include="objects\weapons\BulletLimitedRange.cs" />
+    <Compile Include="objects\weapons\FragGrenade.cs" />
+    <Compile Include="objects\weapons\Grenade.cs" />
     <Compile Include="objects\weapons\MachineGun.cs" />
     <Compile Include="objects\weapons\PlayerWeapon.cs" />
     <Compile Include="objects\weapons\Projectile.cs" />
