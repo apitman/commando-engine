@@ -27,6 +27,13 @@ namespace Commando
 {
     public static class CommonFunctions
     {
+        public static Vector2 normalizeNonmutating(Vector2 v)
+        {
+            Vector2 copy = v;
+            copy.Normalize();
+            return copy;
+        }
+
         public static double distance(Vector2 point1, Vector2 point2)
         {
             return Math.Sqrt(Math.Pow(Math.Abs(point1.X - point2.X), 2) + Math.Pow(Math.Abs(point1.Y - point2.Y), 2));

@@ -20,13 +20,61 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
 namespace Commando.ai.planning
 {
     internal abstract class Action
     {
+        private NonPlayableCharacterAbstract character_;
+
+        internal Action()
+        {
+            throw new NotImplementedException();
+            // make compiler happy, remove this once real actions exist
+        }
+
+        internal Action(NonPlayableCharacterAbstract character)
+        {
+            character_ = character;
+        }
+
+        #region Planning Methods
+        // -----------------------------------------------------------------------
+
+        /// <summary>
+        /// Reserve resources for this action.
+        /// </summary>
+        internal abstract void reserve();
+
+        /// <summary>
+        /// Determine whether this action could have preceded a particular
+        /// planning search node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         internal abstract bool testPreConditions(SearchNode node);
 
+        /// <summary>
+        /// Determine a preceding state if this action had preceded the
+        /// provided search node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         internal abstract SearchNode unifyRegressive(SearchNode node);
+
+        /// <summary>
+        /// Register an action with an action map.
+        /// </summary>
+        /// <param name="actionMap"></param>
+        internal abstract void register(Dictionary<int, Action> actionMap);
+
+        #endregion
+
+        #region Runtime Methods
+        // -----------------------------------------------------------------------
+
+
+        #endregion
     }
 }

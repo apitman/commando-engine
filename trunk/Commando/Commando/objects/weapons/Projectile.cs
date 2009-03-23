@@ -62,15 +62,6 @@ namespace Commando.objects
         {
             Vector2 velocity = velocity_;
             bool colHappened = collisionDetector_.checkCollisions(this, ref velocity, ref direction_);
-            /*
-            if (collisionDetector_.checkCollisions(this, ref velocity, ref direction_))
-            {
-                position_.X += velocity_.X;
-                position_.Y += velocity_.Y;
-                handleCollision();
-                return;
-            }
-            */
             position_.X += velocity_.X;
             position_.Y += velocity_.Y;
             if (((!height_.blocksHigh_) && (!height_.blocksLow_)) || (colHappened && collidedInto_ != null && !objectChangesHeight(collidedInto_)))

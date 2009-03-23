@@ -200,6 +200,10 @@
     <key>laserpointer</key>
     <handle>Sprites\\laserpointer</handle>
   </image>
+  <image>
+    <key>FragGrenade</key>
+    <handle>Sprites\\Grenade</handle>
+  </image>
 </textures>
   </Asset>
 </XnaContent>

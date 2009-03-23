@@ -23,5 +23,15 @@ namespace Commando.ai.planning
             parent.setBool(Variable.Ammo, true);
             return parent;
         }
+
+        internal override void reserve()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override void register(Dictionary<int, Action> actionMap)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
