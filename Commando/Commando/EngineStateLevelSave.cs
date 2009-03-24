@@ -89,7 +89,7 @@ namespace Commando
                 SaveFileDialog dialog = new SaveFileDialog();
                 dialog.Filter = "Commando Level Files (*" + LEVEL_EXTENSION + ")|*" + LEVEL_EXTENSION;
                 dialog.RestoreDirectory = true;
-                dialog.Title = "Fucking Commando Engine Save Prompt";
+                dialog.Title = "Commando Engine Save Prompt";
                 InputSet.getInstance().setToggle(InputsEnum.CONFIRM_BUTTON);
                 InputSet.getInstance().setToggle(InputsEnum.RIGHT_TRIGGER);
                 if (dialog.ShowDialog() == DialogResult.OK)

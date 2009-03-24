@@ -545,7 +545,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\..\..\PlayerTemp_StandToShoot.png">
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_StandToShoot.png">
       <Link>Sprites\PlayerTemp_StandToShoot.png</Link>
       <Name>PlayerTemp_StandToShoot</Name>
       <Importer>TextureImporter</Importer>

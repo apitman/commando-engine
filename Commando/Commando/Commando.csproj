@@ -203,6 +203,7 @@
     <Compile Include="objects\HeadsUpDisplayText.cs" />
     <Compile Include="objects\HeadsUpDisplayWeapon.cs" />
     <Compile Include="objects\HealthBox.cs" />
+    <Compile Include="objects\Inventory.cs" />
     <Compile Include="objects\ItemAbstract.cs" />
     <Compile Include="objects\LevelObjectAbstract.cs" />
     <Compile Include="objects\LevelTransitionObject.cs" />

@@ -33,18 +33,21 @@ namespace Commando.objects
         protected Vector2 pos_;
         protected float depth_;
 
+        /// <summary>
+        /// You should use the other constructor
+        /// </summary>
         public HeadsUpDisplayText()
         {
             font_ = FontEnum.Kootenay;
-            newValue_ = 20;
+            newValue_ = 0;
         }
 
-        public HeadsUpDisplayText(Vector2 pos, float depth, FontEnum font)
+        public HeadsUpDisplayText(Vector2 pos, float depth, FontEnum font, int startValue)
         {
             pos_ = pos;
             depth_ = depth;
             font_ = font;
-            newValue_ = 20;
+            newValue_ = startValue;
         }
 
         /// <summary>

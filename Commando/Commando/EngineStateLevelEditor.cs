@@ -68,8 +68,45 @@ namespace Commando
         public const int SCREEN_SIZE_X = 375;
         public const int SCREEN_SIZE_Y = 375;
         const int HUD_BAR_HEIGHT = 45;
-        const int HUD_BAR_DRAW_Y = SCREEN_SIZE_Y - HUD_BAR_HEIGHT;
-        const int HUD_BAR_DRAW_X = 0;
+        protected int HUD_BAR_WIDTH
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return r.Width;
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected int HUD_BAR_DRAW_Y
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return r.Y + r.Height - HUD_BAR_HEIGHT;
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        protected int HUD_BAR_DRAW_X
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return r.X;
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         List<DrawableObjectAbstract> drawPipeline_ = new List<DrawableObjectAbstract>();
 
@@ -729,7 +766,7 @@ namespace Commando
 
             Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
 
-            TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, SCREEN_SIZE_X, HUD_BAR_HEIGHT), Constants.DEPTH_HUD - 0.01f, Color.Azure);
+            TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, HUD_BAR_WIDTH, HUD_BAR_HEIGHT), Constants.DEPTH_HUD - 0.01f, Color.Azure);
 
 
             
@@ -739,36 +776,29 @@ namespace Commando
                 case (int)pallette_.tile:
                     for (int i = 0; i < NUM_TILES; i++)
                     {
+                        TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) + camOffset.X), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) + camOffset.Y)), Constants.DEPTH_HUD);
 
-                        TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2(((10.0f + i * 20.0f) % 365.0f + camOffset.X), ((((10 + i * 20) / 365) * 20.0f) + 335.0f) + camOffset.Y), 0.2f);
-
-                        TextureMap.getInstance().getTexture("Tile_" + i).drawImageAbsolute(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
-
-                        if(i == curTileIndex_)
-
-
-                            TextureMap.getInstance().getTexture("TileHighlight").drawImageAbsolute(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
-
+                        if (i == curTileIndex_)
+                        {
+                            TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) + camOffset.X - 1), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) + camOffset.Y - 1)), Constants.DEPTH_HUD + 0.01f);
+                        }
                     }
                     break;
                 case (int)pallette_.enemy:
                     {
-
-                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImage(0, new Vector2(10.0f + camOffset.X, (((10* 20) / 365) * 20.0f) + 335.0f + camOffset.Y), 0.2f);
-
-                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImageAbsolute(0, new Vector2(10.0f, (((10 * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
+                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f, HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
 
                         break;
                     }
                 case (int)pallette_.misc:
                     {
                         int i = 0;
-                        TextureMap.fetchTexture("AmmoBox").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i , (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        TextureMap.fetchTexture("AmmoBox").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i , (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
                         i++;
-                        TextureMap.fetchTexture("HealthBox").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i , (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        TextureMap.fetchTexture("HealthBox").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
                         i++;
-                        TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i, (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
-                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * curTileIndex_, (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
+                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD + 0.01f);
                         break;
                     }
             }

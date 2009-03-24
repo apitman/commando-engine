@@ -176,9 +176,15 @@ namespace Commando.objects
                 collisionDetector_.register(this);
             }
 
+            // Give the player his currently active weapon
             Weapon_ = new MachineGun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f));
             //Weapon_.update();
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+
+            // Add the other weapons to the character's inventory
+            Inventory_.Weapons_.Enqueue(new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
+            Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
+
             height_ = new Height(true, true);
         }
 
@@ -208,9 +214,15 @@ namespace Commando.objects
             radius_ = RADIUS;
             collisionDetector_ = new SeparatingAxisCollisionDetector();
 
-            Weapon_ = new MachineGun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            // Give the player his currently active weapon
+            Weapon_ = new MachineGun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f));
             //Weapon_.update();
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+            
+            // Add the other weapons to the character's inventory
+            Inventory_.Weapons_.Enqueue(new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
+            Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
+
             height_ = new Height(true, false);
         }
 
@@ -276,23 +288,38 @@ namespace Commando.objects
                 leftD.Y = (float)Math.Sin((double)rotAngle) * X + (float)Math.Cos((double)rotAngle) * Y;
             }
 
+            // AMP: Resume Here. Note to self.
+            // This is a problem. Since a new Shotgun/Pistol is created each time,
+            // it starts with another full clip of ammo. This allows the player
+            // to switch back and forth for infinite ammo. The solution: start
+            // storing the weapons in the player's inventory.
             if (inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_BUMPER))
             {
-                if (pistol_)
-                {
-                    Weapon_ = new Shotgun(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-                    pistol_ = false;
-                }
-                else
-                {
-                    Weapon_ = new Pistol(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-                    pistol_ = true;
-                }
+                inputSet_.setToggle(InputsEnum.RIGHT_BUMPER);
+                RangedWeaponAbstract temp = Inventory_.Weapons_.Dequeue();
+                Inventory_.Weapons_.Enqueue(Weapon_);
+                Weapon_ = temp;
+                ammo_.update(Weapon_.CurrentAmmo_);
+                //if (pistol_)
+                //{
+                //    Weapon_ = new Shotgun(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+                //    pistol_ = false;
+                //}
+                //else
+                //{
+                //    Weapon_ = new Pistol(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
+                //    pistol_ = true;
+                //}
             }
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {
                 actuator_.shoot(Weapon_);
+            }
+
+            if (inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_1))
+            {
+                reload();
             }
             
             if (leftD.LengthSquared() > 0.2f)
