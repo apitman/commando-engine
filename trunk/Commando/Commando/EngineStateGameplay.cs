@@ -40,7 +40,7 @@ namespace Commando
         const string HEALTH_BAR_FILL_TEX_NAME = "healthBarFiller";
         const string WEAPON_TEX_NAME = "pistol";
         const string HEALTH_TEXT = "Health";
-        const string AMMO_TEXT = "%i/20 bullets";
+        const string AMMO_TEXT = "%i/";
         const string AMMO_REPLACE_TEXT = "%i";
         const string SAVE_PATH = "user level.xml";
         const float HUD_DRAW_DEPTH = Constants.DEPTH_HUD;
@@ -308,7 +308,7 @@ namespace Commando
             ammoTextPos_ = AMMO_TEXT_POSITION;
             healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
             weapon_ = new HeadsUpDisplayWeapon(drawPipeline_, TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
-            ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay);
+            ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay, player_.Weapon_.CurrentAmmo_);
             player_.getHealth().addObserver(healthBar_);
             player_.getWeapon().addObserver(weapon_);
             player_.getAmmo().addObserver(ammo_);
@@ -436,7 +436,8 @@ namespace Commando
             TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, HUD_BAR_WIDTH, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
             FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
             //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
-            ammo_.drawString(AMMO_TEXT, AMMO_REPLACE_TEXT, Color.Black, 0.0f);
+            string realAmmoText = AMMO_TEXT + player_.Inventory_.Ammo_[player_.Weapon_.AmmoType_].ToString() + " " + player_.Weapon_.AmmoType_.ToString();
+            ammo_.drawString(realAmmoText, AMMO_REPLACE_TEXT, Color.Black, 0.0f);
             /* end section*/
         }
 

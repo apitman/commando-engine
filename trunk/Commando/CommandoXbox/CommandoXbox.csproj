@@ -373,6 +373,9 @@
     <Compile Include="..\Commando\objects\HealthBox.cs">
       <Link>objects\HealthBox.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\Inventory.cs">
+      <Link>objects\Inventory.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\ItemAbstract.cs">
       <Link>objects\ItemAbstract.cs</Link>
     </Compile>

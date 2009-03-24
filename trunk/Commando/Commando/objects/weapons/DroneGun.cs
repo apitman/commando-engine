@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.collisiondetection;
+using Commando.controls;
 
 namespace Commando.objects.weapons
 {
@@ -39,13 +40,18 @@ namespace Commando.objects.weapons
 
         public override void shoot()
         {
-            if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
+            if (refireCounter_ == 0 && CurrentAmmo_ > 0)
             {
                 rotation_.Normalize();
                 Vector2 pos = position_ + rotation_ * 15f;
                 Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, pos, rotation_);
                 refireCounter_ = TIME_TO_REFIRE;
-                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
+                CurrentAmmo_--;
+                character_.getAmmo().update(CurrentAmmo_);
+            }
+            else if (refireCounter_ == 0)
+            {
+                character_.reload();
             }
         }
 

@@ -30,19 +30,20 @@ namespace Commando.objects.weapons
         protected const string WEAPON_TEXTURE_NAME = "Pistol";
 
         protected const AmmoTypeEnum AMMO_TYPE = AmmoTypeEnum.BUCKSHOT;
-        protected const int CLIP_SIZE = 6;
         protected const int TIME_TO_REFIRE = 20;
         protected const float SHOTGUN_SOUND_RADIUS = 250.0f;
+        internal const int CLIP_SIZE = 6;
 
         public Shotgun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle, AMMO_TYPE, CLIP_SIZE)
         {
             SOUND_RADIUS = SHOTGUN_SOUND_RADIUS;
+            CurrentAmmo_ = CLIP_SIZE;
         }
 
         public override void shoot()
         {
-            if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
+            if (refireCounter_ == 0 && CurrentAmmo_ > 0)
             {
                 rotation_.Normalize();
                 Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
@@ -56,11 +57,17 @@ namespace Commando.objects.weapons
                 Bullet bullet2 = new Bullet(drawPipeline_, collisionDetector_, bulletPos2, rotation2);
                 Bullet bullet3 = new Bullet(drawPipeline_, collisionDetector_, bulletPos3, rotation3);
                 refireCounter_ = TIME_TO_REFIRE;
-                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
+                CurrentAmmo_--;
+                character_.getAmmo().update(CurrentAmmo_);
 
                 InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
 
                 weaponFired_ = true;
+            }
+            else if (refireCounter_ == 0)
+            {
+                InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
+                character_.reload();
             }
         }
     }

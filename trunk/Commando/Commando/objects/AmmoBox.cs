@@ -61,14 +61,17 @@ namespace Commando.objects
         {
             if (obj is CharacterAbstract)
             {
-                CharacterAmmo ammo = (obj as CharacterAbstract).getAmmo();
-                int ammoCount = ammo.getValue();
-                ammoCount += 5;
-                if (ammoCount > 20)
-                {
-                    ammoCount = 20;
-                }
-                ammo.update(ammoCount);
+                //CharacterAmmo ammo = (obj as CharacterAbstract).getAmmo();
+                (obj as CharacterAbstract).Inventory_.Ammo_[Commando.objects.weapons.AmmoTypeEnum.BUCKSHOT] += Commando.objects.weapons.Shotgun.CLIP_SIZE;
+                (obj as CharacterAbstract).Inventory_.Ammo_[Commando.objects.weapons.AmmoTypeEnum.BULLETS] += Commando.objects.weapons.Pistol.CLIP_SIZE;
+                (obj as CharacterAbstract).Inventory_.Ammo_[Commando.objects.weapons.AmmoTypeEnum.ROUNDS] += Commando.objects.weapons.MachineGun.CLIP_SIZE;
+                //int ammoCount = ammo.getValue();
+                //ammoCount += 5;
+                //if (ammoCount > 20)
+                //{
+                //    ammoCount = 20;
+                //}
+                //ammo.update(ammoCount);
                 toDie_ = true;
             }
         }

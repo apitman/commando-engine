@@ -26,6 +26,7 @@ using Commando.collisiondetection;
 using Commando.graphics;
 using Commando.levels;
 using Commando.objects;
+using Commando.objects.weapons;
 
 namespace Commando
 {
@@ -42,6 +43,11 @@ namespace Commando
 
         protected CharacterWeapon weapon_;
 
+        /// <summary>
+        /// The weapon that the player is currently holding in his hand(s).
+        /// It is not stored in the inventory, so when switching weapons, you
+        /// must add it to the inventory.
+        /// </summary>
         public RangedWeaponAbstract Weapon_ { get; protected set; }
 
         protected string name_;
@@ -55,6 +61,8 @@ namespace Commando
         protected CoverObject lastCoverObject_;
 
         protected Height height_;
+
+        public Inventory Inventory_ { get; set; }
 
         /// <summary>
         /// Create a default Character
@@ -84,6 +92,7 @@ namespace Commando
                 collisionDetector_.register(this);
             }
             height_ = new Height(true, true);
+            Inventory_ = new Inventory();
         }
 
         /// <summary>
@@ -114,6 +123,7 @@ namespace Commando
                 collisionDetector_.register(this);
             }
             height_ = new Height(true, true);
+            Inventory_ = new Inventory();
         }
 
         public CharacterHealth getHealth()
@@ -181,6 +191,10 @@ namespace Commando
             }
             collisionDetector_ = collisionDetector;
             Weapon_.setCollisionDetector(collisionDetector_);
+            foreach (RangedWeaponAbstract weap in Inventory_.Weapons_)
+            {
+                weap.setCollisionDetector(collisionDetector_);
+            }
             if (collisionDetector_ != null)
             {
                 collisionDetector_.register(this);
@@ -205,6 +219,18 @@ namespace Commando
         public virtual Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
         {
             return translate;
+        }
+
+        public virtual void reload()
+        {
+            int numBulletsToPullFromInventory = Weapon_.ClipSize_ - Weapon_.CurrentAmmo_;
+            if (Inventory_.Ammo_[Weapon_.AmmoType_] < numBulletsToPullFromInventory)
+            {
+                numBulletsToPullFromInventory = Inventory_.Ammo_[Weapon_.AmmoType_];
+            }
+            Inventory_.Ammo_[Weapon_.AmmoType_] -= numBulletsToPullFromInventory;
+            Weapon_.CurrentAmmo_ += numBulletsToPullFromInventory;
+            ammo_.update(Weapon_.CurrentAmmo_);
         }
 
         public abstract void damage(int amount, CollisionObjectInterface obj);

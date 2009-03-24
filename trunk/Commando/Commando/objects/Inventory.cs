@@ -21,43 +21,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
+using Commando.objects.weapons;
 
-namespace Commando
+namespace Commando.objects
 {
-    /// <summary>
-    /// Keeps track of a characters current ammo supply.
-    /// </summary>
-    public class CharacterAmmo : CharacterStatusElementInterface
+    public class Inventory
     {
-        protected List<CharacterStatusObserverInterface> observers_ = new List<CharacterStatusObserverInterface>();
-        protected int ammoRemaining_ = 0;
+        /// <summary>
+        /// Stores the number of bullets of each type that exist in the player's inventory
+        /// </summary>
+        public Dictionary<AmmoTypeEnum, int> Ammo_ { get; set; }
 
         /// <summary>
-        /// Add an observer to this CharacterAmmo.
+        /// Stores the weapons that the player is currently holding
         /// </summary>
-        /// <param name="obs">Observer to be added</param>
-        public void addObserver(CharacterStatusObserverInterface obs)
-        {
-            observers_.Add(obs);
-        }
+        public Queue<RangedWeaponAbstract> Weapons_ { get; set; }
 
-        /// <summary>
-        /// Update the value of this CharacterAmmo.  Notifies all observers.
-        /// </summary>
-        /// <param name="value">New value of this CharacterAmmo</param>
-        public void update(int value)
+        public Inventory()
         {
-            ammoRemaining_ = value;
-            foreach (CharacterStatusObserverInterface observer in observers_)
-            {
-                observer.notifyOfChange(value);
-            }
-        }
-
-        public int getValue()
-        {
-            return ammoRemaining_;
+            Ammo_ = new Dictionary<AmmoTypeEnum, int>();
+            Ammo_.Add(AmmoTypeEnum.BUCKSHOT, 0);
+            Ammo_.Add(AmmoTypeEnum.BULLETS, 0);
+            Ammo_.Add(AmmoTypeEnum.ROUNDS, 0);
+            Weapons_ = new Queue<RangedWeaponAbstract>();
         }
     }
 }
