@@ -83,12 +83,6 @@ namespace Commando.ai
             }     
         }
 
-        public override void draw()
-        {
-            // Draw nothing, could add a laser sight for the robots or something
-            // in the future.
-        }
-
         internal Vector2 calculateAverageVelocity()
         {
             int samples = Math.Min(countUp, REACTION_TIME);

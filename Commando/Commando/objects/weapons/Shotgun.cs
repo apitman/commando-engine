@@ -27,7 +27,7 @@ namespace Commando.objects.weapons
 {
     class Shotgun : PlayerWeapon
     {
-        protected const string WEAPON_TEXTURE_NAME = "Pistol";
+        protected const string WEAPON_TEXTURE_NAME = "Shotgun";
 
         protected const AmmoTypeEnum AMMO_TYPE = AmmoTypeEnum.BUCKSHOT;
         protected const int TIME_TO_REFIRE = 20;

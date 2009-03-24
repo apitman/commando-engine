@@ -79,17 +79,44 @@
     <Compile Include="..\Commando\ai\Memory.cs">
       <Link>ai\Memory.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\Action.cs">
+      <Link>ai\planning\Action.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionAttackRanged.cs">
+      <Link>ai\planning\ActionAttackRanged.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionAttackRangedCover.cs">
+      <Link>ai\planning\ActionAttackRangedCover.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionGoto.cs">
+      <Link>ai\planning\ActionGoto.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionTakeCover.cs">
+      <Link>ai\planning\ActionTakeCover.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionType.cs">
+      <Link>ai\planning\ActionType.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\IndividualPlanner.cs">
+      <Link>ai\planning\IndividualPlanner.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\SearchNode.cs">
+      <Link>ai\planning\SearchNode.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\Raycaster.cs">
       <Link>ai\Raycaster.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\ai\Sensor.cs">
-      <Link>ai\Sensor.cs</Link>
+    <Compile Include="..\Commando\ai\sensors\Sensor.cs">
+      <Link>ai\sensors\Sensor.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\ai\SensorEars.cs">
-      <Link>ai\SensorEars.cs</Link>
+    <Compile Include="..\Commando\ai\sensors\SensorCover.cs">
+      <Link>ai\sensors\SensorCover.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\ai\SensorSeeCharacter.cs">
-      <Link>ai\SensorSeeCharacter.cs</Link>
+    <Compile Include="..\Commando\ai\sensors\SensorEars.cs">
+      <Link>ai\sensors\SensorEars.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\sensors\SensorSeeCharacter.cs">
+      <Link>ai\sensors\SensorSeeCharacter.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\Stimulus.cs">
       <Link>ai\Stimulus.cs</Link>

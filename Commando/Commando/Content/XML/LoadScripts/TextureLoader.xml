@@ -14,8 +14,24 @@
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk_Green.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_StandToShoot.xml</texture>
   <image>
+    <key>PistolIcon</key>
+    <handle>Sprites\\PistolIcon</handle>
+  </image>
+  <image>
+    <key>ShotgunIcon</key>
+    <handle>Sprites\\ShotgunIcon</handle>
+  </image>
+  <image>
+    <key>MachineGunIcon</key>
+    <handle>Sprites\\MachineGunIcon</handle>
+  </image>
+  <image>
     <key>MachineGun</key>
     <handle>Sprites\\MachineGun</handle>
+  </image>
+  <image>
+    <key>Shotgun</key>
+    <handle>Sprites\\Shotgun</handle>
   </image>
   <image>
     <key>LevelExit</key>

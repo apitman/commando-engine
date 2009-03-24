@@ -26,7 +26,7 @@ namespace Commando.ai.planning
 {
     internal abstract class Action
     {
-        private NonPlayableCharacterAbstract character_;
+        protected NonPlayableCharacterAbstract character_;
 
         internal Action()
         {
@@ -41,11 +41,6 @@ namespace Commando.ai.planning
 
         #region Planning Methods
         // -----------------------------------------------------------------------
-
-        /// <summary>
-        /// Reserve resources for this action.
-        /// </summary>
-        internal abstract void reserve();
 
         /// <summary>
         /// Determine whether this action could have preceded a particular
@@ -69,11 +64,26 @@ namespace Commando.ai.planning
         /// <param name="actionMap"></param>
         internal abstract void register(Dictionary<int, Action> actionMap);
 
+        /// <summary>
+        /// Reserve resources for this action.
+        /// </summary>
+        internal /*abstract */virtual void reserve() { }
+
+        /// <summary>
+        /// Clean up reservations for this action.
+        /// </summary>
+        internal /*abstract */virtual void unreserve() { }
+
         #endregion
 
         #region Runtime Methods
         // -----------------------------------------------------------------------
 
+        internal /*abstract */bool checkIsStillValid() { return false; }
+
+        internal /*abstract */bool initialize() { return false; }
+
+        internal /*abstract */bool update() { return false; }
 
         #endregion
     }

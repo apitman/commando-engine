@@ -75,7 +75,7 @@ namespace Commando.ai
             }
         }
 
-        public override void draw()
+        public void draw()
         {
             if (isBroadcasting_)
             {
