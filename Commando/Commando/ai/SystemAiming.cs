@@ -68,7 +68,7 @@ namespace Commando.ai
                     AI_.Character_.lookAt(target);
                     if (countUp >= REACTION_TIME)
                     {
-                        AI_.Character_.Weapon_.shoot(AI_.Character_.getCollisionDetector());
+                        AI_.Character_.Weapon_.shoot();
                     }
                 }
                 else

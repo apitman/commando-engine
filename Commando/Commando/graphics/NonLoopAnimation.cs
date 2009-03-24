@@ -58,39 +58,26 @@ namespace Commando.graphics
 
         public void moveNFramesForward(int numFrames)
         {
-            currentFrame_ = (currentFrame_ + numFrames) % totalFrames_;
+            currentFrame_ = currentFrame_ + numFrames;
+            if (currentFrame_ >= totalFrames_)
+            {
+                currentFrame_ = totalFrames_ - 1;
+            }
         }
 
         public void updateFrameNumber(int frameNumber)
         {
-            currentFrame_ = frameNumber % totalFrames_;
+            currentFrame_ = frameNumber;
+            if (currentFrame_ >= totalFrames_)
+            {
+                currentFrame_ = totalFrames_ - 1;
+            }
         }
 
         public void update(Vector2 newPosition, Vector2 newRotation)
         {
-            moved_.X += newPosition.X - position_.X;
-            moved_.Y += newPosition.Y - position_.Y;
-            float magnitude = moved_.Length();
-
-            rotation_ = newRotation;
-            float rot1 = MathHelper.WrapAngle(CommonFunctions.getAngle(rotation_));
-            float rot2 = MathHelper.WrapAngle(CommonFunctions.getAngle(newPosition));
-            float rotDiff = rot1 - rot2;
-            if (magnitude >= frameLengthModifier_)
-            {
-                float frameDiff = magnitude / frameLengthModifier_;
-                if (rotDiff <= MathHelper.PiOver2 && rotDiff >= -MathHelper.PiOver2)
-                {
-                    currentFrame_ = (currentFrame_ + (int)frameDiff) % totalFrames_;
-                }
-                else
-                {
-                    currentFrame_ = (currentFrame_ - (int)frameDiff + totalFrames_) % totalFrames_;
-                }
-                moved_.Normalize();
-                moved_ *= magnitude % frameLengthModifier_;
-            }
             position_ = newPosition;
+            rotation_ = newRotation;
         }
 
         public void setDepth(float depth)
@@ -122,6 +109,11 @@ namespace Commando.graphics
         public void setRotation(Vector2 rotation)
         {
             rotation_ = rotation;
+        }
+
+        public int getNumFrames()
+        {
+            return totalFrames_;
         }
     }
 }

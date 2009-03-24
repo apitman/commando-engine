@@ -40,7 +40,7 @@ namespace Commando.objects.weapons
             SOUND_RADIUS = SHOTGUN_SOUND_RADIUS;
         }
 
-        public override void shoot(Commando.collisiondetection.CollisionDetectorInterface detector)
+        public override void shoot()
         {
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
@@ -52,9 +52,9 @@ namespace Commando.objects.weapons
                 Vector2 bulletPos = position_ + rotation_ * 15f;
                 Vector2 bulletPos2 = position_ + rotation2 * 15f;
                 Vector2 bulletPos3 = position_ + rotation3 * 15f;
-                Bullet bullet = new Bullet(drawPipeline_, detector, bulletPos, rotation_);
-                Bullet bullet2 = new Bullet(drawPipeline_, detector, bulletPos2, rotation2);
-                Bullet bullet3 = new Bullet(drawPipeline_, detector, bulletPos3, rotation3);
+                Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, rotation_);
+                Bullet bullet2 = new Bullet(drawPipeline_, collisionDetector_, bulletPos2, rotation2);
+                Bullet bullet3 = new Bullet(drawPipeline_, collisionDetector_, bulletPos3, rotation3);
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
 

@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.objects;
 
 namespace Commando.graphics
 {
@@ -39,6 +40,8 @@ namespace Commando.graphics
         protected Vector2 newDirection_;
 
         protected const float TURNSPEED = 0.3f;
+
+        protected CoverObject currentCoverObject_ = null;
 
         public DefaultActuator(Dictionary<string, Dictionary<string, CharacterActionInterface>> actions, CharacterAbstract character, string initialActionSet)
         {
@@ -98,6 +101,13 @@ namespace Commando.graphics
         {
             CrouchAction crouch = (CrouchAction)actions_[currentActionSet_]["crouch"];
             currentAction_ = currentAction_.interrupt(crouch);
+        }
+
+        public void shoot(RangedWeaponAbstract weapon)
+        {
+            ShootActionInterface shoot = (ShootActionInterface)actions_[currentActionSet_]["shoot"];
+            shoot.shoot(weapon);
+            currentAction_ = currentAction_.interrupt(shoot);
         }
 
         public void move(Vector2 direction)
@@ -171,6 +181,23 @@ namespace Commando.graphics
                 character_.setDirection(newDirection_);
                 character_.setPosition(character_.getPosition() + temp);
             }
+        }
+
+        public void setCoverObject(CoverObject coverObject)
+        {
+            currentCoverObject_ = coverObject;
+        }
+
+        public CoverObject getCoverObject()
+        {
+            return currentCoverObject_;
+        }
+
+        public void cover(CoverObject coverObject)
+        {
+            CoverActionInterface cover = (CoverActionInterface)actions_[currentActionSet_]["cover"];
+            cover.setCover(coverObject);
+            currentAction_ = currentAction_.interrupt(cover);
         }
 
         protected void setSlowRotationAngle(Vector2 newDirection)

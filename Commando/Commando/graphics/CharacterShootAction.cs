@@ -16,58 +16,40 @@
 ***************************************************************************
 */
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 
 namespace Commando.graphics
 {
-    public class CharacterStayStillAction : CharacterActionInterface
+    public class CharacterShootAction : ShootActionInterface
     {
         private const int PRIORITY = 0;
 
-        protected CharacterAbstract character_;
-
-        protected int priority_;
-
-        protected AnimationInterface animation_;
-
-        public CharacterStayStillAction(CharacterAbstract character, AnimationInterface animation)
+        public CharacterShootAction()
         {
-            priority_ = PRIORITY;
-            character_ = character;
-            animation_ = animation;
+        }
+
+        public void shoot(RangedWeaponAbstract weapon)
+        {
+            weapon.shoot();
         }
 
         public void update()
         {
-            Vector2 position = character_.getPosition();
-            Vector2 direction = character_.getDirection();
-            Vector2 velocity = Vector2.Zero;
-            collisiondetection.CollisionDetectorInterface detector = character_.getCollisionDetector();
-            if (detector != null)
-            {
-                detector.checkCollisions(character_, ref velocity, ref direction);
-            }
-            position.X += velocity.X;
-            position.Y += velocity.Y;
-            character_.setPosition(position);
-            character_.setDirection(direction);
-            animation_.setPosition(position);
-            animation_.setRotation(direction);
+            
         }
 
         public void draw()
         {
-            animation_.draw();
+            
         }
 
-        public void draw(Color color)
+        public void draw(Microsoft.Xna.Framework.Graphics.Color color)
         {
-            animation_.draw(color);
+            
         }
 
         public bool isFinished()
@@ -77,25 +59,22 @@ namespace Commando.graphics
 
         public CharacterActionInterface interrupt(CharacterActionInterface newAction)
         {
-            newAction.start();
             return newAction;
         }
 
         public int getPriority()
         {
-            return priority_;
+            return PRIORITY;
         }
 
         public void setCharacter(CharacterAbstract character)
         {
-            character_ = character;
+            
         }
 
         public void start()
         {
-            animation_.reset();
-            animation_.setPosition(character_.getPosition());
-            animation_.setRotation(character_.getDirection());
+            
         }
     }
 }

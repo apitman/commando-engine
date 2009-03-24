@@ -25,6 +25,7 @@ using Microsoft.Xna.Framework;
 using Commando.collisiondetection;
 using Commando.graphics;
 using Commando.levels;
+using Commando.objects;
 
 namespace Commando
 {
@@ -50,6 +51,8 @@ namespace Commando
         protected List<CollisionObjectInterface> collidedWith_ = new List<CollisionObjectInterface>();
 
         protected List<CollisionObjectInterface> collidedInto_ = new List<CollisionObjectInterface>();
+
+        protected CoverObject lastCoverObject_;
 
         protected Height height_;
 
@@ -177,6 +180,7 @@ namespace Commando
                 collisionDetector_.remove(this);
             }
             collisionDetector_ = collisionDetector;
+            Weapon_.setCollisionDetector(collisionDetector_);
             if (collisionDetector_ != null)
             {
                 collisionDetector_.register(this);
@@ -216,6 +220,16 @@ namespace Commando
                 collisionDetector_.remove(this);
             }
             base.die();
+        }
+
+        public virtual void setCoverObject(CoverObject cObj)
+        {
+            lastCoverObject_ = cObj;
+        }
+
+        public List<CollisionObjectInterface> getCollidedObjects()
+        {
+            return collidedInto_;
         }
     }
 }
