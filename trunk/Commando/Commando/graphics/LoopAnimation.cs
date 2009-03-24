@@ -137,6 +137,11 @@ namespace Commando.graphics
             return (float)Math.Atan2((double)rotation_.Y, (double)rotation_.X);
         }
 
+        public int getNumFrames()
+        {
+            return totalFrames_;
+        }
+
 
         /*
         protected void draw(Vector2 position, float rotation, float depth)

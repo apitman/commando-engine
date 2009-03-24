@@ -247,11 +247,20 @@
     <Compile Include="..\Commando\graphics\AnimationInterface.cs">
       <Link>graphics\AnimationInterface.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\AttachToCoverAction.cs">
+      <Link>graphics\AttachToCoverAction.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\Camera.cs">
       <Link>graphics\Camera.cs</Link>
     </Compile>
     <Compile Include="..\Commando\graphics\CharacterActionInterface.cs">
       <Link>graphics\CharacterActionInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterCoverMoveAction.cs">
+      <Link>graphics\CharacterCoverMoveAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterCoverShootAction.cs">
+      <Link>graphics\CharacterCoverShootAction.cs</Link>
     </Compile>
     <Compile Include="..\Commando\graphics\CharacterRunAction.cs">
       <Link>graphics\CharacterRunAction.cs</Link>
@@ -259,14 +268,23 @@
     <Compile Include="..\Commando\graphics\CharacterRunToAction.cs">
       <Link>graphics\CharacterRunToAction.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\CharacterShootAction.cs">
+      <Link>graphics\CharacterShootAction.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\CharacterStayStillAction.cs">
       <Link>graphics\CharacterStayStillAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CoverActionInterface.cs">
+      <Link>graphics\CoverActionInterface.cs</Link>
     </Compile>
     <Compile Include="..\Commando\graphics\CrouchAction.cs">
       <Link>graphics\CrouchAction.cs</Link>
     </Compile>
     <Compile Include="..\Commando\graphics\DefaultActuator.cs">
       <Link>graphics\DefaultActuator.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\DetachFromCoverAction.cs">
+      <Link>graphics\DetachFromCoverAction.cs</Link>
     </Compile>
     <Compile Include="..\Commando\graphics\Illustrator.cs">
       <Link>graphics\Illustrator.cs</Link>
@@ -279,6 +297,12 @@
     </Compile>
     <Compile Include="..\Commando\graphics\MoveToActionInterface.cs">
       <Link>graphics\MoveToActionInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\NonLoopAnimation.cs">
+      <Link>graphics\NonLoopAnimation.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\ShootActionInterface.cs">
+      <Link>graphics\ShootActionInterface.cs</Link>
     </Compile>
     <Compile Include="..\Commando\levels\CoverGenerator.cs">
       <Link>levels\CoverGenerator.cs</Link>

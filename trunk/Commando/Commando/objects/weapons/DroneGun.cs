@@ -37,13 +37,13 @@ namespace Commando.objects.weapons
             // nothing
         }
 
-        public override void shoot(CollisionDetectorInterface detector)
+        public override void shoot()
         {
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
                 rotation_.Normalize();
                 Vector2 pos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(drawPipeline_, detector, pos, rotation_);
+                Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, pos, rotation_);
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
             }

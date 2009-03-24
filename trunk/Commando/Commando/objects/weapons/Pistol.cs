@@ -41,13 +41,13 @@ namespace Commando.objects.weapons
             SOUND_RADIUS = PISTOL_SOUND_RADIUS;
         }
 
-        public override void shoot(CollisionDetectorInterface detector)
+        public override void shoot()
         {
             if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
             {
                 rotation_.Normalize();
                 Vector2 bulletPos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(drawPipeline_, detector, bulletPos, rotation_);
+                Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, rotation_);
                 refireCounter_ = TIME_TO_REFIRE;
                 character_.getAmmo().update(character_.getAmmo().getValue() - 1);
 

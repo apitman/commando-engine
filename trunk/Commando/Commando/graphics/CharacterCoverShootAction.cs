@@ -25,39 +25,61 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.graphics
 {
-    public class CharacterStayStillAction : CharacterActionInterface
+    public class CharacterCoverShootAction : ShootActionInterface
     {
-        private const int PRIORITY = 0;
-
-        protected CharacterAbstract character_;
+        private const int PRIORITY = 12;
 
         protected int priority_;
 
+        protected CharacterAbstract character_;
+
         protected AnimationInterface animation_;
 
-        public CharacterStayStillAction(CharacterAbstract character, AnimationInterface animation)
+        protected int frameToShoot_;
+
+        protected int currentFrame_;
+
+        protected RangedWeaponAbstract weapon_;
+
+        protected bool finished_;
+
+        protected bool holding_;
+
+        public CharacterCoverShootAction(CharacterAbstract character, AnimationInterface animation, int frameToShoot)
         {
-            priority_ = PRIORITY;
             character_ = character;
             animation_ = animation;
+            frameToShoot_ = frameToShoot;
+            priority_ = PRIORITY;
         }
-
+        
+        public void shoot(RangedWeaponAbstract weapon)
+        {
+            weapon_ = weapon;
+        }
         public void update()
         {
-            Vector2 position = character_.getPosition();
-            Vector2 direction = character_.getDirection();
-            Vector2 velocity = Vector2.Zero;
-            collisiondetection.CollisionDetectorInterface detector = character_.getCollisionDetector();
-            if (detector != null)
+            animation_.updateFrameNumber(currentFrame_);
+            if (currentFrame_ == frameToShoot_)
             {
-                detector.checkCollisions(character_, ref velocity, ref direction);
+                weapon_.shoot();
+                if (!holding_)
+                {
+                    currentFrame_++;
+                }
             }
-            position.X += velocity.X;
-            position.Y += velocity.Y;
-            character_.setPosition(position);
-            character_.setDirection(direction);
-            animation_.setPosition(position);
-            animation_.setRotation(direction);
+            else
+            {
+                currentFrame_++;
+                if (currentFrame_ >= animation_.getNumFrames())
+                {
+                    finished_ = true;
+                }
+            }
+            Vector2 direction = character_.getDirection();
+            Vector2 position = character_.getPosition();
+            animation_.update(position, direction);
+            holding_ = false;
         }
 
         public void draw()
@@ -72,11 +94,20 @@ namespace Commando.graphics
 
         public bool isFinished()
         {
-            return true;
+            return finished_;
         }
 
         public CharacterActionInterface interrupt(CharacterActionInterface newAction)
         {
+            if (newAction == this)
+            {
+                holding_ = true;
+                return this;
+            }
+            if (newAction.getPriority() <= priority_)
+            {
+                return this;
+            }
             newAction.start();
             return newAction;
         }
@@ -93,6 +124,9 @@ namespace Commando.graphics
 
         public void start()
         {
+            finished_ = false;
+            holding_ = false;
+            currentFrame_ = 0;
             animation_.reset();
             animation_.setPosition(character_.getPosition());
             animation_.setRotation(character_.getDirection());

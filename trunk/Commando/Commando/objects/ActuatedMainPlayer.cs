@@ -37,7 +37,9 @@ namespace Commando.objects
 
         const float TURNSPEED = .30f;
 
-        const float RADIUS = 15.0f;
+        static readonly float RADIUS;
+
+        const float SPEED = 3.0f;
 
         protected float radius_;
 
@@ -81,6 +83,14 @@ namespace Commando.objects
             BOUNDSPOINTSLOW.Add(new Vector2(126f - 113.5f, 29f - 37.5f));
             BOUNDSPOINTSLOW.Add(new Vector2(116f - 113.5f, 41f - 37.5f));
             BOUNDSPOINTSLOW.Add(new Vector2(102f - 113.5f, 52f - 37.5f));
+            RADIUS = 0.0f;
+            foreach (Vector2 vec in BOUNDSPOINTSLOW)
+            {
+                if (vec.Length() > RADIUS)
+                {
+                    RADIUS = vec.Length();
+                }
+            }
 
             BOUNDSPOINTSHIGH = new List<Vector2>();
             BOUNDSPOINTSHIGH.Add(new Vector2(96f - 113.5f, 53f - 37.5f));
@@ -92,6 +102,14 @@ namespace Commando.objects
             BOUNDSPOINTSHIGH.Add(new Vector2(134f - 113.5f, 46f - 37.5f));
             BOUNDSPOINTSHIGH.Add(new Vector2(130f - 113.5f, 51f - 37.5f));
             BOUNDSPOINTSHIGH.Add(new Vector2(110f - 113.5f, 54f - 37.5f));
+            foreach (Vector2 vec in BOUNDSPOINTSHIGH)
+            {
+                if (vec.Length() > RADIUS)
+                {
+                    RADIUS = vec.Length();
+                }
+            }
+            RADIUS += 2f;
         }
 
         public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
@@ -107,25 +125,44 @@ namespace Commando.objects
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
             AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
             AnimationInterface crouch = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
+            AnimationInterface cover = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Red"), frameLengthModifier_, depth_);
             AnimationInterface crouch_run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
             AnimationInterface crouch_runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
             AnimationInterface crouch_rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
             AnimationInterface crouch_crouch = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface crouch_cover = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface cover_run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface cover_runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface cover_rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface cover_crouch = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface cover_cover = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerTemp_Walk_Green"), frameLengthModifier_, depth_);
+            AnimationInterface cover_shoot = new NonLoopAnimation(TextureMap.fetchTexture("PlayerTemp_StandToShoot"), 1.0f, depth_);
             Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
             //actions.Add("default", new Dictionary<string, CharacterActionInterface>());
             //actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
             //actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
             //actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
             actions.Add("crouch", new Dictionary<string, CharacterActionInterface>());
-            actions["crouch"].Add("move", new CharacterRunAction(this, crouch_run, 3.0f));
-            actions["crouch"].Add("moveTo", new CharacterRunToAction(this, crouch_runTo, 3.0f));
+            actions["crouch"].Add("move", new CharacterRunAction(this, crouch_run, SPEED));
+            actions["crouch"].Add("moveTo", new CharacterRunToAction(this, crouch_runTo, SPEED));
             actions["crouch"].Add("rest", new CharacterStayStillAction(this, crouch_rest));
             actions["crouch"].Add("crouch", new CrouchAction(this, crouch, "stand", new Height(true, true)));
+            actions["crouch"].Add("cover", new AttachToCoverAction(this, crouch_cover, "cover", SPEED));
+            actions["crouch"].Add("shoot", new CharacterShootAction());
             actions.Add("stand", new Dictionary<string, CharacterActionInterface>());
-            actions["stand"].Add("move", new CharacterRunAction(this, run, 3.0f));
-            actions["stand"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
+            actions["stand"].Add("move", new CharacterRunAction(this, run, SPEED));
+            actions["stand"].Add("moveTo", new CharacterRunToAction(this, runTo, SPEED));
             actions["stand"].Add("rest", new CharacterStayStillAction(this, rest));
             actions["stand"].Add("crouch", new CrouchAction(this, crouch_crouch, "crouch", new Height(true, false)));
+            actions["stand"].Add("cover", new AttachToCoverAction(this, cover, "cover", SPEED));
+            actions["stand"].Add("shoot", new CharacterShootAction());
+            actions.Add("cover", new Dictionary<string, CharacterActionInterface>());
+            actions["cover"].Add("move", new CharacterCoverMoveAction(this, cover_run, SPEED));
+            actions["cover"].Add("moveTo", new CharacterCoverMoveAction(this, cover_runTo, SPEED));
+            actions["cover"].Add("rest", new CharacterStayStillAction(this, cover_rest));
+            actions["cover"].Add("crouch", new CrouchAction(this, cover_crouch, "cover", new Height(true, false)));
+            actions["cover"].Add("cover", new DetachFromCoverAction(this, cover_cover, "stand", SPEED));
+            actions["cover"].Add("shoot", new CharacterCoverShootAction(this, cover_shoot, 1));
             actuator_ = new DefaultActuator(actions, this, "stand");
 
             List<GameTexture> anims = new List<GameTexture>();
@@ -213,6 +250,17 @@ namespace Commando.objects
                 inputSet_.setToggle(Commando.controls.InputsEnum.BUTTON_3);
             }
 
+            if(inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_4))
+            {
+                direction_.Length();
+            }
+
+            if (lastCoverObject_ != null && inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_4))
+            {
+                actuator_.cover(lastCoverObject_);
+                inputSet_.setToggle(Commando.controls.InputsEnum.BUTTON_4);
+            }
+
             Vector2 rightD = new Vector2(inputSet_.getRightDirectionalX(), inputSet_.getRightDirectionalY());
             Vector2 leftD = new Vector2(inputSet_.getLeftDirectionalX(), -inputSet_.getLeftDirectionalY());
             Vector2 oldDirection = direction_;
@@ -244,14 +292,14 @@ namespace Commando.objects
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {
-                Weapon_.shoot(collisionDetector_);
-                
+                actuator_.shoot(Weapon_);
             }
             
             if (leftD.LengthSquared() > 0.2f)
             {
                 actuator_.move(leftD);
             }
+            lastCoverObject_ = null;
             actuator_.update();
             Weapon_.update();
             collidedInto_.Clear();

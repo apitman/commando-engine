@@ -75,6 +75,8 @@ namespace Commando
 
         protected int audialStimulusId_;
 
+        protected CollisionDetectorInterface collisionDetector_;
+
         public RangedWeaponAbstract(List<DrawableObjectAbstract> pipeline,
             CharacterAbstract character, GameTexture animation, Vector2 gunHandle,
             AmmoTypeEnum ammoType, int clipSize)
@@ -93,6 +95,7 @@ namespace Commando
 
             AmmoType_ = ammoType;
             ClipSize_ = clipSize;
+            collisionDetector_ = character.getCollisionDetector();
         }
 
         public void setDrawPipeline(List<DrawableObjectAbstract> pipeline)
@@ -100,7 +103,7 @@ namespace Commando
             drawPipeline_ = pipeline;
         }
 
-        public abstract void shoot(CollisionDetectorInterface detector);
+        public abstract void shoot();
 
         public virtual void update()
         {
@@ -124,6 +127,11 @@ namespace Commando
 
             // TODO make this depth dependent on character depth
             texture_.drawImage(0, position_ + rotation_, CommonFunctions.getAngle(rotation_), 0.6f);
+        }
+
+        public void setCollisionDetector(CollisionDetectorInterface detector)
+        {
+            collisionDetector_ = detector;
         }
     }
 }

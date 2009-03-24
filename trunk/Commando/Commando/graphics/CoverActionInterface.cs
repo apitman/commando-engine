@@ -20,33 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Commando.objects;
 
 namespace Commando.graphics
 {
-    public interface AnimationInterface
+    public interface CoverActionInterface : CharacterActionInterface
     {
-        void updateFrameNumber(int frameNumber);
-
-        void moveNFramesForward(int numFrames);
-
-        void setPosition(Vector2 position);
-
-        void setRotation(Vector2 rotation);
-
-        void update(Vector2 newPosition, Vector2 newRotation);
-
-        void setDepth(float depth);
-
-        void draw();
-
-        void draw(Color color);
-
-        void reset();
-
-        int getNumFrames();
-
-        //TODO: Add functionality to get the current frame's bounds
+        void setCover(CoverObject coverObject);
     }
 }
