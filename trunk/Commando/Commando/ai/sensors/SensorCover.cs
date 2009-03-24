@@ -20,57 +20,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Commando.ai.planning;
 
 namespace Commando.ai
 {
-    /// <summary>
-    /// A particular piece of information that an NPC believes about the
-    /// current state of the world.
-    /// </summary>
-    public class Belief
+    public class SensorCover : Sensor
     {
-        public BeliefType type_;
-        public Object handle_;
-        public float confidence_;
-        public Vector2 position_;
-        public float value_;
-        internal VariableValue data_;
+        public SensorCover(AI ai) : base(ai) { }
 
-        public Belief(BeliefType type, Object handle, float conf, Vector2 position, float value)
+        public override void collect()
         {
-            type_ = type;
-            handle_ = handle;
-            confidence_ = conf;
-            position_ = position;
-            value_ = value;
+            throw new NotImplementedException();
         }
-
-        public void replace(Belief b)
-        {
-            confidence_ = b.confidence_;
-            position_ = b.position_;
-            value_ = b.value_;
-        }
-
-        public override string ToString()
-        {
-            string retVal = type_.ToString();
-            retVal += " at ";
-            retVal += position_.ToString();
-            return retVal;
-        }
-    }
-
-    public enum BeliefType
-    {
-        EnemyLoc,
-        EnemyHealth,
-        AllyLoc,
-        AllyHealth,
-        SuspiciousNoise,
-
-        BestCover
     }
 }

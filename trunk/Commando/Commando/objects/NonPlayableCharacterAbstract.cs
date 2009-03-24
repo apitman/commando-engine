@@ -29,7 +29,7 @@ namespace Commando.objects
 {
     public abstract class NonPlayableCharacterAbstract : CharacterAbstract
     {
-        protected AI AI_ { get; private set; }
+        internal AI AI_ { get; private set; }
         
         /// <summary>
         /// Create a default NonPlayableCharacter

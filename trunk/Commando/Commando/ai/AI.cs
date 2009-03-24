@@ -156,10 +156,6 @@ namespace Commando.ai
 
         public void draw()
         {
-            foreach (System sys in systems_)
-            {
-                sys.draw();
-            }
             CommunicationSystem_.draw();
         }
 

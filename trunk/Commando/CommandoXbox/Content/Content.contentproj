@@ -545,9 +545,33 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Shotgun.png">
+      <Link>Sprites\Shotgun.png</Link>
+      <Name>Shotgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_StandToShoot.png">
       <Link>Sprites\PlayerTemp_StandToShoot.png</Link>
       <Name>PlayerTemp_StandToShoot</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\MachineGunIcon.png">
+      <Link>Sprites\MachineGunIcon.png</Link>
+      <Name>MachineGunIcon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\PistolIcon.png">
+      <Link>Sprites\PistolIcon.png</Link>
+      <Name>PistolIcon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\ShotgunIcon.png">
+      <Link>Sprites\ShotgunIcon.png</Link>
+      <Name>ShotgunIcon</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

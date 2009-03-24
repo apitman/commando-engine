@@ -20,57 +20,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Commando.ai.planning;
 
-namespace Commando.ai
+namespace Commando.ai.planning
 {
-    /// <summary>
-    /// A particular piece of information that an NPC believes about the
-    /// current state of the world.
-    /// </summary>
-    public class Belief
+    class ActionThrowGrenade : Action
     {
-        public BeliefType type_;
-        public Object handle_;
-        public float confidence_;
-        public Vector2 position_;
-        public float value_;
-        internal VariableValue data_;
-
-        public Belief(BeliefType type, Object handle, float conf, Vector2 position, float value)
+        internal override bool testPreConditions(SearchNode node)
         {
-            type_ = type;
-            handle_ = handle;
-            confidence_ = conf;
-            position_ = position;
-            value_ = value;
+            throw new NotImplementedException();
         }
 
-        public void replace(Belief b)
+        internal override SearchNode unifyRegressive(SearchNode node)
         {
-            confidence_ = b.confidence_;
-            position_ = b.position_;
-            value_ = b.value_;
+            throw new NotImplementedException();
         }
 
-        public override string ToString()
+        internal override void register(Dictionary<int, Action> actionMap)
         {
-            string retVal = type_.ToString();
-            retVal += " at ";
-            retVal += position_.ToString();
-            return retVal;
+            throw new NotImplementedException();
         }
-    }
-
-    public enum BeliefType
-    {
-        EnemyLoc,
-        EnemyHealth,
-        AllyLoc,
-        AllyHealth,
-        SuspiciousNoise,
-
-        BestCover
     }
 }

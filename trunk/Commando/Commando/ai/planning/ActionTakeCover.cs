@@ -21,50 +21,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.levels;
+using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionGoto : Action
+    internal class ActionTakeCover : Action
     {
-        internal TileIndex target_;
+        protected const float COST = 1.0f;
 
-        public ActionGoto(TileIndex target)
+        internal TileIndex coverLocation_;
+
+        internal ActionTakeCover(NonPlayableCharacterAbstract character, ref TileIndex coverLocation)
+            : base(character)
         {
-            target_ = target;
+            coverLocation_ = coverLocation;
         }
 
         internal override bool testPreConditions(SearchNode node)
         {
-            // assume we can always get from point A to point B
-            return true;
+            // TODO
+            // if the position AFTER taking cover - think backwards! - is known,
+            //  we can only take cover there if that position has cover, otherwise
+            //  we just check that we know about nearby cover
+            return character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover) != null;
         }
 
         internal override SearchNode unifyRegressive(SearchNode node)
         {
-            SearchNode parent = node.getPredecessor();
-            TileIndex target = node.values[Variable.Location].t;
-            parent.action = new ActionGoto(target);
-
-            // TODO calculate distance
-            float distance = 0;
-            parent.cost += 1.0f + distance;
-
-            // Don't know where we came from to get here, so it could
-            //  be anywhere - unresolve the value
-            parent.resolved[Variable.Location] = false;
-
             // TODO
-            // Figure out if this setBool is supposed to be false or true
-            // Was originally true, but that doesn't seem like it does anything...
-            if (node.values[Variable.Cover].b == true && node.resolved[Variable.Cover] == true)
-                parent.setBool(Variable.Cover, false);
+            // If the current location is resolved and doesn't have cover, we
+            // actually resolve with a Goto instead
+
+            TileIndex coverLocation =
+                character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover).data_.t;
+
+            SearchNode parent = node.getPredecessor();
+            parent.action = new ActionTakeCover(character_, ref coverLocation);
+            parent.cost += COST;
+            parent.setBool(Variable.Cover, false);
+
+            // TODO ...?
+            // if the position AFTER taking cover was known, that's where we were
+            //  at the predecessor, which is handled by the clone operation
+
+            // if it wasn't known, we need to make a best guess as to where we had
+            //  to be in order to take cover
+            parent.setPosition(Variable.Location, ref coverLocation);
 
             return parent;
-        }
-
-        internal override void reserve()
-        {
-            throw new NotImplementedException();
         }
 
         internal override void register(Dictionary<int, Action> actionMap)

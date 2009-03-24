@@ -71,6 +71,12 @@ namespace Commando.ai.planning
             this.resolved[var] = true;
         }
 
+        internal void setPosition(int var, ref TileIndex tile)
+        {
+            this.values[var].t = tile;
+            this.resolved[var] = true;
+        }
+
         internal void resolvesWith(SearchNode other, List<int> failures)
         {
             failures.Clear();
@@ -138,7 +144,8 @@ namespace Commando.ai.planning
         internal const int TargetHealth = 2;
         internal const int Health = 3;
         internal const int Location = 4;
+        internal const int Weapon = 5;
 
-        internal const int LENGTH = 5;
+        internal const int LENGTH = 6;
     }
 }
