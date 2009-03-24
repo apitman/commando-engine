@@ -288,11 +288,6 @@ namespace Commando.objects
                 leftD.Y = (float)Math.Sin((double)rotAngle) * X + (float)Math.Cos((double)rotAngle) * Y;
             }
 
-            // AMP: Resume Here. Note to self.
-            // This is a problem. Since a new Shotgun/Pistol is created each time,
-            // it starts with another full clip of ammo. This allows the player
-            // to switch back and forth for infinite ammo. The solution: start
-            // storing the weapons in the player's inventory.
             if (inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_BUMPER))
             {
                 inputSet_.setToggle(InputsEnum.RIGHT_BUMPER);
