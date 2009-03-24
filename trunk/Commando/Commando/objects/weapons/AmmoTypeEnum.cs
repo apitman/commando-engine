@@ -1,4 +1,4 @@
-/*
+﻿/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -20,38 +20,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Commando.collisiondetection;
 
 namespace Commando.objects.weapons
 {
-    public class DroneGun : RangedWeaponAbstract
+    public enum AmmoTypeEnum
     {
-        protected const AmmoTypeEnum AMMO_TYPE = AmmoTypeEnum.BULLETS;
-        protected const int CLIP_SIZE = 10;
-        protected const int TIME_TO_REFIRE = 10;
-
-        public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
-            : base(pipeline, character, TextureMap.fetchTexture("Pistol"), gunHandle, AMMO_TYPE, CLIP_SIZE)
-        {
-            // nothing
-        }
-
-        public override void shoot(CollisionDetectorInterface detector)
-        {
-            if (refireCounter_ == 0 && character_.getAmmo().getValue() > 0)
-            {
-                rotation_.Normalize();
-                Vector2 pos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(drawPipeline_, detector, pos, rotation_);
-                refireCounter_ = TIME_TO_REFIRE;
-                character_.getAmmo().update(character_.getAmmo().getValue() - 1);
-            }
-        }
-
-        public override void draw()
-        {
-            // do nothing - no graphic for the DroneGun
-        }
+        BULLETS,
+        BUCKSHOT,
+        ROUNDS
     }
 }

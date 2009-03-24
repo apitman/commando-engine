@@ -204,6 +204,7 @@
     <Compile Include="objects\NonPlayableCharacterAbstract.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
+    <Compile Include="objects\weapons\AmmoTypeEnum.cs" />
     <Compile Include="objects\weapons\Bullet.cs" />
     <Compile Include="objects\weapons\BulletLimitedRange.cs" />
     <Compile Include="objects\weapons\FragGrenade.cs" />
@@ -223,7 +224,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SoundEngine.cs" />
     <Compile Include="TextureMap.cs" />
-    <Compile Include="objects\weapons\WeaponAbstract.cs" />
+    <Compile Include="objects\weapons\RangedWeaponAbstract.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

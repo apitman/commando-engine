@@ -31,7 +31,7 @@ namespace Commando.objects.weapons
     /// Weapon which is usable by the player; controls laser pointer and
     /// producing suspicious noises.
     /// </summary>
-    abstract class PlayerWeapon : WeaponAbstract
+    abstract class PlayerWeapon : RangedWeaponAbstract
     {
         protected const string TARGET_TEXTURE_NAME = "laserpointer";
 
@@ -43,8 +43,9 @@ namespace Commando.objects.weapons
         protected static float SOUND_RADIUS;
         protected static readonly Vector2 LASER_OFFSET = new Vector2(2.5f, 2.5f);
 
-        public PlayerWeapon(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
-            : base(pipeline, character, animation, gunHandle)
+        public PlayerWeapon(List<DrawableObjectAbstract> pipeline, CharacterAbstract character,
+                GameTexture animation, Vector2 gunHandle, AmmoTypeEnum ammoType, int clipSize)
+            : base(pipeline, character, animation, gunHandle, ammoType, clipSize)
         {
             laserImage_ = TextureMap.fetchTexture(TARGET_TEXTURE_NAME);
             weaponFired_ = false;

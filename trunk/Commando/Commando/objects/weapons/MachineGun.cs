@@ -29,6 +29,8 @@ namespace Commando.objects.weapons
         protected const string WEAPON_TEXTURE_NAME = "MachineGun";
         protected const float DRAW_OFFSET = 5f;
 
+        protected const AmmoTypeEnum AMMO_TYPE = AmmoTypeEnum.ROUNDS;
+        protected const int CLIP_SIZE = 30;
         protected const int TIME_TO_REFIRE = 5;
         protected const float MACHINE_GUN_SOUND_RADIUS = 250.0f;
         protected static readonly GameTexture BULLET_TEXTURE;
@@ -39,7 +41,7 @@ namespace Commando.objects.weapons
         }
 
         public MachineGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
-            : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle)
+            : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle, AMMO_TYPE, CLIP_SIZE)
         {
             SOUND_RADIUS = MACHINE_GUN_SOUND_RADIUS;
             drawOffset_ = DRAW_OFFSET;

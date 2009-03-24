@@ -27,10 +27,11 @@ using Microsoft.Xna.Framework;
 using Commando.collisiondetection;
 using Commando.ai;
 using Commando.levels;
+using Commando.objects.weapons;
 
 namespace Commando
 {
-    public abstract class WeaponAbstract
+    public abstract class RangedWeaponAbstract
     {
         protected List<DrawableObjectAbstract> drawPipeline_;
         
@@ -66,11 +67,17 @@ namespace Commando
         /// </summary>
         protected int refireCounter_;
 
+        internal int CurrentAmmo_ { get; set; }
+        internal int ClipSize_ { get; set; }
+        internal AmmoTypeEnum AmmoType_ { get; set; }
+
         protected float drawOffset_;
 
         protected int audialStimulusId_;
 
-        public WeaponAbstract(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, GameTexture animation, Vector2 gunHandle)
+        public RangedWeaponAbstract(List<DrawableObjectAbstract> pipeline,
+            CharacterAbstract character, GameTexture animation, Vector2 gunHandle,
+            AmmoTypeEnum ammoType, int clipSize)
         {
             drawPipeline_ = pipeline;
             character_ = character;
@@ -83,6 +90,9 @@ namespace Commando
             audialStimulusId_ = StimulusIDGenerator.getNext();
             drawOffset_ = gunLength_ / 2f;
             gunTip_ = gunLength_;
+
+            AmmoType_ = ammoType;
+            ClipSize_ = clipSize;
         }
 
         public void setDrawPipeline(List<DrawableObjectAbstract> pipeline)
