@@ -29,11 +29,13 @@ namespace Commando.objects.weapons
     {
         protected const string WEAPON_TEXTURE_NAME = "Pistol";
 
+        protected const AmmoTypeEnum AMMO_TYPE = AmmoTypeEnum.BUCKSHOT;
+        protected const int CLIP_SIZE = 6;
         protected const int TIME_TO_REFIRE = 20;
         protected const float SHOTGUN_SOUND_RADIUS = 250.0f;
 
         public Shotgun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
-            : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle)
+            : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle, AMMO_TYPE, CLIP_SIZE)
         {
             SOUND_RADIUS = SHOTGUN_SOUND_RADIUS;
         }

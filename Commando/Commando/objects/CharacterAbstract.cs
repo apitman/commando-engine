@@ -41,7 +41,7 @@ namespace Commando
 
         protected CharacterWeapon weapon_;
 
-        public WeaponAbstract Weapon_ { get; protected set; }
+        public RangedWeaponAbstract Weapon_ { get; protected set; }
 
         protected string name_;
 

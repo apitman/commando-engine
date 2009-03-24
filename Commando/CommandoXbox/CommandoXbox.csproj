@@ -376,6 +376,9 @@
     <Compile Include="..\Commando\objects\TileObject.cs">
       <Link>objects\TileObject.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\weapons\AmmoTypeEnum.cs">
+      <Link>objects\weapons\AmmoTypeEnum.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\Bullet.cs">
       <Link>objects\weapons\Bullet.cs</Link>
     </Compile>
@@ -394,14 +397,14 @@
     <Compile Include="..\Commando\objects\weapons\Projectile.cs">
       <Link>objects\weapons\Projectile.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\weapons\RangedWeaponAbstract.cs">
+      <Link>objects\weapons\RangedWeaponAbstract.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\Shotgun.cs">
       <Link>objects\weapons\Shotgun.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\weapons\Shrapnel.cs">
       <Link>objects\weapons\Shrapnel.cs</Link>
-    </Compile>
-    <Compile Include="..\Commando\objects\weapons\WeaponAbstract.cs">
-      <Link>objects\weapons\WeaponAbstract.cs</Link>
     </Compile>
     <Compile Include="..\Commando\Program.cs">
       <Link>Program.cs</Link>
