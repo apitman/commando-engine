@@ -480,17 +480,11 @@ namespace Commando
                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
                                && rightD.Y < HUD_BAR_DRAW_Y)
                             {
-                                // ERIC
-                                //Vector2 defRotation = new Vector2(1.0f, 0.0f);
-                                //objectRepresentation newObject = new objectRepresentation(DUMMY_ENEMY, rightD, defRotation, 0.2f);
-
-                                // AMP
                                 DummyEnemy dumE = new DummyEnemy(drawPipeline_, mousePos);
                                 // TODO: AMP Fix it so we don't have to do this next line of code
                                 dumE.getActuator().update(); // Makes it so the enemies are drawn in the correct position
 
                                 myLevel_.getEnemies().Add(dumE);
-                                // END
                             }
                             break;
                         }
@@ -572,16 +566,20 @@ namespace Commando
                             }
                     }
                 }
-                // END
             }
             else if (inputs.getButton(InputsEnum.BUTTON_3) && isObjSelected_)
             {
-                // ERIC
-                //myObjects_.RemoveAt(selectedIndex_);
-                // AMP
-                drawPipeline_.Remove(myLevel_.getEnemies()[selectedIndex_]);
-                myLevel_.getEnemies().RemoveAt(selectedIndex_);
-                // END
+                switch (typeSelected_)
+                {
+                    case 1:
+                        drawPipeline_.Remove(myLevel_.getEnemies()[selectedIndex_]);
+                        myLevel_.getEnemies().RemoveAt(selectedIndex_);
+                        break;
+                    case 2:
+                        drawPipeline_.Remove(myLevel_.getItems()[selectedIndex_]);
+                        myLevel_.getItems().RemoveAt(selectedIndex_);
+                        break;
+                }
                 isObjSelected_ = false;
                 selectedIndex_ = 0;
 
