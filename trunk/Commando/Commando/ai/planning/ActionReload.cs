@@ -21,13 +21,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Commando.ai
+namespace Commando.ai.planning
 {
-    /// <summary>
-    /// System responsible for finding paths around obstacles to get
-    /// to a specific destination.
-    /// </summary>
-    class SystemNavigation
+    class ActionReload : Action
     {
+        internal override bool testPreConditions(SearchNode node)
+        {
+            return
+                node.boolPasses(Variable.Weapon, true) &&
+                node.boolPasses(Variable.Ammo, false);
+        }
+
+        internal override SearchNode unifyRegressive(ref SearchNode node)
+        {
+            SearchNode parent = node.getPredecessor();
+            parent.action = new ActionReload();
+            parent.cost += 1;
+            parent.setBool(Variable.Ammo, false);
+            parent.setBool(Variable.Weapon, true);
+            return parent;
+        }
+
+        internal override void register(Dictionary<int, List<Action>> actionMap)
+        {
+            actionMap[Variable.Ammo].Add(this);
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace Commando.ai.planning
             return character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover) != null;
         }
 
-        internal override SearchNode unifyRegressive(SearchNode node)
+        internal override SearchNode unifyRegressive(ref SearchNode node)
         {
             // TODO
             // If the current location is resolved and doesn't have cover, we
@@ -71,9 +71,9 @@ namespace Commando.ai.planning
             return parent;
         }
 
-        internal override void register(Dictionary<int, Action> actionMap)
+        internal override void register(Dictionary<int, List<Action>> actionMap)
         {
-            throw new NotImplementedException();
+            actionMap[Variable.Cover].Add(this);
         }
     }
 }

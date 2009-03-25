@@ -25,8 +25,10 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.ai
 {
-    public class SystemCommunication : System
+    public class SystemCommunication
     {
+        public AI AI_;
+
         public bool isBroadcasting_;
 
         public string broadcastMessage_;
@@ -44,8 +46,9 @@ namespace Commando.ai
         /// <summary>
         /// Basic constructor
         /// </summary>
-        public SystemCommunication(AI ai, int broadcastRadius) : base(ai)
+        public SystemCommunication(AI ai, int broadcastRadius)
         {
+            AI_ = ai;
             broadcastRadius_ = broadcastRadius;
             isBroadcasting_ = false;
             broadcastMessage_ = "Default Message";
@@ -59,7 +62,7 @@ namespace Commando.ai
         /// Decides what, if anything, to broadcast, and broadcasts
         /// it
         /// </summary>
-        public override void update()
+        public void update()
         {
             if (isBroadcasting_)
             {

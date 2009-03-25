@@ -23,11 +23,18 @@ using System.Text;
 
 namespace Commando.ai
 {
-    /// <summary>
-    /// System responsible for identifying tactical positions and informing
-    /// other systems about tactical information.
-    /// </summary>
-    class SystemTactics
+    class SystemTargetSelection : System
     {
+        internal SystemTargetSelection(AI ai) : base(ai) { }
+
+        internal override void update()
+        {
+            Belief firstEnemy = AI_.Memory_.getFirstBelief(BeliefType.EnemyLoc);
+            if (firstEnemy != null)
+            {
+                AI_.Memory_.removeBeliefs(BeliefType.BestTarget);
+                AI_.Memory_.setBelief(new Belief(BeliefType.BestTarget, firstEnemy.handle_, 100, firstEnemy.position_, firstEnemy.value_));
+            }
+        }
     }
 }

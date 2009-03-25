@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.levels;
+using Commando.objects;
 
 namespace Commando.ai.planning
 {
@@ -28,7 +29,8 @@ namespace Commando.ai.planning
     {
         internal TileIndex target_;
 
-        public ActionGoto(TileIndex target)
+        public ActionGoto(NonPlayableCharacterAbstract character, TileIndex target)
+            : base(character)
         {
             target_ = target;
         }
@@ -39,11 +41,11 @@ namespace Commando.ai.planning
             return true;
         }
 
-        internal override SearchNode unifyRegressive(SearchNode node)
+        internal override SearchNode unifyRegressive(ref SearchNode node)
         {
             SearchNode parent = node.getPredecessor();
             TileIndex target = node.values[Variable.Location].t;
-            parent.action = new ActionGoto(target);
+            parent.action = new ActionGoto(character_, target);
 
             // TODO calculate distance
             float distance = 0;
@@ -62,14 +64,9 @@ namespace Commando.ai.planning
             return parent;
         }
 
-        internal override void reserve()
+        internal override void register(Dictionary<int, List<Action>> actionMap)
         {
-            throw new NotImplementedException();
-        }
-
-        internal override void register(Dictionary<int, Action> actionMap)
-        {
-            throw new NotImplementedException();
+            actionMap[Variable.Location].Add(this);
         }
     }
 }

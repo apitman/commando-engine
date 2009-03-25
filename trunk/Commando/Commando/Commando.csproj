@@ -101,6 +101,9 @@
     <Compile Include="ai\planning\ActionAttackRanged.cs" />
     <Compile Include="ai\planning\ActionAttackRangedCover.cs" />
     <Compile Include="ai\planning\ActionGoto.cs" />
+    <Compile Include="ai\planning\ActionInvestigate.cs" />
+    <Compile Include="ai\planning\ActionPatrol.cs" />
+    <Compile Include="ai\planning\ActionReload.cs" />
     <Compile Include="ai\planning\ActionTakeCover.cs" />
     <Compile Include="ai\planning\ActionThrowGrenade.cs" />
     <Compile Include="ai\planning\ActionType.cs" />
@@ -114,11 +117,10 @@
     <Compile Include="ai\Stimulus.cs" />
     <Compile Include="ai\System.cs" />
     <Compile Include="ai\SystemAiming.cs" />
-    <Compile Include="ai\SystemBehavior.cs" />
     <Compile Include="ai\SystemCommunication.cs" />
-    <Compile Include="ai\SystemNavigation.cs" />
+    <Compile Include="ai\SystemGoalSelection.cs" />
     <Compile Include="ai\SystemPlanning.cs" />
-    <Compile Include="ai\SystemTactics.cs" />
+    <Compile Include="ai\SystemTargetSelection.cs" />
     <Compile Include="ai\WorldState.cs" />
     <Compile Include="CharacterStatusElementInterface.cs" />
     <Compile Include="collisiondetection\BoundingLine.cs" />

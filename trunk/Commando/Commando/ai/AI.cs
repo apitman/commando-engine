@@ -16,13 +16,13 @@
  ***************************************************************************
 */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
 using Commando.levels;
 using Microsoft.Xna.Framework;
+using Commando.ai.planning;
 
 namespace Commando.ai
 {
@@ -34,6 +34,10 @@ namespace Commando.ai
         public NonPlayableCharacterAbstract Character_ { get; private set; }
 
         public Memory Memory_ { get; private set; }
+
+        internal List<Action> Actions_ { get; set; }
+        internal SearchNode CurrentGoal_ { get; set; }
+        internal List<Action> CurrentPlan_ { get; set; }
 
         protected List<Sensor> sensors_ = new List<Sensor>();
         protected List<System> systems_ = new List<System>();

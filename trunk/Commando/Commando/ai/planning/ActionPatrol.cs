@@ -20,18 +20,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
-namespace Commando.ai
+namespace Commando.ai.planning
 {
-    public abstract class System
+    class ActionPatrol : Action
     {
-        internal AI AI_;
+        internal const float COST = 5.0f;
 
-        internal System(AI ai)
+        internal ActionPatrol(NonPlayableCharacterAbstract character)
+            : base(character)
         {
-            AI_ = ai;
+
         }
 
-        internal abstract void update();
+        internal override bool testPreConditions(SearchNode node)
+        {
+            return true;
+        }
+
+        internal override SearchNode unifyRegressive(ref SearchNode node)
+        {
+            SearchNode parent = node.getPredecessor();
+            parent.action = new ActionPatrol(character_);
+            parent.cost += COST;
+            parent.setBool(Variable.HasPatrolled, false);
+            return parent;
+        }
+
+        internal override void register(Dictionary<int, List<Action>> actionMap)
+        {
+            actionMap[Variable.HasPatrolled].Add(this);
+        }
     }
 }

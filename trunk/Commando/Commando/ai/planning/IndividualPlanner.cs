@@ -23,25 +23,22 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
-    /*
-    using ActionMap = Dictionary<int, ActionType>;
 
     /// <summary>
     /// Performs goal-oriented action planning for a single agent.
     /// </summary>
     internal class IndividualPlanner
     {
-
-        private ActionMap actionMap_;
+        private Dictionary<int, List<Action>> actionMap_;
 
         private List<Action> plan_;
 
-        public IndividualPlanner(List<ActionType> actions)
+        public IndividualPlanner(List<Action> actions)
         {
             // initialize empty lists within ActionMap
             for (int i = 0; i < Variable.LENGTH; i++)
             {
-                actionMap_.Add(i, new List<ActionType>());
+                actionMap_.Add(i, new List<Action>());
             }
 
             // and then register each ActionType appropriately
@@ -51,10 +48,10 @@ namespace Commando.ai.planning
             }
         }
 
-        public WorkPerformed execute(SearchNode initial, SearchNode goal)
+        public void execute(SearchNode initial, SearchNode goal)
         {
-            List<SearchNode> openlist;
-            List<int> failedConditions;
+            List<SearchNode> openlist = new List<SearchNode>();
+            List<int> failedConditions = new List<int>();
             SearchNode current = goal; // BACKWARDS, START WITH GOAL
 
             // perform search
@@ -69,13 +66,13 @@ namespace Commando.ai.planning
 
                 for (int i = 0; i < failedConditions.Count; i++)
                 {
-                    List<ActionType> solutions = actionMap_[failedConditions[i]];
+                    List<Action> solutions = actionMap_[failedConditions[i]];
 
                     for (int j = 0; j < solutions.Count; j++)
                     {
                         if (solutions[j].testPreConditions(current))
                         {
-                            SearchNode predecessor = solutions[j].resolve(current);
+                            SearchNode predecessor = solutions[j].unifyRegressive(ref current);
 
                             predecessor.fValue = predecessor.cost + predecessor.dist(initial);
                             openlist.Add(predecessor);
@@ -114,5 +111,4 @@ namespace Commando.ai.planning
             return plan_;
         }
     }
-    */
 }

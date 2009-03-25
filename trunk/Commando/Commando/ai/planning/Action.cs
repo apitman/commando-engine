@@ -56,13 +56,13 @@ namespace Commando.ai.planning
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        internal abstract SearchNode unifyRegressive(SearchNode node);
+        internal abstract SearchNode unifyRegressive(ref SearchNode node);
 
         /// <summary>
         /// Register an action with an action map.
         /// </summary>
         /// <param name="actionMap"></param>
-        internal abstract void register(Dictionary<int, Action> actionMap);
+        internal abstract void register(Dictionary<int, List<Action>> actionMap);
 
         /// <summary>
         /// Reserve resources for this action.

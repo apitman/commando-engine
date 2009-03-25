@@ -127,20 +127,11 @@
     <Compile Include="..\Commando\ai\SystemAiming.cs">
       <Link>ai\SystemAiming.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\ai\SystemBehavior.cs">
-      <Link>ai\SystemBehavior.cs</Link>
-    </Compile>
     <Compile Include="..\Commando\ai\SystemCommunication.cs">
       <Link>ai\SystemCommunication.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\ai\SystemNavigation.cs">
-      <Link>ai\SystemNavigation.cs</Link>
-    </Compile>
     <Compile Include="..\Commando\ai\SystemPlanning.cs">
       <Link>ai\SystemPlanning.cs</Link>
-    </Compile>
-    <Compile Include="..\Commando\ai\SystemTactics.cs">
-      <Link>ai\SystemTactics.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\WorldState.cs">
       <Link>ai\WorldState.cs</Link>
