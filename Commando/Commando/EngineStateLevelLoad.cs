@@ -76,17 +76,21 @@ namespace Commando
         protected bool cancelFlag_;
         protected string windowsFileName_;
         protected bool windows_;
+        protected EngineStateInterface returnState_;
+        protected List<string> fileList_;
 
         public enum EngineStateTarget
         {
             GAMEPLAY,
-            LEVEL_EDITOR
+            LEVEL_EDITOR,
+            LEVEL_TRANSITION
         }
 
-        public EngineStateLevelLoad(Engine engine, EngineStateTarget target)
+        public EngineStateLevelLoad(Engine engine, EngineStateTarget target, EngineStateInterface returnState)
         {
             engine_ = engine;
             target_ = target;
+            returnState_ = returnState;
             instructions_ = FontMap.getInstance().getFont(INSTRUCTIONS_FONT);
             cancelFlag_ = false;
 
@@ -125,13 +129,13 @@ namespace Commando
             string[] files = Directory.GetFiles(directory);
 
             filepaths_ = new List<string>();
-            List<string> fileList = new List<string>();
+            fileList_ = new List<string>();
             for (int i = 0; i < files.Length; i++)
             {
                 if (Path.GetExtension(files[i]) == EngineStateLevelSave.LEVEL_EXTENSION)
                 {
                     filepaths_.Add(files[i]);
-                    fileList.Add(Path.GetFileNameWithoutExtension(files[i]));
+                    fileList_.Add(Path.GetFileNameWithoutExtension(files[i]));
                 }
             }
 
@@ -150,11 +154,11 @@ namespace Commando
                     if (Path.GetExtension(files[i]) == EngineStateLevelSave.LEVEL_EXTENSION)
                     {
                         filepaths_.Add(files[i]);
-                        fileList.Add(Path.GetFileNameWithoutExtension(files[i]));
+                        fileList_.Add(Path.GetFileNameWithoutExtension(files[i]));
                     }
                 }
             }
-            menuList_ = new MenuList(fileList, MENU_POSITION);
+            menuList_ = new MenuList(fileList_, MENU_POSITION);
         }
 
         public EngineStateInterface update(GameTime gameTime)
@@ -194,6 +198,13 @@ namespace Commando
                     case EngineStateTarget.LEVEL_EDITOR:
                         return new EngineStateLevelEditor(engine_, this, filepath, container_);
                         break;
+                    case EngineStateTarget.LEVEL_TRANSITION:
+                        {
+                            EngineStateLevelEditor myState = returnState_ as EngineStateLevelEditor;
+                            myState.setTransLevel(fileList_[cursorPos]);
+                            return returnState_;
+                            break;
+                        }
                 }
                 return new EngineStateGameplay(engine_, filepath, container_);
             }

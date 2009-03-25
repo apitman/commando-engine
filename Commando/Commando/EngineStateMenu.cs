@@ -146,11 +146,11 @@ namespace Commando
                 switch(cursorPos)
                 {
                     case 0:
-                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.GAMEPLAY);
+                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.GAMEPLAY, this);
                     case 1:
                         return new EngineStateControls(engine_);
                     case 2:
-                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_EDITOR);
+                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_EDITOR, this);
                     case 3:
                         engine_.Exit();
                         break;
