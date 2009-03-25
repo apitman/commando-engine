@@ -445,6 +445,7 @@ namespace Commando
                 if (Settings.getInstance().IsUsingMouse_)
                 {
                     mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
+                    int i;
                 }
                 else
                 {
@@ -463,8 +464,8 @@ namespace Commando
                             && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
                             && rightD.Y < HUD_BAR_DRAW_Y)
                             {
-                                int myX = (int)(mousePos.X) / 15;
-                                int myY = (int)(mousePos.Y) / 15;
+                                int myX = (int)(mousePos.X) / Tiler.tileSideLength_;
+                                int myY = (int)(mousePos.Y) / Tiler.tileSideLength_;
 
                                 // Edit the Level
                                 myLevel_.changeTile(curTileIndex_, myX, myY, drawPipeline_);
@@ -726,10 +727,9 @@ namespace Commando
                         bool foundTile = false;
                         for (int i = 0; i < NUM_TILES && foundTile == false; i++)
                         {
-                            
-                            Vector2 tilePos = new Vector2(((10.0f + i * 20.0f) % 365.0f + camOffset.X), (((((10 + i * 20) / 365) * 20.0f) + 335.0f) + camOffset.Y));
-                            if (mousePos.Y >= tilePos.Y - Tiler.tileSideLength_ && mousePos.Y < tilePos.Y + Tiler.tileSideLength_
-                                  && mousePos.X >= tilePos.X - Tiler.tileSideLength_ && mousePos.X < tilePos.X + Tiler.tileSideLength_)
+                            Vector2 tilePos = new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) + camOffset.X), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) + camOffset.Y));
+                            if (mousePos.Y >= tilePos.Y && mousePos.Y < tilePos.Y + Tiler.tileSideLength_
+                                  && mousePos.X >= tilePos.X && mousePos.X < tilePos.X + Tiler.tileSideLength_)
                                 {
                                     curTileIndex_ = i;
                                     foundTile = true;
@@ -741,12 +741,11 @@ namespace Commando
                 case (int)pallette_.misc:
                     {
                         bool foundTile = false;
-                        for (int i = 0; i < NUM_TILES && foundTile == false; i++)
+                        for (int i = 0; i < NUM_MISC && foundTile == false; i++)
                         {
-
-                            Vector2 tilePos = new Vector2(((10.0f + i * 35.0f) % 365.0f + camOffset.X), (((((10 + i * 35.0f) / 365) * 20.0f) + 335.0f) + camOffset.Y));
-                            if (mousePos.Y >= tilePos.Y - Tiler.tileSideLength_ && mousePos.Y < tilePos.Y + Tiler.tileSideLength_
-                                  && mousePos.X >= tilePos.X - Tiler.tileSideLength_ && mousePos.X < tilePos.X + Tiler.tileSideLength_)
+                            Vector2 tilePos = new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i + camOffset.X, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5 + camOffset.Y);
+                            if (mousePos.Y >= tilePos.Y && mousePos.Y < tilePos.Y + 2 * Tiler.tileSideLength_
+                                  && mousePos.X >= tilePos.X && mousePos.X < tilePos.X + 2 * Tiler.tileSideLength_)
                             {
                                 curTileIndex_ = i;
                                 foundTile = true;
@@ -825,13 +824,12 @@ namespace Commando
                         for (int i = 0; i < NUM_TILES; i++)
                         {
                             {
-                                TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) + camOffset.X), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) + camOffset.Y)), Constants.DEPTH_HUD);
+                                TextureMap.getInstance().getTexture("Tile_" + i).drawImageAbsolute(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15)), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f))), Constants.DEPTH_HUD);
 
                                 if (i == curTileIndex_)
-
-
-                                    TextureMap.getInstance().getTexture("TileHighlight").drawImageAbsolute(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
-
+                                {
+                                    TextureMap.getInstance().getTexture("TileHighlight").drawImageAbsolute(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) - 1), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) - 1)), Constants.DEPTH_HUD + 0.01f);
+                                }
                             }
                         }
                         break;
@@ -849,11 +847,11 @@ namespace Commando
                         i++;
                         TextureMap.fetchTexture("HealthBox").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
                         i++;
-                        TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i, (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
                         i++;
-                        TextureMap.fetchTexture("levelTransition").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i, (((10 * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
-                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * curTileIndex_, (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
-                        
+                        TextureMap.fetchTexture("levelTransition").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
+                        // If you add more stuff here, be sure to add "i++;", and change the const value NUM_MISC at the top of the file
+                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD + 0.01f);
                         
                         break;
                     }
