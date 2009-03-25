@@ -39,6 +39,10 @@
     <handle>Tiles\\LevelExit</handle>
   </image>
   <image>
+    <key>levelTransition</key>
+    <handle>Sprites\\levelTransition</handle>
+  </image>
+  <image>
     <key>BulletMedium</key>
     <handle>Sprites\\BulletMedium</handle>
   </image>
