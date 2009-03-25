@@ -321,7 +321,7 @@ namespace Commando
             {
                 myLevel_.getItems()[i].setCollisionDetector(collisionDetector_);
             }
-            LevelTransitionObject transition = new LevelTransitionObject(NEXT_LEVEL, collisionDetector_, tileBox, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(172.5f, 277.5f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
+            LevelTransitionObject transition = new LevelTransitionObject(NEXT_LEVEL, collisionDetector_, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(172.5f, 277.5f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
             tileBox.Clear();
             tileBox.Add(new Vector2(-45f, -15f));
             tileBox.Add(new Vector2(45f, -15f));

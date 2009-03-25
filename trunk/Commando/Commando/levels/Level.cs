@@ -182,6 +182,14 @@ namespace Commando.levels
                         Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
                         items_.Add(new AmmoBox(null, pipeline, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW));
                     }
+                    else if (itemElement.GetAttribute("type") == "aTrans")
+                    {
+                        Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
+                        string nextLevel;
+                        nextLevel = itemElement.GetAttribute("nextLevel");
+                        //List<Vector2> pointsList = new List<Vector2>((float)Convert.ToInt32(itemElement.GetAttribute("points")));
+                        items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, 20f, new Height(true, true), pipeline, TextureMap.fetchTexture("levelTransition"), new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), Constants.DEPTH_LOW));
+                    }
                 }
 
                 // Load player location from file
@@ -303,9 +311,20 @@ namespace Commando.levels
                     aBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
                     itemsElement.AppendChild(aBoxElement);
                 }
-            }
-            levelElement.AppendChild(itemsElement);
+                else if (items_[i] is LevelTransitionObject)
+                {
 
+                    LevelTransitionObject myTrans = items_[i] as LevelTransitionObject;
+                    XmlElement aTransElement = doc.CreateElement("item");
+                    aTransElement.SetAttribute("type", "aTrans");
+                    aTransElement.SetAttribute("posX", myTrans.getPosition().X.ToString());
+                    aTransElement.SetAttribute("posY", myTrans.getPosition().Y.ToString());
+                    aTransElement.SetAttribute("nextLevel", myTrans.getNextLevel());
+                    
+                    itemsElement.AppendChild(aTransElement);
+                }
+                levelElement.AppendChild(itemsElement);
+            }
             // Add playerLocation
             XmlElement playerLocElement = doc.CreateElement("playerLocation");
             playerLocElement.SetAttribute("x", playerStartLocation_.X.ToString());

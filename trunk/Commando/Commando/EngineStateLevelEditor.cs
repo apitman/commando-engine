@@ -54,7 +54,7 @@ namespace Commando
     {
         const int NUM_TILES = 23;
         const int NUM_PALLETTES = 3;
-        const int NUM_MISC = 3;
+        const int NUM_MISC = 4;
         const int MAX_MOUSE_X = 345;
         const int MAX_MOUSE_Y = 300;
         const int MIN_MOUSE_X = 30;
@@ -153,15 +153,21 @@ namespace Commando
         protected int numTilesTall_ = 22;
         protected int maxCursorX;
         protected int maxCursorY;
-
+        protected string transLevel_;
         public Level myLevel_;
         public string currentFilepath_;
-
+        
+        protected bool placeTransition_;
+        protected Vector2 transitionPos_;
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
         /// </summary>
         public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState, string filepath, StorageContainer container)
         {
+
+
+
+
             currentFilepath_ = filepath;
 
             engine_ = engine;
@@ -193,6 +199,11 @@ namespace Commando
 
             curTileIndex_ = 0;
             displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
+
+            
+
+            placeTransition_ = false;
+            transitionPos_ = new Vector2(0,0);
         }
 
         /// <summary>
@@ -200,6 +211,17 @@ namespace Commando
         /// </summary>
         /// <param name="gameTime">The GameTime parameter</param>
         /// <returns>Returns itself if user wants to stay in this mode. Returns EngineStateMenu otherwise.</returns>
+        public void setTransLevel(string transLevel)
+        {
+            transLevel_ = transLevel;
+            placeTransition_ = true;
+        }
+        public string getTransLevel()
+        {
+            return transLevel_;
+        }
+        
+        
         public EngineStateInterface update(GameTime gameTime)
         {
             InputSet inputs = InputSet.getInstance();
@@ -218,6 +240,14 @@ namespace Commando
             // END
 
             // Check the inputs
+            if (placeTransition_)
+            {
+                LevelTransitionObject myTransition = new LevelTransitionObject(transLevel_, null, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("levelTransition"), new Vector2(transitionPos_.X, transitionPos_.Y), new Vector2(1f, 0f), Constants.DEPTH_LOW);
+                myLevel_.getItems().Add(myTransition);
+
+
+                placeTransition_ = false;
+            }
             if (inputs.getLeftDirectionalY() < 0)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
@@ -384,7 +414,15 @@ namespace Commando
                                     case 2:
                                         {
                                             myLevel_.setPlayerStartLocation(mousePos);
-
+                                            break;
+                                        }
+                                    case 3:
+                                        {
+                                            transitionPos_.X = mousePos.X;
+                                            transitionPos_.Y = mousePos.Y;
+                                            return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_TRANSITION, this);
+                                            //LevelTransitionObject myTransition = new LevelTransitionObject(
+                                            //myLevel_.getItems().Add(LevelTransitionObject
                                             break;
                                         }
                                 }
@@ -480,6 +518,15 @@ namespace Commando
                                         {
                                             myLevel_.setPlayerStartLocation(mousePos);
 
+                                            break;
+                                        }
+                                    case 3:
+                                        {
+                                            transitionPos_.X = mousePos.X;
+                                            transitionPos_.Y = mousePos.Y;
+                                            return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_TRANSITION, this);
+                                            //LevelTransitionObject myTransition = new LevelTransitionObject(
+                                            //myLevel_.getItems().Add(LevelTransitionObject
                                             break;
                                         }
                                 }
@@ -772,18 +819,23 @@ namespace Commando
             
             switch (curPallette_)
             {
-                
-                case (int)pallette_.tile:
-                    for (int i = 0; i < NUM_TILES; i++)
-                    {
-                        TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) + camOffset.X), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) + camOffset.Y)), Constants.DEPTH_HUD);
 
-                        if (i == curTileIndex_)
+                case (int)pallette_.tile:
+                    {
+                        for (int i = 0; i < NUM_TILES; i++)
                         {
-                            TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) + camOffset.X - 1), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) + camOffset.Y - 1)), Constants.DEPTH_HUD + 0.01f);
+                            {
+                                TextureMap.getInstance().getTexture("Tile_" + i).drawImage(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) + camOffset.X), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) + camOffset.Y)), Constants.DEPTH_HUD);
+
+                                if (i == curTileIndex_)
+
+
+                                    TextureMap.getInstance().getTexture("TileHighlight").drawImageAbsolute(0, new Vector2((10.0f + i * 20.0f) % 365.0f, (((10 + i * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
+
+                            }
                         }
+                        break;
                     }
-                    break;
                 case (int)pallette_.enemy:
                     {
                         TextureMap.getInstance().getTexture("basic_enemy_walk").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f, HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
@@ -797,8 +849,12 @@ namespace Commando
                         i++;
                         TextureMap.fetchTexture("HealthBox").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
                         i++;
-                        TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD + 0.01f);
+                        TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i, (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        i++;
+                        TextureMap.fetchTexture("levelTransition").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * i, (((10 * 20) / 365) * 20.0f) + 335.0f), Constants.DEPTH_HUD);
+                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(10.0f + 35.0f * curTileIndex_, (((10 * 20) / 365) * 20.0f) + 335.0f ), Constants.DEPTH_HUD);
+                        
+                        
                         break;
                     }
             }

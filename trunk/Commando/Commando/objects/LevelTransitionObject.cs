@@ -21,9 +21,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using Commando.collisiondetection;
 using Microsoft.Xna.Framework;
 using Commando.levels;
+using Microsoft.Xna.Framework.Storage;
 
 namespace Commando.objects
 {
@@ -39,10 +41,29 @@ namespace Commando.objects
 
         protected string nextLevel_;
 
-        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, List<Vector2> points, Vector2 center, float radius, Height height, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth)
+        protected List<Vector2> points_;
+
+        protected string nextLevelPath_;
+
+
+
+        protected static readonly List<Vector2> BOUND_POINTS;
+        static LevelTransitionObject()
+        {
+            BOUND_POINTS = new List<Vector2>();
+            BOUND_POINTS.Add(new Vector2(-15.0f, -15.0f));
+            BOUND_POINTS.Add(new Vector2(15.0f, -15.0f));
+            BOUND_POINTS.Add(new Vector2(15.0f, 15.0f));
+            BOUND_POINTS.Add(new Vector2(-15.0f, 15.0f));
+
+
+        }
+
+
+        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, float radius, Height height, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth)
             : base(pipeline, image, position, direction, depth)
         {
-            bounds_ = new ConvexPolygon(points, center);
+            bounds_ = new ConvexPolygon(BOUND_POINTS, center);
             bounds_.rotate(direction_, position_);
             radius_ = radius;
             height_ = height;
@@ -52,13 +73,28 @@ namespace Commando.objects
             }
             detector_ = detector;
             nextLevel_ = nextLevel;
+
+            StorageDevice storageDevice = Settings.getInstance().StorageDevice_;
+            StorageContainer container_ = storageDevice.OpenContainer(EngineStateLevelSave.CONTAINER_NAME);
+            string directory = Path.Combine(container_.Path, EngineStateLevelSave.DIRECTORY_NAME);
+            nextLevelPath_ = Path.Combine(directory, nextLevel_);
+            nextLevelPath_ = nextLevelPath_ + EngineStateLevelSave.LEVEL_EXTENSION;
+       
+
         }
 
         public float getRadius()
         {
             return radius_;
         }
-
+        public string getNextLevel()
+        {
+            return nextLevel_;
+        }
+        public void setNextLevel(string nextLevel)
+        {
+            nextLevel_ = nextLevel;
+        }
         public ConvexPolygonInterface getBounds(HeightEnum height)
         {
             return bounds_;
@@ -81,9 +117,11 @@ namespace Commando.objects
 
         public void handleCollision(CollisionObjectInterface obj)
         {
+            
+
             if (obj is PlayableCharacterAbstract)
             {
-                GlobalHelper.getInstance().getGameplayState().moveToNextLevel(nextLevel_);
+                GlobalHelper.getInstance().getGameplayState().moveToNextLevel(nextLevelPath_);
             }
         }
 
@@ -116,6 +154,19 @@ namespace Commando.objects
             if (detector_ != null)
             {
                 detector_.remove(this);
+            }
+        }
+
+        public override void setCollisionDetector(CollisionDetectorInterface collisionDetector)
+        {
+            if (detector_ != null)
+            {
+                detector_.remove(this);
+            }
+            detector_ = collisionDetector;
+            if (detector_ != null)
+            {
+                detector_.register(this);
             }
         }
     }
