@@ -145,7 +145,9 @@ namespace Commando.ai.planning
         internal const int Health = 3;
         internal const int Location = 4;
         internal const int Weapon = 5;
+        internal const int HasInvestigated = 6;
+        internal const int HasPatrolled = 7;
 
-        internal const int LENGTH = 6;
+        internal const int LENGTH = 8;
     }
 }

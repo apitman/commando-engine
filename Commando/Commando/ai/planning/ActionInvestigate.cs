@@ -20,18 +20,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.levels;
 
-namespace Commando.ai
+namespace Commando.ai.planning
 {
-    public abstract class System
+    class ActionInvestigate : Action
     {
-        internal AI AI_;
-
-        internal System(AI ai)
+        internal override bool testPreConditions(SearchNode node)
         {
-            AI_ = ai;
+            return true;
         }
 
-        internal abstract void update();
+        internal override SearchNode unifyRegressive(ref SearchNode node)
+        {
+            TileIndex investigateLocation =
+                character_.AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget).data_.t;
+
+            ActionGoto goAction = new ActionGoto(character_, investigateLocation);
+            SearchNode parent = goAction.unifyRegressive(ref node);
+
+            parent.setBool(Variable.HasInvestigated, false);
+
+            return parent;
+        }
+
+        internal override void register(Dictionary<int, List<Action>> actionMap)
+        {
+            actionMap[Variable.HasInvestigated].Add(this);
+        }
     }
 }

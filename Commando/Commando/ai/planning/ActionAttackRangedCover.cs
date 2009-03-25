@@ -20,12 +20,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
 namespace Commando.ai.planning
 {
     internal class ActionAttackRangedCover : Action
     {
         protected internal const int COST = 1;
+
+        internal ActionAttackRangedCover(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+
+        }
 
         internal override bool testPreConditions(SearchNode node)
         {
@@ -35,10 +42,10 @@ namespace Commando.ai.planning
                 node.boolPasses(Variable.Ammo, true);
         }
 
-        internal override SearchNode unifyRegressive(SearchNode node)
+        internal override SearchNode unifyRegressive(ref SearchNode node)
         {
             SearchNode parent = node.getPredecessor();
-            parent.action = new ActionAttackRanged();
+            parent.action = new ActionAttackRangedCover(character_);
             parent.cost += COST;
             parent.setInt(Variable.TargetHealth, node.values[Variable.TargetHealth].i + 1);
             parent.setBool(Variable.Weapon, true);
@@ -52,9 +59,9 @@ namespace Commando.ai.planning
             throw new NotImplementedException();
         }
 
-        internal override void register(Dictionary<int, Action> actionMap)
+        internal override void register(Dictionary<int, List<Action>> actionMap)
         {
-            throw new NotImplementedException();
+            actionMap[Variable.TargetHealth].Add(this);
         }
     }
 }

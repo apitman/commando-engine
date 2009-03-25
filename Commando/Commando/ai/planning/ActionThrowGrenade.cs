@@ -30,12 +30,12 @@ namespace Commando.ai.planning
             throw new NotImplementedException();
         }
 
-        internal override SearchNode unifyRegressive(SearchNode node)
+        internal override SearchNode unifyRegressive(ref SearchNode node)
         {
             throw new NotImplementedException();
         }
 
-        internal override void register(Dictionary<int, Action> actionMap)
+        internal override void register(Dictionary<int, List<Action>> actionMap)
         {
             throw new NotImplementedException();
         }

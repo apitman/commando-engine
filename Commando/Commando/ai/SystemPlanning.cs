@@ -16,10 +16,10 @@
  ***************************************************************************
 */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using Commando.ai.planning;
+using Commando.levels;
 
 namespace Commando.ai
 {
@@ -27,13 +27,51 @@ namespace Commando.ai
     /// System responsible for action planning based on beliefs about the
     /// world and the character's available actions.
     /// </summary>
-    internal class SystemPlanning
+    internal class SystemPlanning : System
     {
+        internal SearchNode previousGoal_;
 
+        internal SystemPlanning(AI ai) : base(ai) { }
+
+        internal override void update()
+        {
+            if (previousGoal_ != AI_.CurrentGoal_)
+            {
+                // Clean up previous plan
+                List<Action> oldPlan = AI_.CurrentPlan_;
+                for (int i = 0; i < oldPlan.Count; i++)
+                {
+                    oldPlan[i].unreserve();
+                }
+
+                // And now get a new one
+                SearchNode initial = new SearchNode();
+
+                bool hasWeapon = AI_.Character_.Weapon_ != null;
+                bool hasAmmo = false;
+                if (hasWeapon)
+                {
+                    hasAmmo = AI_.Character_.Weapon_.CurrentAmmo_ > 0;
+                }
+                TileIndex myLoc =
+                    GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(
+                        AI_.Character_.getPosition());
+
+                initial.setInt(Variable.Health, AI_.Character_.getHealth().getValue());
+                initial.setInt(Variable.TargetHealth, 0);
+                initial.setBool(Variable.Weapon, hasWeapon);
+                initial.setBool(Variable.Ammo, hasAmmo);
+                initial.setBool(Variable.HasInvestigated, false);
+                initial.setBool(Variable.HasPatrolled, false);
+                initial.setPosition(Variable.Location, ref myLoc);
+
+                IndividualPlanner planner = new IndividualPlanner(AI_.Actions_);
+                planner.execute(initial, AI_.CurrentGoal_);
+                AI_.CurrentPlan_ = planner.getResult();
+            }
+
+            previousGoal_ = AI_.CurrentGoal_;
+        }
     }
 
-    // TODO
-    // See MainPlayer shoot()
-    // Handle is the backend of the gun
-    // 
 }

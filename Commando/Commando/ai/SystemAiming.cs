@@ -38,7 +38,7 @@ namespace Commando.ai
 
         internal SystemAiming(AI ai) : base(ai) { }
 
-        public override void update()
+        internal override void update()
         {
             // TODO
             // change this to most relevant enemy

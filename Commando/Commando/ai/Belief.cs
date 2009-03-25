@@ -71,6 +71,8 @@ namespace Commando.ai
         AllyHealth,
         SuspiciousNoise,
 
-        BestCover
+        BestTarget,
+        BestCover,
+        InvestigateTarget
     }
 }
