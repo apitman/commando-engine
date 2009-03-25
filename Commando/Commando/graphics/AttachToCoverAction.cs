@@ -24,6 +24,7 @@ using Commando.objects;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Commando.collisiondetection;
+using Commando.levels;
 
 namespace Commando.graphics
 {
@@ -49,7 +50,9 @@ namespace Commando.graphics
 
         protected String nextActionSet_;
 
-        public AttachToCoverAction(CharacterAbstract character, AnimationInterface animation, String nextActionSet, float speed)
+        protected Height nextHeight_;
+
+        public AttachToCoverAction(CharacterAbstract character, AnimationInterface animation, String nextActionSet, Height nextHeight, float speed)
         {
             character_ = character;
             animation_ = animation;
@@ -59,6 +62,7 @@ namespace Commando.graphics
             finished_ = false;
             speed_ = speed;
             nextActionSet_ = nextActionSet;
+            nextHeight_ = nextHeight;
         }
    
         public void setCover(CoverObject coverObject)
@@ -104,6 +108,7 @@ namespace Commando.graphics
                 finished_ = true;
                 (character_.getActuator() as DefaultActuator).setCoverObject(coverObject_);
                 (character_.getActuator() as DefaultActuator).setCurrentActionSet(nextActionSet_);
+                character_.setHeight(nextHeight_);
             }
 
             animation_.update(newPosition, direction);

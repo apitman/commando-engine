@@ -33,6 +33,7 @@ namespace Commando.objects.weapons
         protected const int TIME_TO_REFIRE = 20;
         protected const float SHOTGUN_SOUND_RADIUS = 250.0f;
         internal const int CLIP_SIZE = 6;
+        protected const int NUM_SHOTS = 8;
 
         public Shotgun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle, AMMO_TYPE, CLIP_SIZE)
@@ -45,17 +46,29 @@ namespace Commando.objects.weapons
         {
             if (refireCounter_ == 0 && CurrentAmmo_ > 0)
             {
+                Random rand = new Random();
                 rotation_.Normalize();
-                Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
+                /*Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
                 Vector2 rotation3 = CommonFunctions.rotate(rotation_, 10 * Math.PI / 180f);
                 rotation2.Normalize();
                 rotation3.Normalize();
-                Vector2 bulletPos = position_ + rotation_ * 15f;
-                Vector2 bulletPos2 = position_ + rotation2 * 15f;
-                Vector2 bulletPos3 = position_ + rotation3 * 15f;
+                Vector2 bulletPos = position_ + rotation_ * gunLength_;
+                Vector2 bulletPos2 = position_ + rotation_ * gunLength_;
+                Vector2 bulletPos3 = position_ + rotation_ * gunLength_;
                 Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, rotation_);
                 Bullet bullet2 = new Bullet(drawPipeline_, collisionDetector_, bulletPos2, rotation2);
-                Bullet bullet3 = new Bullet(drawPipeline_, collisionDetector_, bulletPos3, rotation3);
+                Bullet bullet3 = new Bullet(drawPipeline_, collisionDetector_, bulletPos3, rotation3);*/
+                Vector2 bulletPos = position_ + rotation_ * gunLength_;
+                for (int i = 0; i < NUM_SHOTS; i++)
+                {
+                    Vector2 tempPos = bulletPos;
+                    tempPos.X += ((float)rand.NextDouble() - 1f) * 2f;
+                    tempPos.Y += ((float)rand.NextDouble() - 1f) * 2f;
+                    Bullet bullet = new SmallBullet(drawPipeline_, 
+                                                    collisionDetector_, 
+                                                    tempPos, 
+                                                    CommonFunctions.rotate(rotation_, ((float)rand.NextDouble() - 0.5f) * 20f * Math.PI / 180f));
+                }
                 refireCounter_ = TIME_TO_REFIRE;
                 CurrentAmmo_--;
                 character_.getAmmo().update(CurrentAmmo_);

@@ -26,7 +26,7 @@ using Commando.levels;
 
 namespace Commando.objects.weapons
 {
-    class Bullet : Projectile
+    public class Bullet : Projectile
     {
         protected const string TEXTURE_NAME = "BulletMedium";
         protected const float RADIUS = 2.5f;
@@ -34,6 +34,7 @@ namespace Commando.objects.weapons
         protected const float DEPTH = 0.5f;
         protected const int DAMAGE = 5;
         protected static readonly Height HEIGHT = new Height(true, true);
+        protected int damage_;
 
         protected static readonly ConvexPolygon BOUNDS;
 
@@ -50,13 +51,13 @@ namespace Commando.objects.weapons
         public Bullet(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
             : base(pipeline, TextureMap.fetchTexture(TEXTURE_NAME), detector, BOUNDS, RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
         {
-
+            damage_ = DAMAGE;
         }
 
         public Bullet(GameTexture texture, List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
             : base(pipeline, texture, detector, BOUNDS, RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
         {
-
+            damage_ = DAMAGE;
         }
 
         public override void update(GameTime gameTime)
@@ -70,7 +71,7 @@ namespace Commando.objects.weapons
         {
             if (collidedInto_ != null && collidedInto_ is CharacterAbstract)
             {
-                (collidedInto_ as CharacterAbstract).damage(DAMAGE, this);
+                (collidedInto_ as CharacterAbstract).damage(damage_, this);
             }
             ShrapnelGenerator.createShrapnel(pipeline_, position_,
                 Microsoft.Xna.Framework.Graphics.Color.Yellow,

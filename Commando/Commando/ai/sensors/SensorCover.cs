@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
 namespace Commando.ai
 {
@@ -29,7 +30,15 @@ namespace Commando.ai
 
         public override void collect()
         {
-            throw new NotImplementedException();
+            if (AI_.Memory_.getFirstBelief(BeliefType.CoverLoc) == null)
+            {
+                List<CoverObject> coverObjects = WorldState.CoverList_;
+                for (int i = 0; i < coverObjects.Count; i++)
+                {
+                    Belief cover = new Belief(BeliefType.CoverLoc, coverObjects[i], 100f, coverObjects[i].getPosition(), 0f);
+                    AI_.Memory_.setBelief(cover);
+                }
+            }
         }
     }
 }

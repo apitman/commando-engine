@@ -130,8 +130,17 @@
     <Compile Include="..\Commando\ai\SystemCommunication.cs">
       <Link>ai\SystemCommunication.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\SystemCoverSelection.cs">
+      <Link>ai\SystemCoverSelection.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SystemGoalSelection.cs">
+      <Link>ai\SystemGoalSelection.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\SystemPlanning.cs">
       <Link>ai\SystemPlanning.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\SystemTargetSelection.cs">
+      <Link>ai\SystemTargetSelection.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\WorldState.cs">
       <Link>ai\WorldState.cs</Link>
@@ -322,6 +331,9 @@
     <Compile Include="..\Commando\graphics\ShootActionInterface.cs">
       <Link>graphics\ShootActionInterface.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\ThrowGrenadeAction.cs">
+      <Link>graphics\ThrowGrenadeAction.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\levels\CoverGenerator.cs">
       <Link>levels\CoverGenerator.cs</Link>
     </Compile>
@@ -427,8 +439,17 @@
     <Compile Include="..\Commando\objects\weapons\Bullet.cs">
       <Link>objects\weapons\Bullet.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\weapons\BulletLimitedRange.cs">
+      <Link>objects\weapons\BulletLimitedRange.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\DroneGun.cs">
       <Link>objects\weapons\DroneGun.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\FragGrenade.cs">
+      <Link>objects\weapons\FragGrenade.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Grenade.cs">
+      <Link>objects\weapons\Grenade.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\weapons\MachineGun.cs">
       <Link>objects\weapons\MachineGun.cs</Link>
@@ -450,6 +471,9 @@
     </Compile>
     <Compile Include="..\Commando\objects\weapons\Shrapnel.cs">
       <Link>objects\weapons\Shrapnel.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\SmallBullet.cs">
+      <Link>objects\weapons\SmallBullet.cs</Link>
     </Compile>
     <Compile Include="..\Commando\Program.cs">
       <Link>Program.cs</Link>

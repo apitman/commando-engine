@@ -12,6 +12,7 @@
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk_Red.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk_Green.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk_Pistol.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_StandToShoot.xml</texture>
   <image>
     <key>PistolIcon</key>

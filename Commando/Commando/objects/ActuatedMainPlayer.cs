@@ -147,22 +147,25 @@ namespace Commando.objects
             actions["crouch"].Add("moveTo", new CharacterRunToAction(this, crouch_runTo, SPEED));
             actions["crouch"].Add("rest", new CharacterStayStillAction(this, crouch_rest));
             actions["crouch"].Add("crouch", new CrouchAction(this, crouch, "stand", new Height(true, true)));
-            actions["crouch"].Add("cover", new AttachToCoverAction(this, crouch_cover, "cover", SPEED));
+            actions["crouch"].Add("cover", new AttachToCoverAction(this, crouch_cover, "cover", new Height(true, false), SPEED));
             actions["crouch"].Add("shoot", new CharacterShootAction());
+            actions["crouch"].Add("throw", new ThrowGrenadeAction(this, crouch_rest, new Vector2(30f, 0f)));
             actions.Add("stand", new Dictionary<string, CharacterActionInterface>());
             actions["stand"].Add("move", new CharacterRunAction(this, run, SPEED));
             actions["stand"].Add("moveTo", new CharacterRunToAction(this, runTo, SPEED));
             actions["stand"].Add("rest", new CharacterStayStillAction(this, rest));
             actions["stand"].Add("crouch", new CrouchAction(this, crouch_crouch, "crouch", new Height(true, false)));
-            actions["stand"].Add("cover", new AttachToCoverAction(this, cover, "cover", SPEED));
+            actions["stand"].Add("cover", new AttachToCoverAction(this, cover, "cover", new Height(true, false), SPEED));
             actions["stand"].Add("shoot", new CharacterShootAction());
+            actions["stand"].Add("throw", new ThrowGrenadeAction(this, rest, new Vector2(30f, 0f)));
             actions.Add("cover", new Dictionary<string, CharacterActionInterface>());
             actions["cover"].Add("move", new CharacterCoverMoveAction(this, cover_run, SPEED));
             actions["cover"].Add("moveTo", new CharacterCoverMoveAction(this, cover_runTo, SPEED));
             actions["cover"].Add("rest", new CharacterStayStillAction(this, cover_rest));
             actions["cover"].Add("crouch", new CrouchAction(this, cover_crouch, "cover", new Height(true, false)));
-            actions["cover"].Add("cover", new DetachFromCoverAction(this, cover_cover, "stand", SPEED));
+            actions["cover"].Add("cover", new DetachFromCoverAction(this, cover_cover, "stand", new Height(true, true), SPEED));
             actions["cover"].Add("shoot", new CharacterCoverShootAction(this, cover_shoot, 1));
+            actions["cover"].Add("throw", new ThrowGrenadeAction(this, cover_rest, new Vector2(30f, 0f)));
             actuator_ = new DefaultActuator(actions, this, "stand");
 
             List<GameTexture> anims = new List<GameTexture>();
@@ -183,7 +186,7 @@ namespace Commando.objects
 
             // Add the other weapons to the character's inventory
             Inventory_.Weapons_.Enqueue(new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
-            Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
+            Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f)));
 
             height_ = new Height(true, true);
         }
@@ -262,9 +265,11 @@ namespace Commando.objects
                 inputSet_.setToggle(Commando.controls.InputsEnum.BUTTON_3);
             }
 
-            if(inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_4))
+            if(inputSet_.getButton(Commando.controls.InputsEnum.LEFT_TRIGGER))
             {
-                direction_.Length();
+                Grenade grenade = new FragGrenade(pipeline_, collisionDetector_, direction_, Vector2.Zero, direction_);
+                actuator_.throwGrenade(grenade);
+                inputSet_.setToggle(InputsEnum.LEFT_TRIGGER);
             }
 
             if (lastCoverObject_ != null && inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_4))

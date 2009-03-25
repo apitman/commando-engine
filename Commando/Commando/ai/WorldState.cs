@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
 namespace Commando.ai
 {
@@ -32,11 +33,13 @@ namespace Commando.ai
         static internal Dictionary<int, Stimulus> Audial_ {get; private set;}
         static internal List<CharacterAbstract> EnemyList_ { get; set; }
         static internal CharacterAbstract MainPlayer_ { get; set; }
+        static internal List<CoverObject> CoverList_ { get; set; }
 
         static WorldState()
         {
             Audial_ = new Dictionary<int, Stimulus>();
             EnemyList_ = new List<CharacterAbstract>();
+            CoverList_ = new List<CoverObject>();
         }
 
         private WorldState() {}
@@ -45,6 +48,7 @@ namespace Commando.ai
         {
             Audial_.Clear();
             EnemyList_.Clear();
+            CoverList_.Clear();
         }
     }
 
