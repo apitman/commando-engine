@@ -24,6 +24,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.objects;
+using Commando.objects.weapons;
 
 namespace Commando.graphics
 {
@@ -108,6 +109,17 @@ namespace Commando.graphics
             ShootActionInterface shoot = (ShootActionInterface)actions_[currentActionSet_]["shoot"];
             shoot.shoot(weapon);
             currentAction_ = currentAction_.interrupt(shoot);
+        }
+
+        public void throwGrenade(Grenade grenade)
+        {
+            ThrowGrenadeAction thrw = (ThrowGrenadeAction)actions_[currentActionSet_]["throw"];
+            thrw.throwGrenade(grenade);
+            currentAction_ = currentAction_.interrupt(thrw);
+        }
+
+        public void reload()
+        {
         }
 
         public void move(Vector2 direction)
@@ -198,6 +210,11 @@ namespace Commando.graphics
             CoverActionInterface cover = (CoverActionInterface)actions_[currentActionSet_]["cover"];
             cover.setCover(coverObject);
             currentAction_ = currentAction_.interrupt(cover);
+        }
+
+        public bool isFinished()
+        {
+            return currentAction_.isFinished();
         }
 
         protected void setSlowRotationAngle(Vector2 newDirection)

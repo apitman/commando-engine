@@ -26,7 +26,7 @@ using Commando.levels;
 
 namespace Commando.objects.weapons
 {
-    internal abstract class Grenade : Projectile
+    public abstract class Grenade : Projectile
     {
         protected const float RADIUS = 3;
         protected static readonly Height HEIGHT = new Height(true, true);

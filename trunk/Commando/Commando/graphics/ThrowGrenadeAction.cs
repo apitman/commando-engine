@@ -16,74 +16,59 @@
 ***************************************************************************
 */
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
+using Commando.objects.weapons;
 using Microsoft.Xna.Framework;
-using Commando.levels;
 
 namespace Commando.graphics
 {
-    public class CharacterCoverShootAction : ShootActionInterface
+    public class ThrowGrenadeAction : CharacterActionInterface
     {
-        private const int PRIORITY = 12;
+        private const int PRIORITY = 17;
 
         protected int priority_;
 
         protected CharacterAbstract character_;
 
-        protected AnimationInterface animation_;
+        protected Vector2 throwOffset_;
 
-        protected int frameToShoot_;
-
-        protected int currentFrame_;
-
-        protected RangedWeaponAbstract weapon_;
+        protected Grenade grenade_;
 
         protected bool finished_;
 
-        protected bool holding_;
+        protected AnimationInterface animation_;
 
-        protected Height oldHeight_;
-
-        public CharacterCoverShootAction(CharacterAbstract character, AnimationInterface animation, int frameToShoot)
+        public ThrowGrenadeAction(CharacterAbstract character, AnimationInterface animation, Vector2 throwOffset)
         {
             character_ = character;
             animation_ = animation;
-            frameToShoot_ = frameToShoot;
+            throwOffset_ = throwOffset;
             priority_ = PRIORITY;
+            finished_ = true;
         }
-        
-        public void shoot(RangedWeaponAbstract weapon)
+
+        public void throwGrenade(Grenade grenade)
         {
-            weapon_ = weapon;
+            grenade_ = grenade;
         }
+
         public void update()
         {
-            animation_.updateFrameNumber(currentFrame_);
-            if (currentFrame_ == frameToShoot_)
-            {
-                weapon_.shoot();
-                if (!holding_)
-                {
-                    currentFrame_++;
-                }
-            }
-            else
-            {
-                currentFrame_++;
-                if (currentFrame_ >= animation_.getNumFrames())
-                {
-                    finished_ = true;
-                    character_.setHeight(oldHeight_);
-                }
-            }
-            Vector2 direction = character_.getDirection();
             Vector2 position = character_.getPosition();
-            animation_.update(position, direction);
-            holding_ = false;
+            Vector2 direction = character_.getDirection();
+            float angle = CommonFunctions.getAngle(direction);
+            float cosA = (float)Math.Cos(angle);
+            float sinA = (float)Math.Sin(angle);
+            Vector2 newPos = Vector2.Zero;
+            newPos.X = (throwOffset_.X) * cosA - (throwOffset_.Y) * sinA + position.X;
+            newPos.Y = (throwOffset_.X) * sinA + (throwOffset_.Y) * cosA + position.Y;
+            grenade_.setPosition(newPos);
+            grenade_.setDirection(direction);
+            finished_ = true;
         }
 
         public void draw()
@@ -91,7 +76,7 @@ namespace Commando.graphics
             animation_.draw();
         }
 
-        public void draw(Color color)
+        public void draw(Microsoft.Xna.Framework.Graphics.Color color)
         {
             animation_.draw(color);
         }
@@ -103,12 +88,7 @@ namespace Commando.graphics
 
         public CharacterActionInterface interrupt(CharacterActionInterface newAction)
         {
-            if (newAction == this)
-            {
-                holding_ = true;
-                return this;
-            }
-            if (newAction.getPriority() <= priority_)
+            if (newAction == this || (!finished_ && newAction.getPriority() <= priority_))
             {
                 return this;
             }
@@ -129,13 +109,9 @@ namespace Commando.graphics
         public void start()
         {
             finished_ = false;
-            holding_ = false;
-            currentFrame_ = 0;
             animation_.reset();
             animation_.setPosition(character_.getPosition());
             animation_.setRotation(character_.getDirection());
-            oldHeight_ = character_.getHeight();
-            character_.setHeight(new Height(true, true));
         }
     }
 }

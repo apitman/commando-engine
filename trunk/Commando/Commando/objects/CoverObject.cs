@@ -52,6 +52,8 @@ namespace Commando.objects
 
         protected float radius_;
 
+        protected Vector2 coverDirection_;
+
         public CoverObject(CollisionDetectorInterface detector, List<Vector2> points, Vector2 position, Vector2 leftOrTop, Vector2 rightOrBottom)
         {
             if (detector != null)
@@ -59,7 +61,7 @@ namespace Commando.objects
                 detector.register(this);
             }
             collisionDetector_ = detector;
-            boundsPolygon_ = new ConvexPolygon(points, new Vector2(0f, 0f));
+            boundsPolygon_ = new ConvexPolygon(points, Vector2.Zero);
             radius_ = 0;
             foreach (Vector2 vec in points)
             {
@@ -81,6 +83,7 @@ namespace Commando.objects
             {
                 orientation_ = CoverOrientationEnum.HORIZONTAL;
             }
+            coverDirection_ = needsToFace(position_);
         }
 
         public Vector2 needsToMove(Vector2 position, float radius)
@@ -205,6 +208,11 @@ namespace Commando.objects
         public Height getHeight()
         {
             return HEIGHT;
+        }
+
+        public Vector2 getCoverDirection()
+        {
+            return coverDirection_;
         }
     }
 }

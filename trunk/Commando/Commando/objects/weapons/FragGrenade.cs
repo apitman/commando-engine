@@ -39,7 +39,7 @@ namespace Commando.objects.weapons
 
         public override void explode()
         {
-            double fractionAngle = 2 * Math.PI / NUM_PIECES;
+            double fractionAngle = MathHelper.TwoPi / NUM_PIECES;
 
             for (int i = 0; i < NUM_PIECES; i++)
             {
@@ -48,6 +48,7 @@ namespace Commando.objects.weapons
                 BulletLimitedRange bullet =
                     new BulletLimitedRange(pipeline_, collisionDetector_, position_, dir, RANGE_RADIUS);
             }
+            die();
         }
     }
 }

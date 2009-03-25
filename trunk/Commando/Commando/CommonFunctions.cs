@@ -92,9 +92,9 @@ namespace Commando
         /// <returns></returns>
         public static Vector2 getVector(float rotation)
         {
-            double oppOverHyp = Math.Tan(rotation);
-            Vector2 result = new Vector2((float)oppOverHyp, 1);
-            result.Normalize();
+            double cos = Math.Cos(rotation);
+            double sin = Math.Sin(rotation);
+            Vector2 result = new Vector2((float)cos, (float)sin);
             return result;
         }
 
@@ -105,9 +105,9 @@ namespace Commando
         /// <returns></returns>
         public static Vector2 getVector(double rotation)
         {
-            double oppOverHyp = Math.Tan(rotation);
-            Vector2 result = new Vector2((float)oppOverHyp, 1);
-            result.Normalize();
+            double cos = Math.Cos(rotation);
+            double sin = Math.Sin(rotation);
+            Vector2 result = new Vector2((float)cos, (float)sin);
             return result;
         }
     }

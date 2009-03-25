@@ -484,6 +484,16 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\PlayerTemp_Walk_Pistol.png">
+      <Name>PlayerTemp_Walk_Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Pistol_New.png">
+      <Name>Pistol_New</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Sprites\MachineGunIcon.png">
       <Name>MachineGunIcon</Name>
       <Importer>TextureImporter</Importer>
@@ -504,6 +514,12 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML\Sprites\PlayerTemp_Walk_Pistol.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>PlayerTemp_Walk_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
     </Content>
     <Content Include="XML\Sprites\PlayerTemp_StandToShoot.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -70,6 +70,7 @@ namespace Commando.ai
         AllyLoc,
         AllyHealth,
         SuspiciousNoise,
+        CoverLoc,
 
         BestTarget,
         BestCover,
