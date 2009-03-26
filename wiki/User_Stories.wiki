@@ -33,18 +33,20 @@
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fight enemies which attach to cover (Ken, Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fight enemies which throw grenades (Ken)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fight enemies which can reload (Andrew)
-  # [http://www.plixer.com/manual/images/redX.jpg]User's enemies move intelligently around obstacles without unnecessary wall-hugging (Ken)
+  # [http://www.plixer.com/manual/images/redX.jpg]User's enemies move intelligently around obstacles without unnecessary wall-hugging (Ken) - Postponed because any efficient algorithm which won't miss paths requires a full-blown path smoother
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]Users can see what the enemies are communicating to each other (Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character can pickup and switch between pistol, machine gun, and shotgun (Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fire bullets at both high and low heights (Jared)
-  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see an options screen that shows the controls and has screen resolution, muting, and possibly debug mode and change storage device options (Ken)
-  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's enemies will create dynamic plans to combat the player (Ken)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see an options screen that shows the controls and has screen resolution, muting, debug mode, and change storage device options (Ken)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]Extra: User's enemies will create dynamic plans to combat the player (Ken)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]Extra: User can see stack traces of exceptions when running on PC (Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]Extra: User begins game with a main start page on Xbox 360, which detects active controller and sets storage device (Ken)
 
   === Level Editor ===
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can link levels together with waypoints (Eric)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can place pistols, machine guns, and shotguns in the level editor (Eric, Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see a level editor menu that will allow the user to choose whether to save the game or not when quitting (Eric)
-  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can save levels on the PC using a Windows form or dialog box (Andrew) Done, but not working on computers without Gamer Services.
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can save levels on the PC using a Windows form or dialog box (Andrew) - Done, but not working on computers without Gamer Services.
 
 == Build 4: Feb. 24 - Mar. 12 ==
 
