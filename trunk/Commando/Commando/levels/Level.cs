@@ -126,7 +126,7 @@ namespace Commando.levels
                 XmlElement ele = (XmlElement)doc.GetElementsByTagName("level")[0];
                 width_ = Convert.ToInt32(ele.GetAttribute("numTilesWide"));
                 height_ = Convert.ToInt32(ele.GetAttribute("numTilesTall"));
-                
+
                 int[,] loadedTiles = new int[height_, width_];
                 tiles_ = new TileObject[height_, width_];
 
@@ -190,16 +190,28 @@ namespace Commando.levels
                         //List<Vector2> pointsList = new List<Vector2>((float)Convert.ToInt32(itemElement.GetAttribute("points")));
                         items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, 20f, new Height(true, true), pipeline, TextureMap.fetchTexture("levelTransition"), new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), Constants.DEPTH_LOW));
                     }
+                    else if (itemElement.GetAttribute("type") == "aWpnBox")
+                    {
+                        Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
+                        WeaponBox.WeaponType mytype;
+                        if (itemElement.GetAttribute("weaponType") == "machineGun")
+                            mytype = WeaponBox.WeaponType.MachineGun;
+                        else if (itemElement.GetAttribute("weaponType") == "pistol")
+                             mytype = WeaponBox.WeaponType.Pistol;
+                        else 
+                            mytype = WeaponBox.WeaponType.Shotgun;
+                        items_.Add(new WeaponBox(null, pipeline, pos, Vector2.Zero, Constants.DEPTH_LOW, mytype));
+                    }
+
+                    // Load player location from file
+                    XmlElement playerLocation = (XmlElement)doc.GetElementsByTagName("playerLocation")[0];
+                    playerStartLocation_ = new Vector2((float)Convert.ToInt32(playerLocation.GetAttribute("x")), (float)Convert.ToInt32(playerLocation.GetAttribute("y")));
+
+                    //TODO: get from XML
+                    //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
+                    //
+                    player_ = null;
                 }
-
-                // Load player location from file
-                XmlElement playerLocation = (XmlElement)doc.GetElementsByTagName("playerLocation")[0];
-                playerStartLocation_ = new Vector2((float)Convert.ToInt32(playerLocation.GetAttribute("x")), (float)Convert.ToInt32(playerLocation.GetAttribute("y")));
-
-                //TODO: get from XML
-                //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
-                //
-                player_ = null;
             }
             catch (Exception)
             {
@@ -246,7 +258,7 @@ namespace Commando.levels
 
             return this;
         }
-
+        
         public void writeLevelToFile(string filename)
         {
             // Create the document
@@ -322,6 +334,25 @@ namespace Commando.levels
                     aTransElement.SetAttribute("nextLevel", myTrans.getNextLevel());
                     
                     itemsElement.AppendChild(aTransElement);
+                }
+                else if (items_[i] is WeaponBox)
+                {
+                    WeaponBox myWpnBox = items_[i] as WeaponBox;
+                    XmlElement aWpnBoxElement = doc.CreateElement("item");
+                    aWpnBoxElement.SetAttribute("type", "aWpnBox");
+                    aWpnBoxElement.SetAttribute("posX", myWpnBox.getPosition().X.ToString());
+                    aWpnBoxElement.SetAttribute("posY", myWpnBox.getPosition().Y.ToString());
+                    string wpnType;
+                    if (myWpnBox.WeapnType == WeaponBox.WeaponType.MachineGun)
+                        wpnType = "machineGun";
+                    else if (myWpnBox.WeapnType == WeaponBox.WeaponType.Pistol)
+                        wpnType = "pistol";
+                    else
+                        wpnType = "shotgun";
+                        aWpnBoxElement.SetAttribute("weaponType", wpnType);
+                        itemsElement.AppendChild(aWpnBoxElement);
+
+
                 }
                 levelElement.AppendChild(itemsElement);
             }

@@ -521,12 +521,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\levelTransition.bmp">
-      <Link>Sprites\levelTransition.bmp</Link>
-      <Name>levelTransition</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="..\..\Commando\Content\Sprites\MachineGun.png">
       <Link>Sprites\MachineGun.png</Link>
       <Name>MachineGun</Name>
@@ -605,8 +599,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\levelTransition.bmp">
-      <Link>Sprites\levelTransition.bmp</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\levelTransition.png">
+      <Link>Sprites\levelTransition.png</Link>
       <Name>levelTransition</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
