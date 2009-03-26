@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Commando.levels;
 using Commando.objects;
+using Commando.graphics;
 
 namespace Commando.ai.planning
 {
@@ -30,6 +31,12 @@ namespace Commando.ai.planning
         protected const float COST = 1.0f;
 
         internal TileIndex coverLocation_;
+
+        internal ActionTakeCover(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+
+        }
 
         internal ActionTakeCover(NonPlayableCharacterAbstract character, ref TileIndex coverLocation)
             : base(character)
@@ -74,6 +81,26 @@ namespace Commando.ai.planning
         internal override void register(Dictionary<int, List<Action>> actionMap)
         {
             actionMap[Variable.Cover].Add(this);
+        }
+
+        /// <summary>
+        /// Send signal to actuator to attach to a piece of cover.
+        /// </summary>
+        /// <returns>Returns true if successful.</returns>
+        internal override bool initialize()
+        {
+            Belief bestCover = character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover);
+            (character_.getActuator() as DefaultActuator).cover((bestCover.handle_ as CoverObject));
+            return true;
+        }
+
+        /// <summary>
+        /// Poll actuator to see if it is done attaching to cover.
+        /// </summary>
+        /// <returns>Returns true once attached.</returns>
+        internal override bool update()
+        {
+            return (character_.getActuator() as DefaultActuator).isFinished();
         }
     }
 }

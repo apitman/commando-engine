@@ -69,7 +69,6 @@ namespace Commando
 
         protected Engine engine_;
         protected MenuList menuList_;
-        protected StorageContainer container_;
         protected EngineStateTarget target_;
         protected List<string> filepaths_;
         protected GameFont instructions_;
@@ -123,8 +122,8 @@ namespace Commando
 
         private void loadList(StorageDevice storageDevice)
         {
-            container_ = storageDevice.OpenContainer(EngineStateLevelSave.CONTAINER_NAME);
-            string directory = Path.Combine(container_.Path, EngineStateLevelSave.DIRECTORY_NAME);
+            StorageContainer container = ContainerManager.getOpenContainer();
+            string directory = Path.Combine(container.Path, EngineStateLevelSave.DIRECTORY_NAME);
             Directory.CreateDirectory(directory);
             string[] files = Directory.GetFiles(directory);
 
@@ -173,10 +172,10 @@ namespace Commando
                 switch (target_)
                 {
                     case EngineStateTarget.GAMEPLAY:
-                        return new EngineStateGameplay(engine_, windowsFileName_, null);
+                        return new EngineStateGameplay(engine_, windowsFileName_);
                         break;
                     case EngineStateTarget.LEVEL_EDITOR:
-                        return new EngineStateLevelEditor(engine_, this, windowsFileName_, null);
+                        return new EngineStateLevelEditor(engine_, this, windowsFileName_);
                         break;
                 }
             }
@@ -193,10 +192,10 @@ namespace Commando
                 switch (target_)
                 {
                     case EngineStateTarget.GAMEPLAY:
-                        return new EngineStateGameplay(engine_, filepath, container_);
+                        return new EngineStateGameplay(engine_, filepath);
                         break;
                     case EngineStateTarget.LEVEL_EDITOR:
-                        return new EngineStateLevelEditor(engine_, this, filepath, container_);
+                        return new EngineStateLevelEditor(engine_, this, filepath);
                         break;
                     case EngineStateTarget.LEVEL_TRANSITION:
                         {
@@ -206,7 +205,7 @@ namespace Commando
                             break;
                         }
                 }
-                return new EngineStateGameplay(engine_, filepath, container_);
+                return new EngineStateGameplay(engine_, filepath);
             }
             if (inputs.getLeftDirectionalY() > 0)
             {

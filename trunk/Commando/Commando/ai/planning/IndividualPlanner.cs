@@ -29,7 +29,8 @@ namespace Commando.ai.planning
     /// </summary>
     internal class IndividualPlanner
     {
-        private Dictionary<int, List<Action>> actionMap_;
+        private Dictionary<int, List<Action>> actionMap_
+            = new Dictionary<int,List<Action>>();
 
         private List<Action> plan_;
 
@@ -97,11 +98,13 @@ namespace Commando.ai.planning
 
             // retrieve results
             List<Action> plan = new List<Action>();
-            while (current != null)
+            while (current != null && current.action != null)
             {
                 plan.Add(current.action);
                 current = current.next;
             }
+            // note: the current.action != null check prevents a bug in the situation
+            //  where the initial state fulfills the goal state
 
             plan_ = plan;
         }

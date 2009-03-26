@@ -20,33 +20,44 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework;
-using Commando.collisiondetection;
 
-namespace Commando.objects.weapons
+namespace Commando
 {
-    class BulletLimitedRange : Bullet
+    internal class ContainerManager
     {
-        protected float maxDistanceSq_;
-        protected Vector2 origPosition_;
 
-        internal BulletLimitedRange(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction, float range)
-            : base(pipeline, detector, position, direction)
+#if !XBOX
+        internal const string CONTAINER_NAME = "Commando";
+#else
+        internal const string CONTAINER_NAME = "CommandoXbox";
+#endif
+
+        protected static StorageContainer[] container_
+            = new StorageContainer[4];
+
+        internal static StorageContainer getOpenContainer()
         {
-            maxDistanceSq_ = range * range;
-            origPosition_ = position;
+            return getOpenContainer(Settings.getInstance().CurrentPlayer_);
         }
 
-        public override void update(GameTime gameTime)
+        internal static StorageContainer getOpenContainer(PlayerIndex player)
         {
-            base.update(gameTime);
-            if ((position_ - origPosition_).LengthSquared() >= maxDistanceSq_)
+            int index = (int)player;
+
+            if (container_[index] == null || container_[index].IsDisposed)
             {
-                ShrapnelGenerator.createShrapnel(pipeline_, position_,
-                Microsoft.Xna.Framework.Graphics.Color.Yellow,
-                Constants.DEPTH_DEBUG_LINES);
-                this.die();
+                StorageDevice device = Settings.getInstance().StorageDevice_;
+                if (device == null)
+                {
+                    throw new NotImplementedException();
+                }
+                container_[index] = device.OpenContainer(CONTAINER_NAME);
+                return container_[index];
             }
+
+            return container_[index];
         }
     }
 }

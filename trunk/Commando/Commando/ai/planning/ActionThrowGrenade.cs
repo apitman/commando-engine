@@ -39,5 +39,15 @@ namespace Commando.ai.planning
         {
             throw new NotImplementedException();
         }
+
+        internal override bool update()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override bool initialize()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

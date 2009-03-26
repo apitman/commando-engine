@@ -35,13 +35,28 @@ namespace Commando.ai
 
         internal override void update()
         {
-            if (previousGoal_ != AI_.CurrentGoal_)
+            List<int> differences = new List<int>();
+            bool differencesFlag = false;
+            if (AI_.CurrentGoal_ != null && previousGoal_ != null)
+            {
+                AI_.CurrentGoal_.resolvesWith(previousGoal_, differences);
+                if (differences.Count > 0)
+                {
+                    differencesFlag = true;
+                }
+            }
+
+            if (AI_.CurrentGoal_ != null &&
+                (differencesFlag || AI_.CurrentPlan_.Count == 0))
             {
                 // Clean up previous plan
-                List<Action> oldPlan = AI_.CurrentPlan_;
-                for (int i = 0; i < oldPlan.Count; i++)
+                if (AI_.CurrentPlan_ != null)
                 {
-                    oldPlan[i].unreserve();
+                    List<Action> oldPlan = AI_.CurrentPlan_;
+                    for (int i = 0; i < oldPlan.Count; i++)
+                    {
+                        oldPlan[i].unreserve();
+                    }
                 }
 
                 // And now get a new one
@@ -68,6 +83,10 @@ namespace Commando.ai
                 IndividualPlanner planner = new IndividualPlanner(AI_.Actions_);
                 planner.execute(initial, AI_.CurrentGoal_);
                 AI_.CurrentPlan_ = planner.getResult();
+                if (AI_.CurrentPlan_ != null && AI_.CurrentPlan_.Count > 0)
+                {
+                    AI_.CurrentPlan_[0].initialize();
+                }
             }
 
             previousGoal_ = AI_.CurrentGoal_;

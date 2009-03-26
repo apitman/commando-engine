@@ -42,11 +42,9 @@ namespace Commando.ai
         protected List<Sensor> sensors_ = new List<Sensor>();
         protected List<System> systems_ = new List<System>();
 
-        protected List<TileIndex> path_; // temporary
-
-        protected int lastPathfindUpdate_;
-
-        protected const int PATHFIND_THRESHOLD = 15;
+        //protected List<TileIndex> path_;
+        //protected int lastPathfindUpdate_;
+        //protected const int PATHFIND_THRESHOLD = 15;
 
         protected InferenceEngine inferenceEngine_;
 
@@ -55,13 +53,31 @@ namespace Commando.ai
         public AI(NonPlayableCharacterAbstract npc)
         {
             Character_ = npc;
+
             Memory_ = new Memory();
+
+            Actions_ = new List<Action>();
+            Actions_.Add(new ActionTakeCover(npc));
+            Actions_.Add(new ActionInvestigate(npc));
+            Actions_.Add(new ActionGoto(npc));
+            Actions_.Add(new ActionPatrol(npc));
+
+            CurrentGoal_ = null;
+            CurrentPlan_ = new List<Action>();
+
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorSeeCharacter(this));
+
             systems_.Add(new SystemAiming(this));
-            path_ = new List<TileIndex>();
-            lastPathfindUpdate_ = 0;
+            systems_.Add(new SystemTargetSelection(this));
+            systems_.Add(new SystemCoverSelection(this));
+            systems_.Add(new SystemGoalSelection(this));
+            systems_.Add(new SystemPlanning(this));
+
+            //path_ = new List<TileIndex>();
+            //lastPathfindUpdate_ = 0;
             inferenceEngine_ = new InferenceEngine(this);
+
             CommunicationSystem_ = new SystemCommunication(this, 100);
         }
 
@@ -82,6 +98,33 @@ namespace Commando.ai
 
             CommunicationSystem_.update();
 
+            if (CurrentPlan_ != null && CurrentPlan_.Count > 0)
+            {
+                bool isValid = CurrentPlan_[0].checkIsStillValid();
+                if (!isValid)
+                {
+                    for (int i = 0; i < CurrentPlan_.Count; i++)
+                    {
+                        CurrentPlan_[i].unreserve();
+                    }
+                    CurrentPlan_.Clear();
+                }
+                else
+                {
+                    bool done = CurrentPlan_[0].update();
+                    if (done)
+                    {
+                        CurrentPlan_.RemoveAt(0);
+                        if (CurrentPlan_.Count > 0)
+                        {
+                            CurrentPlan_[0].initialize();
+                        }
+                    }
+                }
+            }
+
+            /*
+            
             // TODO Temporary block
             // Tells the AI to proceed to the location of a known enemy
             //  if it does not currently have a place to go
@@ -156,6 +199,7 @@ namespace Commando.ai
             }
 
             // End test block
+            */
         }
 
         public void draw()

@@ -74,9 +74,9 @@ namespace Commando.objects
             detector_ = detector;
             nextLevel_ = nextLevel;
 
-            StorageDevice storageDevice = Settings.getInstance().StorageDevice_;
-            StorageContainer container_ = storageDevice.OpenContainer(EngineStateLevelSave.CONTAINER_NAME);
-            string directory = Path.Combine(container_.Path, EngineStateLevelSave.DIRECTORY_NAME);
+            //StorageDevice storageDevice = Settings.getInstance().StorageDevice_;
+            StorageContainer container = ContainerManager.getOpenContainer();
+            string directory = Path.Combine(container.Path, EngineStateLevelSave.DIRECTORY_NAME);
             nextLevelPath_ = Path.Combine(directory, nextLevel_);
             nextLevelPath_ = nextLevelPath_ + EngineStateLevelSave.LEVEL_EXTENSION;
        

@@ -38,20 +38,33 @@ namespace Commando.ai
 
         internal override void update()
         {
+            // No need to select cover if there is no enemy nearby
+            Belief bestTarget = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+            if (bestTarget == null)
+            {
+                return;
+            }
+
             List<Belief> beliefs = AI_.Memory_.getBeliefs(BeliefType.CoverLoc);
+            if (beliefs.Count == 0)
+            {
+                return;
+            }
+
             float lowValue = float.PositiveInfinity;
             int lowBelief = -1;
             float tempVal;
             Vector2 coverPos = Vector2.Zero, coverDir = Vector2.Zero;
-            Vector2 pos = AI_.Character_.getPosition();
-            Vector2 characterPos = AI_.Memory_.getFirstBelief(BeliefType.EnemyLoc).position_;
+            Vector2 myPos = AI_.Character_.getPosition();
+            Vector2 targetPos = bestTarget.position_;
+
             for (int i = 0; i < beliefs.Count; i++)
             {
                 coverPos = beliefs[i].position_;
-                tempVal = (float)CommonFunctions.distance(pos, coverPos);
+                tempVal = (float)CommonFunctions.distance(myPos, coverPos);
                 tempVal = (float)Math.Sqrt(tempVal);
                 CoverObject cover = (CoverObject)beliefs[i].handle_;
-                float angleToPlayer = MathHelper.WrapAngle(CommonFunctions.getAngle(characterPos - coverPos));
+                float angleToPlayer = MathHelper.WrapAngle(CommonFunctions.getAngle(targetPos - coverPos));
                 float angleOfCover = MathHelper.WrapAngle(CommonFunctions.getAngle(cover.getCoverDirection()));
                 float angleBetweenCoverPlayer = MathHelper.WrapAngle(angleOfCover - angleToPlayer);
                 angleBetweenCoverPlayer *= 2f;

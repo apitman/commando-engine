@@ -38,11 +38,6 @@ namespace Commando
         protected const string KEYBOARD_MESSAGE = "Name Your Level";
         protected const string KEYBOARD_DESCRIPTION = "Enter a name for this level.";
 
-#if !XBOX
-        public const string CONTAINER_NAME = "Commando";
-#else
-        public const string CONTAINER_NAME = "CommandoXbox";
-#endif
         public const string DIRECTORY_NAME = "levels";
         public const string LEVEL_EXTENSION = ".commandolevel";
 
@@ -161,7 +156,8 @@ namespace Commando
 
         private void saveLevel(StorageDevice storageDevice)
         {
-            StorageContainer container = storageDevice.OpenContainer(CONTAINER_NAME);
+            StorageContainer container =
+                ContainerManager.getOpenContainer();
             string directory = Path.Combine(container.Path, DIRECTORY_NAME);
             System.IO.Directory.CreateDirectory(directory);
             string filename = Path.Combine(directory, currentFilename_);

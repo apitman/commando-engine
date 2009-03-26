@@ -79,11 +79,11 @@ namespace Commando.ai.planning
         #region Runtime Methods
         // -----------------------------------------------------------------------
 
-        internal /*abstract */bool checkIsStillValid() { return false; }
+        internal /*abstract */bool checkIsStillValid() { return true; }
 
-        internal /*abstract */bool initialize() { return false; }
+        internal abstract bool initialize();
 
-        internal /*abstract */bool update() { return false; }
+        internal abstract bool update();
 
         #endregion
     }

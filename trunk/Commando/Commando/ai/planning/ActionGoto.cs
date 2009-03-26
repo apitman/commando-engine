@@ -28,6 +28,13 @@ namespace Commando.ai.planning
     class ActionGoto : Action
     {
         internal TileIndex target_;
+        internal List<TileIndex> path_;
+
+        public ActionGoto(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+            
+        }
 
         public ActionGoto(NonPlayableCharacterAbstract character, TileIndex target)
             : base(character)
@@ -67,6 +74,45 @@ namespace Commando.ai.planning
         internal override void register(Dictionary<int, List<Action>> actionMap)
         {
             actionMap[Variable.Location].Add(this);
+        }
+
+        internal override bool update()
+        {
+            TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
+            TileIndex curIndex = grid.getTileIndex(character_.getPosition());
+
+            if (path_ != null && path_.Count > 0)
+            {
+                TileIndex curTarget = path_[0];
+
+                // If we've reached our current target
+                if (TileIndex.equals(curIndex, curTarget))
+                {
+                    // Go on to the next if there is another
+                    if (path_.Count > 1)
+                    {
+                        path_.RemoveAt(0);
+                        curTarget = path_[0];
+                    }
+                    else // otherwise we're done
+                    {
+                        return true;
+                    }
+                }
+
+                character_.moveTo(grid.getTileCenter(path_[0]));
+            }
+            else
+            {
+                path_ = AStarPathfinder.run(grid, curIndex, target_, character_.getRadius(), character_.getHeight());
+            }
+
+            return false;
+        }
+
+        internal override bool initialize()
+        {
+            return true;
         }
     }
 }

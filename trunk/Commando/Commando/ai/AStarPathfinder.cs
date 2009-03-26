@@ -268,13 +268,13 @@ namespace Commando.ai
         /// <param name="height">Height of the character performing the search</param>
         /// <returns>Waypoints which should allow the character to reach the goal.</returns>
         public static List<TileIndex>
-            run(TileGrid grid, Vector2 start, Vector2 destination, float radius, Height height)
+            run(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height)
         {
             // Initialize the static structures used by the search
             reset();
 
-            start_ = grid.getTileIndex(start);
-            goal_ = grid.getTileIndex(destination);
+            start_ = start;
+            goal_ = destination;
 
             // Project our start and goal nodes into the search space, if possible
             // TODO
@@ -330,6 +330,13 @@ namespace Commando.ai
             }
 
             return recreatePath();
+        }
+
+
+        public static List<TileIndex>
+            run(TileGrid grid, Vector2 start, Vector2 destination, float radius, Height height)
+        {
+            return run(grid, grid.getTileIndex(start), grid.getTileIndex(destination), radius, height);
         }
 
         /// <summary>
