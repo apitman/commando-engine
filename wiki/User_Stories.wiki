@@ -13,7 +13,6 @@
 == Build 6: Mar. 31 - Apr. 8 ==
 
   === Gameplay ===
-  # User's enemies will create dynamic plans to combat the player
   # User's enemies will create dynamic squad-based plans to combat the player
   # User can either hear or see enemy agents communicating (either via sound or text)
   # User can hear some sound effects
@@ -26,25 +25,26 @@
 == Build 5: Mar. 17 - Mar. 26 ==
 
   === Gameplay ===
-  # User's character can crouch (Jared)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character can crouch (Jared)
   # User's character can attach to cover (Jared)
-  # User's character can throw grenades (Ken)
-  # User's character can reload (Andrew)
-  # User can fight enemies which crouch (Ken)
-  # User can fight enemies which attach to cover (Ken)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character can throw grenades (Jared, Ken)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character can reload (Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fight enemies which crouch (Jared)
+  # User can fight enemies which attach to cover (Ken, Jared)
   # User can fight enemies which throw grenades (Ken)
-  # User can fight enemies which can reload (Andrew)
-  # User's enemies move intelligently around obstacles without unnecessary wall-hugging (Ken)
-  # User's can see what the enemies are communicating to each other (Andrew)
-  # User's character can pickup and switch between pistol, machine gun, and shotgun (Ken)
-  # User can fire bullets at both high and low heights (Jared)
-  # User can see an options screen that shows the controls and has screen resolution, muting, and possibly debug mode and change storage device options (Ken)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fight enemies which can reload (Andrew)
+  # [http://www.plixer.com/manual/images/redX.jpg]User's enemies move intelligently around obstacles without unnecessary wall-hugging (Ken)
+  # Users can see what the enemies are communicating to each other (Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's character can pickup and switch between pistol, machine gun, and shotgun (Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can fire bullets at both high and low heights (Jared)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see an options screen that shows the controls and has screen resolution, muting, and possibly debug mode and change storage device options (Ken)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User's enemies will create dynamic plans to combat the player (Ken)
 
   === Level Editor ===
-  # User can link levels together with waypoints (Eric)
-  # User can place pistols, machine guns, and shotguns in the level editor (Eric, Andrew)
-  # User can see a level editor menu that will allow the user to choose whether to save the game or not when quitting (Ken)
-  # User can save levels on the PC using a Windows form or dialog box (Andrew, Ken)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can link levels together with waypoints (Eric)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can place pistols, machine guns, and shotguns in the level editor (Eric, Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can see a level editor menu that will allow the user to choose whether to save the game or not when quitting (Eric)
+  # User can save levels on the PC using a Windows form or dialog box (Andrew)
 
 == Build 4: Feb. 24 - Mar. 12 ==
 
