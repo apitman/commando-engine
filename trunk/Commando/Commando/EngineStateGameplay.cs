@@ -371,6 +371,7 @@ namespace Commando
             //HumanEnemy humanENEMY = new HumanEnemy(drawPipeline_, new Vector2(200f, 100f));
             //humanENEMY.setCollisionDetector(collisionDetector_);
 
+
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;
         }
