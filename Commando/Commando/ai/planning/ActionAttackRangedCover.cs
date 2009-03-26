@@ -63,5 +63,15 @@ namespace Commando.ai.planning
         {
             actionMap[Variable.TargetHealth].Add(this);
         }
+
+        internal override bool update()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override bool initialize()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

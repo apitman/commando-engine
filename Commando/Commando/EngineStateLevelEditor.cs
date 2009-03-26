@@ -162,12 +162,8 @@ namespace Commando
         /// <summary>
         /// The constructor takes an EngineStateInterface to return to when level editing is done
         /// </summary>
-        public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState, string filepath, StorageContainer container)
+        public EngineStateLevelEditor(Engine engine, EngineStateInterface returnState, string filepath)
         {
-
-
-
-
             currentFilepath_ = filepath;
 
             engine_ = engine;
@@ -182,10 +178,6 @@ namespace Commando
 
             myLevel_ = new Level(new Tileset(), null);
             myLevel_.getLevelFromFile(filepath, drawPipeline_);
-            if (container != null)
-            {
-                container.Dispose();
-            }
 
             maxCursorX = numTilesWide_ - 3;
             maxCursorY = numTilesTall_ - 3;

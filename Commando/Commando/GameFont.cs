@@ -117,7 +117,7 @@ namespace Commando
         /// Draws a string to the screen with the specified options
         /// </summary>
         /// <param name="text">The text you want to draw</param>
-        /// <param name="pos">The position to start drawing the top-left corner of the text</param>
+        /// <param name="myPos">The position to start drawing the top-left corner of the text</param>
         /// <param name="color">The color of the drawn text</param>
         public void drawString(string text, Vector2 pos, Color color)
         {
@@ -128,7 +128,7 @@ namespace Commando
         /// Draws a string to the screen with the specified options
         /// </summary>
         /// <param name="text">The text you want to draw</param>
-        /// <param name="pos">The position to start drawing the top-left corner of the text</param>
+        /// <param name="myPos">The position to start drawing the top-left corner of the text</param>
         /// <param name="color">The color of the drawn text</param>
         /// <param name="rotation">How far to rotate the text</param>
         /// <param name="origin">The width and height of the text</param>
@@ -144,7 +144,7 @@ namespace Commando
         /// Draws a string to the screen with the specified options
         /// </summary>
         /// <param name="text">The text you want to draw</param>
-        /// <param name="pos">The position to start drawing the top-left corner of the text</param>
+        /// <param name="myPos">The position to start drawing the top-left corner of the text</param>
         /// <param name="color">The color of the drawn text</param>
         /// <param name="rotation">How far to rotate the text</param>
         /// <param name="layerDepth">The depth at which to draw the text</param>
@@ -158,7 +158,7 @@ namespace Commando
         /// Draws a string to the screen with the specified options
         /// </summary>
         /// <param name="text">The text you want to draw</param>
-        /// <param name="pos">The position to start drawing the top-left corner of the text</param>
+        /// <param name="myPos">The position to start drawing the top-left corner of the text</param>
         /// <param name="color">The color of the drawn text</param>
         /// <param name="rotation">How far to rotate the text</param>
         /// <param name="scale">How big or small to scale the text</param>

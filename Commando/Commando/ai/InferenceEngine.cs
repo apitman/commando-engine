@@ -71,6 +71,8 @@ namespace Commando.ai
                     {
                         AI_.Memory_.removeBelief(belief);
                     }
+                    Belief temp = new Belief(BeliefType.InvestigateTarget, null, 100, belief.position_, belief.value_);
+                    AI_.Memory_.setBelief(temp);
                 }
             }
         }

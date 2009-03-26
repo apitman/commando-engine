@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
@@ -51,6 +52,18 @@ namespace Commando.ai.planning
         internal override void register(Dictionary<int, List<Action>> actionMap)
         {
             actionMap[Variable.HasPatrolled].Add(this);
+        }
+
+        internal override bool update()
+        {
+            Vector2 target = character_.getPosition() + 5 * character_.getDirection();
+            character_.moveTo(target);
+            return false;
+        }
+
+        internal override bool initialize()
+        {
+            return true;
         }
     }
 }

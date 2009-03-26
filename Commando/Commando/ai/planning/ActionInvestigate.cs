@@ -21,11 +21,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.levels;
+using Commando.objects;
 
 namespace Commando.ai.planning
 {
     class ActionInvestigate : Action
     {
+        internal const float COST = 1.0f;
+
+        internal ActionInvestigate(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+
+        }
+
         internal override bool testPreConditions(SearchNode node)
         {
             return true;
@@ -34,11 +43,17 @@ namespace Commando.ai.planning
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
             TileIndex investigateLocation =
-                character_.AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget).data_.t;
+                //character_.AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget).data_.t;
+                GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(
+                    character_.AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget).position_
+                    );
 
-            ActionGoto goAction = new ActionGoto(character_, investigateLocation);
-            SearchNode parent = goAction.unifyRegressive(ref node);
-
+            // Create a copy of this search node and set its position to our
+            //  investigate location
+            SearchNode parent = node.getPredecessor();
+            parent.action = new ActionInvestigate(character_);
+            parent.cost += COST;
+            parent.setPosition(Variable.Location, ref investigateLocation);
             parent.setBool(Variable.HasInvestigated, false);
 
             return parent;
@@ -47,6 +62,18 @@ namespace Commando.ai.planning
         internal override void register(Dictionary<int, List<Action>> actionMap)
         {
             actionMap[Variable.HasInvestigated].Add(this);
+        }
+
+        internal override bool initialize()
+        {
+            //throw new NotImplementedException();
+            return true;
+        }
+
+        internal override bool update()
+        {
+            //throw new NotImplementedException();
+            return true;
         }
     }
 }

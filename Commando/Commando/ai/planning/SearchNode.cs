@@ -108,6 +108,16 @@ namespace Commando.ai.planning
             return dist;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+
+            SearchNode rhs = obj as SearchNode;
+            if (rhs == null) return false;
+
+            return (this.values == rhs.values) && (this.resolved == rhs.resolved);
+        }
+
         #region IComparer<SearchNode> Members
 
         public int Compare(SearchNode x, SearchNode y)

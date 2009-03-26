@@ -167,7 +167,7 @@ namespace Commando
         /// Constructs a state of gameplay
         /// </summary>
         /// <param name="engine">Reference to the engine running the state</param>
-        public EngineStateGameplay(Engine engine, string filepath, StorageContainer container)
+        public EngineStateGameplay(Engine engine, string filepath)
         {
             //SoundEngine.getInstance().Music.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);
 
@@ -176,11 +176,6 @@ namespace Commando
             GlobalHelper.getInstance().setGameplayState(this);
 
             loadLevel(filepath);
-
-            if (container != null)
-            {
-                container.Dispose();
-            }
         }
 
         public void moveToNextLevel(string filename)

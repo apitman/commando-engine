@@ -91,8 +91,20 @@
     <Compile Include="..\Commando\ai\planning\ActionGoto.cs">
       <Link>ai\planning\ActionGoto.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionInvestigate.cs">
+      <Link>ai\planning\ActionInvestigate.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionPatrol.cs">
+      <Link>ai\planning\ActionPatrol.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionReload.cs">
+      <Link>ai\planning\ActionReload.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\ActionTakeCover.cs">
       <Link>ai\planning\ActionTakeCover.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionThrowGrenade.cs">
+      <Link>ai\planning\ActionThrowGrenade.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\planning\ActionType.cs">
       <Link>ai\planning\ActionType.cs</Link>
@@ -195,6 +207,9 @@
     </Compile>
     <Compile Include="..\Commando\Constants.cs">
       <Link>Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ContainerManager.cs">
+      <Link>ContainerManager.cs</Link>
     </Compile>
     <Compile Include="..\Commando\controls\ControllerInputInterface.cs">
       <Link>controls\ControllerInputInterface.cs</Link>
@@ -487,10 +502,10 @@
     <Compile Include="..\Commando\TextureMap.cs">
       <Link>TextureMap.cs</Link>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TileObject.cs">
-      <SubType>Code</SubType>
+    <Compile Include="..\Commando\TileObject.cs">
+      <Link>objects\TileObject.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">

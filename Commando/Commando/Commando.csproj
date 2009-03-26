@@ -139,6 +139,7 @@
     <Compile Include="collisiondetection\SolidMovableObjectAbstract.cs" />
     <Compile Include="CommonFunctions.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="ContainerManager.cs" />
     <Compile Include="EngineStateControls.cs" />
     <Compile Include="EngineStateEditorControls.cs" />
     <Compile Include="EngineStateEditorOptions.cs" />

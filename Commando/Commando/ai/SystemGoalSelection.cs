@@ -32,7 +32,7 @@ namespace Commando.ai
         {
             SearchNode goal = new SearchNode();
 
-            Belief target = AI_.Memory_.getFirstBelief(BeliefType.EnemyLoc);
+            Belief target = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
             Belief noise = AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget);
 
             // We have an enemy, so go after it
@@ -44,13 +44,13 @@ namespace Commando.ai
             // Otherwise we investigate a noise if we're aware of one
             else if (noise != null)
             {
-                goal.setBool(Variable.HasInvestigated, false);
+                goal.setBool(Variable.HasInvestigated, true);
             }
 
             // Otherwise we just patrol
             else
             {
-                goal.setBool(Variable.HasPatrolled, false);
+                goal.setBool(Variable.HasPatrolled, true);
             }
 
             AI_.CurrentGoal_ = goal;
