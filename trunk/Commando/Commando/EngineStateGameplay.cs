@@ -325,10 +325,51 @@ namespace Commando
             tileBox.Add(new Vector2(45f, -15f));
             tileBox.Add(new Vector2(45f, 15f));
             tileBox.Add(new Vector2(-45f, 15f));
-            CoverObject cover = new CoverObject(collisionDetector_, tileBox, new Vector2(120f, 135f), new Vector2(75f, 120f), new Vector2(165f, 120f));
+            List<Vector2> vertical = new List<Vector2>();
+            //CoverObject cover = new CoverObject(collisionDetector_, tileBox, new Vector2(120f, 135f), new Vector2(75f, 120f), new Vector2(165f, 120f));
+            //CoverObject cover1 = new CoverObject(collisionDetector_, tileBox, new Vector2(120f, 60f), new Vector2(75f, 75f), new Vector2(165f, 75f));
+            tileBox.Clear();
+            tileBox.Add(new Vector2(-22.5f, -15f));
+            tileBox.Add(new Vector2(22.5f, -15f));
+            tileBox.Add(new Vector2(22.5f, 15f));
+            tileBox.Add(new Vector2(-22.5f, 15f));
+            vertical.Add(new Vector2(-15f, -22.5f));
+            vertical.Add(new Vector2(15f, -22.5f));
+            vertical.Add(new Vector2(15f, 22.5f));
+            vertical.Add(new Vector2(-15f, 22.5f));
+            //CoverObject cover2 = new CoverObject(collisionDetector_, vertical, new Vector2(60f, 97.5f), new Vector2(75f, 75f), new Vector2(75f, 120f));
+            //CoverObject cover3 = new CoverObject(collisionDetector_, vertical, new Vector2(180f, 97.5f), new Vector2(165f, 75f), new Vector2(165f, 120f));
 
-            HumanEnemy humanENEMY = new HumanEnemy(drawPipeline_, new Vector2(200f, 100f));
-            humanENEMY.setCollisionDetector(collisionDetector_);
+            float centerX = 7f * 15f + 7.5f;
+            float centerY = 17f * 15f + 7.5f;
+            CoverObject cover = new CoverObject(collisionDetector_, vertical, new Vector2(centerX - 37.5f, centerY), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX - 22.5f, centerY + 22.5f));
+            CoverObject cover1 = new CoverObject(collisionDetector_, vertical, new Vector2(centerX + 37.5f, centerY), new Vector2(centerX + 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
+            CoverObject cover2 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY - 37.5f), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY - 22.5f));
+            CoverObject cover3 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY + 37.5f), new Vector2(centerX - 22.5f, centerY + 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
+
+            centerX = 7f * 15f + 7.5f;
+            centerY = 7f * 15f + 7.5f;
+            CoverObject cover4 = new CoverObject(collisionDetector_, vertical, new Vector2(centerX - 37.5f, centerY), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX - 22.5f, centerY + 22.5f));
+            CoverObject cover5 = new CoverObject(collisionDetector_, vertical, new Vector2(centerX + 37.5f, centerY), new Vector2(centerX + 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
+            CoverObject cover6 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY - 37.5f), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY - 22.5f));
+            CoverObject cover7 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY + 37.5f), new Vector2(centerX - 22.5f, centerY + 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
+
+            centerX = 21f * 15f + 7.5f;
+            centerY = 17f * 15f + 7.5f;
+            CoverObject cover8 = new CoverObject(collisionDetector_, vertical, new Vector2(centerX - 37.5f, centerY), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX - 22.5f, centerY + 22.5f));
+            CoverObject cover9 = new CoverObject(collisionDetector_, vertical, new Vector2(centerX + 37.5f, centerY), new Vector2(centerX + 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
+            CoverObject cover10 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY - 37.5f), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY - 22.5f));
+            CoverObject cover11 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY + 37.5f), new Vector2(centerX - 22.5f, centerY + 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
+
+            centerX = 20f * 15f + 7.5f;
+            centerY = 7f * 15f + 7.5f;
+            CoverObject cover12 = new CoverObject(collisionDetector_, vertical, new Vector2(centerX - 37.5f, centerY), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX - 22.5f, centerY + 22.5f));
+            CoverObject cover13 = new CoverObject(collisionDetector_, vertical, new Vector2(centerX + 37.5f, centerY), new Vector2(centerX + 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
+            CoverObject cover14 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY - 37.5f), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY - 22.5f));
+            CoverObject cover15 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY + 37.5f), new Vector2(centerX - 22.5f, centerY + 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
+
+            //HumanEnemy humanENEMY = new HumanEnemy(drawPipeline_, new Vector2(200f, 100f));
+            //humanENEMY.setCollisionDetector(collisionDetector_);
 
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;
