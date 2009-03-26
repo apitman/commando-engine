@@ -36,14 +36,19 @@ namespace Commando.objects
         const float TURNSPEED = .30f;
 
         static readonly float RADIUS;
+        static readonly float RADIUSCROUCH;
 
         const float SPEED = 3.0f;
 
         protected float radius_;
 
+        protected float radiusCrouch_;
+
         protected ConvexPolygonInterface boundsPolygonHigh_;
 
         protected ConvexPolygonInterface boundsPolygonLow_;
+
+        protected ConvexPolygonInterface boundsPolygonLowCrouch_;
 
         protected DefaultActuator actuator_;
 
@@ -52,6 +57,8 @@ namespace Commando.objects
         protected static readonly List<Vector2> BOUNDSPOINTSHIGH;
 
         protected static readonly List<Vector2> BOUNDSPOINTSLOW;
+
+        protected static readonly List<Vector2> BOUNDSPOINTSLOWCROUCH;
 
         static ActuatedMainPlayer()
         {
@@ -90,6 +97,22 @@ namespace Commando.objects
                     RADIUS = vec.Length();
                 }
             }
+
+            BOUNDSPOINTSLOWCROUCH = new List<Vector2>();
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(19f - 37.5f, 36f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(25f - 37.5f, 26f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(54f - 37.5f, 21f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(66f - 37.5f, 46f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(42f - 37.5f, 55f - 37.5f));
+            RADIUSCROUCH = 0.0f;
+            foreach (Vector2 vec in BOUNDSPOINTSLOWCROUCH)
+            {
+                if (vec.Length() > RADIUSCROUCH)
+                {
+                    RADIUSCROUCH = vec.Length();
+                }
+            }
+            RADIUSCROUCH += 1f;
             RADIUS += 1f;
         }
 
@@ -101,6 +124,9 @@ namespace Commando.objects
 
             boundsPolygonLow_ = new ConvexPolygon(BOUNDSPOINTSLOW, Vector2.Zero);
             boundsPolygonLow_.rotate(direction_, position_);
+
+            boundsPolygonLowCrouch_ = new ConvexPolygon(BOUNDSPOINTSLOWCROUCH, Vector2.Zero);
+            boundsPolygonLowCrouch_.rotate(direction_, position_);
 
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
@@ -196,7 +222,14 @@ namespace Commando.objects
             List<GameTexture> anims = new List<GameTexture>();
             anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
             animations_ = new AnimationSet(anims);
-            radius_ = RADIUS;
+            if (RADIUS < RADIUSCROUCH)
+            {
+                radius_ = RADIUSCROUCH;
+            }
+            else
+            {
+                radius_ = RADIUS;
+            }; 
             //collisionDetector_ = new SeparatingAxisCollisionDetector();
             collisionDetector_ = detector;
             if (collisionDetector_ != null)
@@ -373,7 +406,14 @@ namespace Commando.objects
             {
                 return boundsPolygonHigh_;
             }
-            return boundsPolygonLow_;
+            if (height_.blocksHigh_)
+            {
+                return boundsPolygonLow_;
+            }
+            else
+            {
+                return boundsPolygonLowCrouch_;
+            }
         }
 
         public override ActuatorInterface getActuator()

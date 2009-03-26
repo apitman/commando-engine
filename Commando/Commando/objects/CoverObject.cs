@@ -91,7 +91,7 @@ namespace Commando.objects
             Vector2 retVector = position;
             if (orientation_ == CoverOrientationEnum.HORIZONTAL)
             {
-                if (retVector.Y < leftOrTop_.Y)
+                if (coverDirection_.Y > 0f)
                 {
                     retVector.Y = leftOrTop_.Y - radius;
                 }
@@ -110,7 +110,7 @@ namespace Commando.objects
             }
             else
             {
-                if (retVector.X < leftOrTop_.X)
+                if (coverDirection_.X > 0f)
                 {
                     retVector.X = leftOrTop_.X - radius;
                 }
@@ -213,6 +213,19 @@ namespace Commando.objects
         public Vector2 getCoverDirection()
         {
             return coverDirection_;
+        }
+
+        public void setCollisionDetector(CollisionDetectorInterface collisionDetector)
+        {
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.remove(this);
+            }
+            collisionDetector_ = collisionDetector;
+            if (collisionDetector_ != null)
+            {
+                collisionDetector_.register(this);
+            }
         }
     }
 }
