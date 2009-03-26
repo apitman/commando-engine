@@ -23,6 +23,7 @@ using System.Text;
 using Commando.levels;
 using Commando.objects;
 using Commando.graphics;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
@@ -50,7 +51,7 @@ namespace Commando.ai.planning
             // if the position AFTER taking cover - think backwards! - is known,
             //  we can only take cover there if that position has cover, otherwise
             //  we just check that we know about nearby cover
-            return character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover) != null;
+            return (character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover) != null);
         }
 
         internal override SearchNode unifyRegressive(ref SearchNode node)
@@ -59,8 +60,12 @@ namespace Commando.ai.planning
             // If the current location is resolved and doesn't have cover, we
             // actually resolve with a Goto instead
 
+            Vector2 coverPosition =
+                character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover).position_;
+
             TileIndex coverLocation =
-                character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover).data_.t;
+                GlobalHelper.getInstance().getCurrentLevelTileGrid()
+                    .getTileIndex(coverPosition);
 
             SearchNode parent = node.getPredecessor();
             parent.action = new ActionTakeCover(character_, ref coverLocation);

@@ -183,10 +183,8 @@ namespace Commando
                 {
                     case EngineStateTarget.GAMEPLAY:
                         return new EngineStateGameplay(engine_, windowsFileName_);
-                        break;
                     case EngineStateTarget.LEVEL_EDITOR:
                         return new EngineStateLevelEditor(engine_, this, windowsFileName_);
-                        break;
                     case EngineStateTarget.LEVEL_TRANSITION:
                         return returnState_;
                 }
@@ -205,16 +203,13 @@ namespace Commando
                 {
                     case EngineStateTarget.GAMEPLAY:
                         return new EngineStateGameplay(engine_, filepath);
-                        break;
                     case EngineStateTarget.LEVEL_EDITOR:
                         return new EngineStateLevelEditor(engine_, this, filepath);
-                        break;
                     case EngineStateTarget.LEVEL_TRANSITION:
                         {
                             EngineStateLevelEditor myState = returnState_ as EngineStateLevelEditor;
                             myState.setTransLevel(fileList_[cursorPos]);
                             return returnState_;
-                            break;
                         }
                 }
                 return new EngineStateGameplay(engine_, filepath);

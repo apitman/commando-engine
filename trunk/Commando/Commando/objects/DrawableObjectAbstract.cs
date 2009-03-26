@@ -33,7 +33,7 @@ namespace Commando
     /// </summary>
     public abstract class DrawableObjectAbstract
     {
-        protected List<DrawableObjectAbstract> pipeline_;
+        public List<DrawableObjectAbstract> pipeline_;
 
         protected Vector2 position_;
 

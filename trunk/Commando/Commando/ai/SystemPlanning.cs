@@ -35,16 +35,8 @@ namespace Commando.ai
 
         internal override void update()
         {
-            List<int> differences = new List<int>();
-            bool differencesFlag = false;
-            if (AI_.CurrentGoal_ != null && previousGoal_ != null)
-            {
-                AI_.CurrentGoal_.resolvesWith(previousGoal_, differences);
-                if (differences.Count > 0)
-                {
-                    differencesFlag = true;
-                }
-            }
+            bool differencesFlag =
+                !SearchNode.testGoalEquality(previousGoal_, AI_.CurrentGoal_);
 
             if (AI_.CurrentGoal_ != null &&
                 (differencesFlag || AI_.CurrentPlan_.Count == 0))
@@ -73,7 +65,7 @@ namespace Commando.ai
                         AI_.Character_.getPosition());
 
                 initial.setInt(Variable.Health, AI_.Character_.getHealth().getValue());
-                initial.setInt(Variable.TargetHealth, 0);
+                initial.setInt(Variable.TargetHealth, 1);
                 initial.setBool(Variable.Weapon, hasWeapon);
                 initial.setBool(Variable.Ammo, hasAmmo);
                 initial.setBool(Variable.HasInvestigated, false);

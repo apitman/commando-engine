@@ -65,6 +65,23 @@ namespace Commando
         const int MIN_CURSOR_Y = 2;
         const int MAX_NUM_ENEMIES = 3;
         const string DUMMY_ENEMY = "dummyEnemy";
+
+        const FontEnum HELP_TEXT_FONT = FontEnum.PescaderoBold;
+        const float HELP_TEXT_DEPTH = Constants.DEPTH_HUD_TEXT;
+        static readonly Color HELP_TEXT_COLOR = Color.Green;
+        protected Vector2 HELP_TEXT_POSITION
+        {
+            get
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                return new Vector2(r.X, r.Y);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
        
         const float DISP_TILE_DEPTH = 0.1f;
         public const int SCREEN_SIZE_X = 375;
@@ -827,12 +844,9 @@ namespace Commando
                 drawPipeline_[i].draw(null);
             }
             string STR_HELP_TEXT = "PRESS " + inputs.getControlName(InputsEnum.BUTTON_4) + " FOR CONTROLS";
-            FontMap.getInstance().getFont(FontEnum.PescaderoBold).drawStringCentered(STR_HELP_TEXT,
-                new Vector2(120.0f, 15.0f),
-                Color.Green,
-                0.0f,
-                0.9f);
-
+            FontMap.getInstance().getFont(HELP_TEXT_FONT).drawString(STR_HELP_TEXT,
+                HELP_TEXT_POSITION,
+                HELP_TEXT_COLOR);
 
             displayTile_.draw(new GameTime());
 

@@ -73,6 +73,12 @@
     <Compile Include="..\Commando\ai\Belief.cs">
       <Link>ai\Belief.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\brains\DummyAI.cs">
+      <Link>ai\brains\DummyAI.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\brains\HumanAI.cs">
+      <Link>ai\brains\HumanAI.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\InferenceEngine.cs">
       <Link>ai\InferenceEngine.cs</Link>
     </Compile>
@@ -87,6 +93,9 @@
     </Compile>
     <Compile Include="..\Commando\ai\planning\ActionAttackRangedCover.cs">
       <Link>ai\planning\ActionAttackRangedCover.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionFlee.cs">
+      <Link>ai\planning\ActionFlee.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\planning\ActionGoto.cs">
       <Link>ai\planning\ActionGoto.cs</Link>

@@ -108,14 +108,26 @@ namespace Commando.ai.planning
             return dist;
         }
 
-        public override bool Equals(object obj)
+        // Remove this when a wrapper Goal class is used
+        public static bool testGoalEquality(SearchNode lhs, SearchNode rhs)
         {
-            if (obj == null) return false;
+            if (lhs == null && rhs == null)
+                return true;
 
-            SearchNode rhs = obj as SearchNode;
-            if (rhs == null) return false;
+            if (lhs == null || rhs == null)
+                return false;
 
-            return (this.values == rhs.values) && (this.resolved == rhs.resolved);
+            if (lhs.values.Length != rhs.resolved.Length)
+                return false;
+
+            for (int i = 0; i < lhs.values.Length; i++)
+            {
+                if (lhs.values[i].i != rhs.values[i].i)
+                    return false;
+                if (rhs.resolved[i] != rhs.resolved[i])
+                    return false;
+            }
+            return true;
         }
 
         #region IComparer<SearchNode> Members

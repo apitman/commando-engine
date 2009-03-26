@@ -69,6 +69,7 @@ namespace Commando.ai
                 if (framesLeftToBroadcast_ <= 0)
                 {
                     isBroadcasting_ = false;
+                    WorldState.Audial_.Remove(key_);
                 }
                 framesLeftToBroadcast_--;
             }

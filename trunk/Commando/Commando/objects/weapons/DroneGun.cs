@@ -35,7 +35,7 @@ namespace Commando.objects.weapons
         public DroneGun(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, TextureMap.fetchTexture("Pistol"), gunHandle, AMMO_TYPE, CLIP_SIZE)
         {
-            // nothing
+            this.CurrentAmmo_ = CLIP_SIZE;
         }
 
         public override void shoot()

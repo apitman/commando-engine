@@ -95,11 +95,14 @@
     <Compile Include="ai\AI.cs" />
     <Compile Include="ai\AStarPathfinder.cs" />
     <Compile Include="ai\Belief.cs" />
+    <Compile Include="ai\brains\DummyAI.cs" />
+    <Compile Include="ai\brains\HumanAI.cs" />
     <Compile Include="ai\InferenceEngine.cs" />
     <Compile Include="ai\Memory.cs" />
     <Compile Include="ai\planning\Action.cs" />
     <Compile Include="ai\planning\ActionAttackRanged.cs" />
     <Compile Include="ai\planning\ActionAttackRangedCover.cs" />
+    <Compile Include="ai\planning\ActionFlee.cs" />
     <Compile Include="ai\planning\ActionGoto.cs" />
     <Compile Include="ai\planning\ActionInvestigate.cs" />
     <Compile Include="ai\planning\ActionPatrol.cs" />

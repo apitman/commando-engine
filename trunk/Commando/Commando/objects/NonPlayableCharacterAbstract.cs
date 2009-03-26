@@ -29,7 +29,7 @@ namespace Commando.objects
 {
     public abstract class NonPlayableCharacterAbstract : CharacterAbstract
     {
-        internal AI AI_ { get; private set; }
+        internal AI AI_ { get; set; }
         
         /// <summary>
         /// Create a default NonPlayableCharacter
@@ -37,7 +37,7 @@ namespace Commando.objects
         public NonPlayableCharacterAbstract() :
             base()
         {
-            AI_ = new AI(this);
+            
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Commando.objects
         public NonPlayableCharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface detector) :
             base(health, ammo, weapon, name, detector)
         {
-            AI_ = new AI(this);
+            
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Commando.objects
         public NonPlayableCharacterAbstract(List<DrawableObjectAbstract> pipeline, CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface detector, AnimationSet animations, float frameLengthModifier, Vector2 velocity, Vector2 position, Vector2 direction, float depth) :
             base(pipeline, health, ammo, weapon, name, detector, animations, frameLengthModifier, velocity, position, direction, depth)
         {
-            AI_ = new AI(this);
+            
         }
 
         public override void die()
