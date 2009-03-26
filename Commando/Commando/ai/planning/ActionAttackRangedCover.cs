@@ -99,8 +99,6 @@ namespace Commando.ai.planning
                 return true;
             }
 
-            throw new Exception("Testing Alert Box");
-
             return false;
         }
 
