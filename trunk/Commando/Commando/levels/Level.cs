@@ -24,6 +24,7 @@ using System.Text;
 using System.Xml;
 using Commando.objects;
 using Microsoft.Xna.Framework;
+using Commando.objects.enemies;
 
 namespace Commando.levels
 {
@@ -157,16 +158,32 @@ namespace Commando.levels
                     XmlElement ele2 = (XmlElement)tList[i];
                     // TODO: Check the "name" attribute of the enemy and instantiate
                     // other enemies if they are specified.
-                    DummyEnemy dumDum = new DummyEnemy(pipeline, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
-                    //Vector2 rotation = CommonFunctions.getVector(Convert.ToInt32(ele2.GetAttribute("rotation")) * Math.PI / 180);
-                    Vector2 rotation = new Vector2(Convert.ToInt32(ele2.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(ele2.GetAttribute("rotationY")) / 100.0f);
-                    dumDum.setDirection(rotation);
-                    // TODO: AMP Fix it so we don't have to do this next line of code
-                    dumDum.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                    string name = ele2.GetAttribute("name");
 
-                    enemies_.Add(dumDum);
+
+                    if (name == "dummy")
+                    {
+                        DummyEnemy dumDum = new DummyEnemy(pipeline, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
+                        //Vector2 rotation = CommonFunctions.getVector(Convert.ToInt32(ele2.GetAttribute("rotation")) * Math.PI / 180);
+                        Vector2 rotation = new Vector2(Convert.ToInt32(ele2.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(ele2.GetAttribute("rotationY")) / 100.0f);
+                        dumDum.setDirection(rotation);
+                        // TODO: AMP Fix it so we don't have to do this next line of code
+                        dumDum.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+
+                        enemies_.Add(dumDum);
+                    }
+                    else if (name == "human")
+                    {
+                        HumanEnemy Humie = new HumanEnemy(pipeline, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
+                        //Vector2 rotation = CommonFunctions.getVector(Convert.ToInt32(ele2.GetAttribute("rotation")) * Math.PI / 180);
+                        Vector2 rotation = new Vector2(Convert.ToInt32(ele2.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(ele2.GetAttribute("rotationY")) / 100.0f);
+                        Humie.setDirection(rotation);
+                        // TODO: AMP Fix it so we don't have to do this next line of code
+                        Humie.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                        
+                        enemies_.Add(Humie);
+                    }
                 }
-
                 // Now load the healthBoxes and ammoBoxes
                 tList = doc.GetElementsByTagName("item");
                 for (int i = 0; i < tList.Count; i++)
@@ -288,8 +305,14 @@ namespace Commando.levels
             XmlElement enemiesElement = doc.CreateElement("enemies");
             for (int i = 0; i < enemies_.Count; i++)
             {
+                
                 XmlElement enemyElement = doc.CreateElement("enemy");
-                enemyElement.SetAttribute("name", "dummy");
+
+                if (enemies_[i] is DummyEnemy)
+                    enemyElement.SetAttribute("name", "dummy");
+
+                else if (enemies_[i] is HumanEnemy)
+                    enemyElement.SetAttribute("name", "human");
                 enemyElement.SetAttribute("posX", Convert.ToInt32(enemies_[i].getPosition().X).ToString());
                 enemyElement.SetAttribute("posY", Convert.ToInt32(enemies_[i].getPosition().Y).ToString());
                 //int rotationDegrees = Convert.ToInt32(CommonFunctions.getAngle(enemies_[i].getDirection()) * 180 / Math.PI);

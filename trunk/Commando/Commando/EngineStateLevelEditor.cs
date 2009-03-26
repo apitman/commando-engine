@@ -28,6 +28,7 @@ using Commando.levels;
 using Commando.objects;
 using Microsoft.Xna.Framework.Storage;
 using System.IO;
+using Commando.objects.enemies;
 
 namespace Commando
 {
@@ -55,6 +56,7 @@ namespace Commando
         const int NUM_TILES = 23;
         const int NUM_PALLETTES = 3;
         const int NUM_MISC = 7;
+        const int NUM_ENEMIES = 2;
         const int MAX_MOUSE_X = 345;
         const int MAX_MOUSE_Y = 300;
         const int MIN_MOUSE_X = 30;
@@ -373,15 +375,26 @@ namespace Commando
                     case (int)pallette_.enemy:
                         {
                             //to do, add enemy on cursor position
-                            Vector2 pos = new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
-                            DummyEnemy dumE = new DummyEnemy(drawPipeline_, pos);
-                            // TODO: AMP Fix it so we don't have to do this next line of code
-                            dumE.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                            Vector2 mousePos = new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
 
-                            myLevel_.getEnemies().Add(dumE);
+                            switch (curTileIndex_)
+                            {
+                                case 0:
+                                    DummyEnemy dumE = new DummyEnemy(drawPipeline_, mousePos);
+                                    // TODO: AMP Fix it so we don't have to do this next line of code
+                                    dumE.getActuator().update(); // Makes it so the enemies are drawn in the correct position
 
+                                    myLevel_.getEnemies().Add(dumE);
+                                    break;
+                                case 1:
+                                    HumanEnemy humEnemy = new HumanEnemy(drawPipeline_, mousePos);
+
+                                    myLevel_.getEnemies().Add(humEnemy);
+                                    break;
+                            }
                             break;
                         }
+
                     case (int)pallette_.misc:
                         {
                             Vector2 mousePos = new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
@@ -390,7 +403,7 @@ namespace Commando
                                    && mousePos.Y <= Constants.MAX_NUM_TILES_Y * Tiler.tileSideLength_
                                    && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_)
                             {
-                                
+
                                 switch (curTileIndex_)
                                 {
                                     case 0:
@@ -421,21 +434,21 @@ namespace Commando
                                         }
                                     case 4:
                                         {
-                                           myLevel_.getItems().Add( new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.MachineGun));
+                                            myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.MachineGun));
                                             break;
                                         }
                                     case 5:
                                         {
-                                            myLevel_.getItems().Add( new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Pistol));
+                                            myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Pistol));
                                             break;
                                         }
                                     case 6:
                                         {
-                                            myLevel_.getItems().Add( new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Shotgun));
+                                            myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Shotgun));
                                             break;
                                         }
                                 }
-                                
+
                             }
                             break;
                         }
@@ -489,11 +502,21 @@ namespace Commando
                                && mousePos.Y > Constants.MIN_NUM_TILES_Y * Tiler.tileSideLength_
                                && rightD.Y < HUD_BAR_DRAW_Y)
                             {
-                                DummyEnemy dumE = new DummyEnemy(drawPipeline_, mousePos);
-                                // TODO: AMP Fix it so we don't have to do this next line of code
-                                dumE.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+                                switch (curTileIndex_)
+                                {
+                                    case 0:
+                                        DummyEnemy dumE = new DummyEnemy(drawPipeline_, mousePos);
+                                        // TODO: AMP Fix it so we don't have to do this next line of code
+                                        dumE.getActuator().update(); // Makes it so the enemies are drawn in the correct position
 
-                                myLevel_.getEnemies().Add(dumE);
+                                        myLevel_.getEnemies().Add(dumE);
+                                        break;
+                                    case 1:
+                                        HumanEnemy humEnemy = new HumanEnemy(drawPipeline_, mousePos);
+
+                                        myLevel_.getEnemies().Add(humEnemy);
+                                        break;
+                                }
                             }
                             break;
                         }
@@ -535,21 +558,21 @@ namespace Commando
                                         }
                                     case 4:
                                         {
-                                            myLevel_.getItems().Add( new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.MachineGun));
-                                            
+                                            myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.MachineGun));
+
                                             break;
                                         }
                                     case 5:
                                         {
                                             myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Pistol));
-                                            
+
                                             break;
                                         }
                                     case 6:
-                                         {
-                                             myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Shotgun));
-                                             break;
-                                         }
+                                        {
+                                            myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Shotgun));
+                                            break;
+                                        }
                                 }
                             }
                             break;
@@ -678,6 +701,8 @@ namespace Commando
                         }
                     case (int)pallette_.enemy:
                         {
+                            inputs.setToggle(InputsEnum.BUTTON_1);
+                            curTileIndex_ = (curTileIndex_ + 1) % NUM_ENEMIES;
                             break;
                         }
                     case (int)pallette_.misc:
@@ -708,6 +733,12 @@ namespace Commando
                         }
                     case (int)pallette_.enemy:
                         {
+                            inputs.setToggle(InputsEnum.BUTTON_1);
+                            if (curTileIndex_ == 0)
+                            {
+                                curTileIndex_ = NUM_ENEMIES;
+                            }
+                            curTileIndex_ = curTileIndex_ - 1;
                             break;
                         }
                     case (int)pallette_.misc:
@@ -859,8 +890,12 @@ namespace Commando
                     }
                 case (int)pallette_.enemy:
                     {
-                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f, HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
+                        int i = 0;
+                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
+                        i++;
+                        TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol").drawImageAbsolute(0, new Vector2((HUD_BAR_DRAW_X + 10.0f + 35.0f * i), HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
 
+                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD + 0.01f);
                         break;
                     }
                 case (int)pallette_.misc:
