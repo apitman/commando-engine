@@ -1,4 +1,7 @@
 using System;
+#if !XBOX
+using System.Windows.Forms;
+#endif
 
 namespace Commando
 {
@@ -9,9 +12,19 @@ namespace Commando
         /// </summary>
         static void Main(string[] args)
         {
-            using (Engine game = new Engine())
+            try
             {
-                game.Run();
+                using (Engine game = new Engine())
+                {
+                    game.Run();
+                }
+            }
+            catch (Exception e)
+            {
+#if !XBOX
+                MessageBox.Show(e.Message);
+                MessageBox.Show(e.StackTrace);
+#endif
             }
         }
     }
