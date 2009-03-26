@@ -141,6 +141,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="EngineStateControls.cs" />
     <Compile Include="EngineStateEditorControls.cs" />
+    <Compile Include="EngineStateEditorOptions.cs" />
     <Compile Include="EngineStateGameOver.cs" />
     <Compile Include="EngineStateLevelEditor.cs" />
     <Compile Include="EngineStateLevelLoad.cs" />
