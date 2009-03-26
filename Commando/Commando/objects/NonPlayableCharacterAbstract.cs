@@ -74,10 +74,6 @@ namespace Commando.objects
             AI_ = new AI(this);
         }
 
-        public abstract void moveTo(Vector2 position);
-
-        public abstract void lookAt(Vector2 location);
-
         public override void die()
         {
             AI_.die();

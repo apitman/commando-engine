@@ -40,6 +40,7 @@ namespace Commando.objects.weapons
             laserImage_ = TextureMap.fetchTexture(TARGET_TEXTURE_NAME);
             SOUND_RADIUS = PISTOL_SOUND_RADIUS;
             CurrentAmmo_ = CLIP_SIZE;
+            pistol_ = true;
         }
 
         public override void shoot()

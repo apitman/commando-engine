@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.levels;
+using Commando.graphics;
 
 namespace Commando.ai
 {
@@ -65,7 +66,7 @@ namespace Commando.ai
                     velocities_[countUp % REACTION_TIME] = ca.getVelocity();
                     countUp++;
                     Vector2 target = predictTargetPosition(belief.position_);
-                    AI_.Character_.lookAt(target);
+                    (AI_.Character_.getActuator() as DefaultActuator).lookAt(target);
                     if (countUp >= REACTION_TIME)
                     {
                         AI_.Character_.Weapon_.shoot();

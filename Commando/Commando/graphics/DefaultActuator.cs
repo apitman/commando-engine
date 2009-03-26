@@ -83,6 +83,11 @@ namespace Commando.graphics
             }
         }
 
+        public String getCurrentActionSet()
+        {
+            return currentActionSet_;
+        }
+
         public void addAction(CharacterActionInterface action)
         {
             throw new NotImplementedException();

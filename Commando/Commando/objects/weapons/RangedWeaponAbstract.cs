@@ -75,6 +75,8 @@ namespace Commando
 
         protected int audialStimulusId_;
 
+        protected bool pistol_ = false;
+
         protected CollisionDetectorInterface collisionDetector_;
 
         public RangedWeaponAbstract(List<DrawableObjectAbstract> pipeline,
@@ -107,6 +109,10 @@ namespace Commando
 
         public virtual void update()
         {
+            if (character_.getGunHandle(pistol_) != Vector2.Zero)
+            {
+                gunHandle_ = character_.getGunHandle(pistol_);
+            }
             Vector2 charPos = character_.getPosition();
             Vector2 newPos = Vector2.Zero;
             rotation_ = character_.getDirection();

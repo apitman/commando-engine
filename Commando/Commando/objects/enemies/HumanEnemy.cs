@@ -1,4 +1,4 @@
-/*
+﻿/*
 ***************************************************************************
 * Copyright 2009 Eric Barnes, Ken Hartsook, Andrew Pitman, & Jared Segal  *
 *                                                                         *
@@ -21,17 +21,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.collisiondetection;
 using Microsoft.Xna.Framework;
-using Commando.graphics;
-using Commando.ai;
-using Commando.objects.weapons;
+using Commando.collisiondetection;
+using Microsoft.Xna.Framework.Graphics;
 using Commando.levels;
-using Commando.controls;
+using Commando.graphics;
+using Commando.objects.weapons;
 
-namespace Commando.objects
+namespace Commando.objects.enemies
 {
-    public class ActuatedMainPlayer : PlayableCharacterAbstract
+    public class HumanEnemy : NonPlayableCharacterAbstract
     {
         const float TURNSPEED = .30f;
 
@@ -47,13 +46,15 @@ namespace Commando.objects
 
         protected DefaultActuator actuator_;
 
-        protected bool pistol_ = false;
-
         protected static readonly List<Vector2> BOUNDSPOINTSHIGH;
 
         protected static readonly List<Vector2> BOUNDSPOINTSLOW;
 
-        static ActuatedMainPlayer()
+        protected Color currentDrawColor_ = Color.LightBlue;
+
+        protected int drawColorCount_ = 0;
+
+        static HumanEnemy()
         {
             BOUNDSPOINTSLOW = new List<Vector2>();
             BOUNDSPOINTSLOW.Add(new Vector2(98f - 113.5f, 51f - 37.5f));
@@ -93,14 +94,15 @@ namespace Commando.objects
             RADIUS += 1f;
         }
 
-        public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
-            : base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", detector, null, 8.0f, Vector2.Zero, position, direction, 0.5f)
+        public HumanEnemy(List<DrawableObjectAbstract> pipeline, Vector2 pos)
+            : base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "human", null, null, 8.0f, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_HIGH)
         {
+            boundsPolygonLow_ = new ConvexPolygon(BOUNDSPOINTSLOW, Vector2.Zero);
             boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
             boundsPolygonHigh_.rotate(direction_, position_);
-
-            boundsPolygonLow_ = new ConvexPolygon(BOUNDSPOINTSLOW, Vector2.Zero);
             boundsPolygonLow_.rotate(direction_, position_);
+            radius_ = RADIUS;
+
 
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
@@ -193,183 +195,29 @@ namespace Commando.objects
 
             actuator_ = new DefaultActuator(actions, this, "pistol_stand");
 
-            List<GameTexture> anims = new List<GameTexture>();
-            anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
-            animations_ = new AnimationSet(anims);
-            radius_ = RADIUS;
-            //collisionDetector_ = new SeparatingAxisCollisionDetector();
-            collisionDetector_ = detector;
-            if (collisionDetector_ != null)
-            {
-                collisionDetector_.register(this);
-            }
-
-            // Give the player his currently active weapon
             Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-            //Weapon_.update();
-            //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-
-            // Add the other weapons to the character's inventory
-            Inventory_.Weapons_.Enqueue(new MachineGun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f)));
-            Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f)));
-
             height_ = new Height(true, true);
+            health_.update(25);
         }
 
-        /*
-        /// <summary>
-        /// Create the main player of the game.
-        /// </summary>
-        public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline) :
-            base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", null, null, 8.0f, Vector2.Zero, new Vector2(100.0f, 200.0f), new Vector2(1.0f,0.0f), 0.5f)
+        public override ActuatorInterface getActuator()
         {
-            boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
-            //ENDTEMP
-            
-            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
-            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
-            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("PlayerWalkNoPistol"), frameLengthModifier_, depth_);
-            Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
-            actions.Add("default", new Dictionary<string, CharacterActionInterface>());
-            actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
-            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
-            actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
-
-            actuator_ = new DefaultActuator(actions, this, "default");
-
-            List<GameTexture> anims = new List<GameTexture>();
-            anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
-            animations_ = new AnimationSet(anims);
-            radius_ = RADIUS;
-            collisionDetector_ = new SeparatingAxisCollisionDetector();
-
-            // Give the player his currently active weapon
-            Weapon_ = new MachineGun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f));
-            //Weapon_.update();
-            //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-            
-            // Add the other weapons to the character's inventory
-            Inventory_.Weapons_.Enqueue(new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
-            Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
-
-            height_ = new Height(true, false);
+            return actuator_;
         }
-        */
 
-        /// <summary>
-        /// Draw the main player at his current position.
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void draw(GameTime gameTime)
+        public override void damage(int amount, CollisionObjectInterface obj)
         {
-            //animations_.drawNextFrame(position_, getRotationAngle(), depth_);
-            actuator_.draw();
-            Weapon_.draw();
-        }
-        
-        /// <summary>
-        /// Update the player's current position, animation, and action based on the 
-        /// user input.
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void update(GameTime gameTime)
-        {
-            if (Settings.getInstance().IsUsingMouse_)
+            health_.update(health_.getValue() - amount);
+            if (health_.getValue() <= 0)
             {
-                float centerX = GlobalHelper.getInstance().getCurrentCamera().getScreenWidth() / 2f;
-                float centerY = GlobalHelper.getInstance().getCurrentCamera().getScreenHeight() / 2f;
-                Vector2 rightDirectional =
-                    new Vector2(inputSet_.getRightDirectionalX() - centerX,
-                                inputSet_.getRightDirectionalY() - centerY);
-                rightDirectional.Normalize();
-                inputSet_.setDirectional(InputsEnum.RIGHT_DIRECTIONAL,
-                                    rightDirectional.X, rightDirectional.Y);
+                die();
+                currentDrawColor_ = Color.Brown;
             }
-
-            if (inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_3))
+            else
             {
-                actuator_.crouch();
-                inputSet_.setToggle(Commando.controls.InputsEnum.BUTTON_3);
+                currentDrawColor_ = Color.Salmon;
+                drawColorCount_ = 2;
             }
-
-            if(inputSet_.getButton(Commando.controls.InputsEnum.LEFT_TRIGGER))
-            {
-                Grenade grenade = new FragGrenade(pipeline_, collisionDetector_, direction_, Vector2.Zero, direction_);
-                actuator_.throwGrenade(grenade);
-                inputSet_.setToggle(InputsEnum.LEFT_TRIGGER);
-            }
-
-            if (lastCoverObject_ != null && inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_4))
-            {
-                actuator_.cover(lastCoverObject_);
-                inputSet_.setToggle(Commando.controls.InputsEnum.BUTTON_4);
-            }
-
-            Vector2 rightD = new Vector2(inputSet_.getRightDirectionalX(), inputSet_.getRightDirectionalY());
-            Vector2 leftD = new Vector2(inputSet_.getLeftDirectionalX(), -inputSet_.getLeftDirectionalY());
-            Vector2 oldDirection = direction_;
-            Vector2 oldPosition = position_;
-            actuator_.look(rightD);
-
-            if (Settings.getInstance().getMovementType() == MovementType.RELATIVE)
-            {
-                float rotAngle = getRotationAngle();
-                float X = -leftD.Y;
-                float Y = leftD.X;
-                leftD.X = (float)Math.Cos((double)rotAngle) * X - (float)Math.Sin((double)rotAngle) * Y;
-                leftD.Y = (float)Math.Sin((double)rotAngle) * X + (float)Math.Cos((double)rotAngle) * Y;
-            }
-
-            if (inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_BUMPER))
-            {
-                inputSet_.setToggle(InputsEnum.RIGHT_BUMPER);
-                RangedWeaponAbstract temp = Inventory_.Weapons_.Dequeue();
-                Inventory_.Weapons_.Enqueue(Weapon_);
-                if (Weapon_ is Pistol)
-                {
-                    actuator_.setCurrentActionSet(actuator_.getCurrentActionSet().Substring(7));
-                }
-                Weapon_ = temp;
-                ammo_.update(Weapon_.CurrentAmmo_);
-                if (Weapon_ is Pistol)
-                {
-                    actuator_.setCurrentActionSet("pistol_" + actuator_.getCurrentActionSet());
-                }
-                //if (pistol_)
-                //{
-                //    Weapon_ = new Shotgun(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-                //    pistol_ = false;
-                //}
-                //else
-                //{
-                //    Weapon_ = new Pistol(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-                //    pistol_ = true;
-                //}
-            }
-
-            if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
-            {
-                actuator_.shoot(Weapon_);
-            }
-
-            if (inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_1))
-            {
-                reload();
-            }
-            
-            if (leftD.LengthSquared() > 0.2f)
-            {
-                actuator_.move(leftD);
-            }
-            lastCoverObject_ = null;
-            actuator_.update();
-            Weapon_.update();
-            collidedInto_.Clear();
-            collidedWith_.Clear();
-            oldPosition -= position_;
-            //Console.WriteLine(oldPosition);
-            GlobalHelper.getInstance().getCurrentCamera().setCenter(position_.X, position_.Y);
-
         }
 
         public override float getRadius()
@@ -383,32 +231,34 @@ namespace Commando.objects
             {
                 return boundsPolygonHigh_;
             }
-            return boundsPolygonLow_;
-        }
-
-        public override ActuatorInterface getActuator()
-        {
-            return actuator_;
-        }
-
-        public override void damage(int amount, CollisionObjectInterface obj)
-        {
-            health_.update(health_.getValue() - amount);
-
-            if (health_.getValue() <= 0)
+            else
             {
-                this.die();
+                return boundsPolygonLow_;
             }
         }
 
-        public void setDrawPipeline(List<DrawableObjectAbstract> pipeline)
+        public override void update(GameTime gameTime)
         {
-            pipeline_ = pipeline;
-            if (pipeline_ != null)
+            AI_.update();
+
+            actuator_.update();
+            Weapon_.update();
+
+            if (drawColorCount_ > 0)
             {
-                pipeline_.Add(this);
-                Weapon_.setDrawPipeline(pipeline_);
+                drawColorCount_--;
             }
+            else
+            {
+                currentDrawColor_ = Color.LightBlue;
+            }
+        }
+
+        public override void draw(GameTime gameTime)
+        {
+            actuator_.draw(currentDrawColor_);
+            Weapon_.draw();
+            AI_.draw();
         }
 
         public override Vector2 getGunHandle(bool pistol)

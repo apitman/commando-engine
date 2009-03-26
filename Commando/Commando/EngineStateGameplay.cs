@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Commando.collisiondetection;
 using Commando.ai;
 using Microsoft.Xna.Framework.Storage;
+using Commando.objects.enemies;
 
 namespace Commando
 {
@@ -323,6 +324,9 @@ namespace Commando
             tileBox.Add(new Vector2(45f, 15f));
             tileBox.Add(new Vector2(-45f, 15f));
             CoverObject cover = new CoverObject(collisionDetector_, tileBox, new Vector2(120f, 135f), new Vector2(75f, 120f), new Vector2(165f, 120f));
+
+            HumanEnemy humanENEMY = new HumanEnemy(drawPipeline_, new Vector2(200f, 100f));
+            humanENEMY.setCollisionDetector(collisionDetector_);
 
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;

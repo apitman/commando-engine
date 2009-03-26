@@ -257,5 +257,10 @@ namespace Commando
         {
             return collidedInto_;
         }
+
+        public virtual Vector2 getGunHandle(bool pistol)
+        {
+            return Vector2.Zero;
+        }
     }
 }
