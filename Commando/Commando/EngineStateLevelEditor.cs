@@ -54,7 +54,7 @@ namespace Commando
     {
         const int NUM_TILES = 23;
         const int NUM_PALLETTES = 3;
-        const int NUM_MISC = 4;
+        const int NUM_MISC = 7;
         const int MAX_MOUSE_X = 345;
         const int MAX_MOUSE_Y = 300;
         const int MIN_MOUSE_X = 30;
@@ -68,6 +68,7 @@ namespace Commando
         public const int SCREEN_SIZE_X = 375;
         public const int SCREEN_SIZE_Y = 375;
         const int HUD_BAR_HEIGHT = 45;
+       
         protected int HUD_BAR_WIDTH
         {
             get
@@ -156,7 +157,7 @@ namespace Commando
         protected string transLevel_;
         public Level myLevel_;
         public string currentFilepath_;
-        protected bool quitEditor_;
+        
         protected bool placeTransition_;
         protected Vector2 transitionPos_;
         /// <summary>
@@ -193,7 +194,7 @@ namespace Commando
             displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
             placeTransition_ = false;
             transitionPos_ = new Vector2(0,0);
-            quitEditor_ = false;
+            
         }
 
         /// <summary>
@@ -211,10 +212,7 @@ namespace Commando
         {
             return transLevel_;
         }
-        public void setQuit()
-        {
-            quitEditor_ = true;
-        }
+        
         
         public EngineStateInterface update(GameTime gameTime)
         {
@@ -242,10 +240,7 @@ namespace Commando
 
                 placeTransition_ = false;
             }
-            if (quitEditor_)
-            {
-                return new EngineStateMenu(engine_);
-            }
+           
             if (inputs.getLeftDirectionalY() < -0.5)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
@@ -424,6 +419,21 @@ namespace Commando
                                             //myLevel_.getItems().Add(LevelTransitionObject
                                             break;
                                         }
+                                    case 4:
+                                        {
+                                           myLevel_.getItems().Add( new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.MachineGun));
+                                            break;
+                                        }
+                                    case 5:
+                                        {
+                                            myLevel_.getItems().Add( new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Pistol));
+                                            break;
+                                        }
+                                    case 6:
+                                        {
+                                            myLevel_.getItems().Add( new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Shotgun));
+                                            break;
+                                        }
                                 }
                                 
                             }
@@ -523,6 +533,23 @@ namespace Commando
                                             //myLevel_.getItems().Add(LevelTransitionObject
                                             break;
                                         }
+                                    case 4:
+                                        {
+                                            myLevel_.getItems().Add( new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.MachineGun));
+                                            
+                                            break;
+                                        }
+                                    case 5:
+                                        {
+                                            myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Pistol));
+                                            
+                                            break;
+                                        }
+                                    case 6:
+                                         {
+                                             myLevel_.getItems().Add(new WeaponBox(null, drawPipeline_, mousePos, Vector2.Zero, Constants.DEPTH_LOW, WeaponBox.WeaponType.Shotgun));
+                                             break;
+                                         }
                                 }
                             }
                             break;
@@ -846,6 +873,26 @@ namespace Commando
                         TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
                         i++;
                         TextureMap.fetchTexture("levelTransition").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
+                        i++;
+    
+                        TextureDrawer rifTex = new TextureDrawer(TextureMap.fetchTexture("MachineGunIcon"), new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
+                        rifTex.Scale = 0.18f;
+                        rifTex.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
+                        rifTex.draw();
+                        i++;
+
+                        
+                        TextureDrawer pistolTex = new TextureDrawer(TextureMap.fetchTexture("PistolIcon"), new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
+                        pistolTex.Scale = 0.18f;
+                        pistolTex.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
+                        pistolTex.draw();
+                        i++;
+
+                        TextureDrawer shotTex = new TextureDrawer(TextureMap.fetchTexture("ShotgunIcon"), new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
+                        shotTex.Scale = 0.18f;
+                        shotTex.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
+                        shotTex.draw();
+                        
                         // If you add more stuff here, be sure to add "i++;", and change the const value NUM_MISC at the top of the file
                         TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD + 0.01f);
                         

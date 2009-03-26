@@ -77,7 +77,7 @@ namespace Commando
             unselectedControlsString.Add("Next Palette: " + inputs.getControlName(InputsEnum.LEFT_BUMPER));
             unselectedControlsString.Add("Prev Palette: " + inputs.getControlName(InputsEnum.RIGHT_BUMPER));
             unselectedControlsString.Add("Place Tile: " + inputs.getControlName(InputsEnum.RIGHT_TRIGGER));
-            unselectedControlsString.Add("Quit: " + inputs.getControlName(InputsEnum.CANCEL_BUTTON));
+            unselectedControlsString.Add("Options: " + inputs.getControlName(InputsEnum.CANCEL_BUTTON));
 
             Vector2 selectedControlsMenuPos =
                 new Vector2(engine_.GraphicsDevice.Viewport.Width / 2.0f - 200.0f,

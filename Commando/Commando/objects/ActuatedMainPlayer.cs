@@ -398,6 +398,10 @@ namespace Commando.objects
             {
                 pipeline_.Add(this);
                 Weapon_.setDrawPipeline(pipeline_);
+                foreach (RangedWeaponAbstract i in Inventory_.Weapons_)
+                {
+                    i.setDrawPipeline(pipeline_);
+                }
             }
         }
 

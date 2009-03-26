@@ -63,7 +63,10 @@ namespace Commando
 
         protected Engine engine_;
         protected EngineStateLevelEditor state_;
+        protected EngineStateInterface successState_;
+        protected EngineStateInterface cancelState_;
         protected EngineStateInterface returnState_;
+        
         protected bool saved_ = false;
         protected bool cancelFlag_ = false;
         protected bool tryingToSave_ = false;
@@ -71,10 +74,12 @@ namespace Commando
         protected GameFont mainMessage_;
         protected string currentFilename_ = "";
 
-        public EngineStateLevelSave(Engine engine, EngineStateLevelEditor state)
+        public EngineStateLevelSave(Engine engine, EngineStateLevelEditor state, EngineStateInterface successState, EngineStateInterface cancelState)
         {
             engine_ = engine;
             state_ = state;
+            successState_ = successState;
+            cancelState_ = cancelState;
             returnState_ = this;
             mainMessage_ = FontMap.getInstance().getFont(MESSAGE_FONT);
             StorageDevice sd = Settings.getInstance().StorageDevice_;
@@ -106,7 +111,7 @@ namespace Commando
         {
             if (cancelFlag_)
             {
-                return returnState_;
+                return cancelState_;
             }
 
             if (!tryingToSave_ && !cancelFlag_)
@@ -141,7 +146,7 @@ namespace Commando
             // If they cancelled, go back to LevelEditor
             if (filename == null)
             {
-                returnState_ = state_;
+                returnState_ = cancelState_;
                 cancelFlag_ = true;
                 return;
             }
@@ -165,7 +170,7 @@ namespace Commando
             container.Dispose();
 
             //returnState_ = new EngineStateMenu(engine_);
-            returnState_ = state_;
+            returnState_ = successState_;
         }
 
         public void draw()

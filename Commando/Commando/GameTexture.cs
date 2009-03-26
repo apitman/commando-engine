@@ -257,7 +257,7 @@ namespace Commando
         {
             spriteBatch_.Draw(texture_, position, imageDimensions_[imageNumber], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth);
         }
-
+        
         /// <summary>
         /// Draw the image to the screen with the specified dimensions and a rotation.
         /// </summary>
