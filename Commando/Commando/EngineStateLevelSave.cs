@@ -168,7 +168,8 @@ namespace Commando
             state_.myLevel_.writeLevelToFile(filename);
             container.Dispose();
 
-            returnState_ = new EngineStateMenu(engine_);
+            //returnState_ = new EngineStateMenu(engine_);
+            returnState_ = state_;
         }
 
         public void draw()

@@ -156,7 +156,7 @@ namespace Commando
         protected string transLevel_;
         public Level myLevel_;
         public string currentFilepath_;
-        
+        protected bool quitEditor_;
         protected bool placeTransition_;
         protected Vector2 transitionPos_;
         /// <summary>
@@ -199,18 +199,17 @@ namespace Commando
 
             curTileIndex_ = 0;
             displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
-
-            
-
             placeTransition_ = false;
             transitionPos_ = new Vector2(0,0);
+            quitEditor_ = false;
         }
 
         /// <summary>
         /// Determines how to update the level editor based on user input
         /// </summary>
         /// <param name="gameTime">The GameTime parameter</param>
-        /// <returns>Returns itself if user wants to stay in this mode. Returns EngineStateMenu otherwise.</returns>
+        /// <returns>Returns itself if user wants to stay in this mode. Returns 
+        /// otherwise.</returns>
         public void setTransLevel(string transLevel)
         {
             transLevel_ = transLevel;
@@ -220,7 +219,10 @@ namespace Commando
         {
             return transLevel_;
         }
-        
+        public void setQuit()
+        {
+            quitEditor_ = true;
+        }
         
         public EngineStateInterface update(GameTime gameTime)
         {
@@ -248,7 +250,11 @@ namespace Commando
 
                 placeTransition_ = false;
             }
-            if (inputs.getLeftDirectionalY() < 0)
+            if (quitEditor_)
+            {
+                return new EngineStateMenu(engine_);
+            }
+            if (inputs.getLeftDirectionalY() < -0.5)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
                 if (cursorPosY_ < Constants.MAX_NUM_TILES_Y)
@@ -257,7 +263,7 @@ namespace Commando
                 }
                 GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
             }
-            else if (inputs.getLeftDirectionalY() > 0)
+            else if (inputs.getLeftDirectionalY() > 0.5)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
                 if (cursorPosY_ > Constants.MIN_NUM_TILES_Y)
@@ -266,7 +272,7 @@ namespace Commando
                 }
                 GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
             }
-            else if (inputs.getLeftDirectionalX() > 0)
+            else if (inputs.getLeftDirectionalX() > 0.5)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
                 if (cursorPosX_ < Constants.MAX_NUM_TILES_X)
@@ -275,7 +281,7 @@ namespace Commando
                 }
                 GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
             }
-            else if (inputs.getLeftDirectionalX() < 0)
+            else if (inputs.getLeftDirectionalX() < -0.5)
             {
                 inputs.setToggle(InputsEnum.LEFT_DIRECTIONAL);
                 if (cursorPosX_ > Constants.MIN_NUM_TILES_X)
@@ -287,8 +293,9 @@ namespace Commando
             else if (inputs.getButton(InputsEnum.CANCEL_BUTTON))
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
-                engine_.initializeScreen();
-                return new EngineStateLevelSave(engine_, this);
+                //engine_.initializeScreen();
+                //return new EngineStateLevelSave(engine_, this);
+                return new EngineStateEditorOptions(engine_, this);
             }
             else if (inputs.getButton(InputsEnum.BUTTON_4))
             {
@@ -582,7 +589,6 @@ namespace Commando
                 }
                 isObjSelected_ = false;
                 selectedIndex_ = 0;
-
             }
             else if (inputs.getButton(InputsEnum.LEFT_TRIGGER))
             {
