@@ -232,6 +232,7 @@ namespace Commando
             // Load the level and create bounding boxes
             myLevel_ = new Level(new Tileset(), null);
             myLevel_.getLevelFromFile(filename, drawPipeline_);
+            
             //player_ = (ActuatedMainPlayer)myLevel_.getPlayer(); // AMP: I don't like this in the Level class
             if (moveToNextLevel_)
             {
@@ -317,6 +318,7 @@ namespace Commando
             {
                 myLevel_.getItems()[i].setCollisionDetector(collisionDetector_);
             }
+
             LevelTransitionObject transition = new LevelTransitionObject(NEXT_LEVEL, collisionDetector_, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(172.5f, 277.5f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
             tileBox.Clear();
             tileBox.Add(new Vector2(-45f, -15f));

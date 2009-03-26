@@ -210,8 +210,8 @@ namespace Commando.objects
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
 
             // Add the other weapons to the character's inventory
-            Inventory_.Weapons_.Enqueue(new MachineGun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f)));
-            Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f)));
+            //Inventory_.Weapons_.Enqueue(new MachineGun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f)));
+            //Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(42f - 37.5f, 47f - 37.5f)));
 
             height_ = new Height(true, true);
         }
@@ -249,8 +249,8 @@ namespace Commando.objects
             //Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             
             // Add the other weapons to the character's inventory
-            Inventory_.Weapons_.Enqueue(new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
-            Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
+            //Inventory_.Weapons_.Enqueue(new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
+            //Inventory_.Weapons_.Enqueue(new Shotgun(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f)));
 
             height_ = new Height(true, false);
         }
@@ -320,7 +320,7 @@ namespace Commando.objects
                 leftD.Y = (float)Math.Sin((double)rotAngle) * X + (float)Math.Cos((double)rotAngle) * Y;
             }
 
-            if (inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_BUMPER))
+            if (inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_BUMPER) && Inventory_.Weapons_.Count > 0)
             {
                 inputSet_.setToggle(InputsEnum.RIGHT_BUMPER);
                 RangedWeaponAbstract temp = Inventory_.Weapons_.Dequeue();
@@ -335,16 +335,6 @@ namespace Commando.objects
                 {
                     actuator_.setCurrentActionSet("pistol_" + actuator_.getCurrentActionSet());
                 }
-                //if (pistol_)
-                //{
-                //    Weapon_ = new Shotgun(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-                //    pistol_ = false;
-                //}
-                //else
-                //{
-                //    Weapon_ = new Pistol(pipeline_, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
-                //    pistol_ = true;
-                //}
             }
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))

@@ -451,6 +451,9 @@
     <Compile Include="..\Commando\objects\PlayableCharacterAbstract.cs">
       <Link>objects\PlayableCharacterAbstract.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\WeaponBox.cs">
+      <Link>objects\WeaponBox.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\AmmoTypeEnum.cs">
       <Link>objects\weapons\AmmoTypeEnum.cs</Link>
     </Compile>
