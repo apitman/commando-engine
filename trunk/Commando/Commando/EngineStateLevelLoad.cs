@@ -164,8 +164,18 @@ namespace Commando
         {
             if (cancelFlag_)
             {
-                return new EngineStateMenu(engine_);
-            }
+                switch (target_)
+                {
+                    case EngineStateTarget.GAMEPLAY:
+                        return new EngineStateMenu(engine_);
+                        break;
+                    case EngineStateTarget.LEVEL_EDITOR:
+                        return new EngineStateMenu(engine_);
+                        break;
+                    case EngineStateTarget.LEVEL_TRANSITION:
+                        return returnState_;
+                }           
+                }
 
             if (windows_)
             {
@@ -177,6 +187,8 @@ namespace Commando
                     case EngineStateTarget.LEVEL_EDITOR:
                         return new EngineStateLevelEditor(engine_, this, windowsFileName_);
                         break;
+                    case EngineStateTarget.LEVEL_TRANSITION:
+                        return returnState_;
                 }
             }
 
@@ -222,7 +234,18 @@ namespace Commando
             {
                 inputs.setToggle(InputsEnum.CANCEL_BUTTON);
                 inputs.setToggle(InputsEnum.BUTTON_2);
-                return new EngineStateMenu(engine_);
+                switch (target_)
+                {
+                    case EngineStateTarget.GAMEPLAY:
+                        return new EngineStateMenu(engine_);
+                        break;
+                    case EngineStateTarget.LEVEL_EDITOR:
+                        return new EngineStateMenu(engine_);
+                        break;
+                    case EngineStateTarget.LEVEL_TRANSITION:
+                        return returnState_;
+                        break;
+                }
             }
 
             return this;
