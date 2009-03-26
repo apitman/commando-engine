@@ -28,6 +28,7 @@ using Commando.levels;
 using Commando.graphics;
 using Commando.objects.weapons;
 
+
 namespace Commando.objects.enemies
 {
     public class HumanEnemy : NonPlayableCharacterAbstract
