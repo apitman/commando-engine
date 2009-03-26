@@ -20,16 +20,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.levels;
 using Commando.objects;
+using Commando.levels;
+using Microsoft.Xna.Framework;
+using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    class ActionInvestigate : Action
+    class ActionFlee : Action
     {
-        internal const float COST = 1.0f;
+        internal const float COST = 10.0f;
+        internal const int THRESHOLD = 60;
 
-        internal ActionInvestigate(NonPlayableCharacterAbstract character)
+        protected int counter = 0;
+
+        internal ActionFlee(NonPlayableCharacterAbstract character)
             : base(character)
         {
 
@@ -42,26 +47,17 @@ namespace Commando.ai.planning
 
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
-            TileIndex investigateLocation =
-                //character_.AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget).data_.t;
-                GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(
-                    character_.AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget).position_
-                    );
-
-            // Create a copy of this search node and set its position to our
-            //  investigate location
             SearchNode parent = node.getPredecessor();
-            parent.action = new ActionInvestigate(character_);
+            parent.action = new ActionFlee(character_);
             parent.cost += COST;
-            parent.setPosition(Variable.Location, ref investigateLocation);
-            parent.setBool(Variable.HasInvestigated, false);
+            parent.setInt(Variable.TargetHealth, node.values[Variable.TargetHealth].i + 1);
 
             return parent;
         }
 
         internal override void register(Dictionary<int, List<Action>> actionMap)
         {
-            actionMap[Variable.HasInvestigated].Add(this);
+            actionMap[Variable.TargetHealth].Add(this);
         }
 
         internal override bool initialize()
@@ -71,9 +67,21 @@ namespace Commando.ai.planning
 
         internal override bool update()
         {
-            character_.AI_.Memory_.removeBeliefs(BeliefType.InvestigateTarget);
-            character_.AI_.Memory_.removeBeliefs(BeliefType.SuspiciousNoise);
-            return true;
+            counter++;
+            if (counter >= THRESHOLD)
+                return true;
+
+            Belief bestTarget = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+            if (bestTarget == null)
+                return true;
+            //CharacterAbstract enemy = bestTarget.handle_ as CharacterAbstract;
+            Vector2 opposite = bestTarget.position_ - character_.getPosition();
+            opposite = -opposite;
+            opposite.Normalize();
+
+            (character_.getActuator() as DefaultActuator).moveTo(character_.getPosition() + opposite * 5);
+
+            return false;
         }
     }
 }

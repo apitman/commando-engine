@@ -32,6 +32,7 @@ namespace Commando.ai
 
         internal int countUp = 0;
         internal int countDown = LOSS_TIME;
+        internal bool lossFlag = false;
 
         const int REACTION_TIME = 10;
         const int HOLD_AIM_TIME = 10;
@@ -41,31 +42,32 @@ namespace Commando.ai
 
         internal override void update()
         {
-            // TODO
-            // change this to most relevant enemy
-            Belief belief = AI_.Memory_.getFirstBelief(BeliefType.EnemyLoc);
+            Belief belief = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+            if (belief == null)
+            {
+                return;
+            }
+
+            CharacterAbstract enemy = (belief.handle_ as CharacterAbstract);
 
             // TODO
             // change this to can see object, remove hard-codedness
             // also change it to not actually access the character directly;
             //      that character should drop EnemyVelocity stimuli or something
-            if (belief != null &&
-                Raycaster.canSeePoint(AI_.Character_.getPosition(),
+            if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
                                         belief.position_,
-                                        new Height(true, true),
-                                        new Height(true, true)))
+                                        AI_.Character_.getHeight(),
+                                        enemy.getHeight()))
             {
-                CharacterAbstract ca = (belief.handle_ as CharacterAbstract);
-
                 // if can still see actual character, we might fire
                 if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
-                                        ca.getPosition(),
-                                        new Height(true, true),
-                                        new Height(true, true)))
+                                        enemy.getPosition(),
+                                        AI_.Character_.getHeight(),
+                                        enemy.getHeight()))
                 {
-                    velocities_[countUp % REACTION_TIME] = ca.getVelocity();
+                    velocities_[countUp % REACTION_TIME] = enemy.getVelocity();
                     countUp++;
-                    Vector2 target = predictTargetPosition(belief.position_);
+                    Vector2 target = predictTargetPosition(enemy.getPosition());
                     (AI_.Character_.getActuator() as DefaultActuator).lookAt(target);
                     if (countUp >= REACTION_TIME)
                     {
@@ -79,6 +81,7 @@ namespace Commando.ai
                     {
                         countDown = LOSS_TIME;
                         countUp = 0;
+                        lossFlag = true;
                     }
                 }
             }     

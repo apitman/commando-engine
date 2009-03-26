@@ -23,6 +23,7 @@ using Commando.objects.weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.levels;
+using Commando.ai.brains;
 
 namespace Commando.objects
 {
@@ -57,6 +58,8 @@ namespace Commando.objects
         public DummyEnemy(List<DrawableObjectAbstract> pipeline, Vector2 pos) :
             base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
         {
+            AI_ = new DummyAI(this);
+
             List<GameTexture> animationTextures = new List<GameTexture>();
             animationTextures.Add(TextureMap.getInstance().getTexture("basic_enemy_walk"));
             animations_ = new AnimationSet(animationTextures);

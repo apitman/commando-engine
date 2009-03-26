@@ -319,7 +319,6 @@ namespace Commando
                 myLevel_.getItems()[i].setCollisionDetector(collisionDetector_);
             }
 
-            LevelTransitionObject transition = new LevelTransitionObject(NEXT_LEVEL, collisionDetector_, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("Tile_0"), new Vector2(172.5f, 277.5f), new Vector2(1f, 0f), Constants.DEPTH_LOW);
             tileBox.Clear();
             tileBox.Add(new Vector2(-45f, -15f));
             tileBox.Add(new Vector2(45f, -15f));
@@ -371,12 +370,25 @@ namespace Commando
             //HumanEnemy humanENEMY = new HumanEnemy(drawPipeline_, new Vector2(200f, 100f));
             //humanENEMY.setCollisionDetector(collisionDetector_);
 
-
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;
+            WorldState.CoverList_.Add(cover);
+            WorldState.CoverList_.Add(cover1);
+            WorldState.CoverList_.Add(cover2);
+            WorldState.CoverList_.Add(cover3);
+            WorldState.CoverList_.Add(cover4);
+            WorldState.CoverList_.Add(cover5);
+            WorldState.CoverList_.Add(cover6);
+            WorldState.CoverList_.Add(cover7);
+            WorldState.CoverList_.Add(cover8);
+            WorldState.CoverList_.Add(cover9);
+            WorldState.CoverList_.Add(cover10);
+            WorldState.CoverList_.Add(cover11);
+            WorldState.CoverList_.Add(cover12);
+            WorldState.CoverList_.Add(cover13);
+            WorldState.CoverList_.Add(cover14);
+            WorldState.CoverList_.Add(cover15);
         }
-
-        #region EngineStateInterface Members
 
         /// <summary>
         /// Handles input and moves all characters and objects forward one
@@ -484,6 +496,5 @@ namespace Commando
             /* end section*/
         }
 
-        #endregion
     }
 }

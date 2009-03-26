@@ -21,17 +21,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
+using Commando.graphics;
+using Commando.objects.weapons;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
     internal class ActionAttackRangedCover : Action
     {
+        protected SystemAiming aiming;
         protected internal const int COST = 1;
 
         internal ActionAttackRangedCover(NonPlayableCharacterAbstract character)
             : base(character)
         {
-
+            aiming = new SystemAiming(character.AI_);
         }
 
         internal override bool testPreConditions(SearchNode node)
@@ -66,12 +70,54 @@ namespace Commando.ai.planning
 
         internal override bool update()
         {
-            throw new NotImplementedException();
+            aiming.update();
+
+            // Move this into checkIsStillValid
+            if (character_.Weapon_.CurrentAmmo_ <= 0 || aiming.lossFlag)
+            {
+                Belief bestTarget = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+                if (bestTarget != null)
+                {
+                    Belief enemyLoc = character_.AI_.Memory_.getBelief(BeliefType.EnemyLoc, bestTarget.handle_);
+                    if (enemyLoc != null)
+                    {
+                        character_.AI_.Memory_.removeBelief(enemyLoc);
+                    }
+                    character_.AI_.Memory_.removeBelief(bestTarget);
+                }
+                character_.AI_.Memory_.removeBeliefs(BeliefType.BestTarget);
+                character_.AI_.Memory_.removeBeliefs(BeliefType.EnemyLoc);
+                character_.AI_.Memory_.removeBeliefs(BeliefType.SuspiciousNoise);
+
+                // remove from cover, then go after target's last known location
+                DefaultActuator da = (character_.getActuator() as DefaultActuator);
+                CoverObject cover = da.getCoverObject();
+                if (cover != null)
+                    da.cover(da.getCoverObject());
+                (character_.getActuator() as DefaultActuator).moveTo(bestTarget.position_);
+
+                return true;
+            }
+
+            return false;
         }
 
         internal override bool initialize()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            Belief bestTarget =
+                character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+            Vector2 target = bestTarget.position_;
+
+            DefaultActuator da = (character_.getActuator() as DefaultActuator);
+            da.lookAt(target);
+            da.update();
+            da.throwGrenade(
+                new FragGrenade(character_.pipeline_, character_.getCollisionDetector(),
+                    character_.getDirection(), character_.getPosition(),
+                    character_.getDirection()));
+            da.update();
+            return true;
         }
     }
 }

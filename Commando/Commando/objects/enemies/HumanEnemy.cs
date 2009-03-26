@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Commando.levels;
 using Commando.graphics;
 using Commando.objects.weapons;
+using Commando.ai.brains;
 
 
 namespace Commando.objects.enemies
@@ -51,7 +52,7 @@ namespace Commando.objects.enemies
 
         protected static readonly List<Vector2> BOUNDSPOINTSLOW;
 
-        protected Color currentDrawColor_ = Color.LightBlue;
+        protected Color currentDrawColor_ = Color.Black;
 
         protected int drawColorCount_ = 0;
 
@@ -98,6 +99,8 @@ namespace Commando.objects.enemies
         public HumanEnemy(List<DrawableObjectAbstract> pipeline, Vector2 pos)
             : base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "human", null, null, 8.0f, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_HIGH)
         {
+            AI_ = new HumanAI(this);
+
             boundsPolygonLow_ = new ConvexPolygon(BOUNDSPOINTSLOW, Vector2.Zero);
             boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
             boundsPolygonHigh_.rotate(direction_, position_);
@@ -251,7 +254,7 @@ namespace Commando.objects.enemies
             }
             else
             {
-                currentDrawColor_ = Color.LightBlue;
+                currentDrawColor_ = Color.Black;
             }
         }
 

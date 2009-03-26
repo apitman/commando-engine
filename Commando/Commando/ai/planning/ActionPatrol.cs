@@ -29,6 +29,9 @@ namespace Commando.ai.planning
     class ActionPatrol : Action
     {
         internal const float COST = 5.0f;
+        internal const int THRESHOLD = 70;
+
+        protected int counter = 0;
 
         internal ActionPatrol(NonPlayableCharacterAbstract character)
             : base(character)
@@ -57,7 +60,15 @@ namespace Commando.ai.planning
 
         internal override bool update()
         {
-            Vector2 target = character_.getPosition() + 5 * character_.getDirection();
+            counter++;
+            if (counter >= THRESHOLD)
+            {
+                counter = 0;
+                (character_.getActuator() as DefaultActuator).lookAt(-character_.getDirection());
+            }
+            Vector2 direction = character_.getDirection();
+            direction.Normalize();
+            Vector2 target = character_.getPosition() + direction * 5;
             (character_.getActuator() as DefaultActuator).moveTo(target);
             return false;
         }

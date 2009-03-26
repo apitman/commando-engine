@@ -29,7 +29,7 @@ namespace Commando.ai
     /// <summary>
     /// An encapsulation of an NPC's intelligence.
     /// </summary>
-    public class AI
+    public abstract class AI
     {
         public NonPlayableCharacterAbstract Character_ { get; private set; }
 
@@ -57,18 +57,11 @@ namespace Commando.ai
             Memory_ = new Memory();
 
             Actions_ = new List<Action>();
-            Actions_.Add(new ActionTakeCover(npc));
-            Actions_.Add(new ActionInvestigate(npc));
-            Actions_.Add(new ActionGoto(npc));
-            Actions_.Add(new ActionPatrol(npc));
 
             CurrentGoal_ = null;
             CurrentPlan_ = new List<Action>();
 
-            sensors_.Add(new SensorEars(this));
-            sensors_.Add(new SensorSeeCharacter(this));
-
-            systems_.Add(new SystemAiming(this));
+            //systems_.Add(new SystemAiming(this));
             systems_.Add(new SystemTargetSelection(this));
             systems_.Add(new SystemCoverSelection(this));
             systems_.Add(new SystemGoalSelection(this));
@@ -122,84 +115,6 @@ namespace Commando.ai
                     }
                 }
             }
-
-            /*
-            
-            // TODO Temporary block
-            // Tells the AI to proceed to the location of a known enemy
-            //  if it does not currently have a place to go
-            lastPathfindUpdate_++;
-            TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
-            if (path_ == null || path_.Count == 0 || lastPathfindUpdate_ > PATHFIND_THRESHOLD)
-            {
-                List<Belief> list = Memory_.getBeliefs(BeliefType.EnemyLoc);
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Belief b = list[i];
-                    //Character_.moveTo(b.position_);
-                    //Character_.lookAt(b.position_);
-                    Vector2 start = Character_.getPosition();
-                    Vector2 dest = b.position_;
-                    if (TileIndex.equals(grid.getTileIndex(start), grid.getTileIndex(dest)))
-                    {
-                        Memory_.removeBelief(b);
-                        continue;
-                    }
-                    float radius = Character_.getRadius();
-                    Height h = new Height(true, true);
-                    path_ = 
-                        AStarPathfinder.run(grid, start, dest, radius, h);
-                    lastPathfindUpdate_ = 0;
-                    if (path_ != null)
-                        break;               
-                }
-            }
-
-            // TODO Temporary block
-            // Tells the AI to proceed to the location of a suspicious
-            // noise if there is no known enemy location
-            if (path_ == null || path_.Count == 0 || lastPathfindUpdate_ > PATHFIND_THRESHOLD)
-            {
-                List<Belief> list = Memory_.getBeliefs(BeliefType.SuspiciousNoise);
-                for (int i = 0; i < list.Count; i++ )
-                {
-                    Belief b = list[i];
-                    Character_.lookAt(b.position_);
-                    Vector2 start = Character_.getPosition();
-                    Vector2 dest = b.position_;
-                    float radius = Character_.getRadius();
-                    Height h = new Height(true, true);
-                    path_ =
-                        AStarPathfinder.run(grid, start, dest, radius, h);
-                    lastPathfindUpdate_ = 0;
-                    if (path_ != null)
-                        break;
-                }
-            }
-
-            if (path_ == null || path_.Count == 0)
-            {
-                return;
-            }
-
-            TileIndex cur = path_[0];
-            if (grid.isPointWithinTile(Character_.getPosition(), cur))
-            {
-                path_.RemoveAt(0);
-                if (path_.Count != 0)
-                {
-                    Character_.moveTo(grid.getTileCenter(path_[0]));
-                    //Character_.lookAt(grid.getTileCenter(path_[0]));
-                }
-            }
-            else
-            {
-                Character_.moveTo(grid.getTileCenter(path_[0]));
-                //Character_.lookAt(grid.getTileCenter(path_[0]));
-            }
-
-            // End test block
-            */
         }
 
         public void draw()

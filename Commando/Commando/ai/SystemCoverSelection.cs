@@ -62,6 +62,7 @@ namespace Commando.ai
             {
                 coverPos = beliefs[i].position_;
                 tempVal = (float)CommonFunctions.distance(myPos, coverPos);
+                //tempVal += (float)CommonFunctions.distance(myPos, targetPos);
                 tempVal = (float)Math.Sqrt(tempVal);
                 CoverObject cover = (CoverObject)beliefs[i].handle_;
                 float angleToPlayer = MathHelper.WrapAngle(CommonFunctions.getAngle(targetPos - coverPos));
@@ -72,6 +73,7 @@ namespace Commando.ai
                 if (tempVal < lowValue)
                 {
                     lowBelief = i;
+                    lowValue = tempVal;
                 }
             }
             AI_.Memory_.removeBeliefs(BeliefType.BestCover);

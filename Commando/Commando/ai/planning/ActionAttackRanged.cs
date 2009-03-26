@@ -21,17 +21,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
+using Commando.graphics;
 
 namespace Commando.ai.planning
 {
     internal class ActionAttackRanged : Action
     {
-        protected internal const int COST = 3;
+        protected SystemAiming aiming;
+
+        protected internal const int COST = 4;
 
         internal ActionAttackRanged(NonPlayableCharacterAbstract character)
             : base(character)
         {
-
+            aiming = new SystemAiming(character_.AI_);
         }
 
         internal override bool testPreConditions(SearchNode node)
@@ -63,12 +66,37 @@ namespace Commando.ai.planning
 
         internal override bool update()
         {
-            throw new NotImplementedException();
+            aiming.update();
+
+            // Move this into checkIsStillValid
+            if (character_.Weapon_.CurrentAmmo_ <= 0 || aiming.lossFlag)
+            {
+                Belief bestTarget = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+                if (bestTarget != null)
+                {
+                    Belief enemyLoc = character_.AI_.Memory_.getBelief(BeliefType.EnemyLoc, bestTarget.handle_);
+                    if (enemyLoc != null)
+                    {
+                        character_.AI_.Memory_.removeBelief(enemyLoc);
+                    }
+                    character_.AI_.Memory_.removeBelief(bestTarget);
+                }
+                character_.AI_.Memory_.removeBeliefs(BeliefType.BestTarget);
+                character_.AI_.Memory_.removeBeliefs(BeliefType.EnemyLoc);
+                character_.AI_.Memory_.removeBeliefs(BeliefType.SuspiciousNoise);
+
+                (character_.getActuator() as DefaultActuator).moveTo(bestTarget.position_);
+                
+                return true;
+            }
+
+            return false;
         }
 
         internal override bool initialize()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return true;
         }
     }
 }
