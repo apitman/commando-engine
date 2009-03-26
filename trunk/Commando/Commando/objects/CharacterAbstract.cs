@@ -250,7 +250,11 @@ namespace Commando
 
         public virtual void setCoverObject(CoverObject cObj)
         {
-            lastCoverObject_ = cObj;
+            if (lastCoverObject_ == null || CommonFunctions.distance(lastCoverObject_.getPosition(), position_) >
+                    CommonFunctions.distance(cObj.getPosition(), position_))
+            {
+                lastCoverObject_ = cObj;
+            }
         }
 
         public List<CollisionObjectInterface> getCollidedObjects()

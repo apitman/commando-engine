@@ -292,6 +292,8 @@ namespace Commando
             //collisionDetector_ = new CollisionDetector(polygons);
             collisionDetector_ = new SeparatingAxisCollisionDetector();
 
+            List<CoverObject> coverObjects = CoverGenerator.generateCoverObjects(tilesForGrid);
+            
             foreach (BoxObject boxOb in boxesToBeAddedForReal)
             {
                 //boxOb.getBounds().rotate(new Vector2(1.0f, 0.0f), boxOb.getPosition());
@@ -318,7 +320,7 @@ namespace Commando
             {
                 myLevel_.getItems()[i].setCollisionDetector(collisionDetector_);
             }
-
+            /*
             tileBox.Clear();
             tileBox.Add(new Vector2(-45f, -15f));
             tileBox.Add(new Vector2(45f, -15f));
@@ -366,12 +368,18 @@ namespace Commando
             CoverObject cover13 = new CoverObject(collisionDetector_, vertical, new Vector2(centerX + 37.5f, centerY), new Vector2(centerX + 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
             CoverObject cover14 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY - 37.5f), new Vector2(centerX - 22.5f, centerY - 22.5f), new Vector2(centerX + 22.5f, centerY - 22.5f));
             CoverObject cover15 = new CoverObject(collisionDetector_, tileBox, new Vector2(centerX, centerY + 37.5f), new Vector2(centerX - 22.5f, centerY + 22.5f), new Vector2(centerX + 22.5f, centerY + 22.5f));
-
+            */
             //HumanEnemy humanENEMY = new HumanEnemy(drawPipeline_, new Vector2(200f, 100f));
             //humanENEMY.setCollisionDetector(collisionDetector_);
+            foreach (CoverObject coverOb in coverObjects)
+            {
+                coverOb.setCollisionDetector(collisionDetector_);
+                WorldState.CoverList_.Add(coverOb);
+            }
 
             WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;
+            /*
             WorldState.CoverList_.Add(cover);
             WorldState.CoverList_.Add(cover1);
             WorldState.CoverList_.Add(cover2);
@@ -388,6 +396,7 @@ namespace Commando
             WorldState.CoverList_.Add(cover13);
             WorldState.CoverList_.Add(cover14);
             WorldState.CoverList_.Add(cover15);
+             * */
         }
 
         /// <summary>
