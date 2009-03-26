@@ -106,7 +106,7 @@ namespace Commando.graphics
 
         public CharacterActionInterface interrupt(CharacterActionInterface newAction)
         {
-            if (newAction == this || newAction.getPriority() <= priority_ || finished_)
+            if (newAction == this || newAction.getPriority() <= priority_ || !finished_)
             {
                 return this;
             }

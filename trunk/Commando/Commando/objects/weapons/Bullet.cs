@@ -34,28 +34,30 @@ namespace Commando.objects.weapons
         protected const float DEPTH = 0.5f;
         protected const int DAMAGE = 5;
         protected static readonly Height HEIGHT = new Height(true, true);
-        protected int damage_;
 
-        protected static readonly ConvexPolygon BOUNDS;
+        private static readonly List<Vector2> BOUNDS_POINTS;
+
+
+        protected int damage_;
 
         static Bullet()
         {
-            List<Vector2> points = new List<Vector2>();
-            points.Add(new Vector2(1f, 1f));
-            points.Add(new Vector2(-1f, 1f));
-            points.Add(new Vector2(-1f, -1f));
-            points.Add(new Vector2(1f, -1f));
-            BOUNDS = new ConvexPolygon(points, Vector2.Zero);
+            BOUNDS_POINTS = new List<Vector2>();
+            BOUNDS_POINTS.Add(new Vector2(1f, 1f));
+            BOUNDS_POINTS.Add(new Vector2(-1f, 1f));
+            BOUNDS_POINTS.Add(new Vector2(-1f, -1f));
+            BOUNDS_POINTS.Add(new Vector2(1f, -1f));
         }
 
         public Bullet(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
-            : base(pipeline, TextureMap.fetchTexture(TEXTURE_NAME), detector, BOUNDS, RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
+            : base(pipeline, TextureMap.fetchTexture(TEXTURE_NAME), detector, null, RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
         {
             damage_ = DAMAGE;
+            boundsPolygon_ = new ConvexPolygon(BOUNDS_POINTS, Vector2.Zero);
         }
 
         public Bullet(GameTexture texture, List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
-            : base(pipeline, texture, detector, BOUNDS, RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
+            : base(pipeline, texture, detector, new ConvexPolygon(BOUNDS_POINTS, Vector2.Zero), RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
         {
             damage_ = DAMAGE;
         }

@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Commando.objects;
 using Microsoft.Xna.Framework;
+using Commando.graphics;
 
 namespace Commando.ai.planning
 {
@@ -57,7 +58,7 @@ namespace Commando.ai.planning
         internal override bool update()
         {
             Vector2 target = character_.getPosition() + 5 * character_.getDirection();
-            character_.moveTo(target);
+            (character_.getActuator() as DefaultActuator).moveTo(target);
             return false;
         }
 

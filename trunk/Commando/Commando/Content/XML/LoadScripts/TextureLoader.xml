@@ -14,6 +14,21 @@
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk_Green.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_Walk_Pistol.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\PlayerTemp_StandToShoot.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\PlayerTemp_2_Crouch_Walk.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Crouch_Pistol_Walk.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Crouch_Rifle_Walk.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Stand_Rifle_Walk.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Stand_Pistol_Walk.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_StandToShoot_Pistol.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_StandToShoot_Rifle.xml</texture>
+  <image>
+    <key>GreenPlayer_Crouch_Pistol</key>
+    <handle>Sprites\\GreenPlayer_Crouch_Pistol</handle>
+  </image>
+  <image>
+    <key>GreenPlayer_Crouch_Rifle</key>
+    <handle>Sprites\\GreenPlayer_Crouch_Rifle</handle>
+  </image>
   <image>
     <key>PistolIcon</key>
     <handle>Sprites\\PistolIcon</handle>

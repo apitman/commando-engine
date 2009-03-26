@@ -193,6 +193,7 @@
     <Compile Include="objects\BoxObject.cs" />
     <Compile Include="objects\CoverObject.cs" />
     <Compile Include="objects\enemies\DummyEnemy.cs" />
+    <Compile Include="objects\enemies\HumanEnemy.cs" />
     <Compile Include="objects\HeadsUpDisplayObject.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />
     <Compile Include="AnimationSet.cs" />

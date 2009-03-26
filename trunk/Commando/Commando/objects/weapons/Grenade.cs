@@ -32,22 +32,21 @@ namespace Commando.objects.weapons
         protected static readonly Height HEIGHT = new Height(true, true);
         protected const float SPEED = 5.0f;
         protected const float DEPTH = 0.5f;
-        protected static readonly ConvexPolygon BOUNDS;
+        private static readonly List<Vector2> BOUNDS_POINTS;
 
         static Grenade()
         {
-            List<Vector2> points = new List<Vector2>();
-            points.Add(new Vector2(3f, 3f));
-            points.Add(new Vector2(-3f, 3f));
-            points.Add(new Vector2(-3f, -3f));
-            points.Add(new Vector2(3f, -3f));
-            BOUNDS = new ConvexPolygon(points, Vector2.Zero);
+            BOUNDS_POINTS = new List<Vector2>();
+            BOUNDS_POINTS.Add(new Vector2(1f, 1f));
+            BOUNDS_POINTS.Add(new Vector2(-1f, 1f));
+            BOUNDS_POINTS.Add(new Vector2(-1f, -1f));
+            BOUNDS_POINTS.Add(new Vector2(1f, -1f));
         }
 
         public Grenade(List<DrawableObjectAbstract> pipeline, GameTexture texture, CollisionDetectorInterface detector, Vector2 direction, Vector2 position, Vector2 directionFacing)
-            : base(pipeline, texture, detector, BOUNDS, RADIUS, HEIGHT, CommonFunctions.normalizeNonmutating(direction) * SPEED, position, directionFacing, DEPTH)
+            : base(pipeline, texture, detector, null, RADIUS, HEIGHT, CommonFunctions.normalizeNonmutating(direction) * SPEED, position, directionFacing, DEPTH)
         {
-
+            boundsPolygon_ = new ConvexPolygon(BOUNDS_POINTS, Vector2.Zero);
         }
 
         public override void update(GameTime gameTime)

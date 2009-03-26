@@ -77,7 +77,11 @@ namespace Commando.objects
             actions["default"].Add("move", new CharacterRunAction(this, run, 2.0f));
             actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 2.0f));
             actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
+            actions["default"].Add("crouch", new CharacterStayStillAction(this, rest));
+            actions["default"].Add("cover", new CharacterStayStillAction(this, rest));
+            actions["default"].Add("shoot", new CharacterShootAction());
             actuator_ = new DefaultActuator(actions, this, "default");
+            
 
             currentDrawColor_ = Color.White;
             health_.update(15);
@@ -105,28 +109,6 @@ namespace Commando.objects
             {
                 currentDrawColor_ = Color.White;
             }
-            if (collidedInto_.Count > 0)
-            {
-                foreach (CollisionObjectInterface cObj in collidedInto_)
-                {
-                    if (cObj is ActuatedMainPlayer)
-                    {
-                        (cObj as ActuatedMainPlayer).damage(1, this);
-                    }
-                }
-                collidedInto_.Clear();
-            }
-            if (collidedWith_.Count > 0)
-            {
-                foreach (CollisionObjectInterface cObj in collidedWith_)
-                {
-                    if (cObj is ActuatedMainPlayer)
-                    {
-                        (cObj as ActuatedMainPlayer).damage(1, this);
-                    }
-                }
-                collidedWith_.Clear();
-            }
         }
 
         public override void draw(GameTime gameTime)
@@ -135,14 +117,14 @@ namespace Commando.objects
             AI_.draw();
         }
 
-        public override void moveTo(Vector2 position)
+        public void moveTo(Vector2 position)
         {
             actuator_.moveTo(position);
             //movingToward_ = position;
             //atLocation_ = false;
         }
 
-        public override void lookAt(Vector2 location)
+        public void lookAt(Vector2 location)
         {
             actuator_.lookAt(location);
             //lookingAt_ = location;

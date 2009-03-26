@@ -76,6 +76,7 @@ namespace Commando.graphics
             {
                 (character_.getActuator() as DefaultActuator).setCurrentActionSet(nextActionSet_);
                 finished_ = true;
+                character_.setHeight(nextHeight_);
                 return;
             }
             Vector2 position = character_.getPosition();

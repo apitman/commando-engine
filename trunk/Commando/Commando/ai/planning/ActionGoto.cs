@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Commando.levels;
 using Commando.objects;
+using Commando.graphics;
 
 namespace Commando.ai.planning
 {
@@ -100,7 +101,7 @@ namespace Commando.ai.planning
                     }
                 }
 
-                character_.moveTo(grid.getTileCenter(path_[0]));
+                (character_.getActuator() as DefaultActuator).moveTo(grid.getTileCenter(path_[0]));
             }
             else
             {

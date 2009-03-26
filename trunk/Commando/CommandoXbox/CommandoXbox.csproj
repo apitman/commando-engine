@@ -406,6 +406,9 @@
     <Compile Include="..\Commando\objects\enemies\DummyEnemy.cs">
       <Link>objects\enemies\DummyEnemy.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\enemies\HumanEnemy.cs">
+      <Link>objects\enemies\HumanEnemy.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\HeadsUpDisplayObject.cs">
       <Link>objects\HeadsUpDisplayObject.cs</Link>
     </Compile>
