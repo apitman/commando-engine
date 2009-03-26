@@ -14,7 +14,7 @@ _Note:_ This page is expected to be updated frequently, so check back often to s
 
 = The COMMANDO engine =
 
-  * Download CommandoReleasev0.5b.zip from here http://code.google.com/p/commando-engine/downloads/list. Unzip it and run the .exe installer to install the engine. After installing, run Commando.exe to run the Commando Engine. _Note 2:_ If you would like to compile the source code, then you will need Microsoft Visual Studio 2008 and XNA Game Studio 3.0, which can be found here http://www.microsoft.com/downloads/details.aspx?FamilyId=7D70D6ED-1EDD-4852-9883-9A33C0AD8FEE&displaylang=en
+  * Download CommandoRelease v0.5b.zip from here http://code.google.com/p/commando-engine/downloads/list. Unzip it and run the .exe installer to install the engine. After installing, run Commando.exe to run the Commando Engine. _Note 2:_ If you would like to compile the source code, then you will need Microsoft Visual Studio 2008 and XNA Game Studio 3.0, which can be found here http://www.microsoft.com/downloads/details.aspx?FamilyId=7D70D6ED-1EDD-4852-9883-9A33C0AD8FEE&displaylang=en
 
 = How to play the game =
 
