@@ -30,30 +30,24 @@ namespace Commando.ai
 
         internal override void update()
         {
-            SearchNode goal = new SearchNode();
-
-            Belief target = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-            Belief noise = AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget);
-
-            // We have an enemy, so go after it
-            if (target != null)
+            float highestRelevance = float.MinValue;
+            Goal mostRelevant = null;
+            for (int i = 0; i < AI_.Goals_.Count; i++)
             {
-                goal.setInt(Variable.TargetHealth, 0);
+                AI_.Goals_[i].refresh();
+                if (AI_.Goals_[i].Relevance_ > highestRelevance)
+                {
+                    highestRelevance = AI_.Goals_[i].Relevance_;
+                    mostRelevant = AI_.Goals_[i];
+                }
             }
 
-            // Otherwise we investigate a noise if we're aware of one
-            else if (noise != null)
+            if (mostRelevant == null)
             {
-                goal.setBool(Variable.HasInvestigated, true);
+                throw new NotImplementedException("AIs without goals not yet supported");
             }
 
-            // Otherwise we just patrol
-            else
-            {
-                goal.setBool(Variable.HasPatrolled, true);
-            }
-
-            AI_.CurrentGoal_ = goal;
+            AI_.CurrentGoal_ = mostRelevant;
         }
     }
 }

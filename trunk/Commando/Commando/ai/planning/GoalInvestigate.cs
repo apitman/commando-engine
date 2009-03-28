@@ -20,29 +20,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
-using Commando.ai.planning;
 
-namespace Commando.ai.brains
+namespace Commando.ai.planning
 {
-    public class DummyAI : AI
+    class GoalInvestigate : Goal
     {
-        public DummyAI(NonPlayableCharacterAbstract npc)
-            : base(npc)
+        internal GoalInvestigate(AI ai)
+            : base(ai)
         {
-            Goals_.Add(new GoalPatrol(this));
-            Goals_.Add(new GoalInvestigate(this));
-            Goals_.Add(new GoalKill(this));
+            node_ = new SearchNode();
+            node_.setBool(Variable.HasInvestigated, true);
+        }
 
-            Actions_.Add(new ActionInvestigate(npc));
-            Actions_.Add(new ActionGoto(npc));
-            Actions_.Add(new ActionPatrol(npc));
-            Actions_.Add(new ActionFlee(npc));
-            Actions_.Add(new ActionAttackRanged(npc));
-
-            sensors_.Add(new SensorEars(this));
-            sensors_.Add(new SensorSeeCharacter(this));
-
+        internal override void refresh()
+        {
+            Belief investigateTarget = AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget);
+            if (investigateTarget != null)
+            {
+                this.handle_ = investigateTarget.handle_;
+                Relevance_ = 0.1f + investigateTarget.confidence_ / 2;
+            }
+            else
+            {
+                this.handle_ = null;
+                Relevance_ = 0.0f;
+            }
         }
     }
 }

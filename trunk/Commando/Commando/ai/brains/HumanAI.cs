@@ -30,6 +30,10 @@ namespace Commando.ai.brains
         public HumanAI(NonPlayableCharacterAbstract npc)
             : base(npc)
         {
+            Goals_.Add(new GoalPatrol(this));
+            Goals_.Add(new GoalInvestigate(this));
+            Goals_.Add(new GoalKill(this));
+
             Actions_.Add(new ActionTakeCover(npc));
             Actions_.Add(new ActionInvestigate(npc));
             Actions_.Add(new ActionGoto(npc));

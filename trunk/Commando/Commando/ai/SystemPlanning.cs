@@ -29,14 +29,14 @@ namespace Commando.ai
     /// </summary>
     internal class SystemPlanning : System
     {
-        internal SearchNode previousGoal_;
+        internal Goal previousGoal_;
 
         internal SystemPlanning(AI ai) : base(ai) { }
 
         internal override void update()
         {
             bool differencesFlag =
-                !SearchNode.testGoalEquality(previousGoal_, AI_.CurrentGoal_);
+                !Goal.areSame(previousGoal_, AI_.CurrentGoal_);
 
             if (AI_.CurrentGoal_ != null &&
                 (differencesFlag || AI_.CurrentPlan_.Count == 0))
@@ -65,7 +65,7 @@ namespace Commando.ai
                         AI_.Character_.getPosition());
 
                 initial.setInt(Variable.Health, AI_.Character_.getHealth().getValue());
-                initial.setInt(Variable.TargetHealth, 1);
+                initial.setInt(Variable.TargetHealth, 1); // TODO change this to TargetHealth/WeaponDamage
                 initial.setBool(Variable.Weapon, hasWeapon);
                 initial.setBool(Variable.Ammo, hasAmmo);
                 initial.setBool(Variable.HasInvestigated, false);
@@ -73,7 +73,7 @@ namespace Commando.ai
                 initial.setPosition(Variable.Location, ref myLoc);
 
                 IndividualPlanner planner = new IndividualPlanner(AI_.Actions_);
-                planner.execute(initial, AI_.CurrentGoal_);
+                planner.execute(initial, AI_.CurrentGoal_.getNode());
                 AI_.CurrentPlan_ = planner.getResult();
                 if (AI_.CurrentPlan_ != null && AI_.CurrentPlan_.Count > 0)
                 {

@@ -118,6 +118,18 @@
     <Compile Include="..\Commando\ai\planning\ActionType.cs">
       <Link>ai\planning\ActionType.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\Goal.cs">
+      <Link>ai\planning\Goal.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\GoalInvestigate.cs">
+      <Link>ai\planning\GoalInvestigate.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\GoalKill.cs">
+      <Link>ai\planning\GoalKill.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\GoalPatrol.cs">
+      <Link>ai\planning\GoalPatrol.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\IndividualPlanner.cs">
       <Link>ai\planning\IndividualPlanner.cs</Link>
     </Compile>
