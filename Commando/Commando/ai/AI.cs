@@ -36,8 +36,11 @@ namespace Commando.ai
         public Memory Memory_ { get; private set; }
 
         internal List<Action> Actions_ { get; set; }
-        internal SearchNode CurrentGoal_ { get; set; }
         internal List<Action> CurrentPlan_ { get; set; }
+
+        internal List<Goal> Goals_ { get; set; }
+        internal Goal CurrentGoal_ { get; set; }
+        
 
         protected List<Sensor> sensors_ = new List<Sensor>();
         protected List<System> systems_ = new List<System>();
@@ -56,9 +59,10 @@ namespace Commando.ai
 
             Memory_ = new Memory();
 
-            Actions_ = new List<Action>();
-
+            Goals_ = new List<Goal>();
             CurrentGoal_ = null;
+
+            Actions_ = new List<Action>();
             CurrentPlan_ = new List<Action>();
 
             //systems_.Add(new SystemAiming(this));
