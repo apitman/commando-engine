@@ -68,6 +68,7 @@ namespace Commando.ai
             systems_.Add(new SystemCoverSelection(this));
             systems_.Add(new SystemGoalSelection(this));
             systems_.Add(new SystemPlanning(this));
+            systems_.Add(new SystemMemoryCleanup(this));
 
             //path_ = new List<TileIndex>();
             //lastPathfindUpdate_ = 0;
