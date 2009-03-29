@@ -24,15 +24,13 @@ using Commando.objects;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// Action encapsulates both the logic used in planning with a particular
+    /// action and the information necessary to actually perform that action.
+    /// </summary>
     internal abstract class Action
     {
         protected NonPlayableCharacterAbstract character_;
-
-        internal Action()
-        {
-            throw new NotImplementedException();
-            // make compiler happy, remove this once real actions exist
-        }
 
         internal Action(NonPlayableCharacterAbstract character)
         {
@@ -41,6 +39,8 @@ namespace Commando.ai.planning
 
         #region Planning Methods
         // -----------------------------------------------------------------------
+        // Methods in this region should only be implemented by Ken prior
+        // to the end of Spring Semester 2009, as part of his DAI project.
 
         /// <summary>
         /// Determine whether this action could have preceded a particular
@@ -78,6 +78,7 @@ namespace Commando.ai.planning
 
         #region Runtime Methods
         // -----------------------------------------------------------------------
+        // Methods in this region can be implemented by anyone.
 
         internal /*abstract */bool checkIsStillValid() { return true; }
 

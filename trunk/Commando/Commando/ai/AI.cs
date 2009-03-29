@@ -41,7 +41,6 @@ namespace Commando.ai
         internal List<Goal> Goals_ { get; set; }
         internal Goal CurrentGoal_ { get; set; }
         
-
         protected List<Sensor> sensors_ = new List<Sensor>();
         protected List<System> systems_ = new List<System>();
 

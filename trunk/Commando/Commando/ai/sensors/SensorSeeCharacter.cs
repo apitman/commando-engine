@@ -46,7 +46,7 @@ namespace Commando.ai
                 CharacterAbstract ally = WorldState.EnemyList_[i];
                 if (me != ally &&
                     Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), ally.getPosition(), FIELD_OF_VIEW) &&
-                    Raycaster.canSeePoint(me.getPosition(), ally.getPosition(), new Height(true, false), new Height(true, true)))
+                    Raycaster.canSeePoint(me.getPosition(), ally.getPosition(), me.getHeight(), ally.getHeight()))
                 {
                     Belief posBelief = new Belief(BeliefType.AllyLoc, ally, 100, ally.getPosition(), 0);
                     Belief healthBelief = new Belief(BeliefType.AllyHealth, ally, 100, ally.getPosition(), ally.getHealth().getValue());
@@ -56,7 +56,7 @@ namespace Commando.ai
             }
             CharacterAbstract enemy = WorldState.MainPlayer_;
             if (Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), enemy.getPosition(), FIELD_OF_VIEW) &&
-                Raycaster.canSeePoint(me.getPosition(), enemy.getPosition(), new Height(true, false), new Height(true, true)))
+                Raycaster.canSeePoint(me.getPosition(), enemy.getPosition(), me.getHeight(), enemy.getHeight()))
             {
                 Belief posBelief = new Belief(BeliefType.EnemyLoc, enemy, 100, enemy.getPosition(), 0);
                 Belief healthBelief = new Belief(BeliefType.EnemyHealth, enemy, 100, enemy.getPosition(), enemy.getHealth().getValue());

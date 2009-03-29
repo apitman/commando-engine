@@ -20,11 +20,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
 namespace Commando.ai.planning
 {
     class ActionThrowGrenade : Action
     {
+        internal ActionThrowGrenade(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+            throw new NotImplementedException();
+        }
+
         internal override bool testPreConditions(SearchNode node)
         {
             throw new NotImplementedException();
