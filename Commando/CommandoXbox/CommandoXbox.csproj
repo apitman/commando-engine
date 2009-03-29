@@ -166,6 +166,9 @@
     <Compile Include="..\Commando\ai\SystemGoalSelection.cs">
       <Link>ai\SystemGoalSelection.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\SystemMemoryCleanup.cs">
+      <Link>ai\SystemMemoryCleanup.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\SystemPlanning.cs">
       <Link>ai\SystemPlanning.cs</Link>
     </Compile>

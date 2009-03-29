@@ -126,6 +126,7 @@
     <Compile Include="ai\SystemCommunication.cs" />
     <Compile Include="ai\SystemCoverSelection.cs" />
     <Compile Include="ai\SystemGoalSelection.cs" />
+    <Compile Include="ai\SystemMemoryCleanup.cs" />
     <Compile Include="ai\SystemPlanning.cs" />
     <Compile Include="ai\SystemTargetSelection.cs" />
     <Compile Include="ai\WorldState.cs" />
