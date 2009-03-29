@@ -101,21 +101,7 @@ namespace Commando
             else
             {
 #if !XBOX
-                OpenFileDialog dialog = new OpenFileDialog();
-                //dialog.InitialDirectory = EngineStateLevelSave.DIRECTORY_NAME;
-                dialog.Filter = "Commando Level Files (*" + EngineStateLevelSave.LEVEL_EXTENSION + ")|*" + EngineStateLevelSave.LEVEL_EXTENSION;
-                dialog.Multiselect = false;
-                InputSet.getInstance().setToggle(InputsEnum.CONFIRM_BUTTON);
-                InputSet.getInstance().setToggle(InputsEnum.RIGHT_TRIGGER);
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    windowsFileName_ = dialog.FileName;
-                }
-                else
-                {
-                    cancelFlag_ = true;
-                }
-                windows_ = true;
+                loadDialog();
 #endif
             }
         }
@@ -260,5 +246,28 @@ namespace Commando
                 0,
                 INSTRUCTIONS_DEPTH);
         }
+
+#if !XBOX
+        [STAThread]
+        private void loadDialog()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            //dialog.InitialDirectory = EngineStateLevelSave.DIRECTORY_NAME;
+            dialog.Filter = "Commando Level Files (*" + EngineStateLevelSave.LEVEL_EXTENSION + ")|*" + EngineStateLevelSave.LEVEL_EXTENSION;
+            dialog.Title = "Commando Engine Load Prompt";
+            dialog.Multiselect = false;
+            InputSet.getInstance().setToggle(InputsEnum.CONFIRM_BUTTON);
+            InputSet.getInstance().setToggle(InputsEnum.RIGHT_TRIGGER);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                windowsFileName_ = dialog.FileName;
+            }
+            else
+            {
+                cancelFlag_ = true;
+            }
+            windows_ = true;
+        }
+#endif
     }
 }

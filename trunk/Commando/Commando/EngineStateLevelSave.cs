@@ -86,23 +86,7 @@ namespace Commando
             if (sd == null)
             {
 #if !XBOX
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.Filter = "Commando Level Files (*" + LEVEL_EXTENSION + ")|*" + LEVEL_EXTENSION;
-                dialog.RestoreDirectory = true;
-                dialog.Title = "Commando Engine Save Prompt";
-                InputSet.getInstance().setToggle(InputsEnum.CONFIRM_BUTTON);
-                InputSet.getInstance().setToggle(InputsEnum.RIGHT_TRIGGER);
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    state_.myLevel_.writeLevelToFile(dialog.FileName);
-                    returnState_ = new EngineStateMenu(engine_);
-                    cancelFlag_ = true;
-                }
-                else
-                {
-                    returnState_ = state_;
-                    cancelFlag_ = true;
-                }
+                saveDialog();
 #endif
             }
         }
@@ -183,5 +167,28 @@ namespace Commando
             mainMessage_.drawStringCentered(currentFilename_, fileNamePos, FILENAME_COLOR, 0, MESSAGE_DEPTH);
         }
 
+#if !XBOX
+        [STAThread]
+        private void saveDialog()
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Commando Level Files (*" + LEVEL_EXTENSION + ")|*" + LEVEL_EXTENSION;
+            dialog.RestoreDirectory = true;
+            dialog.Title = "Commando Engine Save Prompt";
+            InputSet.getInstance().setToggle(InputsEnum.CONFIRM_BUTTON);
+            InputSet.getInstance().setToggle(InputsEnum.RIGHT_TRIGGER);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                state_.myLevel_.writeLevelToFile(dialog.FileName);
+                returnState_ = new EngineStateMenu(engine_);
+                cancelFlag_ = true;
+            }
+            else
+            {
+                returnState_ = state_;
+                cancelFlag_ = true;
+            }
+        }
+#endif
     }
 }

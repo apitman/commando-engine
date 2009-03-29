@@ -49,8 +49,6 @@ namespace Commando.ai
         //protected int lastPathfindUpdate_;
         //protected const int PATHFIND_THRESHOLD = 15;
 
-        protected InferenceEngine inferenceEngine_;
-
         public SystemCommunication CommunicationSystem_ { get; private set; }
 
         public AI(NonPlayableCharacterAbstract npc)
@@ -73,7 +71,6 @@ namespace Commando.ai
 
             //path_ = new List<TileIndex>();
             //lastPathfindUpdate_ = 0;
-            inferenceEngine_ = new InferenceEngine(this);
 
             CommunicationSystem_ = new SystemCommunication(this, 100);
         }
@@ -85,8 +82,6 @@ namespace Commando.ai
             {
                 sensors_[i].collect();
             }
-
-            inferenceEngine_.update();
 
             for (int i = 0; i < systems_.Count; i++)
             {
