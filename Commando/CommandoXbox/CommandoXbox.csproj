@@ -79,9 +79,6 @@
     <Compile Include="..\Commando\ai\brains\HumanAI.cs">
       <Link>ai\brains\HumanAI.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\ai\InferenceEngine.cs">
-      <Link>ai\InferenceEngine.cs</Link>
-    </Compile>
     <Compile Include="..\Commando\ai\Memory.cs">
       <Link>ai\Memory.cs</Link>
     </Compile>

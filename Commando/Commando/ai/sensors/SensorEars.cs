@@ -37,6 +37,16 @@ namespace Commando.ai
                 Stimulus stim = cur.Current.Value;
                 filter(id, stim);
             }
+
+            foreach (Belief bel in AI_.Memory_.getBeliefs(BeliefType.SuspiciousNoise))
+            {
+                if (CommonFunctions.distance(bel.position_, AI_.Character_.getPosition()) < Commando.levels.Tiler.tileSideLength_)
+                {
+                    bel.confidence_ /= 2;
+                }
+                Belief temp = new Belief(BeliefType.InvestigateTarget, null, bel.confidence_, bel.position_, bel.value_);
+                AI_.Memory_.setBelief(temp);
+            }
         }
 
         private void filter(int id, Stimulus stim)
@@ -56,6 +66,5 @@ namespace Commando.ai
                 }
             }
         }
-
     }
 }

@@ -63,6 +63,17 @@ namespace Commando.ai
                 AI_.Memory_.setBelief(posBelief);
                 AI_.Memory_.setBelief(healthBelief);
             }
+            else
+            {
+                // Update the position and confidence of the EnemyLoc beliefs
+                foreach (Belief bel in AI_.Memory_.getBeliefs(BeliefType.EnemyLoc))
+                {
+                    if (CommonFunctions.distance(bel.position_, me.getPosition()) < Tiler.tileSideLength_)
+                    {
+                        bel.confidence_ /= 2;
+                    }
+                }
+            }
         }
 
     }

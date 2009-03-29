@@ -97,7 +97,6 @@
     <Compile Include="ai\Belief.cs" />
     <Compile Include="ai\brains\DummyAI.cs" />
     <Compile Include="ai\brains\HumanAI.cs" />
-    <Compile Include="ai\InferenceEngine.cs" />
     <Compile Include="ai\Memory.cs" />
     <Compile Include="ai\planning\Action.cs" />
     <Compile Include="ai\planning\ActionAttackRanged.cs" />
