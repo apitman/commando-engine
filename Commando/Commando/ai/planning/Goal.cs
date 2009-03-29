@@ -23,6 +23,11 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// Goal encapsulates a desire which an NPC wants to fulfill, and it
+    /// contains the logic for calculating how relevant this goal is at any
+    /// point in time and the state the world would be in once fulfilled.
+    /// </summary>
     internal abstract class Goal
     {
         protected SearchNode node_;

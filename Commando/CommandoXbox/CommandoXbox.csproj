@@ -130,6 +130,9 @@
     <Compile Include="..\Commando\ai\planning\IndividualPlanner.cs">
       <Link>ai\planning\IndividualPlanner.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\ReservationTable.cs">
+      <Link>ai\planning\ReservationTable.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\SearchNode.cs">
       <Link>ai\planning\SearchNode.cs</Link>
     </Compile>

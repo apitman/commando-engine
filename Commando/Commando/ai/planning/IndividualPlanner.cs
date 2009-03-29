@@ -34,6 +34,10 @@ namespace Commando.ai.planning
 
         private List<Action> plan_;
 
+        /// <summary>
+        /// Create an individual planner.
+        /// </summary>
+        /// <param name="actions">Actions available to the character being planned for.</param>
         public IndividualPlanner(List<Action> actions)
         {
             // initialize empty lists within ActionMap
@@ -49,6 +53,11 @@ namespace Commando.ai.planning
             }
         }
 
+        /// <summary>
+        /// Create a plan from the initial state to the goal.
+        /// </summary>
+        /// <param name="initial">Current believed state of the world.</param>
+        /// <param name="goal">Desired state of the world.</param>
         public void execute(SearchNode initial, SearchNode goal)
         {
             List<SearchNode> openlist = new List<SearchNode>();
@@ -58,13 +67,18 @@ namespace Commando.ai.planning
             // perform search
             while (true)
             {
-                current.resolvesWith(initial, failedConditions);
+                current.unifiesWith(initial, failedConditions);
 
+                // If current state and initial states unify,
+                // we have found a complete plan, so finish
                 if (failedConditions.Count == 0)
                 {
                     break;
                 }
 
+                // Otherwise, we go through our action map looking up actions which
+                // fulfill all of the ways in which the current state didn't unify
+                // with the initial, and try those actions.
                 for (int i = 0; i < failedConditions.Count; i++)
                 {
                     List<Action> solutions = actionMap_[failedConditions[i]];
@@ -81,34 +95,45 @@ namespace Commando.ai.planning
                     }
                 }
 
+                // No search states left in the open list, so no plan
+                // could be found
                 if (openlist.Count == 0)
                 {
                     current = null;
                     break;
                 }
 
+                // Get the cheapest search state and try from there
                 // TODO
-                // might be worth it to profile this against a data structure
+                // Might be worth it to profile this against a data structure
                 // with O(log n) insertion but no necessary sort (ie sorted list)
                 openlist.Sort(current);
-
                 current = openlist[0];
                 openlist.RemoveAt(0);
             }
 
-            // retrieve results
+            // Reconstruct the generated plan; plan will be empty if we failed.
+            // Therefore, an empty plan could have two meanings:
+            //  1. Plan failed, so we need to switch goals to try another.
+            //  2. Initial state satisfies the current goal, so we should try to
+            //      satisfy a different goal anyway.
+            // This small amount of ambiguity helps reduce (plan == null) errors.
             List<Action> plan = new List<Action>();
             while (current != null && current.action != null)
             {
                 plan.Add(current.action);
                 current = current.next;
             }
-            // note: the current.action != null check prevents a bug in the situation
+            // Note: the current.action != null check prevents a bug in the situation
             //  where the initial state fulfills the goal state
 
             plan_ = plan;
         }
 
+        /// <summary>
+        /// Fetch the result of planning.
+        /// </summary>
+        /// <returns>The generated plan from the last call to 'execute'.</returns>
         public List<Action> getResult()
         {
             return plan_;

@@ -77,7 +77,7 @@ namespace Commando.ai.planning
             this.resolved[var] = true;
         }
 
-        internal void resolvesWith(SearchNode other, List<int> failures)
+        internal void unifiesWith(SearchNode other, List<int> failures)
         {
             failures.Clear();
             for (int i = 0; i < Variable.LENGTH; i++)

@@ -20,11 +20,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects;
 
 namespace Commando.ai.planning
 {
     class ActionReload : Action
     {
+        internal ActionReload(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+            throw new NotImplementedException();
+        }
+
         internal override bool testPreConditions(SearchNode node)
         {
             return
@@ -35,7 +42,7 @@ namespace Commando.ai.planning
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
             SearchNode parent = node.getPredecessor();
-            parent.action = new ActionReload();
+            parent.action = new ActionReload(character_);
             parent.cost += 1;
             parent.setBool(Variable.Ammo, false);
             parent.setBool(Variable.Weapon, true);
