@@ -118,8 +118,8 @@ namespace Commando
                 // throw new Exception();
 
                 GamerServicesComponent gsc = new GamerServicesComponent(this);
-                this.Components.Add(gsc);
                 gsc.Initialize();
+                this.Components.Add(gsc);
                 Settings.getInstance().IsGamerServicesAllowed_ = true;
             }
             catch
