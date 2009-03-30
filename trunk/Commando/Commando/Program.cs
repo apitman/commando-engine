@@ -24,6 +24,11 @@ namespace Commando
 #if !XBOX
                 MessageBox.Show(e.Message);
                 MessageBox.Show(e.StackTrace);
+#else
+                // See CrashDebugGame.cs for credits to Nick Gravelyn
+                // for this technique and code.
+                using (CrashDebugGame game = new CrashDebugGame(e))
+                    game.Run();
 #endif
             }
         }

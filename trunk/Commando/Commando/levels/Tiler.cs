@@ -37,6 +37,7 @@ namespace Commando.levels
         /// Generate a list of TileObjects from a two dimensional array of ints, where each 
         /// number in the array represents the type of tile to use at that cooridinate.
         /// </summary>
+        /// <param name="pipeline">Drawing pipeline in which to register the object</param>
         /// <param name="tiles">Array of ints representing types of tiles</param>
         /// <returns>List of TileObjects</returns>
         public static List<TileObject> getTiles(List<DrawableObjectAbstract> pipeline, int[,] tiles)

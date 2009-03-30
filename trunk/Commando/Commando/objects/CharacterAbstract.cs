@@ -79,6 +79,7 @@ namespace Commando
         /// <param name="ammo">CharacterStatusElement for ammo</param>
         /// <param name="weapon">CharacterStatusElement for the current weapon</param>
         /// <param name="name">The character's name</param>
+        /// <param name="collisionDetector">Collision detector with which this object should register.</param>
         public CharacterAbstract(CharacterHealth health, CharacterAmmo ammo, CharacterWeapon weapon, string name, CollisionDetectorInterface collisionDetector) :
             base()
         {
@@ -100,10 +101,12 @@ namespace Commando
         /// Also, specify the AnimationSet, frameLengthModifier, velocity, position, direction,
         /// and depth of the character.
         /// </summary>
+        /// <param name="pipeline">List of objects from which the object should be drawn.</param>
         /// <param name="health">CharacterStatusElement for health</param>
         /// <param name="ammo">CharacterStatusElement for ammo</param>
         /// <param name="weapon">CharacterStatusElement for the current weapon</param>
         /// <param name="name">The character's name</param>
+        /// <param name="collisionDetector">Collision detector with which this object should register.</param>
         /// <param name="animations">AnimationSet containing all animations for this object</param>
         /// <param name="frameLengthModifier">Float representing the ratio of frames in an animation to movement along the screen</param>
         /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>

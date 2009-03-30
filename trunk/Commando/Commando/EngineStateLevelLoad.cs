@@ -154,10 +154,8 @@ namespace Commando
                 {
                     case EngineStateTarget.GAMEPLAY:
                         return new EngineStateMenu(engine_);
-                        break;
                     case EngineStateTarget.LEVEL_EDITOR:
                         return new EngineStateMenu(engine_);
-                        break;
                     case EngineStateTarget.LEVEL_TRANSITION:
                         return returnState_;
                 }           
@@ -219,13 +217,10 @@ namespace Commando
                 {
                     case EngineStateTarget.GAMEPLAY:
                         return new EngineStateMenu(engine_);
-                        break;
                     case EngineStateTarget.LEVEL_EDITOR:
                         return new EngineStateMenu(engine_);
-                        break;
                     case EngineStateTarget.LEVEL_TRANSITION:
                         return returnState_;
-                        break;
                 }
             }
 

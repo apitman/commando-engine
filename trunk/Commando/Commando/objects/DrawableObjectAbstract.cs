@@ -121,7 +121,7 @@ namespace Commando
         /// <summary>
         /// Set the object's current postion
         /// </summary>
-        /// <param name="myPos">Object's position relative to the top left corner of the screen</param>
+        /// <param name="pos">Object's position relative to the top left corner of the screen</param>
         public void setPosition(Vector2 pos)
         {
             position_ = pos;

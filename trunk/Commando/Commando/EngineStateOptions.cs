@@ -127,7 +127,7 @@ namespace Commando
                         IAsyncResult result =
                             Guide.BeginShowStorageDeviceSelector(fetchStorageDevice, "selectStorage");
                     }
-                    catch (GuideAlreadyVisibleException e)
+                    catch (GuideAlreadyVisibleException)
                     {
                         // No code here, but this catch block is needed
                         // because !Guide.IsVisible doesn't always work

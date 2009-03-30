@@ -43,6 +43,7 @@ namespace Commando.objects
         /// <summary>
         /// Create a LevelObject with the specified image, position, direction, and depth.
         /// </summary>
+        /// <param name="pipeline">List of objects from which the object should be drawn.</param>
         /// <param name="image">GameTexture for this object.</param>
         /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
         /// <param name="direction">Direction of the object as a Vector</param>

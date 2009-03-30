@@ -168,6 +168,7 @@ namespace Commando
         /// Constructs a state of gameplay
         /// </summary>
         /// <param name="engine">Reference to the engine running the state</param>
+        /// <param name="filepath">Path to level file which should be loaded.</param>
         public EngineStateGameplay(Engine engine, string filepath)
         {
             //SoundEngine.getInstance().Music.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);

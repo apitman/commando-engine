@@ -41,6 +41,7 @@ namespace Commando
         /// <summary>
         /// Create a MovableObject at the specifed position, direction, and depth.
         /// </summary>
+        /// <param name="pipeline">List of objects from which the object should be drawn.</param>
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>
         /// <param name="depth">Depth the object is to be drawn to</param>
@@ -54,6 +55,7 @@ namespace Commando
         /// Create a MovableObject at the specifed position, direction, and depth with the 
         /// specified velocity.
         /// </summary>
+        /// <param name="pipeline">List of objects from which the object should be drawn.</param>
         /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>
         /// <param name="position">Position of object relative to the top left corner</param>
         /// <param name="direction">Vector representing the direction of the object</param>

@@ -77,7 +77,7 @@ namespace Commando.ai
                 }
             }
             AI_.Memory_.removeBeliefs(BeliefType.BestCover);
-            Belief bestBelief = new Belief(BeliefType.BestCover, beliefs[lowBelief].handle_, beliefs[lowBelief].confidence_, beliefs[lowBelief].position_, beliefs[lowBelief].value_);
+            Belief bestBelief = beliefs[lowBelief].convert(BeliefType.BestCover);
             AI_.Memory_.setBelief(bestBelief);
         }
     }

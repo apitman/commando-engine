@@ -29,8 +29,8 @@ namespace Commando.objects.weapons
 {
     public class SmallBullet : Bullet
     {
-        private const string TEXTURE_NAME = "BulletSmall";
-        private const int DAMAGE = 1;
+        private new const string TEXTURE_NAME = "BulletSmall";
+        private new const int DAMAGE = 1;
 
         public SmallBullet(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
             : base(TextureMap.fetchTexture(TEXTURE_NAME), pipeline, detector, position, direction)
