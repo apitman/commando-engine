@@ -48,8 +48,11 @@ namespace Commando.ai
                     Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), ally.getPosition(), FIELD_OF_VIEW) &&
                     Raycaster.canSeePoint(me.getPosition(), ally.getPosition(), me.getHeight(), ally.getHeight()))
                 {
-                    Belief posBelief = new Belief(BeliefType.AllyLoc, ally, 100, ally.getPosition(), 0);
-                    Belief healthBelief = new Belief(BeliefType.AllyHealth, ally, 100, ally.getPosition(), ally.getHealth().getValue());
+                    Belief posBelief = new Belief(BeliefType.AllyLoc, ally, 100);
+                    posBelief.position_ = ally.getPosition();
+                    Belief healthBelief = new Belief(BeliefType.AllyHealth, ally, 100);
+                    healthBelief.position_ = ally.getPosition();
+                    healthBelief.data_.int1 = ally.getHealth().getValue();
                     AI_.Memory_.setBelief(posBelief);
                     AI_.Memory_.setBelief(healthBelief);
                 }
@@ -58,8 +61,11 @@ namespace Commando.ai
             if (Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), enemy.getPosition(), FIELD_OF_VIEW) &&
                 Raycaster.canSeePoint(me.getPosition(), enemy.getPosition(), me.getHeight(), enemy.getHeight()))
             {
-                Belief posBelief = new Belief(BeliefType.EnemyLoc, enemy, 100, enemy.getPosition(), 0);
-                Belief healthBelief = new Belief(BeliefType.EnemyHealth, enemy, 100, enemy.getPosition(), enemy.getHealth().getValue());
+                Belief posBelief = new Belief(BeliefType.EnemyLoc, enemy, 100);
+                posBelief.position_ = enemy.getPosition();
+                Belief healthBelief = new Belief(BeliefType.EnemyHealth, enemy, 100);
+                healthBelief.position_ = enemy.getPosition();
+                healthBelief.data_.int1 = enemy.getHealth().getValue();
                 AI_.Memory_.setBelief(posBelief);
                 AI_.Memory_.setBelief(healthBelief);
             }

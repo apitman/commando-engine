@@ -40,6 +40,8 @@ namespace Commando.objects
         /// <summary>
         /// Create a non-rotated TileObject with the specified image, position, and depth.
         /// </summary>
+        /// <param name="tileNumber">TODO</param>
+        /// <param name="pipeline">Drawing pipeline in which to register the object</param>
         /// <param name="image">GameTexture for this object.</param>
         /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
         /// <param name="depth">Drawing depth of the object</param>
@@ -52,6 +54,8 @@ namespace Commando.objects
         /// <summary>
         /// Create a TileObject with the specified image, position, direction, and depth.
         /// </summary>
+        /// <param name="tileNumber">TODO</param>
+        /// <param name="pipeline">Drawing pipeline in which to register the object</param>
         /// <param name="image">GameTexture for this object.</param>
         /// <param name="position">Position of the object as a Vector relative to the top left corner</param>
         /// <param name="direction">Direction of the object as a Vector</param>

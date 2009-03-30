@@ -247,6 +247,9 @@
     <Compile Include="..\Commando\controls\X360ControllerInput.cs">
       <Link>controls\X360ControllerInput.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\CrashDebugGame.cs">
+      <Link>CrashDebugGame.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\Engine.cs">
       <Link>Engine.cs</Link>
     </Compile>

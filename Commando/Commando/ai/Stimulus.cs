@@ -52,7 +52,7 @@ namespace Commando.ai
         /// <param name="source"></param>
         /// <param name="type"></param>
         /// <param name="radius"></param>
-        /// <param name="myPos"></param>
+        /// <param name="pos"></param>
         /// <param name="handle"></param>
         /// <param name="message"></param>
         public Stimulus(StimulusSource source, StimulusType type, float radius, Vector2 pos, Object handle, Belief message)

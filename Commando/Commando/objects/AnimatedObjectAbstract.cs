@@ -52,6 +52,7 @@ namespace Commando
         /// Create an AnimatedObject with the specified animations, frameLengthModifier,
         /// velocity, position, direction, and depth.
         /// </summary>
+        /// <param name="pipeline">List of objects from which the object should be drawn.</param>
         /// <param name="animations">AnimationSet containing all animations for this object</param>
         /// <param name="frameLengthModifier">Float representing the ratio of frames in an animation to movement along the screen</param>
         /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>

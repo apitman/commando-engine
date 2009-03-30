@@ -43,6 +43,7 @@ namespace Commando
         /// Create a NonAnimatedMovableObject with the specified texture, current image,
         /// position, direction, and depth with the specified velocity.
         /// </summary>
+        /// <param name="pipeline">List of objects from which the object should be drawn.</param>
         /// <param name="texture">GameTexture of this object</param>
         /// <param name="curImage">The number of the current image</param>
         /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>

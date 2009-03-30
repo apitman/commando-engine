@@ -219,7 +219,7 @@ namespace Commando
         /// <summary>
         /// Determines how to update the level editor based on user input
         /// </summary>
-        /// <param name="gameTime">The GameTime parameter</param>
+        /// <param name="transLevel">TODO</param>
         /// <returns>Returns itself if user wants to stay in this mode. Returns 
         /// otherwise.</returns>
         public void setTransLevel(string transLevel)
@@ -447,7 +447,6 @@ namespace Commando
                                             return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_TRANSITION, this);
                                             //LevelTransitionObject myTransition = new LevelTransitionObject(
                                             //myLevel_.getItems().Add(LevelTransitionObject
-                                            break;
                                         }
                                     case 4:
                                         {
@@ -484,7 +483,6 @@ namespace Commando
                 if (Settings.getInstance().IsUsingMouse_)
                 {
                     mousePos = new Vector2(rightD.X + camOffset.X, rightD.Y + camOffset.Y);
-                    int i;
                 }
                 else
                 {
@@ -571,7 +569,6 @@ namespace Commando
                                             return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_TRANSITION, this);
                                             //LevelTransitionObject myTransition = new LevelTransitionObject(
                                             //myLevel_.getItems().Add(LevelTransitionObject
-                                            break;
                                         }
                                     case 4:
                                         {

@@ -116,7 +116,7 @@ namespace Commando.ai.planning
             {
                 if (owner == null)
                 {
-                    throw new AccessViolationException("Consumed resources cannot be freed.");
+                    throw new InvalidOperationException("Consumed resources cannot be freed.");
                 }
 
                 if (table[resource] == owner)
@@ -125,7 +125,7 @@ namespace Commando.ai.planning
                 }
                 else
                 {
-                    throw new AccessViolationException("This NPC does not own this resource");
+                    throw new InvalidOperationException("This NPC does not own this resource");
                 }
             }
         }
@@ -145,7 +145,7 @@ namespace Commando.ai.planning
                 }
                 else
                 {
-                    throw new AccessViolationException("This NPC does not own this resource");
+                    throw new InvalidOperationException("This NPC does not own this resource");
                 }
             }
         }

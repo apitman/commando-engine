@@ -40,9 +40,9 @@ namespace Commando.ai
                 {
                     Vector2 location = coverObjects[i].needsToMove(coverObjects[i].getPosition(), AI_.Character_.getRadius());
                     TileIndex index = GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(location);
-                    Belief cover = new Belief(BeliefType.CoverLoc, coverObjects[i], 100f, location, 0f);
-                    cover.data_ = new VariableValue();
-                    cover.data_.t = index;
+                    Belief cover = new Belief(BeliefType.CoverLoc, coverObjects[i], 100f);
+                    cover.position_ = location;
+                    cover.data_.tile1 = index;
                     AI_.Memory_.setBelief(cover);
                 }
             }

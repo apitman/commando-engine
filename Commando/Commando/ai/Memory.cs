@@ -96,7 +96,6 @@ namespace Commando.ai
         /// <returns>A list of all beliefs with that handle, or an empty list if there are none.</returns>
         public List<Belief> getBeliefs(Object handle)
         {
-            List<Belief> list;
             throw new NotImplementedException();
         }
 

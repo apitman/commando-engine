@@ -117,7 +117,7 @@ namespace Commando.collisiondetection
             float centerX = center_.X;
             float centerY = center_.Y;
             Vector2 curVec;
-            Vector2 newVec;
+
             for (int i = 0; i < numPoints_; i++)
             {
                 curVec = original_[i];

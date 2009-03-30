@@ -44,7 +44,7 @@ namespace Commando.ai
                 {
                     bel.confidence_ /= 2;
                 }
-                Belief temp = new Belief(BeliefType.InvestigateTarget, null, bel.confidence_, bel.position_, bel.value_);
+                Belief temp = bel.convert(BeliefType.InvestigateTarget);
                 AI_.Memory_.setBelief(temp);
             }
         }
@@ -56,7 +56,8 @@ namespace Commando.ai
                 AI_.CommunicationSystem_.isListening_ = true;
                 if (stim.type_ == StimulusType.Position)
                 {
-                    Belief b = new Belief(BeliefType.SuspiciousNoise, null, 100, stim.position_, 0);
+                    Belief b = new Belief(BeliefType.SuspiciousNoise, null, 100);
+                    b.position_ = stim.position_;
                     AI_.Memory_.setBelief(b);
                 }
                 else if (stim.type_ == StimulusType.Message)

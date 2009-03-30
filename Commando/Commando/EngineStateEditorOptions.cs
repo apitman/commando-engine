@@ -125,7 +125,7 @@ namespace Commando
                         IAsyncResult result =
                             Guide.BeginShowStorageDeviceSelector(fetchStorageDevice, "selectStorage");
                     }
-                    catch (GuideAlreadyVisibleException e)
+                    catch (GuideAlreadyVisibleException)
                     {
                         // No code here, but this catch block is needed
                         // because !Guide.IsVisible doesn't always work
@@ -180,25 +180,16 @@ namespace Commando
                         break;
 
                     case STR_SAVE_CONTINUE:
-          
                         engine_.initializeScreen();
                         return new EngineStateLevelSave(engine_, savedState_, savedState_, this);
-                        break;
                     case STR_SAVE_QUIT:
-                        
-                        
                         engine_.initializeScreen();
                         return new EngineStateLevelSave(engine_, savedState_,new EngineStateMenu(engine_), this);
-                        break;
                     case STR_QUIT_NOSAVE:
                         engine_.initializeScreen();
                         return new EngineStateMenu(engine_);
-                        break;
-
                     case STR_RETURN:
                         return savedState_;
-                        break;
-                        
                 }
             }
 

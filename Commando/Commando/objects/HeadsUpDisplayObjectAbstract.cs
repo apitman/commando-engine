@@ -47,6 +47,7 @@ namespace Commando.objects
         /// <summary>
         /// Create a HeadsUpDisplayObject with the specified texture, position, direction, and depth.
         /// </summary>
+        /// <param name="pipeline">Drawing pipeline in which to register the object</param>
         /// <param name="texture">GameTexture for this HeadsUpDisplayObject</param>
         /// <param name="position">Position as a Vector relative to the top left corner</param>
         /// <param name="direction">Direction of the HeadsUpDisplayObject as a Vector</param>

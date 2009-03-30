@@ -60,12 +60,8 @@ namespace Commando.ai.planning
             // If the current location is resolved and doesn't have cover, we
             // actually resolve with a Goto instead
 
-            Vector2 coverPosition =
-                character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover).position_;
-
             TileIndex coverLocation =
-                GlobalHelper.getInstance().getCurrentLevelTileGrid()
-                    .getTileIndex(coverPosition);
+                character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover).data_.tile1;
 
             SearchNode parent = node.getPredecessor();
             parent.action = new ActionTakeCover(character_, ref coverLocation);

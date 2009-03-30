@@ -33,7 +33,8 @@ namespace Commando.ai
             if (firstEnemy != null)
             {
                 AI_.Memory_.removeBeliefs(BeliefType.BestTarget);
-                AI_.Memory_.setBelief(new Belief(BeliefType.BestTarget, firstEnemy.handle_, 100, firstEnemy.position_, firstEnemy.value_));
+                Belief bestTarget = firstEnemy.convert(BeliefType.BestTarget);
+                AI_.Memory_.setBelief(bestTarget);
             }
         }
     }

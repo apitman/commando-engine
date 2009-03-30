@@ -512,7 +512,6 @@ namespace Commando.collisiondetection
             float minDistance = float.PositiveInfinity;
             Vector2 minAxis = Vector2.Zero;
             Vector2 currentEdgeNormal;
-            Vector2 temp;
 
             for (int i = 0; i < edgesCountPolygonA + edgesCountPolygonB; i++)
             {
@@ -602,7 +601,6 @@ namespace Commando.collisiondetection
             float minDistance = float.PositiveInfinity;
             Vector2 minAxis = Vector2.Zero;
             Vector2 currentEdgeNormal;
-            Vector2 temp;
             
             for (int i = 0; i < edgesCountPolygonA + edgesCountPolygonB; i++)
             {
