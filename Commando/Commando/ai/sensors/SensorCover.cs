@@ -21,6 +21,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
+using Microsoft.Xna.Framework;
+using Commando.levels;
+using Commando.ai.planning;
 
 namespace Commando.ai
 {
@@ -35,7 +38,11 @@ namespace Commando.ai
                 List<CoverObject> coverObjects = WorldState.CoverList_;
                 for (int i = 0; i < coverObjects.Count; i++)
                 {
-                    Belief cover = new Belief(BeliefType.CoverLoc, coverObjects[i], 100f, coverObjects[i].getPosition(), 0f);
+                    Vector2 location = coverObjects[i].needsToMove(coverObjects[i].getPosition(), AI_.Character_.getRadius());
+                    TileIndex index = GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(location);
+                    Belief cover = new Belief(BeliefType.CoverLoc, coverObjects[i], 100f, location, 0f);
+                    cover.data_ = new VariableValue();
+                    cover.data_.t = index;
                     AI_.Memory_.setBelief(cover);
                 }
             }
