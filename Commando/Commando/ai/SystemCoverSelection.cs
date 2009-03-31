@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Commando.objects;
 using Microsoft.Xna.Framework;
+using Commando.ai.planning;
 
 namespace Commando.ai
 {
@@ -58,27 +59,31 @@ namespace Commando.ai
             Vector2 myPos = AI_.Character_.getPosition();
             Vector2 targetPos = bestTarget.position_;
 
+            AI_.Memory_.removeBeliefs(BeliefType.AvailableCover);
+
             for (int i = 0; i < beliefs.Count; i++)
             {
+                if (ReservationTable.isReserved(beliefs[i].handle_))
+                {
+                    continue;
+                }
+                CoverObject cover = (CoverObject)beliefs[i].handle_;
+
                 coverPos = beliefs[i].position_;
                 tempVal = (float)CommonFunctions.distance(myPos, coverPos);
                 //tempVal += (float)CommonFunctions.distance(myPos, targetPos);
                 tempVal = (float)Math.Sqrt(tempVal);
-                CoverObject cover = (CoverObject)beliefs[i].handle_;
+
                 float angleToPlayer = MathHelper.WrapAngle(CommonFunctions.getAngle(targetPos - coverPos));
                 float angleOfCover = MathHelper.WrapAngle(CommonFunctions.getAngle(cover.getCoverDirection()));
                 float angleBetweenCoverPlayer = MathHelper.WrapAngle(angleOfCover - angleToPlayer);
                 angleBetweenCoverPlayer *= 2f;
                 tempVal *= angleBetweenCoverPlayer * angleBetweenCoverPlayer;
-                if (tempVal < lowValue)
-                {
-                    lowBelief = i;
-                    lowValue = tempVal;
-                }
+
+                Belief availableCover = beliefs[i].convert(BeliefType.AvailableCover);
+                availableCover.relevance_ = 1/tempVal;
+                AI_.Memory_.setBelief(availableCover);
             }
-            AI_.Memory_.removeBeliefs(BeliefType.BestCover);
-            Belief bestBelief = beliefs[lowBelief].convert(BeliefType.BestCover);
-            AI_.Memory_.setBelief(bestBelief);
         }
     }
 }

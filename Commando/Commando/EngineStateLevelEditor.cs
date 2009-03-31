@@ -671,7 +671,7 @@ namespace Commando
                     {
                         mousePos = new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_);
                     }
-                    List<CharacterAbstract> myEnemies = myLevel_.getEnemies();
+                    List<NonPlayableCharacterAbstract> myEnemies = myLevel_.getEnemies();
                     for (int i = 0; i < myEnemies.Count && foundObj == false; i++)
                     {
                         if (mousePos.Y >= myEnemies[i].getPosition().Y - Tiler.tileSideLength_ && mousePos.Y < myEnemies[i].getPosition().Y + Tiler.tileSideLength_

@@ -38,7 +38,7 @@ namespace Commando.levels
 
         protected TileObject[,] tiles_;
 
-        protected List<CharacterAbstract> enemies_;
+        protected List<NonPlayableCharacterAbstract> enemies_;
 
         /// <summary>
         /// Right now, we're not gonna use this.
@@ -59,7 +59,7 @@ namespace Commando.levels
             width_ = 25;
             player_ = null;
             playerStartLocation_ = new Vector2(100.0f, 200.0f);
-            enemies_ = new List<CharacterAbstract>();
+            enemies_ = new List<NonPlayableCharacterAbstract>();
             items_ = new List<LevelObjectAbstract>();
         }
         public void setPlayerStartLocation(Vector2 pos)
@@ -85,7 +85,7 @@ namespace Commando.levels
             return tiles_;
         }
 
-        public List<CharacterAbstract> getEnemies()
+        public List<NonPlayableCharacterAbstract> getEnemies()
         {
             return enemies_;
         }
@@ -100,7 +100,7 @@ namespace Commando.levels
             return player_;
         }
 
-        public void setEnemies(List<CharacterAbstract> enemies)
+        public void setEnemies(List<NonPlayableCharacterAbstract> enemies)
         {
             enemies_ = enemies;
         }

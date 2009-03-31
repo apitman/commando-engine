@@ -30,7 +30,7 @@ namespace Commando.ai.planning
     internal class ActionTakeCover : Action
     {
         protected const float COST = 1.0f;
-
+        internal CoverObject cover_;
         internal TileIndex coverLocation_;
 
         internal ActionTakeCover(NonPlayableCharacterAbstract character)
@@ -51,7 +51,7 @@ namespace Commando.ai.planning
             // if the position AFTER taking cover - think backwards! - is known,
             //  we can only take cover there if that position has cover, otherwise
             //  we just check that we know about nearby cover
-            return (character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover) != null);
+            return (character_.AI_.Memory_.getFirstBelief(BeliefType.AvailableCover) != null);
         }
 
         internal override SearchNode unifyRegressive(ref SearchNode node)
@@ -61,7 +61,7 @@ namespace Commando.ai.planning
             // actually resolve with a Goto instead
 
             TileIndex coverLocation =
-                character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover).data_.tile1;
+                character_.AI_.Memory_.getFirstBelief(BeliefType.AvailableCover).data_.tile1;
 
             SearchNode parent = node.getPredecessor();
             parent.action = new ActionTakeCover(character_, ref coverLocation);
@@ -90,8 +90,8 @@ namespace Commando.ai.planning
         /// <returns>Returns true if successful.</returns>
         internal override bool initialize()
         {
-            Belief bestCover = character_.AI_.Memory_.getFirstBelief(BeliefType.BestCover);
-            (character_.getActuator() as DefaultActuator).cover((bestCover.handle_ as CoverObject));
+            
+            (character_.getActuator() as DefaultActuator).cover(cover_);
             return true;
         }
 
@@ -102,6 +102,20 @@ namespace Commando.ai.planning
         internal override bool update()
         {
             return (character_.getActuator() as DefaultActuator).isFinished();
+        }
+
+        internal override void reserve()
+        {
+            base.reserve();
+            Belief bestCover = character_.AI_.Memory_.getFirstBelief(BeliefType.AvailableCover);
+            cover_ = (bestCover.handle_ as CoverObject);
+            ReservationTable.reserveResource(cover_, character_);
+        }
+
+        internal override void unreserve()
+        {
+            base.unreserve();
+            ReservationTable.freeResource(cover_, character_);
         }
     }
 }
