@@ -167,6 +167,11 @@ namespace Commando.levels
                         //Vector2 rotation = CommonFunctions.getVector(Convert.ToInt32(ele2.GetAttribute("rotation")) * Math.PI / 180);
                         Vector2 rotation = new Vector2(Convert.ToInt32(ele2.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(ele2.GetAttribute("rotationY")) / 100.0f);
                         dumDum.setDirection(rotation);
+                        string team = ele2.GetAttribute("allegiance");
+                        if (team != null && team != string.Empty)
+                        {
+                            dumDum.allegiance_ = Convert.ToInt32(team);
+                        }
                         // TODO: AMP Fix it so we don't have to do this next line of code
                         dumDum.getActuator().update(); // Makes it so the enemies are drawn in the correct position
 
@@ -178,6 +183,13 @@ namespace Commando.levels
                         //Vector2 rotation = CommonFunctions.getVector(Convert.ToInt32(ele2.GetAttribute("rotation")) * Math.PI / 180);
                         Vector2 rotation = new Vector2(Convert.ToInt32(ele2.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(ele2.GetAttribute("rotationY")) / 100.0f);
                         Humie.setDirection(rotation);
+                        string team = ele2.GetAttribute("allegiance");
+                        if (team != null && team != string.Empty)
+                        {
+                            Humie.allegiance_ = Convert.ToInt32(team);
+                        }
+
+                     
                         // TODO: AMP Fix it so we don't have to do this next line of code
                         Humie.getActuator().update(); // Makes it so the enemies are drawn in the correct position
                         
@@ -319,6 +331,7 @@ namespace Commando.levels
                 //enemyElement.SetAttribute("rotation", rotationDegrees.ToString());
                 enemyElement.SetAttribute("rotationX", Convert.ToInt32(enemies_[i].getDirection().X * 100).ToString());
                 enemyElement.SetAttribute("rotationY", Convert.ToInt32(enemies_[i].getDirection().Y * 100).ToString());
+                enemyElement.SetAttribute("allegiance", enemies_[i].allegiance_.ToString());
                 enemiesElement.AppendChild(enemyElement);
             }
             levelElement.AppendChild(enemiesElement);
