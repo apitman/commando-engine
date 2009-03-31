@@ -53,6 +53,7 @@ namespace Commando.ai
         public AI(NonPlayableCharacterAbstract npc)
         {
             Character_ = npc;
+            ReservationTable.register(npc);
 
             Memory_ = new Memory();
 

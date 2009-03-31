@@ -278,14 +278,17 @@ namespace Commando
             boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
             tilesForGrid = CoverGenerator.generateRealTileDistances(tilesForGrid);
             //DEBUG PRINT
-            for (int i = 0; i < tilesForGrid.GetLength(0); i++)
+            if (Settings.getInstance().IsInDebugMode_)
             {
-                for (int j = 0; j < tilesForGrid.GetLength(1); j++)
+                for (int i = 0; i < tilesForGrid.GetLength(0); i++)
                 {
-                    Console.Write(tilesForGrid[i, j].highDistance_.ToString("F1"));
-                    Console.Write(" ");
+                    for (int j = 0; j < tilesForGrid.GetLength(1); j++)
+                    {
+                        Console.Write(tilesForGrid[i, j].highDistance_.ToString("F1"));
+                        Console.Write(" ");
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
             }
             //END
             GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
@@ -378,26 +381,14 @@ namespace Commando
                 WorldState.CoverList_.Add(coverOb);
             }
 
-            WorldState.EnemyList_ = (List<NonPlayableCharacterAbstract>)myLevel_.getEnemies();
-            WorldState.MainPlayer_ = player_;
-            /*
-            WorldState.CoverList_.Add(cover);
-            WorldState.CoverList_.Add(cover1);
-            WorldState.CoverList_.Add(cover2);
-            WorldState.CoverList_.Add(cover3);
-            WorldState.CoverList_.Add(cover4);
-            WorldState.CoverList_.Add(cover5);
-            WorldState.CoverList_.Add(cover6);
-            WorldState.CoverList_.Add(cover7);
-            WorldState.CoverList_.Add(cover8);
-            WorldState.CoverList_.Add(cover9);
-            WorldState.CoverList_.Add(cover10);
-            WorldState.CoverList_.Add(cover11);
-            WorldState.CoverList_.Add(cover12);
-            WorldState.CoverList_.Add(cover13);
-            WorldState.CoverList_.Add(cover14);
-            WorldState.CoverList_.Add(cover15);
-             * */
+            //WorldState.EnemyList_ = (List<NonPlayableCharacterAbstract>)myLevel_.getEnemies();
+            List<CharacterAbstract> characterList = new List<CharacterAbstract>();
+            for (int i = 0; i < myLevel_.getEnemies().Count; i++)
+            {
+                characterList.Add(myLevel_.getEnemies()[i]);
+            }
+            characterList.Add(player_);
+            WorldState.CharacterList_ = characterList;
         }
 
         /// <summary>
