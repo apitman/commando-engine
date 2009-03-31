@@ -34,7 +34,7 @@ namespace Commando.ai.planning
         internal ActionAttackRanged(NonPlayableCharacterAbstract character)
             : base(character)
         {
-            aiming = new SystemAiming(character_.AI_);
+            
         }
 
         internal override bool testPreConditions(SearchNode node)
@@ -56,7 +56,7 @@ namespace Commando.ai.planning
 
         internal override void reserve()
         {
-            throw new NotImplementedException();
+            // Do nothing
         }
 
         internal override void register(Dictionary<int, List<Action>> actionMap)
@@ -95,7 +95,7 @@ namespace Commando.ai.planning
 
         internal override bool initialize()
         {
-            //throw new NotImplementedException();
+            aiming = new SystemAiming(character_.AI_);
             return true;
         }
     }
