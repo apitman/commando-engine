@@ -70,6 +70,7 @@ namespace Commando.objects
                 }
                 health.update(healthCount);
                 toDie_ = true;
+                hasBeenPickedUp_ = true;
             }
         }
 

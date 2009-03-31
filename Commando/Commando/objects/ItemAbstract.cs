@@ -37,6 +37,8 @@ namespace Commando.objects
 
         protected CollisionDetectorInterface detector_;
 
+        protected bool hasBeenPickedUp_;
+
         public ItemAbstract(CollisionDetectorInterface detector, List<Vector2> points, Vector2 center, float radius, Height height, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth)
             : base(pipeline, image, position, direction, depth)
         {
@@ -44,6 +46,7 @@ namespace Commando.objects
             bounds_.rotate(direction_, position_);
             radius_ = radius;
             height_ = height;
+            hasBeenPickedUp_ = false;
             if (detector != null)
             {
                 detector.register(this);
@@ -63,7 +66,8 @@ namespace Commando.objects
 
         public virtual Vector2 checkCollisionWith(CollisionObjectInterface obj, CollisionDetectorInterface detector, HeightEnum height, float radDistance, Vector2 velocity)
         {
-            if (detector.checkCollision(obj.getBounds(height), getBounds(height), radDistance, velocity) != Vector2.Zero)
+            if (!hasBeenPickedUp_ && detector.checkCollision(obj.getBounds(height), getBounds(height), radDistance, velocity) != Vector2.Zero
+                && (obj is PlayableCharacterAbstract))
             {
                 handleCollision(obj);
             }
@@ -72,7 +76,10 @@ namespace Commando.objects
 
         public virtual Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
         {
-            handleCollision(obj);
+            if (!hasBeenPickedUp_ && obj is PlayableCharacterAbstract)
+            {
+                handleCollision(obj);
+            }
             return Vector2.Zero;
         }
 
@@ -112,6 +119,22 @@ namespace Commando.objects
             {
                 detector_.register(this);
             }
+        }
+
+        public bool hasBeenPickedUp()
+        {
+            return hasBeenPickedUp_;
+        }
+
+        public bool tryToPickUp(CharacterAbstract character, CollisionDetectorInterface detector)
+        {
+            float radDist = CommonFunctions.distance(character.getPosition(), position_);
+            if (!hasBeenPickedUp_ && detector.checkCollision(character.getBounds(HeightEnum.LOW), bounds_, radDist, Vector2.Zero) != Vector2.Zero)
+            {
+                handleCollision(character);
+                return true;
+            }
+            return true;
         }
     }
 }
