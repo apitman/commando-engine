@@ -55,8 +55,6 @@ namespace Commando.objects
 
         protected int drawColorCount_ = 0;
 
-        internal int allegiance_ { get; set; }
-
         public DummyEnemy(List<DrawableObjectAbstract> pipeline, Vector2 pos) :
             base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
         {

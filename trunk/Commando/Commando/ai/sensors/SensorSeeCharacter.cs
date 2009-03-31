@@ -40,46 +40,47 @@ namespace Commando.ai
         public override void collect()
         {
             CharacterAbstract me = AI_.Character_;
-            for (int i = 0; i < WorldState.EnemyList_.Count; i++)
+            for (int i = 0; i < WorldState.CharacterList_.Count; i++)
             {
-                
-                CharacterAbstract ally = WorldState.EnemyList_[i];
-                if (me != ally &&
-                    Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), ally.getPosition(), FIELD_OF_VIEW) &&
-                    Raycaster.canSeePoint(me.getPosition(), ally.getPosition(), me.getHeight(), ally.getHeight()))
+                CharacterAbstract character = WorldState.CharacterList_[i];
+                if (me != character &&
+                    Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), character.getPosition(), FIELD_OF_VIEW) &&
+                    Raycaster.canSeePoint(me.getPosition(), character.getPosition(), me.getHeight(), character.getHeight()))
                 {
-                    Belief posBelief = new Belief(BeliefType.AllyLoc, ally, 100);
-                    posBelief.position_ = ally.getPosition();
-                    Belief healthBelief = new Belief(BeliefType.AllyHealth, ally, 100);
-                    healthBelief.position_ = ally.getPosition();
-                    healthBelief.data_.int1 = ally.getHealth().getValue();
+                    BeliefType locationType;
+                    BeliefType healthType;
+                    if (me.allegiance_ == character.allegiance_)
+                    {
+                        locationType = BeliefType.AllyLoc;
+                        healthType = BeliefType.AllyHealth;
+                    }
+                    else
+                    {
+                        locationType = BeliefType.EnemyLoc;
+                        healthType = BeliefType.EnemyHealth;
+                    }
+                    Belief posBelief = new Belief(locationType, character, 100);
+                    posBelief.position_ = character.getPosition();
+                    Belief healthBelief = new Belief(healthType, character, 100);
+                    healthBelief.position_ = character.getPosition();
+                    healthBelief.data_.int1 = character.getHealth().getValue();
                     AI_.Memory_.setBelief(posBelief);
                     AI_.Memory_.setBelief(healthBelief);
                 }
             }
-            CharacterAbstract enemy = WorldState.MainPlayer_;
-            if (Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), enemy.getPosition(), FIELD_OF_VIEW) &&
-                Raycaster.canSeePoint(me.getPosition(), enemy.getPosition(), me.getHeight(), enemy.getHeight()))
+
+            // TODO
+            // Reimplement this correctly
+            // Update the position and confidence of the EnemyLoc beliefs
+            /*
+            foreach (Belief bel in AI_.Memory_.getBeliefs(BeliefType.EnemyLoc))
             {
-                Belief posBelief = new Belief(BeliefType.EnemyLoc, enemy, 100);
-                posBelief.position_ = enemy.getPosition();
-                Belief healthBelief = new Belief(BeliefType.EnemyHealth, enemy, 100);
-                healthBelief.position_ = enemy.getPosition();
-                healthBelief.data_.int1 = enemy.getHealth().getValue();
-                AI_.Memory_.setBelief(posBelief);
-                AI_.Memory_.setBelief(healthBelief);
-            }
-            else
-            {
-                // Update the position and confidence of the EnemyLoc beliefs
-                foreach (Belief bel in AI_.Memory_.getBeliefs(BeliefType.EnemyLoc))
+                if (CommonFunctions.distance(bel.position_, me.getPosition()) < Tiler.tileSideLength_)
                 {
-                    if (CommonFunctions.distance(bel.position_, me.getPosition()) < Tiler.tileSideLength_)
-                    {
-                        bel.confidence_ /= 2;
-                    }
+                    bel.confidence_ /= 2;
                 }
             }
+            */
         }
 
     }

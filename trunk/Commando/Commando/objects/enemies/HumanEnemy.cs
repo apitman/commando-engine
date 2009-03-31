@@ -56,8 +56,6 @@ namespace Commando.objects.enemies
 
         protected int drawColorCount_ = 0;
 
-        internal int allegiance_ { get; set; }
-
         static HumanEnemy()
         {
             BOUNDSPOINTSLOW = new List<Vector2>();

@@ -64,6 +64,8 @@ namespace Commando
 
         public Inventory Inventory_ { get; set; }
 
+        internal int allegiance_ { get; set; }
+
         /// <summary>
         /// Create a default Character
         /// </summary>

@@ -30,11 +30,18 @@ namespace Commando.ai.planning
     /// </summary>
     internal static class ReservationTable
     {
+        private static List<NonPlayableCharacterAbstract> notifyList_;
         private static Dictionary<Object, NonPlayableCharacterAbstract> reservations_;
 
         static ReservationTable()
         {
+            notifyList_ = new List<NonPlayableCharacterAbstract>();
             reservations_ = new Dictionary<object, NonPlayableCharacterAbstract>();
+        }
+
+        internal static void register(NonPlayableCharacterAbstract npc)
+        {
+            notifyList_.Add(npc);
         }
 
         /// <summary>
@@ -113,12 +120,11 @@ namespace Commando.ai.planning
                 }
 
                 // notify other agents in the world that this resource is taken
-                List<NonPlayableCharacterAbstract> npcs = WorldState.EnemyList_;
-                for (int i = 0; i < npcs.Count; i++)
+                for (int i = 0; i < notifyList_.Count; i++)
                 {
-                    if (npcs[i] != reserver)
+                    if (notifyList_[i] != reserver)
                     {
-                        npcs[i].AI_.Memory_.removeBelief(type, resource);
+                        notifyList_[i].AI_.Memory_.removeBelief(type, resource);
                     }
                 }
                 return true;

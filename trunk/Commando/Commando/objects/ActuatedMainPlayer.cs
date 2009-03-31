@@ -60,8 +60,6 @@ namespace Commando.objects
 
         protected static readonly List<Vector2> BOUNDSPOINTSLOWCROUCH;
 
-        internal int allegiance_ { get; set; }
-
         static ActuatedMainPlayer()
         {
             BOUNDSPOINTSLOW = new List<Vector2>();
