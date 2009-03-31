@@ -34,9 +34,12 @@ namespace Commando
             return copy;
         }
 
-        public static double distance(Vector2 point1, Vector2 point2)
+        public static float distance(Vector2 point1, Vector2 point2)
         {
-            return Math.Sqrt(Math.Pow(Math.Abs(point1.X - point2.X), 2) + Math.Pow(Math.Abs(point1.Y - point2.Y), 2));
+            point1.X -= point2.X;
+            point1.Y -= point1.Y;
+            return point1.Length();
+            //return (float)Math.Sqrt(point1.X * point1.X + point1.Y * point1.Y);
         }
 
         public static void rotate(ref Vector2 vector, float angle)
@@ -109,6 +112,11 @@ namespace Commando
             double sin = Math.Sin(rotation);
             Vector2 result = new Vector2((float)cos, (float)sin);
             return result;
+        }
+
+        public static float dotProduct(Vector2 first, Vector2 second)
+        {
+            return (first.X * second.X) + (first.Y * second.Y);
         }
     }
 }

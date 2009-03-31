@@ -73,6 +73,7 @@ namespace Commando.objects
                 //}
                 //ammo.update(ammoCount);
                 toDie_ = true;
+                hasBeenPickedUp_ = true;
             }
         }
 

@@ -395,7 +395,7 @@ namespace Commando.objects
             collidedWith_.Clear();
             oldPosition -= position_;
             //Console.WriteLine(oldPosition);
-            GlobalHelper.getInstance().getCurrentCamera().setCenter(position_.X, position_.Y);
+            //GlobalHelper.getInstance().getCurrentCamera().setCenter(position_.X, position_.Y);
 
         }
 

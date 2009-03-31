@@ -113,6 +113,7 @@ namespace Commando.objects
                 }
                 (obj as CharacterAbstract).Inventory_ = inv;
                 toDie_ = true;
+                hasBeenPickedUp_ = true;
             }
         }
 

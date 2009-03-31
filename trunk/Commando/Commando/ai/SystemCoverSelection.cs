@@ -24,6 +24,7 @@ using System.Text;
 using Commando.objects;
 using Microsoft.Xna.Framework;
 using Commando.ai.planning;
+using Commando.levels;
 
 namespace Commando.ai
 {
@@ -64,6 +65,11 @@ namespace Commando.ai
             for (int i = 0; i < beliefs.Count; i++)
             {
                 if (ReservationTable.isReserved(beliefs[i].handle_))
+                {
+                    continue;
+                }
+                Tile coverTile = GlobalHelper.getInstance().getCurrentLevelTileGrid().getTile(beliefs[i].data_.tile1);
+                if ((coverTile.highDistance_) * TileGrid.TILEWIDTH < AI_.Character_.getRadius() || (coverTile.lowDistance_) * TileGrid.TILEWIDTH < AI_.Character_.getRadius())
                 {
                     continue;
                 }

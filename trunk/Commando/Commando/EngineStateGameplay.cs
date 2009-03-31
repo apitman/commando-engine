@@ -448,7 +448,32 @@ namespace Commando
             // TODO
             // may want to maintain a separate pipeline for objects whose
             //  update function doesn't do anything (aka tiles)
-
+            if (player_ == null)
+            {
+                Vector2 moveVector = Vector2.Zero;
+                Vector2 cameraPosition = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
+                if (cameraPosition.X < 100.0f)
+                {
+                    moveVector.X = -3f;
+                }
+                else if (cameraPosition.X > engine_.GraphicsDevice.Viewport.Width - 100.0f)
+                {
+                    moveVector.X = 3f;
+                }
+                if (cameraPosition.Y < 100.0f)
+                {
+                    moveVector.Y = -3f;
+                }
+                else if (cameraPosition.Y > engine_.GraphicsDevice.Viewport.Height - 100.0f)
+                {
+                    moveVector.Y = 3f;
+                }
+                GlobalHelper.getInstance().getCurrentCamera().move(moveVector.X, moveVector.Y);
+            }
+            else
+            {
+                GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
+            }
             if (player_.isDead())
             {
                 return new EngineStateGameOver(engine_);
