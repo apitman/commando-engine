@@ -28,7 +28,6 @@ namespace Commando.ai
 {
     internal class SystemAiming : System
     {
-        internal Belief belief_;
         internal CharacterAbstract enemy_;
         internal Vector2[] velocities_ = new Vector2[REACTION_TIME];
 
@@ -42,23 +41,24 @@ namespace Commando.ai
 
         internal SystemAiming(AI ai) : base(ai)
         {
-            belief_ = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-            if (belief_ == null || belief_.handle_ == null)
+            Belief belief = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+            if (belief == null || belief.handle_ == null)
             {
                 return;
             }
-            enemy_ = (belief_.handle_ as CharacterAbstract);
+            enemy_ = (belief.handle_ as CharacterAbstract);
         }
 
         internal override void update()
         {
+            Belief belief = AI_.Memory_.getBelief(BeliefType.BestTarget, enemy_);
 
             // TODO
             // change this to can see object, remove hard-codedness
             // also change it to not actually access the character directly;
             //      that character should drop EnemyVelocity stimuli or something
             if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
-                                        belief_.position_,
+                                        belief.position_,
                                         AI_.Character_.getHeight(),
                                         enemy_.getHeight()))
             {
@@ -108,6 +108,12 @@ namespace Commando.ai
         internal Vector2 predictTargetPosition(Vector2 currentPosition)
         {
             Vector2 averageVelocity = calculateAverageVelocity();
+
+            // TODO
+            // Add this to credits
+            // The following code was taken from Programming Game AI by Example,
+            //  by Mat Buckland
+
             float distance = (float)(AI_.Character_.getPosition() - currentPosition).Length();
 
             // TODO
