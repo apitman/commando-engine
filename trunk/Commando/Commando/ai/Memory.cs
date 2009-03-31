@@ -243,11 +243,11 @@ namespace Commando.ai
         /// <summary>
         /// Safely changes the relevance of a belief in memory.
         /// </summary>
-        /// <param name="belief"></param>
-        /// <param name="relevance"></param>
+        /// <param name="belief">Belief whose relevance will be changed.</param>
+        /// <param name="relevance">New relevance for the belief.</param>
         public void updateRelevance(Belief belief, float relevance)
         {
-            bool relevanceReduced = (belief.relevance_ < belief.relevance_);
+            bool relevanceReduced = (relevance < belief.relevance_);
             belief.relevance_ = relevance;
 
             // if relevance was reduced and this belief was cached, refresh
