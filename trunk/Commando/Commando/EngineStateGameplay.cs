@@ -378,7 +378,7 @@ namespace Commando
                 WorldState.CoverList_.Add(coverOb);
             }
 
-            WorldState.EnemyList_ = (List<CharacterAbstract>)myLevel_.getEnemies();
+            WorldState.EnemyList_ = (List<NonPlayableCharacterAbstract>)myLevel_.getEnemies();
             WorldState.MainPlayer_ = player_;
             /*
             WorldState.CoverList_.Add(cover);

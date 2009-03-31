@@ -28,6 +28,8 @@ namespace Commando.ai
 {
     internal class SystemAiming : System
     {
+        internal Belief belief_;
+        internal CharacterAbstract enemy_;
         internal Vector2[] velocities_ = new Vector2[REACTION_TIME];
 
         internal int countUp = 0;
@@ -38,36 +40,37 @@ namespace Commando.ai
         const int HOLD_AIM_TIME = 10;
         const int LOSS_TIME = 5;
 
-        internal SystemAiming(AI ai) : base(ai) { }
-
-        internal override void update()
+        internal SystemAiming(AI ai) : base(ai)
         {
-            Belief belief = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-            if (belief == null)
+            belief_ = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+            if (belief_ == null || belief_.handle_ == null)
             {
                 return;
             }
+            enemy_ = (belief_.handle_ as CharacterAbstract);
+        }
 
-            CharacterAbstract enemy = (belief.handle_ as CharacterAbstract);
+        internal override void update()
+        {
 
             // TODO
             // change this to can see object, remove hard-codedness
             // also change it to not actually access the character directly;
             //      that character should drop EnemyVelocity stimuli or something
             if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
-                                        belief.position_,
+                                        belief_.position_,
                                         AI_.Character_.getHeight(),
-                                        enemy.getHeight()))
+                                        enemy_.getHeight()))
             {
                 // if can still see actual character, we might fire
                 if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
-                                        enemy.getPosition(),
+                                        enemy_.getPosition(),
                                         AI_.Character_.getHeight(),
-                                        enemy.getHeight()))
+                                        enemy_.getHeight()))
                 {
-                    velocities_[countUp % REACTION_TIME] = enemy.getVelocity();
+                    velocities_[countUp % REACTION_TIME] = enemy_.getVelocity();
                     countUp++;
-                    Vector2 target = predictTargetPosition(enemy.getPosition());
+                    Vector2 target = predictTargetPosition(enemy_.getPosition());
                     (AI_.Character_.getActuator() as DefaultActuator).lookAt(target);
                     if (countUp >= REACTION_TIME)
                     {
@@ -105,9 +108,14 @@ namespace Commando.ai
         internal Vector2 predictTargetPosition(Vector2 currentPosition)
         {
             Vector2 averageVelocity = calculateAverageVelocity();
+            float distance = (float)(AI_.Character_.getPosition() - currentPosition).Length();
+
             // TODO
-            // actually perform the intersection calculation!
-            return currentPosition;
+            // Replace this with a lookup
+            float weaponSpeed = 15.0f;
+            float lookAheadTime = distance / (averageVelocity.Length() + weaponSpeed);
+            
+            return currentPosition + averageVelocity * lookAheadTime;
         }
     }
 }

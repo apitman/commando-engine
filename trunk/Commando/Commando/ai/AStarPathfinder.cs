@@ -357,10 +357,12 @@ namespace Commando.ai
                 cur = searchSpace_[cur.x_, cur.y_].parent;
             }
 
+            /*
             for (int i = 0; i < path.Count; i++)
             {
                 Console.WriteLine("Goto " + path[i].x_ + "," + path[i].y_);
             }
+            */
 
             return path;
         }

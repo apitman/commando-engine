@@ -79,6 +79,10 @@ namespace Commando.ai
                 {
                     AI_.CurrentPlan_[0].initialize();
                 }
+                for (int i = 0; i < AI_.CurrentPlan_.Count; i++)
+                {
+                    AI_.CurrentPlan_[i].reserve();
+                }
             }
 
             previousGoal_ = AI_.CurrentGoal_;

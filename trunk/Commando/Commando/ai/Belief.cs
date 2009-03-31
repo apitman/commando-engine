@@ -40,11 +40,19 @@ namespace Commando.ai
 
         private Belief() { }
 
-        public Belief(BeliefType type, Object handle, float conf)
+        public Belief(BeliefType type, Object handle, float confidence)
         {
             type_ = type;
             handle_ = handle;
-            confidence_ = conf;
+            confidence_ = confidence;
+        }
+
+        public Belief(BeliefType type, Object handle, float confidence, float relevance)
+        {
+            type_ = type;
+            handle_ = handle;
+            confidence_ = confidence;
+            relevance_ = relevance;
         }
 
         public Belief convert(BeliefType type)
@@ -91,6 +99,8 @@ namespace Commando.ai
 
     public enum BeliefType
     {
+        Error, // used as a flag to throw exceptions
+
         EnemyLoc, // 
         EnemyHealth, // data.int1 = health
         AllyLoc, // 
@@ -99,7 +109,7 @@ namespace Commando.ai
         CoverLoc, // data.tile1 = tile index of position
 
         BestTarget, // 
-        BestCover, // data.tile1 = tile index of position
+        AvailableCover, // data.tile1 = tile index of position
         InvestigateTarget // 
     }
 

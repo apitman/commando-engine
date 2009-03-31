@@ -35,7 +35,7 @@ namespace Commando.ai.planning
         internal ActionAttackRangedCover(NonPlayableCharacterAbstract character)
             : base(character)
         {
-            aiming = new SystemAiming(character.AI_);
+            
         }
 
         internal override bool testPreConditions(SearchNode node)
@@ -60,7 +60,7 @@ namespace Commando.ai.planning
 
         internal override void reserve()
         {
-            throw new NotImplementedException();
+            // Do nothing
         }
 
         internal override void register(Dictionary<int, List<Action>> actionMap)
@@ -104,6 +104,8 @@ namespace Commando.ai.planning
 
         internal override bool initialize()
         {
+            aiming = new SystemAiming(character_.AI_);
+
             //throw new NotImplementedException();
             Belief bestTarget =
                 character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);

@@ -30,11 +30,11 @@ namespace Commando.ai.planning
     /// </summary>
     internal static class ReservationTable
     {
-        private static Dictionary<Object, NonPlayableCharacterAbstract> table;
+        private static Dictionary<Object, NonPlayableCharacterAbstract> reservations_;
 
         static ReservationTable()
         {
-            table = new Dictionary<object, NonPlayableCharacterAbstract>();
+            reservations_ = new Dictionary<object, NonPlayableCharacterAbstract>();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Commando.ai.planning
         /// <returns>True if the resource can be reserved, false if it is already reserved.</returns>
         internal static bool isFree(Object resource)
         {
-            return !table.ContainsKey(resource);
+            return !reservations_.ContainsKey(resource);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Commando.ai.planning
 
                 // throw new AccessViolationException("ReservationTable should not be used to determine if a resource has been consumed.");
             }
-            return (table.ContainsKey(resource) && table[resource] == owner);
+            return (reservations_.ContainsKey(resource) && reservations_[resource] == owner);
         }
 
         /// <summary>
@@ -99,7 +99,28 @@ namespace Commando.ai.planning
         {
             if (isFree(resource))
             {
-                table.Add(resource, reserver);
+                reservations_.Add(resource, reserver);
+
+                BeliefType type = BeliefType.Error;
+                if (resource is CoverObject)
+                {
+                    type = BeliefType.AvailableCover;
+                }
+
+                if (type == BeliefType.Error)
+                {
+                    throw new NotImplementedException("Reservations for this object type not yet implemented");
+                }
+
+                // notify other agents in the world that this resource is taken
+                List<NonPlayableCharacterAbstract> npcs = WorldState.EnemyList_;
+                for (int i = 0; i < npcs.Count; i++)
+                {
+                    if (npcs[i] != reserver)
+                    {
+                        npcs[i].AI_.Memory_.removeBelief(type, resource);
+                    }
+                }
                 return true;
             }
             return false;
@@ -112,16 +133,16 @@ namespace Commando.ai.planning
         /// <param name="owner">Current owner of the resource.</param>
         internal static void freeResource(Object resource, NonPlayableCharacterAbstract owner)
         {
-            if (table.ContainsKey(resource))
+            if (reservations_.ContainsKey(resource))
             {
                 if (owner == null)
                 {
                     throw new InvalidOperationException("Consumed resources cannot be freed.");
                 }
 
-                if (table[resource] == owner)
+                if (reservations_[resource] == owner)
                 {
-                    table.Remove(resource);
+                    reservations_.Remove(resource);
                 }
                 else
                 {
@@ -137,11 +158,11 @@ namespace Commando.ai.planning
         /// <param name="owner">Current owner of the resource reservation.</param>
         internal static void consumeResource(Object resource, NonPlayableCharacterAbstract owner)
         {
-            if (table.ContainsKey(resource))
+            if (reservations_.ContainsKey(resource))
             {
-                if (table[resource] == owner)
+                if (reservations_[resource] == owner)
                 {
-                    table[resource] = null;
+                    reservations_[resource] = null;
                 }
                 else
                 {
@@ -156,7 +177,7 @@ namespace Commando.ai.planning
         /// </summary>
         internal static void reset()
         {
-            table.Clear();
+            reservations_.Clear();
         }
     }
 }

@@ -31,14 +31,14 @@ namespace Commando.ai
     internal class WorldState
     {
         static internal Dictionary<int, Stimulus> Audial_ {get; private set;}
-        static internal List<CharacterAbstract> EnemyList_ { get; set; }
+        static internal List<NonPlayableCharacterAbstract> EnemyList_ { get; set; }
         static internal CharacterAbstract MainPlayer_ { get; set; }
         static internal List<CoverObject> CoverList_ { get; set; }
 
         static WorldState()
         {
             Audial_ = new Dictionary<int, Stimulus>();
-            EnemyList_ = new List<CharacterAbstract>();
+            EnemyList_ = new List<NonPlayableCharacterAbstract>();
             CoverList_ = new List<CoverObject>();
         }
 
