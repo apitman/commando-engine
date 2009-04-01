@@ -27,14 +27,11 @@ using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    class ActionFlee : Action
+    class ActionFleeType : ActionType
     {
         internal const float COST = 10.0f;
-        internal const int THRESHOLD = 60;
 
-        protected int counter = 0;
-
-        internal ActionFlee(NonPlayableCharacterAbstract character)
+        internal ActionFleeType(NonPlayableCharacterAbstract character)
             : base(character)
         {
 
@@ -55,9 +52,22 @@ namespace Commando.ai.planning
             return parent;
         }
 
-        internal override void register(Dictionary<int, List<Action>> actionMap)
+        internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             actionMap[Variable.TargetHealth].Add(this);
+        }
+    }
+
+    internal class ActionFlee : Action
+    {
+        internal const int THRESHOLD = 60;
+
+        protected int counter = 0;
+
+        internal ActionFlee(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+
         }
 
         internal override bool initialize()

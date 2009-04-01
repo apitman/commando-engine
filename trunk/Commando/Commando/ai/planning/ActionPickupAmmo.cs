@@ -27,11 +27,11 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
-    internal class ActionTakeCoverType : ActionType
+    internal class ActionPickupAmmoType : ActionType
     {
         protected const float COST = 1.0f;
 
-        internal ActionTakeCoverType(NonPlayableCharacterAbstract character)
+        internal ActionPickupAmmoType(NonPlayableCharacterAbstract character)
             : base(character)
         {
 
@@ -39,86 +39,80 @@ namespace Commando.ai.planning
 
         internal override bool testPreConditions(SearchNode node)
         {
-            // TODO
-            // if the position AFTER taking cover - think backwards! - is known,
-            //  we can only take cover there if that position has cover, otherwise
-            //  we just check that we know about nearby cover
-            return (character_.AI_.Memory_.getFirstBelief(BeliefType.AvailableCover) != null);
+            return (character_.AI_.Memory_.getFirstBelief(BeliefType.AmmoLoc) != null);
         }
 
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
-            // TODO
-            // If the current location is resolved and doesn't have cover, we
-            // actually resolve with a Goto instead
+            Belief ammoBelief =
+                character_.AI_.Memory_.getFirstBelief(BeliefType.AmmoLoc);
 
-            TileIndex coverLocation =
-                character_.AI_.Memory_.getFirstBelief(BeliefType.AvailableCover).data_.tile1;
+            TileIndex ammoLocation = ammoBelief.data_.tile1;
 
             SearchNode parent = node.getPredecessor();
-            parent.action = new ActionTakeCover(character_, ref coverLocation);
+            parent.action = new ActionPickupAmmo(character_, ref ammoLocation, ammoBelief.handle_);
             parent.cost += COST;
-            parent.setBool(Variable.Cover, false);
+            parent.unresolve(Variable.Ammo);
 
-            // TODO ...?
-            // if the position AFTER taking cover was known, that's where we were
-            //  at the predecessor, which is handled by the clone operation
-
-            // if it wasn't known, we need to make a best guess as to where we had
-            //  to be in order to take cover
-            parent.setPosition(Variable.Location, ref coverLocation);
+            parent.setPosition(Variable.Location, ref ammoLocation);
 
             return parent;
         }
 
         internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
-            actionMap[Variable.Cover].Add(this);
+            actionMap[Variable.Ammo].Add(this);
         }
     }
 
-    internal class ActionTakeCover : Action
+    internal class ActionPickupAmmo : Action
     {
-        internal CoverObject cover_;
-        internal TileIndex coverLocation_;
+        internal AmmoBox ammo_;
+        internal TileIndex ammoLocation_;
+        internal Object tempHandle_;
 
-        internal ActionTakeCover(NonPlayableCharacterAbstract character, ref TileIndex coverLocation)
+        internal ActionPickupAmmo(NonPlayableCharacterAbstract character, ref TileIndex ammoLocation, Object tempHandle)
             : base(character)
         {
-            coverLocation_ = coverLocation;
+            ammoLocation_ = ammoLocation;
+            tempHandle_ = tempHandle;
         }
 
         /// <summary>
-        /// Send signal to actuator to attach to a piece of cover.
+        /// TODO
         /// </summary>
-        /// <returns>Returns true if successful.</returns>
+        /// <returns></returns>
         internal override bool initialize()
         {
-            (character_.getActuator() as DefaultActuator).cover(cover_);
             return true;
         }
 
         /// <summary>
-        /// Poll actuator to see if it is done attaching to cover.
+        /// TODO
         /// </summary>
-        /// <returns>Returns true once attached.</returns>
+        /// <returns></returns>
         internal override bool update()
         {
-            return (character_.getActuator() as DefaultActuator).isFinished();
+            if (ammo_.tryToPickUp(character_, character_.getCollisionDetector()))
+            {
+                return true;
+            }
+            (character_.getActuator() as DefaultActuator).moveTo(ammo_.getPosition());
+            return false;
         }
 
         internal override void reserve()
         {
             base.reserve();
-            Belief bestCover = character_.AI_.Memory_.getFirstBelief(BeliefType.AvailableCover);
-            cover_ = (bestCover.handle_ as CoverObject);
-            ReservationTable.reserveResource(cover_, character_);
+
+            ammo_ = (tempHandle_ as AmmoBox);
+            ReservationTable.reserveResource(ammo_, character_);
         }
 
         internal override void unreserve()
         {
             base.unreserve();
-            ReservationTable.freeResource(cover_, character_);
+            ReservationTable.freeResource(ammo_, character_);
         }
     }
 }

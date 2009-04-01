@@ -29,8 +29,8 @@ namespace Commando.ai.planning
     /// </summary>
     internal class IndividualPlanner
     {
-        private Dictionary<int, List<Action>> actionMap_
-            = new Dictionary<int,List<Action>>();
+        private Dictionary<int, List<ActionType>> actionMap_
+            = new Dictionary<int, List<ActionType>>();
 
         private List<Action> plan_;
 
@@ -38,12 +38,12 @@ namespace Commando.ai.planning
         /// Create an individual planner.
         /// </summary>
         /// <param name="actions">Actions available to the character being planned for.</param>
-        public IndividualPlanner(List<Action> actions)
+        public IndividualPlanner(List<ActionType> actions)
         {
             // initialize empty lists within ActionMap
             for (int i = 0; i < Variable.LENGTH; i++)
             {
-                actionMap_.Add(i, new List<Action>());
+                actionMap_.Add(i, new List<ActionType>());
             }
 
             // and then register each ActionType appropriately
@@ -81,7 +81,7 @@ namespace Commando.ai.planning
                 // with the initial, and try those actions.
                 for (int i = 0; i < failedConditions.Count; i++)
                 {
-                    List<Action> solutions = actionMap_[failedConditions[i]];
+                    List<ActionType> solutions = actionMap_[failedConditions[i]];
 
                     for (int j = 0; j < solutions.Count; j++)
                     {

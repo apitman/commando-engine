@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
+using Commando.ai.planning;
+using Commando.levels;
 
 namespace Commando.ai.sensors
 {
@@ -38,11 +40,17 @@ namespace Commando.ai.sensors
             for (int i = 0; i < WorldState.AmmoList_.Count; i++)
             {
                 AmmoBox box = WorldState.AmmoList_[i];
+                if (ReservationTable.isReserved(box))
+                {
+                    continue;
+                }
                 if (Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), box.getPosition(), fieldOfView) &&
                     Raycaster.canSeePoint(me.getPosition(), box.getPosition(), me.getHeight(), box.getHeight()))
                 {
                     Belief posBelief = new Belief(BeliefType.AmmoLoc, box, 100);
                     posBelief.position_ = box.getPosition();
+                    posBelief.relevance_ = (float)(1 / (box.getPosition() - AI_.Character_.getPosition()).LengthSquared());
+                    posBelief.data_.tile1 = GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(box.getPosition());
                     AI_.Memory_.setBelief(posBelief);
                 }
             }

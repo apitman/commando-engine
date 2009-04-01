@@ -24,9 +24,9 @@ using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionReload : Action
+    class ActionReloadType : ActionType
     {
-        internal ActionReload(NonPlayableCharacterAbstract character)
+        internal ActionReloadType(NonPlayableCharacterAbstract character)
             : base(character)
         {
             throw new NotImplementedException();
@@ -42,26 +42,18 @@ namespace Commando.ai.planning
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
             SearchNode parent = node.getPredecessor();
-            parent.action = new ActionReload(character_);
+            throw new NotImplementedException();
+            //parent.action = new ActionReload(character_);
             parent.cost += 1;
             parent.setBool(Variable.Ammo, false);
             parent.setBool(Variable.Weapon, true);
             return parent;
         }
 
-        internal override void register(Dictionary<int, List<Action>> actionMap)
+        internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             actionMap[Variable.Ammo].Add(this);
         }
 
-        internal override bool update()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override bool initialize()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

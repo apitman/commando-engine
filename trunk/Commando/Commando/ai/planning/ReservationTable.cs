@@ -113,6 +113,10 @@ namespace Commando.ai.planning
                 {
                     type = BeliefType.AvailableCover;
                 }
+                else if (resource is AmmoBox)
+                {
+                    type = BeliefType.AmmoLoc;
+                }
 
                 if (type == BeliefType.Error)
                 {

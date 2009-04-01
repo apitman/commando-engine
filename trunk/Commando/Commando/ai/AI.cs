@@ -36,7 +36,7 @@ namespace Commando.ai
 
         public Memory Memory_ { get; private set; }
 
-        internal List<Action> Actions_ { get; set; }
+        internal List<ActionType> Actions_ { get; set; }
         internal PlanManager PlanManager_ { get; private set; }
 
         internal List<Goal> Goals_ { get; set; }
@@ -57,7 +57,7 @@ namespace Commando.ai
             Goals_ = new List<Goal>();
             CurrentGoal_ = null;
 
-            Actions_ = new List<Action>();
+            Actions_ = new List<ActionType>();
             PlanManager_ = new PlanManager(this);
 
             //systems_.Add(new SystemAiming(this));
