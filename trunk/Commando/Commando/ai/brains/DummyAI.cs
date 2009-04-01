@@ -22,11 +22,14 @@ using System.Linq;
 using System.Text;
 using Commando.objects;
 using Commando.ai.planning;
+using Commando.ai.sensors;
 
 namespace Commando.ai.brains
 {
     public class DummyAI : AI
     {
+        const float FIELD_OF_VIEW = (float)Math.PI;
+
         public DummyAI(NonPlayableCharacterAbstract npc)
             : base(npc)
         {
@@ -41,7 +44,7 @@ namespace Commando.ai.brains
             Actions_.Add(new ActionAttackRanged(npc));
 
             sensors_.Add(new SensorEars(this));
-            sensors_.Add(new SensorSeeCharacter(this));
+            sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));
 
         }
     }

@@ -130,6 +130,9 @@
     <Compile Include="..\Commando\ai\planning\IndividualPlanner.cs">
       <Link>ai\planning\IndividualPlanner.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\PlanManager.cs">
+      <Link>ai\planning\PlanManager.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\ReservationTable.cs">
       <Link>ai\planning\ReservationTable.cs</Link>
     </Compile>
@@ -151,6 +154,9 @@
     <Compile Include="..\Commando\ai\sensors\SensorSeeCharacter.cs">
       <Link>ai\sensors\SensorSeeCharacter.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\sensors\SensorVisual.cs">
+      <Link>ai\sensors\SensorVisual.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\Stimulus.cs">
       <Link>ai\Stimulus.cs</Link>
     </Compile>
@@ -171,9 +177,6 @@
     </Compile>
     <Compile Include="..\Commando\ai\SystemMemoryCleanup.cs">
       <Link>ai\SystemMemoryCleanup.cs</Link>
-    </Compile>
-    <Compile Include="..\Commando\ai\SystemPlanning.cs">
-      <Link>ai\SystemPlanning.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\SystemTargetSelection.cs">
       <Link>ai\SystemTargetSelection.cs</Link>
