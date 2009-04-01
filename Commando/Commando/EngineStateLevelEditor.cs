@@ -849,8 +849,10 @@ namespace Commando
 
             TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((cursorPosX_ *Tiler.tileSideLength_ - 1 ), (cursorPosY_ * Tiler.tileSideLength_ - 1)), 0.2f);
 
-            TextureMap.fetchTexture("PlayerStartPos").drawImage(0, myLevel_.getPlayerStartLocation(), 0.3f);
-            
+            if (myLevel_.getPlayerStartLocation() != null && myLevel_.getPlayerStartLocation() != Vector2.Zero)
+            {
+                TextureMap.fetchTexture("PlayerStartPos").drawImage(0, myLevel_.getPlayerStartLocation(), 0.3f);
+            }
             
             if (isObjSelected_)
             {

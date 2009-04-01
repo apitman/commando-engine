@@ -235,16 +235,29 @@ namespace Commando
             myLevel_.getLevelFromFile(filename, drawPipeline_);
             
             //player_ = (ActuatedMainPlayer)myLevel_.getPlayer(); // AMP: I don't like this in the Level class
-            if (moveToNextLevel_)
+            if (moveToNextLevel_ && myLevel_.getPlayerStartLocation() != null && myLevel_.getPlayerStartLocation() != Vector2.Zero)
             {
                 player_.setPosition(myLevel_.getPlayerStartLocation());
                 player_.setDrawPipeline(drawPipeline_);
             }
-            else
+            else if (myLevel_.getPlayerStartLocation() != null && myLevel_.getPlayerStartLocation() != Vector2.Zero)
             {
                 player_ = new ActuatedMainPlayer(drawPipeline_, collisionDetector_, myLevel_.getPlayerStartLocation(), new Vector2(1.0f, 0.0f));
             }
-            GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
+            else
+            {
+                player_ = null;
+            }
+
+            if (player_ == null)
+            {
+                engine_.IsMouseVisible = true;
+            }
+            else
+            {
+                GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
+                engine_.IsMouseVisible = false;
+            }
 
             boxesToBeAdded = new bool[myLevel_.getHeight(), myLevel_.getWidth()];
             tilesForGrid = new Tile[myLevel_.getHeight(), myLevel_.getWidth()];
@@ -305,17 +318,20 @@ namespace Commando
             }
             //END Jared's test stuff
 
-            healthBarPos_ = HEALTH_BAR_POSITION;
-            weaponIconPos_ = WEAPON_ICON_POSITION;
-            healthTextPos_ = new Vector2(healthBarPos_.X + HEALTH_TEXT_OFFSET_X, healthBarPos_.Y + HEALTH_TEXT_OFFSET_Y);
-            ammoTextPos_ = AMMO_TEXT_POSITION;
-            healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
-            weapon_ = new HeadsUpDisplayWeapon(drawPipeline_, TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
-            ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay, player_.Weapon_.CurrentAmmo_);
-            player_.getHealth().addObserver(healthBar_);
-            player_.getWeapon().addObserver(weapon_);
-            player_.getAmmo().addObserver(ammo_);
-            player_.setCollisionDetector(collisionDetector_);
+            if (player_ != null)
+            {
+                healthBarPos_ = HEALTH_BAR_POSITION;
+                weaponIconPos_ = WEAPON_ICON_POSITION;
+                healthTextPos_ = new Vector2(healthBarPos_.X + HEALTH_TEXT_OFFSET_X, healthBarPos_.Y + HEALTH_TEXT_OFFSET_Y);
+                ammoTextPos_ = AMMO_TEXT_POSITION;
+                healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+                weapon_ = new HeadsUpDisplayWeapon(drawPipeline_, TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+                ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay, player_.Weapon_.CurrentAmmo_);
+                player_.getHealth().addObserver(healthBar_);
+                player_.getWeapon().addObserver(weapon_);
+                player_.getAmmo().addObserver(ammo_);
+                player_.setCollisionDetector(collisionDetector_);
+            }
             for (int i = 0; i < myLevel_.getEnemies().Count; i++)
             {
                 myLevel_.getEnemies()[i].setCollisionDetector(collisionDetector_);
@@ -338,7 +354,10 @@ namespace Commando
             {
                 characterList.Add(myLevel_.getEnemies()[i]);
             }
-            characterList.Add(player_);
+            if (player_ != null)
+            {
+                characterList.Add(player_);
+            }
             WorldState.CharacterList_ = characterList;
         }
 
@@ -376,7 +395,10 @@ namespace Commando
             #endif
 
             // Pass input set to player
-            player_.setInputSet(inputs);
+            if (player_ != null)
+            {
+                player_.setInputSet(inputs);
+            }
 
             // Update all of the objects in the drawing pipeline
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)
@@ -416,7 +438,7 @@ namespace Commando
             {
                 GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
             }
-            if (player_.isDead())
+            if (player_ != null && player_.isDead())
             {
                 return new EngineStateGameOver(engine_);
             }
@@ -462,14 +484,17 @@ namespace Commando
             //  Most likely, the HUD should be a single object with a .draw()
             //  or the individual pieces should be in the pipeline.
             /* begin section */
-            healthBar_.draw(new GameTime());
-            TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImageAbsolute(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
-            weapon_.draw(new GameTime());
-            TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, HUD_BAR_WIDTH, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
-            FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
-            //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
-            string realAmmoText = AMMO_TEXT + player_.Inventory_.Ammo_[player_.Weapon_.AmmoType_].ToString() + " " + player_.Weapon_.AmmoType_.ToString();
-            ammo_.drawString(realAmmoText, AMMO_REPLACE_TEXT, Color.Black, 0.0f);
+            if (player_ != null)
+            {
+                healthBar_.draw(new GameTime());
+                TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImageAbsolute(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
+                weapon_.draw(new GameTime());
+                TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, HUD_BAR_WIDTH, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
+                FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
+                //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
+                string realAmmoText = AMMO_TEXT + player_.Inventory_.Ammo_[player_.Weapon_.AmmoType_].ToString() + " " + player_.Weapon_.AmmoType_.ToString();
+                ammo_.drawString(realAmmoText, AMMO_REPLACE_TEXT, Color.Black, 0.0f);
+            }
             /* end section*/
         }
 
