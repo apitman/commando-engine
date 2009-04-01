@@ -25,16 +25,14 @@ using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    internal class ActionAttackRanged : Action
+    internal class ActionAttackRangedType : ActionType
     {
-        protected SystemAiming aiming;
-
         protected internal const int COST = 4;
 
-        internal ActionAttackRanged(NonPlayableCharacterAbstract character)
+        internal ActionAttackRangedType(NonPlayableCharacterAbstract character)
             : base(character)
         {
-            
+
         }
 
         internal override bool testPreConditions(SearchNode node)
@@ -54,14 +52,20 @@ namespace Commando.ai.planning
             return parent;
         }
 
-        internal override void reserve()
-        {
-            // Do nothing
-        }
-
-        internal override void register(Dictionary<int, List<Action>> actionMap)
+        internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             actionMap[Variable.TargetHealth].Add(this);
+        }
+    }
+
+    internal class ActionAttackRanged : Action
+    {
+        protected SystemAiming aiming;
+
+        internal ActionAttackRanged(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+
         }
 
         internal override bool update()

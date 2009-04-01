@@ -25,11 +25,11 @@ using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionInvestigate : Action
+    class ActionInvestigateType : ActionType
     {
         internal const float COST = 1.0f;
 
-        internal ActionInvestigate(NonPlayableCharacterAbstract character)
+        internal ActionInvestigateType(NonPlayableCharacterAbstract character)
             : base(character)
         {
 
@@ -59,9 +59,18 @@ namespace Commando.ai.planning
             return parent;
         }
 
-        internal override void register(Dictionary<int, List<Action>> actionMap)
+        internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             actionMap[Variable.HasInvestigated].Add(this);
+        }
+    }
+
+    internal class ActionInvestigate : Action
+    {
+        internal ActionInvestigate(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+
         }
 
         internal override bool initialize()

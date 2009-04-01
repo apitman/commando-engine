@@ -27,12 +27,11 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
-    internal class ActionAttackRangedCover : Action
+    internal class ActionAttackRangedCoverType : ActionType
     {
-        protected SystemAiming aiming;
         protected internal const int COST = 1;
 
-        internal ActionAttackRangedCover(NonPlayableCharacterAbstract character)
+        internal ActionAttackRangedCoverType(NonPlayableCharacterAbstract character)
             : base(character)
         {
             
@@ -58,14 +57,20 @@ namespace Commando.ai.planning
             return parent;
         }
 
-        internal override void reserve()
-        {
-            // Do nothing
-        }
-
-        internal override void register(Dictionary<int, List<Action>> actionMap)
+        internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             actionMap[Variable.TargetHealth].Add(this);
+        }
+    }
+
+    internal class ActionAttackRangedCover : Action
+    {
+        protected SystemAiming aiming;
+
+        internal ActionAttackRangedCover(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+            
         }
 
         internal override bool update()

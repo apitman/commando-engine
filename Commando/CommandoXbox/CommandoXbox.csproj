@@ -103,6 +103,9 @@
     <Compile Include="..\Commando\ai\planning\ActionPatrol.cs">
       <Link>ai\planning\ActionPatrol.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionPickupAmmo.cs">
+      <Link>ai\planning\ActionPickupAmmo.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\ActionReload.cs">
       <Link>ai\planning\ActionReload.cs</Link>
     </Compile>
@@ -111,9 +114,6 @@
     </Compile>
     <Compile Include="..\Commando\ai\planning\ActionThrowGrenade.cs">
       <Link>ai\planning\ActionThrowGrenade.cs</Link>
-    </Compile>
-    <Compile Include="..\Commando\ai\planning\ActionType.cs">
-      <Link>ai\planning\ActionType.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\planning\Goal.cs">
       <Link>ai\planning\Goal.cs</Link>
@@ -144,6 +144,9 @@
     </Compile>
     <Compile Include="..\Commando\ai\sensors\Sensor.cs">
       <Link>ai\sensors\Sensor.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\sensors\SensorAmmo.cs">
+      <Link>ai\sensors\SensorAmmo.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\sensors\SensorCover.cs">
       <Link>ai\sensors\SensorCover.cs</Link>

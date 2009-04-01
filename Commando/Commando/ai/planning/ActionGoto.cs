@@ -26,21 +26,13 @@ using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    class ActionGoto : Action
+    class ActionGotoType : ActionType
     {
-        internal TileIndex target_;
-        internal List<TileIndex> path_;
 
-        public ActionGoto(NonPlayableCharacterAbstract character)
+        public ActionGotoType(NonPlayableCharacterAbstract character)
             : base(character)
         {
             
-        }
-
-        public ActionGoto(NonPlayableCharacterAbstract character, TileIndex target)
-            : base(character)
-        {
-            target_ = target;
         }
 
         internal override bool testPreConditions(SearchNode node)
@@ -72,9 +64,22 @@ namespace Commando.ai.planning
             return parent;
         }
 
-        internal override void register(Dictionary<int, List<Action>> actionMap)
+        internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             actionMap[Variable.Location].Add(this);
+        }
+
+    }
+
+    internal class ActionGoto : Action
+    {
+        internal TileIndex target_;
+        internal List<TileIndex> path_;
+
+        public ActionGoto(NonPlayableCharacterAbstract character, TileIndex target)
+            : base(character)
+        {
+            target_ = target;
         }
 
         internal override bool update()

@@ -24,9 +24,9 @@ using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionThrowGrenade : Action
+    class ActionThrowGrenadeType : ActionType
     {
-        internal ActionThrowGrenade(NonPlayableCharacterAbstract character)
+        internal ActionThrowGrenadeType(NonPlayableCharacterAbstract character)
             : base(character)
         {
             throw new NotImplementedException();
@@ -42,17 +42,7 @@ namespace Commando.ai.planning
             throw new NotImplementedException();
         }
 
-        internal override void register(Dictionary<int, List<Action>> actionMap)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override bool update()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override bool initialize()
+        internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             throw new NotImplementedException();
         }

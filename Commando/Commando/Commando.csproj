@@ -109,10 +109,10 @@
     <Compile Include="ai\planning\ActionGoto.cs" />
     <Compile Include="ai\planning\ActionInvestigate.cs" />
     <Compile Include="ai\planning\ActionPatrol.cs" />
+    <Compile Include="ai\planning\ActionPickupAmmo.cs" />
     <Compile Include="ai\planning\ActionReload.cs" />
     <Compile Include="ai\planning\ActionTakeCover.cs" />
     <Compile Include="ai\planning\ActionThrowGrenade.cs" />
-    <Compile Include="ai\planning\ActionType.cs" />
     <Compile Include="ai\planning\Goal.cs" />
     <Compile Include="ai\planning\GoalInvestigate.cs" />
     <Compile Include="ai\planning\GoalKill.cs" />

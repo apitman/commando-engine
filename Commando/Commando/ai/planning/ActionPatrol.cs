@@ -26,14 +26,11 @@ using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    class ActionPatrol : Action
+    class ActionPatrolType : ActionType
     {
         internal const float COST = 5.0f;
-        internal const int THRESHOLD = 70;
 
-        protected int counter = 0;
-
-        internal ActionPatrol(NonPlayableCharacterAbstract character)
+        internal ActionPatrolType(NonPlayableCharacterAbstract character)
             : base(character)
         {
 
@@ -53,9 +50,22 @@ namespace Commando.ai.planning
             return parent;
         }
 
-        internal override void register(Dictionary<int, List<Action>> actionMap)
+        internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             actionMap[Variable.HasPatrolled].Add(this);
+        }
+    }
+
+    internal class ActionPatrol : Action
+    {
+        internal const int THRESHOLD = 70;
+
+        protected int counter = 0;
+
+        internal ActionPatrol(NonPlayableCharacterAbstract character)
+            : base(character)
+        {
+
         }
 
         internal override bool update()

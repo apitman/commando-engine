@@ -25,21 +25,20 @@ using Commando.objects;
 namespace Commando.ai.planning
 {
     /// <summary>
-    /// Action encapsulates both the logic used in planning with a particular
-    /// action and the information necessary to actually perform that action.
+    /// ActionType encapsulates the logic used in planning with a particular
+    /// action.
     /// </summary>
-    internal abstract class Action
+    internal abstract class ActionType
     {
         protected NonPlayableCharacterAbstract character_;
 
-        internal Action(NonPlayableCharacterAbstract character)
+        internal ActionType(NonPlayableCharacterAbstract character)
         {
             character_ = character;
         }
 
-        #region Planning Methods
         // -----------------------------------------------------------------------
-        // Methods in this region should only be implemented by Ken prior
+        // Methods in this class should only be implemented by Ken prior
         // to the end of Spring Semester 2009, as part of his DAI project.
 
         /// <summary>
@@ -62,7 +61,17 @@ namespace Commando.ai.planning
         /// Register an action with an action map.
         /// </summary>
         /// <param name="actionMap"></param>
-        internal abstract void register(Dictionary<int, List<Action>> actionMap);
+        internal abstract void register(Dictionary<int, List<ActionType>> actionMap);
+    }
+
+    internal abstract class Action
+    {
+        protected NonPlayableCharacterAbstract character_;
+
+        internal Action(NonPlayableCharacterAbstract character)
+        {
+            character_ = character;
+        }
 
         /// <summary>
         /// Reserve resources for this action.
@@ -74,9 +83,7 @@ namespace Commando.ai.planning
         /// </summary>
         internal /*abstract */virtual void unreserve() { }
 
-        #endregion
 
-        #region Runtime Methods
         // -----------------------------------------------------------------------
         // Methods in this region can be implemented by anyone.
 
@@ -85,7 +92,5 @@ namespace Commando.ai.planning
         internal abstract bool initialize();
 
         internal abstract bool update();
-
-        #endregion
     }
 }

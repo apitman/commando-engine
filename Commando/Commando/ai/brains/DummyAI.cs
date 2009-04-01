@@ -37,11 +37,11 @@ namespace Commando.ai.brains
             Goals_.Add(new GoalInvestigate(this));
             Goals_.Add(new GoalKill(this));
 
-            Actions_.Add(new ActionInvestigate(npc));
-            Actions_.Add(new ActionGoto(npc));
-            Actions_.Add(new ActionPatrol(npc));
-            Actions_.Add(new ActionFlee(npc));
-            Actions_.Add(new ActionAttackRanged(npc));
+            Actions_.Add(new ActionInvestigateType(npc));
+            Actions_.Add(new ActionGotoType(npc));
+            Actions_.Add(new ActionPatrolType(npc));
+            Actions_.Add(new ActionFleeType(npc));
+            Actions_.Add(new ActionAttackRangedType(npc));
 
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));
