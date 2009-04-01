@@ -24,14 +24,15 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.levels;
 
-namespace Commando.ai
+namespace Commando.ai.sensors
 {
-    class SensorSeeCharacter : Sensor
+    class SensorSeeCharacter : SensorVisual
     {
+        public SensorSeeCharacter(AI ai, float fov)
+            : base(ai, fov)
+        {
 
-        const float FIELD_OF_VIEW = (float)Math.PI;
-
-        public SensorSeeCharacter(AI ai) : base(ai) { }
+        }
 
         /// <summary>
         /// Examine all characters stored in the world state, determine if we can see them, and if
@@ -44,7 +45,7 @@ namespace Commando.ai
             {
                 CharacterAbstract character = WorldState.CharacterList_[i];
                 if (me != character &&
-                    Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), character.getPosition(), FIELD_OF_VIEW) &&
+                    Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), character.getPosition(), fieldOfView) &&
                     Raycaster.canSeePoint(me.getPosition(), character.getPosition(), me.getHeight(), character.getHeight()))
                 {
                     BeliefType locationType;

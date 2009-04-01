@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Commando.ai
+namespace Commando.ai.sensors
 {
     /// <summary>
     /// Collects Stimuluses (sic) from the world and filters them

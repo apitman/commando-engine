@@ -20,38 +20,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
 
-namespace Commando.ai
+namespace Commando.ai.sensors
 {
-    /// <summary>
-    /// Caches pointers to important entities which will be used by Sensors to
-    /// gather data.
-    /// </summary>
-    internal class WorldState
+    abstract class SensorVisual : Sensor
     {
-        static internal Dictionary<int, Stimulus> Audial_ {get; private set;}
-        static internal List<CharacterAbstract> CharacterList_ { get; set; }
-        static internal List<CoverObject> CoverList_ { get; set; }
-        static internal List<AmmoBox> AmmoList_ { get; set; }
+        protected float fieldOfView;
 
-        static WorldState()
+        public SensorVisual(AI ai, float fov)
+            : base(ai)
         {
-            Audial_ = new Dictionary<int, Stimulus>();
-            CharacterList_ = new List<CharacterAbstract>();
-            CoverList_ = new List<CoverObject>();
-            AmmoList_ = new List<AmmoBox>();
-        }
-
-        private WorldState() {}
-
-        static internal void reset()
-        {
-            Audial_.Clear();
-            CharacterList_.Clear();
-            CoverList_.Clear();
-            AmmoList_.Clear();
+            fieldOfView = fov;
         }
     }
-
 }

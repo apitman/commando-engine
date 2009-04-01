@@ -107,6 +107,7 @@ namespace Commando.ai
         AllyHealth, // data.int1 = health
         SuspiciousNoise, // 
         CoverLoc, // data.tile1 = tile index of position
+        AmmoLoc, // 
 
         BestTarget, // 
         AvailableCover, // data.tile1 = tile index of position

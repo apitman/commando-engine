@@ -23,6 +23,7 @@ using Commando.objects;
 using Commando.levels;
 using Microsoft.Xna.Framework;
 using Commando.ai.planning;
+using Commando.ai.sensors;
 
 namespace Commando.ai
 {
@@ -36,17 +37,13 @@ namespace Commando.ai
         public Memory Memory_ { get; private set; }
 
         internal List<Action> Actions_ { get; set; }
-        internal List<Action> CurrentPlan_ { get; set; }
+        internal PlanManager PlanManager_ { get; private set; }
 
         internal List<Goal> Goals_ { get; set; }
         internal Goal CurrentGoal_ { get; set; }
         
         protected List<Sensor> sensors_ = new List<Sensor>();
         protected List<System> systems_ = new List<System>();
-
-        //protected List<TileIndex> path_;
-        //protected int lastPathfindUpdate_;
-        //protected const int PATHFIND_THRESHOLD = 15;
 
         public SystemCommunication CommunicationSystem_ { get; private set; }
 
@@ -61,13 +58,12 @@ namespace Commando.ai
             CurrentGoal_ = null;
 
             Actions_ = new List<Action>();
-            CurrentPlan_ = new List<Action>();
+            PlanManager_ = new PlanManager(this);
 
             //systems_.Add(new SystemAiming(this));
             systems_.Add(new SystemTargetSelection(this));
             systems_.Add(new SystemCoverSelection(this));
             systems_.Add(new SystemGoalSelection(this));
-            systems_.Add(new SystemPlanning(this));
             systems_.Add(new SystemMemoryCleanup(this));
 
             //path_ = new List<TileIndex>();
@@ -91,30 +87,7 @@ namespace Commando.ai
 
             CommunicationSystem_.update();
 
-            if (CurrentPlan_ != null && CurrentPlan_.Count > 0)
-            {
-                bool isValid = CurrentPlan_[0].checkIsStillValid();
-                if (!isValid)
-                {
-                    for (int i = 0; i < CurrentPlan_.Count; i++)
-                    {
-                        CurrentPlan_[i].unreserve();
-                    }
-                    CurrentPlan_.Clear();
-                }
-                else
-                {
-                    bool done = CurrentPlan_[0].update();
-                    if (done)
-                    {
-                        CurrentPlan_.RemoveAt(0);
-                        if (CurrentPlan_.Count > 0)
-                        {
-                            CurrentPlan_[0].initialize();
-                        }
-                    }
-                }
-            }
+            PlanManager_.update();
         }
 
         public void draw()

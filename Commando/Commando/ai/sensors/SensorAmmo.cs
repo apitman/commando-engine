@@ -22,36 +22,30 @@ using System.Linq;
 using System.Text;
 using Commando.objects;
 
-namespace Commando.ai
+namespace Commando.ai.sensors
 {
-    /// <summary>
-    /// Caches pointers to important entities which will be used by Sensors to
-    /// gather data.
-    /// </summary>
-    internal class WorldState
+    class SensorAmmo : SensorVisual
     {
-        static internal Dictionary<int, Stimulus> Audial_ {get; private set;}
-        static internal List<CharacterAbstract> CharacterList_ { get; set; }
-        static internal List<CoverObject> CoverList_ { get; set; }
-        static internal List<AmmoBox> AmmoList_ { get; set; }
-
-        static WorldState()
+        public SensorAmmo(AI ai, float fov)
+            : base(ai, fov)
         {
-            Audial_ = new Dictionary<int, Stimulus>();
-            CharacterList_ = new List<CharacterAbstract>();
-            CoverList_ = new List<CoverObject>();
-            AmmoList_ = new List<AmmoBox>();
+
         }
 
-        private WorldState() {}
-
-        static internal void reset()
+        public override void collect()
         {
-            Audial_.Clear();
-            CharacterList_.Clear();
-            CoverList_.Clear();
-            AmmoList_.Clear();
+            CharacterAbstract me = AI_.Character_;
+            for (int i = 0; i < WorldState.AmmoList_.Count; i++)
+            {
+                AmmoBox box = WorldState.AmmoList_[i];
+                if (Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), box.getPosition(), fieldOfView) &&
+                    Raycaster.canSeePoint(me.getPosition(), box.getPosition(), me.getHeight(), box.getHeight()))
+                {
+                    Belief posBelief = new Belief(BeliefType.AmmoLoc, box, 100);
+                    posBelief.position_ = box.getPosition();
+                    AI_.Memory_.setBelief(posBelief);
+                }
+            }
         }
     }
-
 }

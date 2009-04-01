@@ -118,13 +118,16 @@
     <Compile Include="ai\planning\GoalKill.cs" />
     <Compile Include="ai\planning\GoalPatrol.cs" />
     <Compile Include="ai\planning\IndividualPlanner.cs" />
+    <Compile Include="ai\planning\PlanManager.cs" />
     <Compile Include="ai\planning\ReservationTable.cs" />
     <Compile Include="ai\planning\SearchNode.cs" />
     <Compile Include="ai\Raycaster.cs" />
     <Compile Include="ai\sensors\Sensor.cs" />
+    <Compile Include="ai\sensors\SensorAmmo.cs" />
     <Compile Include="ai\sensors\SensorCover.cs" />
     <Compile Include="ai\sensors\SensorEars.cs" />
     <Compile Include="ai\sensors\SensorSeeCharacter.cs" />
+    <Compile Include="ai\sensors\SensorVisual.cs" />
     <Compile Include="ai\Stimulus.cs" />
     <Compile Include="ai\System.cs" />
     <Compile Include="ai\SystemAiming.cs" />
@@ -132,7 +135,6 @@
     <Compile Include="ai\SystemCoverSelection.cs" />
     <Compile Include="ai\SystemGoalSelection.cs" />
     <Compile Include="ai\SystemMemoryCleanup.cs" />
-    <Compile Include="ai\SystemPlanning.cs" />
     <Compile Include="ai\SystemTargetSelection.cs" />
     <Compile Include="ai\WorldState.cs" />
     <Compile Include="CharacterStatusElementInterface.cs" />

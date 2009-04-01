@@ -78,12 +78,12 @@ namespace Commando.ai
                 coverPos = beliefs[i].position_;
                 tempVal = (float)CommonFunctions.distance(myPos, coverPos);
                 //tempVal += (float)CommonFunctions.distance(myPos, targetPos);
-                tempVal = (float)Math.Sqrt(tempVal);
+                //tempVal = (float)Math.Sqrt(tempVal);
 
                 float angleToPlayer = MathHelper.WrapAngle(CommonFunctions.getAngle(targetPos - coverPos));
                 float angleOfCover = MathHelper.WrapAngle(CommonFunctions.getAngle(cover.getCoverDirection()));
                 float angleBetweenCoverPlayer = MathHelper.WrapAngle(angleOfCover - angleToPlayer);
-                angleBetweenCoverPlayer *= 2f;
+                //angleBetweenCoverPlayer *= 2f;
                 tempVal *= angleBetweenCoverPlayer * angleBetweenCoverPlayer;
 
                 Belief availableCover = beliefs[i].convert(BeliefType.AvailableCover);

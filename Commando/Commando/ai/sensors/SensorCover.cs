@@ -25,7 +25,7 @@ using Microsoft.Xna.Framework;
 using Commando.levels;
 using Commando.ai.planning;
 
-namespace Commando.ai
+namespace Commando.ai.sensors
 {
     public class SensorCover : Sensor
     {
