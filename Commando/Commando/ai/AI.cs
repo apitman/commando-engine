@@ -81,7 +81,7 @@ namespace Commando.ai
                 systems_[i].update();
             }
 
-            //CommunicationSystem_.update();
+            CommunicationSystem_.update();
 
             GoalManager_.update();
             PlanManager_.update();
@@ -90,7 +90,7 @@ namespace Commando.ai
         public void draw()
         {
             CommunicationSystem_.draw();
-            PlanManager_.draw();
+            //PlanManager_.draw();
         }
 
         public void die()

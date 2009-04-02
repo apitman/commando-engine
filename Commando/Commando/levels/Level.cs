@@ -231,20 +231,20 @@ namespace Commando.levels
                             mytype = WeaponBox.WeaponType.Shotgun;
                         items_.Add(new WeaponBox(null, pipeline, pos, Vector2.Zero, Constants.DEPTH_LOW, mytype));
                     }
-
-                    // Load player location from file
-                    if (doc.GetElementsByTagName("playerLocation").Count > 0)
-                    {
-                        XmlElement playerLocation = (XmlElement)doc.GetElementsByTagName("playerLocation")[0];
-                        playerStartLocation_ = new Vector2((float)Convert.ToInt32(playerLocation.GetAttribute("x")), (float)Convert.ToInt32(playerLocation.GetAttribute("y")));
-                    }
-
-
-                    //TODO: get from XML
-                    //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
-                    //
-                    player_ = null;
                 }
+
+                // Load player location from file
+                if (doc.GetElementsByTagName("playerLocation").Count > 0)
+                {
+                    XmlElement playerLocation = (XmlElement)doc.GetElementsByTagName("playerLocation")[0];
+                    playerStartLocation_ = new Vector2((float)Convert.ToInt32(playerLocation.GetAttribute("x")), (float)Convert.ToInt32(playerLocation.GetAttribute("y")));
+                }
+
+
+                //TODO: get from XML
+                //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
+                //
+                player_ = null;
             /*
             }
             catch (Exception)
