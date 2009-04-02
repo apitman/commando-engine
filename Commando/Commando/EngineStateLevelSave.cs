@@ -42,7 +42,7 @@ namespace Commando
         public const string LEVEL_EXTENSION = ".commandolevel";
 
         protected const string MESSAGE = "Please do not interrupt this process.";
-        protected const FontEnum MESSAGE_FONT = FontEnum.Kootenay;
+        protected const FontEnum MESSAGE_FONT = FontEnum.Kootenay14;
         protected Vector2 MESSAGE_POSITION
         {
             get

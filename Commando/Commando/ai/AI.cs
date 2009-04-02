@@ -93,11 +93,13 @@ namespace Commando.ai
         public void draw()
         {
             CommunicationSystem_.draw();
+            PlanManager_.draw();
         }
 
         public void die()
         {
             CommunicationSystem_.die();
+            PlanManager_.die();
         }
     }
 }

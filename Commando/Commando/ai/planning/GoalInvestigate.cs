@@ -37,6 +37,11 @@ namespace Commando.ai.planning
             Belief investigateTarget = AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget);
             if (investigateTarget != null)
             {
+                if (investigateTarget.handle_ != this.handle_)
+                {
+                    // new target, so reset the HasFailed flag
+                    HasFailed_ = false;
+                }
                 this.handle_ = investigateTarget.handle_;
                 Relevance_ = 0.1f + investigateTarget.confidence_ / 2;
             }

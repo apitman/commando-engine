@@ -35,7 +35,7 @@ namespace Commando.ai
             for (int i = 0; i < AI_.Goals_.Count; i++)
             {
                 AI_.Goals_[i].refresh();
-                if (AI_.Goals_[i].Relevance_ > highestRelevance)
+                if (!AI_.Goals_[i].HasFailed_ && AI_.Goals_[i].Relevance_ > highestRelevance)
                 {
                     highestRelevance = AI_.Goals_[i].Relevance_;
                     mostRelevant = AI_.Goals_[i];

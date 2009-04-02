@@ -44,22 +44,32 @@ namespace Commando.ai.sensors
             for (int i = 0; i < WorldState.CharacterList_.Count; i++)
             {
                 CharacterAbstract character = WorldState.CharacterList_[i];
+                BeliefType locationType;
+                BeliefType healthType;
+                if (me.allegiance_ == character.allegiance_)
+                {
+                    locationType = BeliefType.AllyLoc;
+                    healthType = BeliefType.AllyHealth;
+                }
+                else
+                {
+                    locationType = BeliefType.EnemyLoc;
+                    healthType = BeliefType.EnemyHealth;
+                }
+
+                // First see if the character is dead
+                if (character.isDead())
+                {
+                    AI_.Memory_.removeBelief(locationType, character);
+                    AI_.Memory_.removeBelief(healthType, character);
+                    continue;
+                }
+
+                // Then see if I can see the character
                 if (me != character &&
                     Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), character.getPosition(), fieldOfView) &&
                     Raycaster.canSeePoint(me.getPosition(), character.getPosition(), me.getHeight(), character.getHeight()))
                 {
-                    BeliefType locationType;
-                    BeliefType healthType;
-                    if (me.allegiance_ == character.allegiance_)
-                    {
-                        locationType = BeliefType.AllyLoc;
-                        healthType = BeliefType.AllyHealth;
-                    }
-                    else
-                    {
-                        locationType = BeliefType.EnemyLoc;
-                        healthType = BeliefType.EnemyHealth;
-                    }
                     Belief posBelief = new Belief(locationType, character, 100);
                     posBelief.position_ = character.getPosition();
                     Belief healthBelief = new Belief(healthType, character, 100);
@@ -72,16 +82,12 @@ namespace Commando.ai.sensors
 
             // TODO
             // Reimplement this correctly
-            // Update the position and confidence of the EnemyLoc beliefs
-            /*
+            // Update the position and confidence of the AllyLoc and EnemyLoc beliefs
             foreach (Belief bel in AI_.Memory_.getBeliefs(BeliefType.EnemyLoc))
             {
-                if (CommonFunctions.distance(bel.position_, me.getPosition()) < Tiler.tileSideLength_)
-                {
-                    bel.confidence_ /= 2;
-                }
+                bel.confidence_ -= .4f;
             }
-            */
+            
         }
 
     }

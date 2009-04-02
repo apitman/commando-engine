@@ -87,10 +87,18 @@ namespace Commando.ai.planning
         // -----------------------------------------------------------------------
         // Methods in this region can be implemented by anyone.
 
-        internal /*abstract */bool checkIsStillValid() { return true; }
+        internal /*abstract */virtual bool checkIsStillValid() { return true; }
 
         internal abstract bool initialize();
 
-        internal abstract bool update();
+        internal abstract ActionStatus update();
+    }
+
+    enum ActionStatus
+    {
+        IN_PROGRESS,
+        SUCCESS,
+        FAILED,
+        UNKNOWN
     }
 }

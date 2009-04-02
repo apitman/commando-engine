@@ -37,7 +37,7 @@ namespace Commando
     /// </summary>
     class EngineStateStart : EngineStateInterface
     {
-        protected const FontEnum TEXT_FONT = FontEnum.Kootenay;
+        protected const FontEnum TEXT_FONT = FontEnum.Kootenay14;
         protected readonly Color TEXT_COLOR = Color.White;
         protected const float TEXT_ROTATION = 0.0f;
         protected const float TEXT_DEPTH = Constants.DEPTH_MENU_TEXT;

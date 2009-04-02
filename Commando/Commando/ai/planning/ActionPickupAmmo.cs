@@ -91,14 +91,18 @@ namespace Commando.ai.planning
         /// TODO
         /// </summary>
         /// <returns></returns>
-        internal override bool update()
+        internal override ActionStatus update()
         {
             if (ammo_.tryToPickUp(character_, character_.getCollisionDetector()))
             {
-                return true;
+                return ActionStatus.SUCCESS;
+            }
+            if (ammo_.hasBeenPickedUp())
+            {
+                return ActionStatus.FAILED;
             }
             (character_.getActuator() as DefaultActuator).moveTo(ammo_.getPosition());
-            return false;
+            return ActionStatus.IN_PROGRESS;
         }
 
         internal override void reserve()

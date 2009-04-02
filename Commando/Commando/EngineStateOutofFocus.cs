@@ -33,7 +33,7 @@ namespace Commando
 
         const float OVERLAY_DEPTH = Constants.DEPTH_OUT_OF_FOCUS_OVERLAY;
         const string MESSAGE = "Game Temporarily Paused\n\nPlease move the mouse back\ninto the game window and make\nsure that it is active.";
-        const FontEnum MESSAGE_FONT = FontEnum.Kootenay;
+        const FontEnum MESSAGE_FONT = FontEnum.Kootenay14;
         static readonly Color MESSAGE_COLOR = Color.White;
         const float MESSAGE_ROTATION = 0.0f;
         const float MESSAGE_DEPTH = Constants.DEPTH_OUT_OF_FOCUS_TEXT;

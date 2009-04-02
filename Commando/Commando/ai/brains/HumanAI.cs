@@ -41,7 +41,7 @@ namespace Commando.ai.brains
             Actions_.Add(new ActionInvestigateType(npc));
             Actions_.Add(new ActionGotoType(npc));
             Actions_.Add(new ActionPatrolType(npc));
-            //Actions_.Add(new ActionAttackRangedType(npc));
+            Actions_.Add(new ActionAttackRangedType(npc));
             Actions_.Add(new ActionAttackRangedCoverType(npc));
             Actions_.Add(new ActionFleeType(npc));
             Actions_.Add(new ActionPickupAmmoType(npc));

@@ -32,7 +32,7 @@ namespace Commando.ai
         {
             foreach (Belief bel in AI_.Memory_.getAllBeliefs())
             {
-                if (bel.confidence_ == 0)
+                if (bel.confidence_ <= 0)
                 {
                     AI_.Memory_.removeBelief(bel);
                 }

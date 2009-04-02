@@ -268,39 +268,9 @@ namespace Commando.ai
         /// <param name="height">Height of the character performing the search</param>
         /// <returns>Waypoints which should allow the character to reach the goal.</returns>
         public static List<TileIndex>
-            run(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height)
+            calculateExactPath(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height)
         {
-            // Initialize the static structures used by the search
-            reset();
-
-            start_ = start;
-            goal_ = destination;
-
-            // Project our start and goal nodes into the search space, if possible
-            // TODO
-            // For now, if they are farther apart than the size of the search space in
-            // any dimension, we give up - in the future, they will try to get as close
-            // as possible
-            short manhattanX = (short)Math.Abs(start_.x_ - goal_.x_);
-            short manhattanY = (short)Math.Abs(start_.y_ - goal_.y_);
-            short leftOffset = (short)Math.Floor((SEARCH_SPACE_WIDTH - manhattanX) / 2.0f);
-            short rightOffset = (short)Math.Ceiling((SEARCH_SPACE_WIDTH - manhattanX) / 2.0f);
-            short bottomOffset = (short)Math.Floor((SEARCH_SPACE_HEIGHT - manhattanY) / 2.0f);
-            short topOffset = (short)Math.Ceiling((SEARCH_SPACE_HEIGHT - manhattanY) / 2.0f);
-            gridXOffset_ = (short)(Math.Min(start_.x_, goal_.x_) - leftOffset);
-            gridYOffset_ = (short)(Math.Min(start_.y_, goal_.y_) - topOffset);
-
-            if (gridXOffset_ < 0) gridXOffset_ = 0;
-            if (gridYOffset_ < 0) gridYOffset_ = 0;
-            start_.x_ -= gridXOffset_;
-            start_.y_ -= gridYOffset_;
-            goal_.x_ -= gridXOffset_;
-            goal_.y_ -= gridYOffset_;
-
-            searchRadius_ =
-                (float)(radius / ((TileGrid.TILEWIDTH + TileGrid.TILEHEIGHT) / 2.0f));
-            grid_ = grid;
-            searchHeight_ = height;
+            setupSearch(grid, start, destination, radius, height);
 
             //Console.WriteLine("Pathfind Start: " + start_.x_ + "," + start_.y_);
             //Console.WriteLine("Pathfind Goal: " + goal_.x_ + "," + goal_.y_);
@@ -334,9 +304,50 @@ namespace Commando.ai
 
 
         public static List<TileIndex>
-            run(TileGrid grid, Vector2 start, Vector2 destination, float radius, Height height)
+            calculateExactPath(TileGrid grid, Vector2 start, Vector2 destination, float radius, Height height)
         {
-            return run(grid, grid.getTileIndex(start), grid.getTileIndex(destination), radius, height);
+            return calculateExactPath(grid, grid.getTileIndex(start), grid.getTileIndex(destination), radius, height);
+        }
+
+        public static List<TileIndex>
+            calculateNearbyPath(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height, float threshold)
+        {
+            setupSearch(grid, start, destination, radius, height);
+
+            //Console.WriteLine("Pathfind Start: " + start_.x_ + "," + start_.y_);
+            //Console.WriteLine("Pathfind Goal: " + goal_.x_ + "," + goal_.y_);
+
+            TileIndex cur = start_;
+            searchSpace_[cur.x_, cur.y_].g = 0;
+            searchSpace_[cur.x_, cur.y_].f = heuristicDistance(cur.x_, cur.y_);
+            searchSpace_[cur.x_, cur.y_].parent = new TileIndex(-1, -1); // stack
+            touched_[cur.x_, cur.y_] = true;
+
+            // As long as we aren't near enough to the goal, keep expanding outward and checking
+            // the next most promising node
+            while (heuristicDistance(cur.x_, cur.y_) > threshold)
+            {
+                searchSpace_[cur.x_, cur.y_].open = false;
+                expand(ref cur, searchSpace_[cur.x_, cur.y_].g);
+
+                // If we are out of nodes to check, no path exists
+                if (openlist_.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    cur = getNext();
+                }
+            }
+
+            return recreatePath();
+        }
+
+        public static List<TileIndex>
+            calculateNearbyPath(TileGrid grid, Vector2 start, Vector2 destination, float radius, Height height, float threshold)
+        {
+            return calculateNearbyPath(grid, grid.getTileIndex(start), grid.getTileIndex(destination), radius, height, threshold);
         }
 
         /// <summary>
@@ -370,6 +381,41 @@ namespace Commando.ai
         protected static bool collision(Tile tile)
         {
             return tile.collides(searchHeight_, searchRadius_);
+        }
+
+        protected static void setupSearch(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height)
+        {
+            // Initialize the static structures used by the search
+            reset();
+
+            start_ = start;
+            goal_ = destination;
+
+            // Project our start and goal nodes into the search space, if possible
+            // TODO
+            // For now, if they are farther apart than the size of the search space in
+            // any dimension, we give up - in the future, they will try to get as close
+            // as possible
+            short manhattanX = (short)Math.Abs(start_.x_ - goal_.x_);
+            short manhattanY = (short)Math.Abs(start_.y_ - goal_.y_);
+            short leftOffset = (short)Math.Floor((SEARCH_SPACE_WIDTH - manhattanX) / 2.0f);
+            short rightOffset = (short)Math.Ceiling((SEARCH_SPACE_WIDTH - manhattanX) / 2.0f);
+            short bottomOffset = (short)Math.Floor((SEARCH_SPACE_HEIGHT - manhattanY) / 2.0f);
+            short topOffset = (short)Math.Ceiling((SEARCH_SPACE_HEIGHT - manhattanY) / 2.0f);
+            gridXOffset_ = (short)(Math.Min(start_.x_, goal_.x_) - leftOffset);
+            gridYOffset_ = (short)(Math.Min(start_.y_, goal_.y_) - topOffset);
+
+            if (gridXOffset_ < 0) gridXOffset_ = 0;
+            if (gridYOffset_ < 0) gridYOffset_ = 0;
+            start_.x_ -= gridXOffset_;
+            start_.y_ -= gridYOffset_;
+            goal_.x_ -= gridXOffset_;
+            goal_.y_ -= gridYOffset_;
+
+            searchRadius_ =
+                (float)(radius / ((TileGrid.TILEWIDTH + TileGrid.TILEHEIGHT) / 2.0f));
+            grid_ = grid;
+            searchHeight_ = height;
         }
     }
 

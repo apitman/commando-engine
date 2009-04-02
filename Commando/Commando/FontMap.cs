@@ -71,7 +71,8 @@ namespace Commando
         {
             //TODO: Eventually, create automatic loading of fonts based on an xml file.
             //      For now, just create the load for each font in this function
-            fonts_.Add(FontEnum.Kootenay, new GameFont("SpriteFonts/Kootenay", spriteBatch, engine));
+            fonts_.Add(FontEnum.Kootenay8, new GameFont("SpriteFonts/Kootenay8", spriteBatch, engine));
+            fonts_.Add(FontEnum.Kootenay14, new GameFont("SpriteFonts/Kootenay", spriteBatch, engine));
             fonts_.Add(FontEnum.Kootenay48, new GameFont("SpriteFonts/Kootenay48", spriteBatch, engine));
             fonts_.Add(FontEnum.Lindsey, new GameFont("SpriteFonts/Lindsey", spriteBatch, engine));
             fonts_.Add(FontEnum.Miramonte, new GameFont("SpriteFonts/Miramonte", spriteBatch, engine));

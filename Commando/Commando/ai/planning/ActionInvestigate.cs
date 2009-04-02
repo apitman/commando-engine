@@ -78,11 +78,11 @@ namespace Commando.ai.planning
             return true;
         }
 
-        internal override bool update()
+        internal override ActionStatus update()
         {
             character_.AI_.Memory_.removeBeliefs(BeliefType.InvestigateTarget);
             character_.AI_.Memory_.removeBeliefs(BeliefType.SuspiciousNoise);
-            return true;
+            return ActionStatus.SUCCESS;
         }
     }
 }

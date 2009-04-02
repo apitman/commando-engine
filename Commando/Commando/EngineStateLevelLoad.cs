@@ -38,7 +38,7 @@ namespace Commando
 
         protected const string INSTRUCTIONS_MESSAGE = "Please select a level to load: ";
         protected const float INSTRUCTIONS_DEPTH = Constants.DEPTH_MENU_TEXT;
-        protected const FontEnum INSTRUCTIONS_FONT = FontEnum.Kootenay;
+        protected const FontEnum INSTRUCTIONS_FONT = FontEnum.Kootenay14;
         protected static readonly Color INSTRUCTIONS_COLOR = Color.Yellow;
         protected Vector2 INSTRUCTIONS_POSITION
         {

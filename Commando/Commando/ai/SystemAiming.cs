@@ -39,55 +39,51 @@ namespace Commando.ai
         const int HOLD_AIM_TIME = 10;
         const int LOSS_TIME = 5;
 
-        internal SystemAiming(AI ai) : base(ai)
+        internal SystemAiming(AI ai, CharacterAbstract enemy) : base(ai)
         {
-            Belief belief = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-            if (belief == null || belief.handle_ == null)
-            {
-                return;
-            }
-            enemy_ = (belief.handle_ as CharacterAbstract);
+            enemy_ = enemy;
         }
 
         internal override void update()
         {
-            Belief belief = AI_.Memory_.getBelief(BeliefType.BestTarget, enemy_);
 
             // TODO
             // change this to can see object, remove hard-codedness
             // also change it to not actually access the character directly;
             //      that character should drop EnemyVelocity stimuli or something
-            if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
-                                        belief.position_,
-                                        AI_.Character_.getHeight(),
-                                        enemy_.getHeight()))
+
+            // Don't fire at dead enemies
+            if (enemy_.isDead())
             {
-                // if can still see actual character, we might fire
-                if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
-                                        enemy_.getPosition(),
-                                        AI_.Character_.getHeight(),
-                                        enemy_.getHeight()))
+                lossFlag = true;
+                return;
+            }
+
+            // If can still see actual character, we might fire
+            if (Raycaster.canSeePoint(AI_.Character_.getPosition(),
+                                    enemy_.getPosition(),
+                                    AI_.Character_.getHeight(),
+                                    enemy_.getHeight()))
+            {
+                velocities_[countUp % REACTION_TIME] = enemy_.getVelocity();
+                countUp++;
+                Vector2 target = predictTargetPosition(enemy_.getPosition());
+                (AI_.Character_.getActuator() as DefaultActuator).lookAt(target);
+                if (countUp >= REACTION_TIME)
                 {
-                    velocities_[countUp % REACTION_TIME] = enemy_.getVelocity();
-                    countUp++;
-                    Vector2 target = predictTargetPosition(enemy_.getPosition());
-                    (AI_.Character_.getActuator() as DefaultActuator).lookAt(target);
-                    if (countUp >= REACTION_TIME)
-                    {
-                        AI_.Character_.Weapon_.shoot();
-                    }
+                    AI_.Character_.Weapon_.shoot();
                 }
-                else
+            }
+            else
+            {
+                countDown--;
+                if (countDown == 0)
                 {
-                    countDown--;
-                    if (countDown == 0)
-                    {
-                        countDown = LOSS_TIME;
-                        countUp = 0;
-                        lossFlag = true;
-                    }
+                    countDown = LOSS_TIME;
+                    countUp = 0;
+                    lossFlag = true;
                 }
-            }     
+            }
         }
 
         internal Vector2 calculateAverageVelocity()

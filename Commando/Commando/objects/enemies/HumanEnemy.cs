@@ -254,7 +254,10 @@ namespace Commando.objects.enemies
             }
             else
             {
-                currentDrawColor_ = Color.Black;
+                if (allegiance_ == 2)
+                    currentDrawColor_ = Color.Black;
+                else
+                    currentDrawColor_ = Color.White;
             }
         }
 

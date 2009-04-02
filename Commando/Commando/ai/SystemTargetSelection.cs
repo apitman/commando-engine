@@ -29,12 +29,23 @@ namespace Commando.ai
 
         internal override void update()
         {
-            Belief firstEnemy = AI_.Memory_.getFirstBelief(BeliefType.EnemyLoc);
-            if (firstEnemy != null)
+            // Translate Enemy Locations into targets
+            List<Belief> targets = AI_.Memory_.getBeliefs(BeliefType.EnemyLoc);
+            for (int i = 0; i < targets.Count; i++)
             {
-                AI_.Memory_.removeBeliefs(BeliefType.BestTarget);
-                Belief bestTarget = firstEnemy.convert(BeliefType.BestTarget);
+                Belief bestTarget = targets[i].convert(BeliefType.BestTarget);
+                bestTarget.relevance_ = 1 / (targets[i].position_ - AI_.Character_.getPosition()).LengthSquared();
                 AI_.Memory_.setBelief(bestTarget);
+            }
+
+            // Clean up the most relevant BestTarget if necessary
+            Belief best = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+            if (best == null)
+                return;
+            CharacterAbstract enemy = (best.handle_ as CharacterAbstract);
+            if (enemy.isDead())
+            {
+                AI_.Memory_.removeBelief(best);
             }
         }
     }

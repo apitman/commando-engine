@@ -102,9 +102,11 @@ namespace Commando.ai.planning
         /// Poll actuator to see if it is done attaching to cover.
         /// </summary>
         /// <returns>Returns true once attached.</returns>
-        internal override bool update()
+        internal override ActionStatus update()
         {
-            return (character_.getActuator() as DefaultActuator).isFinished();
+            if ((character_.getActuator() as DefaultActuator).isFinished())
+                return ActionStatus.SUCCESS;
+            return ActionStatus.IN_PROGRESS;
         }
 
         internal override void reserve()

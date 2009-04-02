@@ -27,7 +27,7 @@ namespace Commando
 
         protected override void LoadContent()
         {
-            font = FontMap.getInstance().getFont(FontEnum.Kootenay).getFont();
+            font = FontMap.getInstance().getFont(FontEnum.Kootenay14).getFont();
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 

@@ -237,7 +237,14 @@ namespace Commando.ai
                 }
             }
 
-            cachedBeliefs_[type] = bestBelief;
+            if (bestBelief != null)
+            {
+                cachedBeliefs_[type] = bestBelief;
+            }
+            else
+            {
+                cachedBeliefs_.Remove(type);
+            }
         }
 
         /// <summary>

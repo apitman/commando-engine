@@ -28,7 +28,8 @@ namespace Commando
     /// </summary>
     public enum FontEnum
 	{
-        Kootenay,
+        Kootenay8,
+        Kootenay14,
         Kootenay48,
         Lindsey,
         Miramonte,

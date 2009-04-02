@@ -30,7 +30,7 @@ namespace Commando
     /// </summary>
     class EngineStateMenu : EngineStateInterface
     {
-        protected readonly FontEnum MENU_FONT = FontEnum.Kootenay;
+        protected readonly FontEnum MENU_FONT = FontEnum.Kootenay14;
         protected readonly Color MENU_SELECTED_COLOR = Color.White;
         protected readonly Color MENU_UNSELECTED_COLOR = Color.Green;
         protected const float MENU_DEPTH = Constants.DEPTH_MENU_TEXT;
@@ -50,7 +50,7 @@ namespace Commando
             }
         }
 
-        protected const FontEnum CONTROL_TIPS_FONT = FontEnum.Kootenay;
+        protected const FontEnum CONTROL_TIPS_FONT = FontEnum.Kootenay14;
         protected readonly Color CONTROL_TIPS_COLOR = Color.White;
         protected const float CONTROL_TIPS_ROTATION = 0.0f;
         protected const float CONTROL_TIPS_DEPTH = Constants.DEPTH_MENU_TEXT;

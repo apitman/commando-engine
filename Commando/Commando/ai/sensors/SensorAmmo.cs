@@ -42,11 +42,18 @@ namespace Commando.ai.sensors
                 AmmoBox box = WorldState.AmmoList_[i];
                 if (ReservationTable.isReserved(box))
                 {
+                    AI_.Memory_.removeBelief(BeliefType.AmmoLoc, box);
                     continue;
                 }
                 if (Raycaster.inFieldOfView(me.getDirection(), me.getPosition(), box.getPosition(), fieldOfView) &&
                     Raycaster.canSeePoint(me.getPosition(), box.getPosition(), me.getHeight(), box.getHeight()))
                 {
+                    if (box.hasBeenPickedUp())
+                    {
+                        AI_.Memory_.removeBelief(BeliefType.AmmoLoc, box);
+                        continue;
+                    }
+
                     Belief posBelief = new Belief(BeliefType.AmmoLoc, box, 100);
                     posBelief.position_ = box.getPosition();
                     posBelief.relevance_ = (float)(1 / (box.getPosition() - AI_.Character_.getPosition()).LengthSquared());

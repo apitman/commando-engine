@@ -80,6 +80,11 @@ namespace Commando.ai
                 //tempVal += (float)CommonFunctions.distance(myPos, targetPos);
                 //tempVal = (float)Math.Sqrt(tempVal);
 
+                // TODO
+                // Give bonus if cover is relatively between the player and the target?
+                // This might be taken care of if we take both distance from character
+                //  and distance from target into account
+
                 float angleToPlayer = MathHelper.WrapAngle(CommonFunctions.getAngle(targetPos - coverPos));
                 float angleOfCover = MathHelper.WrapAngle(CommonFunctions.getAngle(cover.getCoverDirection()));
                 float angleBetweenCoverPlayer = MathHelper.WrapAngle(angleOfCover - angleToPlayer);
