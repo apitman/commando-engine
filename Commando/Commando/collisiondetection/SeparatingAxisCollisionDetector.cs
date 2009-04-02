@@ -348,6 +348,7 @@ namespace Commando.collisiondetection
             ConvexPolygonInterface movingObjectPolygonHigh = obj.getBounds(HeightEnum.HIGH);
             Height objectHeight = obj.getHeight(), otherObjectHeight;
             Height translationHeight;
+            Vector2 tempVelocity = velocity;
 
             Vector2 translate = Vector2.Zero, translateHigh = Vector2.Zero, translateLow = Vector2.Zero;
             float dist;
@@ -366,11 +367,11 @@ namespace Commando.collisiondetection
                     translationHeight = new Height(false, false);
                     if (otherObjectHeight.blocksLow_)
                     {
-                        translateLow = cObj.checkCollisionWith(obj, this, HeightEnum.LOW, dist, velocity);
+                        translateLow = cObj.checkCollisionWith(obj, this, HeightEnum.LOW, dist, tempVelocity);
                     }
                     if (otherObjectHeight.blocksHigh_)
                     {
-                        translateHigh = cObj.checkCollisionWith(obj, this, HeightEnum.HIGH, dist, velocity);
+                        translateHigh = cObj.checkCollisionWith(obj, this, HeightEnum.HIGH, dist, tempVelocity);
                     }
                     if (translateLow.LengthSquared() > translateHigh.LengthSquared())
                     {
@@ -416,8 +417,9 @@ namespace Commando.collisiondetection
                             if (!isInCollisions)
                             {
                                 collisions.Add(translate);
-                                movingObjectPolygonHigh.translate(translate);
-                                movingObjectPolygonLow.translate(translate);
+                                //movingObjectPolygonHigh.translate(translate);
+                                //movingObjectPolygonLow.translate(translate);
+                                tempVelocity += translate;
                             }
                         }
                     }

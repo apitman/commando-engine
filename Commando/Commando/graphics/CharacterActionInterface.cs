@@ -38,6 +38,8 @@ namespace Commando.graphics
 
         int getPriority();
 
+        //string getActionLevel();
+
         void setCharacter(CharacterAbstract character);
 
         void start();

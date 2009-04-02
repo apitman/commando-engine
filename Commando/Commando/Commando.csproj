@@ -189,6 +189,7 @@
     <Compile Include="graphics\MoveActionInterface.cs" />
     <Compile Include="graphics\MoveToActionInterface.cs" />
     <Compile Include="graphics\CharacterRunAction.cs" />
+    <Compile Include="graphics\MultiLevelActuator.cs" />
     <Compile Include="graphics\NonLoopAnimation.cs" />
     <Compile Include="graphics\ShootActionInterface.cs" />
     <Compile Include="graphics\ThrowGrenadeAction.cs" />

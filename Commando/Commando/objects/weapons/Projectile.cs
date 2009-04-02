@@ -129,17 +129,17 @@ namespace Commando.objects
             {
                 obj.collidedInto(this);
                 collidedWith(obj);
-                //return translate;
-            }
-            if (objectChangesHeight(obj))
-            {
-                if (height == HeightEnum.HIGH)
+
+                if (objectChangesHeight(obj))
                 {
-                    height_.blocksHigh_ = false;
-                }
-                else
-                {
-                    height_.blocksLow_ = false;
+                    if (height == HeightEnum.HIGH)
+                    {
+                        height_.blocksHigh_ = false;
+                    }
+                    else
+                    {
+                        height_.blocksLow_ = false;
+                    }
                 }
             }
             return Vector2.Zero;
