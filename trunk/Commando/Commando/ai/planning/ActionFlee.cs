@@ -27,11 +27,11 @@ using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    class ActionFleeType : ActionType
+    class ActionTypeFlee : ActionType
     {
         internal const float COST = 20.0f;
 
-        internal ActionFleeType(NonPlayableCharacterAbstract character)
+        internal ActionTypeFlee(NonPlayableCharacterAbstract character)
             : base(character)
         {
 

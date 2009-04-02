@@ -20,40 +20,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
 
-namespace Commando.ai.planning
+namespace Commando
 {
-    class ActionTypeReload : ActionType
+    /// <summary>
+    /// Allows universal access to a single Random object.
+    /// Otherwise multiple Random objects created in a short period of time
+    ///     all produce the same values.
+    /// </summary>
+    public static class RandomManager
     {
-        internal ActionTypeReload(NonPlayableCharacterAbstract character)
-            : base(character)
+        private static Random random;
+
+        static RandomManager()
         {
-            throw new NotImplementedException();
+            random = new Random();
         }
 
-        internal override bool testPreConditions(SearchNode node)
+        public static Random get()
         {
-            return
-                node.boolPasses(Variable.Weapon, true) &&
-                node.boolPasses(Variable.Ammo, false);
+            return random;
         }
-
-        internal override SearchNode unifyRegressive(ref SearchNode node)
-        {
-            SearchNode parent = node.getPredecessor();
-            throw new NotImplementedException();
-            //parent.action = new ActionReload(character_);
-            parent.cost += 1;
-            parent.setBool(Variable.Ammo, false);
-            parent.setBool(Variable.Weapon, true);
-            return parent;
-        }
-
-        internal override void register(Dictionary<int, List<ActionType>> actionMap)
-        {
-            actionMap[Variable.Ammo].Add(this);
-        }
-
     }
 }

@@ -20,40 +20,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionTypeReload : ActionType
+    internal abstract class TeamGoal
     {
-        internal ActionTypeReload(NonPlayableCharacterAbstract character)
-            : base(character)
-        {
-            throw new NotImplementedException();
-        }
+        internal bool HasFailed_ { get; set; }
+        internal float Relevance_ { get; set; } // TODO figure out why protected internal doesn't work
 
-        internal override bool testPreConditions(SearchNode node)
-        {
-            return
-                node.boolPasses(Variable.Weapon, true) &&
-                node.boolPasses(Variable.Ammo, false);
-        }
+        internal abstract bool isValid(List<AI> teamMembers);
 
-        internal override SearchNode unifyRegressive(ref SearchNode node)
-        {
-            SearchNode parent = node.getPredecessor();
-            throw new NotImplementedException();
-            //parent.action = new ActionReload(character_);
-            parent.cost += 1;
-            parent.setBool(Variable.Ammo, false);
-            parent.setBool(Variable.Weapon, true);
-            return parent;
-        }
+        internal abstract void refresh(List<AI> teamMembers);
 
-        internal override void register(Dictionary<int, List<ActionType>> actionMap)
-        {
-            actionMap[Variable.Ammo].Add(this);
-        }
-
+        internal abstract void allocateTasks(List<AI> teamMembers);
     }
 }

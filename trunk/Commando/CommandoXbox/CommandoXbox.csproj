@@ -124,6 +124,9 @@
     <Compile Include="..\Commando\ai\planning\GoalKill.cs">
       <Link>ai\planning\GoalKill.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\GoalManager.cs">
+      <Link>ai\planning\GoalManager.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\GoalPatrol.cs">
       <Link>ai\planning\GoalPatrol.cs</Link>
     </Compile>
@@ -138,6 +141,18 @@
     </Compile>
     <Compile Include="..\Commando\ai\planning\SearchNode.cs">
       <Link>ai\planning\SearchNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\TeamActionSuppress.cs">
+      <Link>ai\planning\TeamActionSuppress.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\TeamGoal.cs">
+      <Link>ai\planning\TeamGoal.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\TeamGoalEliminate.cs">
+      <Link>ai\planning\TeamGoalEliminate.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\TeamPlanner.cs">
+      <Link>ai\planning\TeamPlanner.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\Raycaster.cs">
       <Link>ai\Raycaster.cs</Link>
@@ -174,9 +189,6 @@
     </Compile>
     <Compile Include="..\Commando\ai\SystemCoverSelection.cs">
       <Link>ai\SystemCoverSelection.cs</Link>
-    </Compile>
-    <Compile Include="..\Commando\ai\SystemGoalSelection.cs">
-      <Link>ai\SystemGoalSelection.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\SystemMemoryCleanup.cs">
       <Link>ai\SystemMemoryCleanup.cs</Link>
@@ -531,6 +543,9 @@
     </Compile>
     <Compile Include="..\Commando\Program.cs">
       <Link>Program.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\RandomManager.cs">
+      <Link>RandomManager.cs</Link>
     </Compile>
     <Compile Include="..\Commando\Settings.cs">
       <Link>Settings.cs</Link>

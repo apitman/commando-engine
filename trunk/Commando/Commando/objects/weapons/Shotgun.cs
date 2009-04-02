@@ -46,7 +46,7 @@ namespace Commando.objects.weapons
         {
             if (refireCounter_ == 0 && CurrentAmmo_ > 0)
             {
-                Random rand = new Random();
+                Random rand = RandomManager.get();
                 rotation_.Normalize();
                 /*Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
                 Vector2 rotation3 = CommonFunctions.rotate(rotation_, 10 * Math.PI / 180f);

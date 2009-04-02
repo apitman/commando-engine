@@ -64,6 +64,10 @@ namespace Commando.ai.planning
         internal abstract void register(Dictionary<int, List<ActionType>> actionMap);
     }
 
+    /// <summary>
+    /// Action encapsulates the logic to carry out a particular action, verify that it
+    /// is still valid, determine success, etc.
+    /// </summary>
     internal abstract class Action
     {
         protected NonPlayableCharacterAbstract character_;

@@ -25,11 +25,11 @@ using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    internal class ActionAttackRangedType : ActionType
+    internal class ActionTypeAttackRanged : ActionType
     {
         protected internal const int COST = 4;
 
-        internal ActionAttackRangedType(NonPlayableCharacterAbstract character)
+        internal ActionTypeAttackRanged(NonPlayableCharacterAbstract character)
             : base(character)
         {
 
@@ -38,6 +38,7 @@ namespace Commando.ai.planning
         internal override bool testPreConditions(SearchNode node)
         {
             return
+                (character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget) != null) &&
                 node.boolPasses(Variable.Weapon, true) &&
                 node.boolPasses(Variable.Ammo, true);
         }

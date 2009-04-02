@@ -36,10 +36,9 @@ namespace Commando.ai
 
         public Memory Memory_ { get; private set; }
 
-        internal List<ActionType> Actions_ { get; set; }
         internal PlanManager PlanManager_ { get; private set; }
+        internal GoalManager GoalManager_ { get; private set; }
 
-        internal List<Goal> Goals_ { get; set; }
         internal Goal CurrentGoal_ { get; set; }
         
         protected List<Sensor> sensors_ = new List<Sensor>();
@@ -54,16 +53,13 @@ namespace Commando.ai
 
             Memory_ = new Memory();
 
-            Goals_ = new List<Goal>();
+            GoalManager_ = new GoalManager(this);
             CurrentGoal_ = null;
-
-            Actions_ = new List<ActionType>();
             PlanManager_ = new PlanManager(this);
 
             //systems_.Add(new SystemAiming(this));
             systems_.Add(new SystemTargetSelection(this));
             systems_.Add(new SystemCoverSelection(this));
-            systems_.Add(new SystemGoalSelection(this));
             systems_.Add(new SystemMemoryCleanup(this));
 
             //path_ = new List<TileIndex>();
@@ -87,6 +83,7 @@ namespace Commando.ai
 
             //CommunicationSystem_.update();
 
+            GoalManager_.update();
             PlanManager_.update();
         }
 
