@@ -85,7 +85,7 @@ namespace Commando.ai
                 systems_[i].update();
             }
 
-            CommunicationSystem_.update();
+            //CommunicationSystem_.update();
 
             PlanManager_.update();
         }

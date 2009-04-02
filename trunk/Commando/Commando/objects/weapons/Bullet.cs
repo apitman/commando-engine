@@ -83,7 +83,7 @@ namespace Commando.objects.weapons
 
         public override void collidedInto(CollisionObjectInterface obj)
         {
-            if (obj is Bullet)
+            if (obj is Bullet || obj is ItemAbstract || obj is CoverObject)
             {
                 return;
             }

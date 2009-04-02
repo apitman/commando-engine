@@ -46,7 +46,11 @@ namespace Commando.graphics
 
         protected string restingAction_;
 
-        public MultiLevelActuator(Dictionary<string, Dictionary<string, CharacterActionInterface>> actions, List<string> actionLevels, CharacterAbstract character, string initialActionSet, string initialAction)
+        protected string highActionLevel_;
+
+        protected string lowActionLevel_;
+
+        public MultiLevelActuator(Dictionary<string, Dictionary<string, CharacterActionInterface>> actions, List<string> actionLevels, CharacterAbstract character, string initialActionSet, string initialAction, string lowActionLevel, string highActionLevel)
         {
             if (ActionSetValidator.validate(actions))
             {
@@ -65,11 +69,17 @@ namespace Commando.graphics
                 currentActions_.Add(s, initAction);
             }
             restingAction_ = RESTINGSTATE;
+            lowActionLevel_ = lowActionLevel;
+            highActionLevel_ = highActionLevel;
         }
 
         public MultiLevelActuator(Dictionary<string, Dictionary<string, CharacterActionInterface>> actions, List<string> actionLevels, CharacterAbstract character, string initialActionSet)
-            : this(actions, actionLevels, character, initialActionSet, RESTINGSTATE)
+            : this(actions, actionLevels, character, initialActionSet, RESTINGSTATE, actionLevels[0], "")
         {
+            if (actionLevels.Count > 1)
+            {
+                highActionLevel_ = actionLevels_[1];
+            }
         }
 
         public void update()
@@ -99,12 +109,18 @@ namespace Commando.graphics
 
         public void draw()
         {
-            throw new NotImplementedException();
+            foreach (string curLevel in actionLevels_)
+            {
+                currentActions_[curLevel].draw();
+            }
         }
 
         public void draw(Color color)
         {
-            throw new NotImplementedException();
+            foreach (string curLevel in actionLevels_)
+            {
+                currentActions_[curLevel].draw(color);
+            }
         }
 
         public bool perform(String actionName, ActionParameters parameters)
@@ -114,14 +130,23 @@ namespace Commando.graphics
                 return false;
             }
             CharacterActionInterface action = actions_[currentActionSet_][actionName];
-
-
+            action.setParameters(parameters);
+            string actionLevel = action.getActionLevel();
+            currentActions_[actionLevel] = currentActions_[actionLevel].interrupt(action);
+            if (currentActions_[actionLevel] == action)
+            {
+                return true;
+            }
             return false;
         }
 
         public ConvexPolygonInterface getBounds(HeightEnum height)
         {
-            throw new NotImplementedException();
+            if (height == HeightEnum.HIGH)
+            {
+                return currentActions_[highActionLevel_].getBounds(height);
+            }
+            return currentActions_[lowActionLevel_].getBounds(height);
         }
     }
 
