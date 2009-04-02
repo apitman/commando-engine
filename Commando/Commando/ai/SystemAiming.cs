@@ -71,7 +71,8 @@ namespace Commando.ai
                 (AI_.Character_.getActuator() as DefaultActuator).lookAt(target);
                 if (countUp >= REACTION_TIME)
                 {
-                    AI_.Character_.Weapon_.shoot();
+                    //AI_.Character_.Weapon_.shoot();
+                    (AI_.Character_.getActuator() as DefaultActuator).shoot(AI_.Character_.Weapon_);
                 }
             }
             else

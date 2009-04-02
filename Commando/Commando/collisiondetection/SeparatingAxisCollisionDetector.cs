@@ -450,7 +450,7 @@ namespace Commando.collisiondetection
             ConvexPolygonInterface movingObjectPolygon = obj.getBounds(height);
             Height objectHeight = obj.getHeight();
 
-            Vector2 translate;
+            Vector2 translate, tempVelocity = velocity;
             float dist;
             List<Vector2> collisions = new List<Vector2>();
             foreach (CollisionObjectInterface cObj in objects_)
@@ -460,7 +460,7 @@ namespace Commando.collisiondetection
                 {
                     dist = radius + cObj.getRadius() - dist;
                     //translate = checkCollision(movingObjectPolygon, cObj.getBounds(height), dist, velocity);
-                    translate = cObj.checkCollisionWith(obj, this, height, dist, velocity);
+                    translate = cObj.checkCollisionWith(obj, this, height, dist, tempVelocity);
                     if (translate != Vector2.Zero)
                     {
                         obj.collidedInto(cObj);
@@ -472,6 +472,7 @@ namespace Commando.collisiondetection
                         if (translate != Vector2.Zero)
                         {
                             collisions.Add(translate);
+                            tempVelocity += translate;
                         }
                     }
                 }
