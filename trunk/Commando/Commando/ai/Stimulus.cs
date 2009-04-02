@@ -30,15 +30,17 @@ namespace Commando.ai
     struct Stimulus
     {
         public StimulusSource source_;
+        public int sourceAllegiance_;
         public StimulusType type_;
         public float radius_;
         public Vector2 position_;
         public Object handle_;
         public Belief message_;
 
-        public Stimulus(StimulusSource source, StimulusType type, float radius, Vector2 pos, Object handle)
+        public Stimulus(StimulusSource source, int sourceAllegiance, StimulusType type, float radius, Vector2 pos, Object handle)
         {
             source_ = source;
+            sourceAllegiance_ = sourceAllegiance;
             type_ = type;
             radius_ = radius;
             position_ = pos;
@@ -55,9 +57,10 @@ namespace Commando.ai
         /// <param name="pos"></param>
         /// <param name="handle"></param>
         /// <param name="message"></param>
-        public Stimulus(StimulusSource source, StimulusType type, float radius, Vector2 pos, Object handle, Belief message)
+        public Stimulus(StimulusSource source, int sourceAllegiance, StimulusType type, float radius, Vector2 pos, Object handle, Belief message)
         {
             source_ = source;
+            sourceAllegiance_ = sourceAllegiance;
             type_ = type;
             radius_ = radius;
             position_ = pos;
