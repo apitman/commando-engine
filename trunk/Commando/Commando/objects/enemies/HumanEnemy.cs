@@ -259,6 +259,9 @@ namespace Commando.objects.enemies
                 else
                     currentDrawColor_ = Color.White;
             }
+
+            collidedInto_.Clear();
+            collidedWith_.Clear();
         }
 
         public override void draw(GameTime gameTime)

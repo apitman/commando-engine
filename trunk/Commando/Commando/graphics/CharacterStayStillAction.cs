@@ -60,6 +60,24 @@ namespace Commando.graphics
             animation_.setRotation(direction);
         }
 
+        public void update(string level)
+        {
+            Vector2 position = character_.getPosition();
+            Vector2 direction = character_.getDirection();
+            Vector2 velocity = Vector2.Zero;
+            collisiondetection.CollisionDetectorInterface detector = character_.getCollisionDetector();
+            if (detector != null)
+            {
+                detector.checkCollisions(character_, ref velocity, ref direction);
+            }
+            position.X += velocity.X;
+            position.Y += velocity.Y;
+            character_.setPosition(position);
+            character_.setDirection(direction);
+            animation_.setPosition(position);
+            animation_.setRotation(direction);
+        }
+
         public void draw()
         {
             animation_.draw();
