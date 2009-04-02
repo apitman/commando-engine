@@ -122,7 +122,7 @@ namespace Commando.ai
             // Resume here
             WorldState.Audial_.Remove(key_);
             WorldState.Audial_.Add(key_,
-                new Stimulus(StimulusSource.CharacterAbstract, StimulusType.Message, broadcastRadius_, AI_.Character_.getPosition(), this, belief));
+                new Stimulus(StimulusSource.CharacterAbstract, AI_.Character_.allegiance_, StimulusType.Message, broadcastRadius_, AI_.Character_.getPosition(), this, belief));
         }
 
         /// <summary>

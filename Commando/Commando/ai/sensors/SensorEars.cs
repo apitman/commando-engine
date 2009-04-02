@@ -54,13 +54,13 @@ namespace Commando.ai.sensors
             if (CommonFunctions.distance(AI_.Character_.getPosition(), stim.position_) < (double) stim.radius_)
             {
                 AI_.CommunicationSystem_.isListening_ = true;
-                if (stim.type_ == StimulusType.Position)
+                if (stim.type_ == StimulusType.Position && stim.sourceAllegiance_ == AI_.Character_.allegiance_)
                 {
                     Belief b = new Belief(BeliefType.SuspiciousNoise, null, 100);
                     b.position_ = stim.position_;
                     AI_.Memory_.setBelief(b);
                 }
-                else if (stim.type_ == StimulusType.Message)
+                else if (stim.type_ == StimulusType.Message && stim.sourceAllegiance_ == AI_.Character_.allegiance_)
                 {
                     // For now, we believe messages that we receive with 100% certainty
                     AI_.Memory_.setBelief(stim.message_);
