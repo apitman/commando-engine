@@ -25,11 +25,11 @@ using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionInvestigateType : ActionType
+    class ActionTypeInvestigate : ActionType
     {
         internal const float COST = 1.0f;
 
-        internal ActionInvestigateType(NonPlayableCharacterAbstract character)
+        internal ActionTypeInvestigate(NonPlayableCharacterAbstract character)
             : base(character)
         {
 

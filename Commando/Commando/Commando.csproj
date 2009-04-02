@@ -116,11 +116,16 @@
     <Compile Include="ai\planning\Goal.cs" />
     <Compile Include="ai\planning\GoalInvestigate.cs" />
     <Compile Include="ai\planning\GoalKill.cs" />
+    <Compile Include="ai\planning\GoalManager.cs" />
     <Compile Include="ai\planning\GoalPatrol.cs" />
+    <Compile Include="ai\planning\TeamActionSuppress.cs" />
+    <Compile Include="ai\planning\TeamPlanner.cs" />
     <Compile Include="ai\planning\IndividualPlanner.cs" />
     <Compile Include="ai\planning\PlanManager.cs" />
     <Compile Include="ai\planning\ReservationTable.cs" />
     <Compile Include="ai\planning\SearchNode.cs" />
+    <Compile Include="ai\planning\TeamGoal.cs" />
+    <Compile Include="ai\planning\TeamGoalEliminate.cs" />
     <Compile Include="ai\Raycaster.cs" />
     <Compile Include="ai\sensors\Sensor.cs" />
     <Compile Include="ai\sensors\SensorAmmo.cs" />
@@ -133,7 +138,6 @@
     <Compile Include="ai\SystemAiming.cs" />
     <Compile Include="ai\SystemCommunication.cs" />
     <Compile Include="ai\SystemCoverSelection.cs" />
-    <Compile Include="ai\SystemGoalSelection.cs" />
     <Compile Include="ai\SystemMemoryCleanup.cs" />
     <Compile Include="ai\SystemTargetSelection.cs" />
     <Compile Include="ai\WorldState.cs" />
@@ -248,6 +252,7 @@
     <Compile Include="objects\weapons\MachineGun.cs" />
     <Compile Include="objects\weapons\PlayerWeapon.cs" />
     <Compile Include="objects\weapons\Projectile.cs" />
+    <Compile Include="RandomManager.cs" />
     <Compile Include="TileObject.cs" />
     <Compile Include="objects\weapons\DroneGun.cs" />
     <Compile Include="objects\weapons\Pistol.cs" />

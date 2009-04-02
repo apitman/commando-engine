@@ -77,7 +77,7 @@ namespace Commando.objects.weapons
 
             // use a random seed based on position, not time, otherwise all the bullets
             //  in a frame will have the same shrapnel generated (or so it seems)
-            Random r = new Random((int)pos.X + (int)pos.Y);
+            Random r = RandomManager.get();
             int count = r.Next(DEFAULT_COUNT_RANGE) + DEFAULT_COUNT_MIN;
             for (int i = 0; i < count; i++)
             {

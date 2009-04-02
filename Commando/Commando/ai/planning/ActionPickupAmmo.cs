@@ -27,11 +27,11 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
-    internal class ActionPickupAmmoType : ActionType
+    internal class ActionTypePickupAmmo : ActionType
     {
         protected const float COST = 1.0f;
 
-        internal ActionPickupAmmoType(NonPlayableCharacterAbstract character)
+        internal ActionTypePickupAmmo(NonPlayableCharacterAbstract character)
             : base(character)
         {
 

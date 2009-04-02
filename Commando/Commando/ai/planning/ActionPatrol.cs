@@ -26,11 +26,11 @@ using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    class ActionPatrolType : ActionType
+    class ActionTypePatrol : ActionType
     {
         internal const float COST = 5.0f;
 
-        internal ActionPatrolType(NonPlayableCharacterAbstract character)
+        internal ActionTypePatrol(NonPlayableCharacterAbstract character)
             : base(character)
         {
 

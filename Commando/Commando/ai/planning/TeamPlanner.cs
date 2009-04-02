@@ -20,40 +20,49 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionTypeReload : ActionType
+    internal class TeamPlanner
     {
-        internal ActionTypeReload(NonPlayableCharacterAbstract character)
-            : base(character)
+        protected int counter = 0;
+        protected const int UPDATE_RATE = 150; // every five seconds
+
+        protected List<AI> teamMembers_ = new List<AI>();
+        protected List<TeamGoal> teamGoals_ = new List<TeamGoal>();
+
+        internal void update()
         {
+            counter++;
+            if (counter < UPDATE_RATE)
+            {
+                return;
+            }
+            counter = 0;
+
+            refreshTeamMembers();
+        }
+
+        protected void refreshTeamMembers()
+        {
+            for (int i = 0; i < teamMembers_.Count; i++)
+            {
+                if (teamMembers_[i].Character_.isDead())
+                {
+                    teamMembers_.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method should be responsible for looking at distances amongst
+        /// characters of a certain allegiance, and forming groups accordingly.
+        /// </summary>
+        protected void reconstructTeam()
+        {
+            // TODO
             throw new NotImplementedException();
         }
-
-        internal override bool testPreConditions(SearchNode node)
-        {
-            return
-                node.boolPasses(Variable.Weapon, true) &&
-                node.boolPasses(Variable.Ammo, false);
-        }
-
-        internal override SearchNode unifyRegressive(ref SearchNode node)
-        {
-            SearchNode parent = node.getPredecessor();
-            throw new NotImplementedException();
-            //parent.action = new ActionReload(character_);
-            parent.cost += 1;
-            parent.setBool(Variable.Ammo, false);
-            parent.setBool(Variable.Weapon, true);
-            return parent;
-        }
-
-        internal override void register(Dictionary<int, List<ActionType>> actionMap)
-        {
-            actionMap[Variable.Ammo].Add(this);
-        }
-
     }
 }

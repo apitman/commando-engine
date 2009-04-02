@@ -27,11 +27,11 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
-    internal class ActionAttackRangedCoverType : ActionType
+    internal class ActionTypeAttackRangedCover : ActionType
     {
         protected internal const int COST = 1;
 
-        internal ActionAttackRangedCoverType(NonPlayableCharacterAbstract character)
+        internal ActionTypeAttackRangedCover(NonPlayableCharacterAbstract character)
             : base(character)
         {
             
@@ -40,6 +40,7 @@ namespace Commando.ai.planning
         internal override bool testPreConditions(SearchNode node)
         {
             return
+                (character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget) != null) &&
                 node.boolPasses(Variable.Cover, true) && 
                 node.boolPasses(Variable.Weapon, true) &&
                 node.boolPasses(Variable.Ammo, true);

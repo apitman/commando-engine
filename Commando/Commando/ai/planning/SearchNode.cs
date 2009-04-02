@@ -59,6 +59,13 @@ namespace Commando.ai.planning
                 this.values[var].b == val;
         }
 
+        internal bool taskPasses(int var, TeamTask val)
+        {
+            return
+                this.resolved[var] == false ||
+                this.values[var].task == val;
+        }
+
         internal void setBool(int var, bool val)
         {
             this.values[var].b = val;
@@ -75,6 +82,12 @@ namespace Commando.ai.planning
         {
             this.values[var].t = tile;
             this.resolved[var] = true;
+        }
+
+        internal void setTask(TeamTask val)
+        {
+            this.values[Variable.TeamTask].task = val;
+            this.resolved[Variable.TeamTask] = true;
         }
 
         internal void unresolve(int var)
@@ -96,7 +109,7 @@ namespace Commando.ai.planning
                 }
             }
         }
-
+        
         internal int dist(SearchNode other)
         {
             int dist = 0;
@@ -114,6 +127,7 @@ namespace Commando.ai.planning
         }
 
         // Remove this when a wrapper Goal class is used
+        /*
         public static bool testGoalEquality(SearchNode lhs, SearchNode rhs)
         {
             if (lhs == null && rhs == null)
@@ -134,6 +148,7 @@ namespace Commando.ai.planning
             }
             return true;
         }
+         */
 
         #region IComparer<SearchNode> Members
 
@@ -158,6 +173,8 @@ namespace Commando.ai.planning
         internal bool b;
         [FieldOffset(0)]
         internal TileIndex t;
+        [FieldOffset(0)]
+        internal TeamTask task;
     }
 
     /// <summary>
@@ -174,7 +191,14 @@ namespace Commando.ai.planning
         internal const int Weapon = 5;
         internal const int HasInvestigated = 6;
         internal const int HasPatrolled = 7;
+        internal const int TeamTask = 8;
 
-        internal const int LENGTH = 8;
+        internal const int LENGTH = 9;
+    }
+
+    internal enum TeamTask
+    {
+        CLEAR,
+        SUPPRESS
     }
 }

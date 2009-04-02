@@ -28,7 +28,8 @@ namespace Commando.ai.planning
     internal class PlanManager
     {
         protected AI AI_;
-        protected List<Action> currentPlan_;
+        protected List<ActionType> actions_ = new List<ActionType>();
+        protected List<Action> currentPlan_ = new List<Action>();
         protected Goal previousGoal_;
 
         internal bool HasFailed_ { get; set; }
@@ -36,8 +37,6 @@ namespace Commando.ai.planning
         internal PlanManager(AI ai)
         {
             AI_ = ai;
-            currentPlan_ = new List<Action>();
-
             HasFailed_ = false;
         }
 
@@ -51,9 +50,11 @@ namespace Commando.ai.planning
             {
                 cleanupPlan(currentPlan_);
                 HasFailed_ = false;
-                IndividualPlanner planner = new IndividualPlanner(AI_.Actions_);
+
+                IndividualPlanner planner = new IndividualPlanner(actions_);
                 planner.execute(getInitialState(), AI_.CurrentGoal_.getNode());
                 currentPlan_ = planner.getResult();
+
                 if (currentPlan_ != null && currentPlan_.Count > 0)
                 {
                     reservePlan(currentPlan_);
@@ -131,6 +132,7 @@ namespace Commando.ai.planning
             initial.setBool(Variable.HasInvestigated, false);
             initial.setBool(Variable.HasPatrolled, false);
             initial.setPosition(Variable.Location, ref myLoc);
+            initial.setTask(TeamTask.CLEAR);
             return initial;
         }
 
@@ -151,6 +153,11 @@ namespace Commando.ai.planning
                 plan[i].unreserve();
             }
             plan.Clear();
+        }
+
+        internal void addAction(ActionType action)
+        {
+            actions_.Add(action);
         }
 
         internal void die()

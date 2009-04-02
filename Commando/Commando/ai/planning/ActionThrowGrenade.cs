@@ -24,9 +24,9 @@ using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionThrowGrenadeType : ActionType
+    class ActionTypeThrowGrenade : ActionType
     {
-        internal ActionThrowGrenadeType(NonPlayableCharacterAbstract character)
+        internal ActionTypeThrowGrenade(NonPlayableCharacterAbstract character)
             : base(character)
         {
             throw new NotImplementedException();

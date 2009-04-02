@@ -33,15 +33,15 @@ namespace Commando.ai.brains
         public DummyAI(NonPlayableCharacterAbstract npc)
             : base(npc)
         {
-            Goals_.Add(new GoalPatrol(this));
-            Goals_.Add(new GoalInvestigate(this));
-            Goals_.Add(new GoalKill(this));
+            GoalManager_.addGoal(new GoalPatrol(this));
+            GoalManager_.addGoal(new GoalInvestigate(this));
+            GoalManager_.addGoal(new GoalKill(this));
 
-            Actions_.Add(new ActionInvestigateType(npc));
-            Actions_.Add(new ActionGotoType(npc));
-            Actions_.Add(new ActionPatrolType(npc));
-            Actions_.Add(new ActionFleeType(npc));
-            Actions_.Add(new ActionAttackRangedType(npc));
+            PlanManager_.addAction(new ActionTypeInvestigate(npc));
+            PlanManager_.addAction(new ActionTypeGoto(npc));
+            PlanManager_.addAction(new ActionTypePatrol(npc));
+            PlanManager_.addAction(new ActionTypeFlee(npc));
+            PlanManager_.addAction(new ActionTypeAttackRanged(npc));
 
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));

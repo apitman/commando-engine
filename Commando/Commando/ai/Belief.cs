@@ -101,6 +101,12 @@ namespace Commando.ai
     {
         Error, // used as a flag to throw exceptions
 
+        TeamInfo, /* Handle should always be NULL so there is only one of these at a time
+                   * Used by different tasks to cache information:
+                   *    TeamActionSuppress - handle1 = enemy to suppress
+                   * */
+                   
+
         EnemyLoc, // 
         EnemyHealth, // data.int1 = health
         AllyLoc, // 
@@ -117,6 +123,16 @@ namespace Commando.ai
     [StructLayout(LayoutKind.Explicit)]
     internal struct BeliefValue
     {
+        /*
+         * Apparently, references can't be used in unions?
+         * This will crash at runtime.
+         * 
+        [FieldOffset(0)]
+        internal Object handle1;
+        [FieldOffset(4)]
+        internal Object handle2;
+         */
+
         [FieldOffset(0)]
         internal int int1;
         [FieldOffset(4)]

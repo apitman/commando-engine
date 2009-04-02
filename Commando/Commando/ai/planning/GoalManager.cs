@@ -24,21 +24,38 @@ using Commando.ai.planning;
 
 namespace Commando.ai
 {
-    class SystemGoalSelection : System
+    class GoalManager
     {
-        internal SystemGoalSelection(AI ai) : base(ai) { }
+        protected AI AI_;
 
-        internal override void update()
+        protected List<Goal> goals_ = new List<Goal>();
+
+        internal GoalManager(AI ai)
+        {
+            AI_ = ai;
+        }
+
+        internal void addGoal(Goal goal)
+        {
+            goals_.Add(goal);
+        }
+
+        internal void setTeamGoal(Goal goal)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void update()
         {
             float highestRelevance = float.MinValue;
             Goal mostRelevant = null;
-            for (int i = 0; i < AI_.Goals_.Count; i++)
+            for (int i = 0; i < goals_.Count; i++)
             {
-                AI_.Goals_[i].refresh();
-                if (!AI_.Goals_[i].HasFailed_ && AI_.Goals_[i].Relevance_ > highestRelevance)
+                goals_[i].refresh();
+                if (!goals_[i].HasFailed_ && goals_[i].Relevance_ > highestRelevance)
                 {
-                    highestRelevance = AI_.Goals_[i].Relevance_;
-                    mostRelevant = AI_.Goals_[i];
+                    highestRelevance = goals_[i].Relevance_;
+                    mostRelevant = goals_[i];
                 }
             }
 

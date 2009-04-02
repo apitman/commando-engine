@@ -24,36 +24,61 @@ using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionTypeReload : ActionType
+    internal class TeamActionTypeSuppress : ActionType
     {
-        internal ActionTypeReload(NonPlayableCharacterAbstract character)
+        protected internal const int COST = 3;
+
+        internal TeamActionTypeSuppress(NonPlayableCharacterAbstract character)
             : base(character)
         {
-            throw new NotImplementedException();
+            
         }
 
         internal override bool testPreConditions(SearchNode node)
         {
             return
-                node.boolPasses(Variable.Weapon, true) &&
-                node.boolPasses(Variable.Ammo, false);
+                node.taskPasses(Variable.TeamTask, TeamTask.SUPPRESS) &&
+                node.boolPasses(Variable.Ammo, true) &&
+                node.boolPasses(Variable.Weapon, true);
         }
 
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
+            Belief target = character_.AI_.Memory_.getFirstBelief(BeliefType.TeamInfo);
+
             SearchNode parent = node.getPredecessor();
-            throw new NotImplementedException();
-            //parent.action = new ActionReload(character_);
-            parent.cost += 1;
-            parent.setBool(Variable.Ammo, false);
+            parent.action = new TeamActionSuppress(character_, target.handle_);
+            parent.cost += COST;
             parent.setBool(Variable.Weapon, true);
+            parent.setBool(Variable.Ammo, true);
+            parent.setTask(TeamTask.CLEAR);
             return parent;
         }
 
         internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
-            actionMap[Variable.Ammo].Add(this);
+            actionMap[Variable.TeamTask].Add(this);
+        }
+    }
+
+    internal class TeamActionSuppress : Action
+    {
+        protected Object handle_;
+
+        internal TeamActionSuppress(NonPlayableCharacterAbstract character, Object handle)
+            : base(character)
+        {
+            handle_ = handle;
         }
 
+        internal override bool initialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override ActionStatus update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

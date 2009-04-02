@@ -118,8 +118,8 @@ namespace Commando.levels
         public Level getLevelFromFile(string filename, List<DrawableObjectAbstract> pipeline)
         {
             // Load the user's level from XML
-            try
-            {
+            /*try
+            {*/
                 XmlDocument doc = new XmlDocument();
                 doc.Load(filename);
 
@@ -245,6 +245,7 @@ namespace Commando.levels
                     //
                     player_ = null;
                 }
+            /*
             }
             catch (Exception)
             {
@@ -288,6 +289,7 @@ namespace Commando.levels
 
                 enemies_.Add(dumDum);
             }
+             */
 
             return this;
         }

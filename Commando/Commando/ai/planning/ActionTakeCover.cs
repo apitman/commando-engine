@@ -27,11 +27,11 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
-    internal class ActionTakeCoverType : ActionType
+    internal class ActionTypeTakeCover : ActionType
     {
         protected const float COST = 1.0f;
 
-        internal ActionTakeCoverType(NonPlayableCharacterAbstract character)
+        internal ActionTypeTakeCover(NonPlayableCharacterAbstract character)
             : base(character)
         {
 

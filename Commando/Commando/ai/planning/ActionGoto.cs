@@ -27,12 +27,12 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
-    class ActionGotoType : ActionType
+    class ActionTypeGoto : ActionType
     {
         protected const float BASE_COST = 1.0f;
         protected const float COST_PER_TILE = 0.15f;
 
-        public ActionGotoType(NonPlayableCharacterAbstract character)
+        public ActionTypeGoto(NonPlayableCharacterAbstract character)
             : base(character)
         {
             
