@@ -130,13 +130,13 @@ namespace Commando.graphics
                 return false;
             }
             CharacterActionInterface action = actions_[currentActionSet_][actionName];
-            action.setParameters(parameters);
-            string actionLevel = action.getActionLevel();
-            currentActions_[actionLevel] = currentActions_[actionLevel].interrupt(action);
-            if (currentActions_[actionLevel] == action)
-            {
-                return true;
-            }
+            //action.setParameters(parameters);
+            //string actionLevel = action.getActionLevel();
+            //currentActions_[actionLevel] = currentActions_[actionLevel].interrupt(action);
+            //if (currentActions_[actionLevel] == action)
+            //{
+            //    return true;
+            //}
             return false;
         }
 
@@ -144,9 +144,10 @@ namespace Commando.graphics
         {
             if (height == HeightEnum.HIGH)
             {
-                return currentActions_[highActionLevel_].getBounds(height);
+                //return currentActions_[highActionLevel_].getBounds(height);
             }
-            return currentActions_[lowActionLevel_].getBounds(height);
+            //return currentActions_[lowActionLevel_].getBounds(height);
+            return null;
         }
     }
 
