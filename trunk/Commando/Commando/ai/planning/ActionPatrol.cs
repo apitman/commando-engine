@@ -68,7 +68,7 @@ namespace Commando.ai.planning
 
         }
 
-        internal override bool update()
+        internal override ActionStatus update()
         {
             counter++;
             if (counter >= THRESHOLD)
@@ -80,7 +80,7 @@ namespace Commando.ai.planning
             direction.Normalize();
             Vector2 target = character_.getPosition() + direction * 5;
             (character_.getActuator() as DefaultActuator).moveTo(target);
-            return false;
+            return ActionStatus.IN_PROGRESS;
         }
 
         internal override bool initialize()

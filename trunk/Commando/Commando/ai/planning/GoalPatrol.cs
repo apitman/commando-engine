@@ -37,6 +37,7 @@ namespace Commando.ai.planning
             // Make this more complete
             // Relevance of patrolling should go up with lack of danger
             Relevance_ = 0.10f;
+            HasFailed_ = false;
         }
     }
 }

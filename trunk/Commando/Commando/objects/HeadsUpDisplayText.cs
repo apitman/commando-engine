@@ -38,7 +38,7 @@ namespace Commando.objects
         /// </summary>
         public HeadsUpDisplayText()
         {
-            font_ = FontEnum.Kootenay;
+            font_ = FontEnum.Kootenay14;
             newValue_ = 0;
         }
 

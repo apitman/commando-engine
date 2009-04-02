@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.levels;
 
 namespace Commando
 {
@@ -40,6 +41,11 @@ namespace Commando
             point1.Y -= point1.Y;
             return point1.Length();
             //return (float)Math.Sqrt(point1.X * point1.X + point1.Y * point1.Y);
+        }
+
+        public static float distance(TileIndex tile1, TileIndex tile2)
+        {
+            return (float)Math.Sqrt(Math.Pow(tile1.x_ - tile2.x_, 2) + Math.Pow(tile1.y_ - tile2.y_, 2));
         }
 
         public static void rotate(ref Vector2 vector, float angle)

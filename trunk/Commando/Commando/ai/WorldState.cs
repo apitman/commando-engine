@@ -45,6 +45,28 @@ namespace Commando.ai
 
         private WorldState() {}
 
+        static internal void refresh()
+        {
+            /*
+            for (int i = 0; i < CharacterList_.Count; i++)
+            {
+                if (CharacterList_[i].isDead())
+                {
+                    CharacterList_.RemoveAt(i);
+                    i--;
+                }
+            }
+            */
+            for (int i = 0; i < AmmoList_.Count; i++)
+            {
+                if (AmmoList_[i].isDead())
+                {
+                    AmmoList_.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
         static internal void reset()
         {
             Audial_.Clear();

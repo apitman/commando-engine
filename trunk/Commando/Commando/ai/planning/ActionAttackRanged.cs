@@ -44,8 +44,10 @@ namespace Commando.ai.planning
 
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
+            Belief target = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+
             SearchNode parent = node.getPredecessor();
-            parent.action = new ActionAttackRanged(character_);
+            parent.action = new ActionAttackRanged(character_, target.handle_);
             parent.cost += COST;
             parent.setInt(Variable.TargetHealth, node.values[Variable.TargetHealth].i + 1);
             parent.setBool(Variable.Ammo, true);
@@ -60,46 +62,34 @@ namespace Commando.ai.planning
 
     internal class ActionAttackRanged : Action
     {
+        protected CharacterAbstract target;
+        protected Object handle_;
         protected SystemAiming aiming;
 
-        internal ActionAttackRanged(NonPlayableCharacterAbstract character)
+        internal ActionAttackRanged(NonPlayableCharacterAbstract character, Object handle)
             : base(character)
         {
-
+            handle_ = handle;
         }
 
-        internal override bool update()
+        internal override ActionStatus update()
         {
             aiming.update();
 
             // Move this into checkIsStillValid
             if (character_.Weapon_.CurrentAmmo_ <= 0 || aiming.lossFlag)
             {
-                Belief bestTarget = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-                if (bestTarget != null)
-                {
-                    Belief enemyLoc = character_.AI_.Memory_.getBelief(BeliefType.EnemyLoc, bestTarget.handle_);
-                    if (enemyLoc != null)
-                    {
-                        character_.AI_.Memory_.removeBelief(enemyLoc);
-                    }
-                    character_.AI_.Memory_.removeBelief(bestTarget);
-                }
-                character_.AI_.Memory_.removeBeliefs(BeliefType.BestTarget);
-                character_.AI_.Memory_.removeBeliefs(BeliefType.EnemyLoc);
-                character_.AI_.Memory_.removeBeliefs(BeliefType.SuspiciousNoise);
-
-                (character_.getActuator() as DefaultActuator).moveTo(bestTarget.position_);
-                
-                return true;
+                character_.reload();
+                return ActionStatus.SUCCESS;
             }
 
-            return false;
+            return ActionStatus.IN_PROGRESS;
         }
 
         internal override bool initialize()
         {
-            aiming = new SystemAiming(character_.AI_);
+            target = (handle_ as CharacterAbstract);
+            aiming = new SystemAiming(character_.AI_, target);
             return true;
         }
     }

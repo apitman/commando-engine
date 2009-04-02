@@ -35,7 +35,7 @@ namespace Commando
         protected MenuList selectedControlsMenuList_;
         protected string controlTitle_;
 
-        protected readonly FontEnum CONTROLS_FONT = FontEnum.Kootenay;
+        protected readonly FontEnum CONTROLS_FONT = FontEnum.Kootenay14;
         protected readonly Color CONTROLS_COLOR = Color.Green;
         protected readonly Color CONTROLS_TITLE_COLOR = Color.WhiteSmoke;
         protected const float CONTROLS_SPACING = 40.0f;

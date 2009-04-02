@@ -326,7 +326,7 @@ namespace Commando
                 ammoTextPos_ = AMMO_TEXT_POSITION;
                 healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
                 weapon_ = new HeadsUpDisplayWeapon(drawPipeline_, TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
-                ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay, player_.Weapon_.CurrentAmmo_);
+                ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay14, player_.Weapon_.CurrentAmmo_);
                 player_.getHealth().addObserver(healthBar_);
                 player_.getWeapon().addObserver(weapon_);
                 player_.getAmmo().addObserver(ammo_);
@@ -412,6 +412,9 @@ namespace Commando
             // TODO
             // may want to maintain a separate pipeline for objects whose
             //  update function doesn't do anything (aka tiles)
+
+            WorldState.refresh();
+
             if (player_ == null)
             {
                 Vector2 moveVector = Vector2.Zero;
@@ -490,8 +493,8 @@ namespace Commando
                 TextureMap.getInstance().getTexture(HEALTH_BAR_OUTLINE_TEX_NAME).drawImageAbsolute(0, healthBarPos_, 0.0f, HUD_DRAW_DEPTH);
                 weapon_.draw(new GameTime());
                 TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, HUD_BAR_WIDTH, HUD_BAR_HEIGHT), HUD_DRAW_DEPTH - 0.01f, Color.Silver);
-                FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
-                //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
+                FontMap.getInstance().getFont(FontEnum.Kootenay14).drawString(HEALTH_TEXT, healthTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
+                //FontMap.getInstance().getFont(FontEnum.Kootenay14).drawString(AMMO_TEXT, ammoTextPos_, Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, FONT_DRAW_DEPTH);
                 string realAmmoText = AMMO_TEXT + player_.Inventory_.Ammo_[player_.Weapon_.AmmoType_].ToString() + " " + player_.Weapon_.AmmoType_.ToString();
                 ammo_.drawString(realAmmoText, AMMO_REPLACE_TEXT, Color.Black, 0.0f);
             }

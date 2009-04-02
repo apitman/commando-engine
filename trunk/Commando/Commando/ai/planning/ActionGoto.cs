@@ -23,11 +23,14 @@ using System.Text;
 using Commando.levels;
 using Commando.objects;
 using Commando.graphics;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
     class ActionGotoType : ActionType
     {
+        protected const float BASE_COST = 1.0f;
+        protected const float COST_PER_TILE = 0.15f;
 
         public ActionGotoType(NonPlayableCharacterAbstract character)
             : base(character)
@@ -38,6 +41,11 @@ namespace Commando.ai.planning
         internal override bool testPreConditions(SearchNode node)
         {
             // assume we can always get from point A to point B
+            // TODO
+            // Should GOTO only be allowed if Cover = false at current node?
+            // If TakeCover sets Cover = false, this would make sense, as we
+            //  could never do a GOTO from somewhere and still have cover afterwards
+            //  unless we TakeCover
             return true;
         }
 
@@ -47,13 +55,15 @@ namespace Commando.ai.planning
             TileIndex target = node.values[Variable.Location].t;
             parent.action = new ActionGoto(character_, target);
 
-            // TODO calculate distance
-            float distance = 0;
-            parent.cost += 1.0f + distance;
+            TileIndex currentTile =
+                GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(character_.getPosition());
+            float distance_in_tiles =
+                CommonFunctions.distance(target, currentTile);
+            parent.cost += BASE_COST + distance_in_tiles * COST_PER_TILE;
 
             // Don't know where we came from to get here, so it could
             //  be anywhere - unresolve the value
-            parent.resolved[Variable.Location] = false;
+            parent.unresolve(Variable.Location);
 
             // TODO
             // Figure out if this setBool is supposed to be false or true
@@ -82,7 +92,7 @@ namespace Commando.ai.planning
             target_ = target;
         }
 
-        internal override bool update()
+        internal override ActionStatus update()
         {
             TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
             TileIndex curIndex = grid.getTileIndex(character_.getPosition());
@@ -102,7 +112,7 @@ namespace Commando.ai.planning
                     }
                     else // otherwise we're done
                     {
-                        return true;
+                        return ActionStatus.SUCCESS;
                     }
                 }
 
@@ -111,10 +121,16 @@ namespace Commando.ai.planning
             }
             else
             {
-                path_ = AStarPathfinder.run(grid, curIndex, target_, character_.getRadius(), character_.getHeight());
+                path_ = AStarPathfinder.calculateExactPath(grid, curIndex, target_, character_.getRadius(), character_.getHeight());
+                if (path_ == null) // no path could be found
+                {
+                    (character_.getActuator() as DefaultActuator).moveTo(grid.getTileCenter(target_));
+                    (character_.getActuator() as DefaultActuator).lookAt(grid.getTileCenter(target_));
+                    return ActionStatus.FAILED;
+                }
             }
 
-            return false;
+            return ActionStatus.IN_PROGRESS;
         }
 
         internal override bool initialize()

@@ -47,8 +47,10 @@ namespace Commando.ai.planning
 
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
+            Belief target = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+
             SearchNode parent = node.getPredecessor();
-            parent.action = new ActionAttackRangedCover(character_);
+            parent.action = new ActionAttackRangedCover(character_, target.handle_);
             parent.cost += COST;
             parent.setInt(Variable.TargetHealth, node.values[Variable.TargetHealth].i + 1);
             parent.setBool(Variable.Weapon, true);
@@ -65,65 +67,49 @@ namespace Commando.ai.planning
 
     internal class ActionAttackRangedCover : Action
     {
+        protected CharacterAbstract target;
+        protected Object handle_;
         protected SystemAiming aiming;
 
-        internal ActionAttackRangedCover(NonPlayableCharacterAbstract character)
+        internal ActionAttackRangedCover(NonPlayableCharacterAbstract character, Object handle)
             : base(character)
         {
-            
+            handle_ = handle;
         }
 
-        internal override bool update()
+        internal override ActionStatus update()
         {
             aiming.update();
 
             // Move this into checkIsStillValid
             if (character_.Weapon_.CurrentAmmo_ <= 0 || aiming.lossFlag)
             {
-                Belief bestTarget = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-                if (bestTarget != null)
-                {
-                    Belief enemyLoc = character_.AI_.Memory_.getBelief(BeliefType.EnemyLoc, bestTarget.handle_);
-                    if (enemyLoc != null)
-                    {
-                        character_.AI_.Memory_.removeBelief(enemyLoc);
-                    }
-                    character_.AI_.Memory_.removeBelief(bestTarget);
-                }
-                character_.AI_.Memory_.removeBeliefs(BeliefType.BestTarget);
-                character_.AI_.Memory_.removeBeliefs(BeliefType.EnemyLoc);
-                character_.AI_.Memory_.removeBeliefs(BeliefType.SuspiciousNoise);
+                character_.reload();
 
                 // remove from cover, then go after target's last known location
                 DefaultActuator da = (character_.getActuator() as DefaultActuator);
                 CoverObject cover = da.getCoverObject();
                 if (cover != null)
+                {
                     da.cover(da.getCoverObject());
-                (character_.getActuator() as DefaultActuator).moveTo(bestTarget.position_);
+                    if (ReservationTable.isReservedBy(cover, character_))
+                    {
+                        ReservationTable.freeResource(cover, character_);
+                    }
+                }
+                //(character_.getActuator() as DefaultActuator).moveTo(bestTarget.position_);
 
-                return true;
+                return ActionStatus.SUCCESS;
             }
 
-            return false;
+            return ActionStatus.IN_PROGRESS;
         }
 
         internal override bool initialize()
         {
-            aiming = new SystemAiming(character_.AI_);
+            target = (handle_ as CharacterAbstract);
+            aiming = new SystemAiming(character_.AI_, target);
 
-            //throw new NotImplementedException();
-            Belief bestTarget =
-                character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-            Vector2 target = bestTarget.position_;
-
-            DefaultActuator da = (character_.getActuator() as DefaultActuator);
-            da.lookAt(target);
-            da.update();
-            da.throwGrenade(
-                new FragGrenade(character_.pipeline_, character_.getCollisionDetector(),
-                    character_.getDirection(), character_.getPosition(),
-                    character_.getDirection()));
-            da.update();
             return true;
         }
     }

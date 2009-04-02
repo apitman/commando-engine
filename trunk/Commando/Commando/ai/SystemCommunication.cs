@@ -106,7 +106,7 @@ namespace Commando.ai
             //        debugOut += kvp.Value.message_.ToString() + "\n";                    
             //    }
             //}
-            //FontMap.getInstance().getFont(FontEnum.Kootenay).drawString(debugOut, Vector2.One, Microsoft.Xna.Framework.Graphics.Color.Black);
+            //FontMap.getInstance().getFont(FontEnum.Kootenay14).drawString(debugOut, Vector2.One, Microsoft.Xna.Framework.Graphics.Color.Black);
             // END DEBUG STUFF
         }
 

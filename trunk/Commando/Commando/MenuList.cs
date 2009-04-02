@@ -36,7 +36,7 @@ namespace Commando
         readonly Color DEFAULT_BASE_COLOR = Color.Green;
         readonly Color DEFAULT_SELECTED_COLOR = Color.White;
         const float DEFAULT_SPACING = 40.0f;
-        const FontEnum DEFAULT_FONT = FontEnum.Kootenay;
+        const FontEnum DEFAULT_FONT = FontEnum.Kootenay14;
         const float DEFAULT_ROTATION = 0.0f;
         const float DEFAULT_SCALE = 1.0f;
         const float DEFAULT_DEPTH = Constants.DEPTH_MENU_TEXT;

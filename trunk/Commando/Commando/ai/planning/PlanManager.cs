@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.levels;
+using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
@@ -46,8 +47,10 @@ namespace Commando.ai.planning
                 !Goal.areSame(previousGoal_, AI_.CurrentGoal_);
 
             if (AI_.CurrentGoal_ != null &&
-                (differencesFlag || currentPlan_.Count == 0))
+                (differencesFlag || currentPlan_.Count == 0 || HasFailed_))
             {
+                cleanupPlan(currentPlan_);
+                HasFailed_ = false;
                 IndividualPlanner planner = new IndividualPlanner(AI_.Actions_);
                 planner.execute(getInitialState(), AI_.CurrentGoal_.getNode());
                 currentPlan_ = planner.getResult();
@@ -56,12 +59,20 @@ namespace Commando.ai.planning
                     reservePlan(currentPlan_);
                     currentPlan_[0].initialize();
                 }
-
+                else
+                {
+                    HasFailed_ = true;
+                }
             }
 
             previousGoal_ = AI_.CurrentGoal_;
 
             executePlan();
+
+            if (HasFailed_)
+            {
+                AI_.CurrentGoal_.HasFailed_ = true;
+            }
         }
 
         internal void executePlan()
@@ -72,18 +83,26 @@ namespace Commando.ai.planning
                 if (!isValid)
                 {
                     HasFailed_ = true;
-                    cleanupPlan(currentPlan_);
                 }
                 else
                 {
-                    bool done = currentPlan_[0].update();
-                    if (done)
+                    ActionStatus status = currentPlan_[0].update();
+                    if (status == ActionStatus.SUCCESS)
                     {
                         currentPlan_.RemoveAt(0);
                         if (currentPlan_.Count > 0)
                         {
                             currentPlan_[0].initialize();
                         }
+                    }
+                    else if (status == ActionStatus.FAILED)
+                    {
+
+                        HasFailed_ = true;
+                    }
+                    else if (status == ActionStatus.IN_PROGRESS)
+                    {
+                        // Do nothing
                     }
                 }
             }
@@ -98,7 +117,8 @@ namespace Commando.ai.planning
             bool hasAmmo = false;
             if (hasWeapon)
             {
-                hasAmmo = AI_.Character_.Weapon_.CurrentAmmo_ > 0;
+                hasAmmo = AI_.Character_.Weapon_.CurrentAmmo_ > 0 ||
+                    AI_.Character_.Inventory_.Ammo_[AI_.Character_.Weapon_.AmmoType_] > 0;
             }
             TileIndex myLoc =
                 GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(
@@ -124,11 +144,44 @@ namespace Commando.ai.planning
 
         protected void cleanupPlan(List<Action> plan)
         {
+            if (plan == null)
+                return;
             for (int i = 0; i < plan.Count; i++)
             {
                 plan[i].unreserve();
             }
             plan.Clear();
+        }
+
+        internal void die()
+        {
+            cleanupPlan(currentPlan_);
+        }
+
+        internal void draw()
+        {
+#if !XBOX
+            if (AI_.CurrentGoal_ == null)
+                return;
+            StringBuilder planString = new StringBuilder();
+            planString.Append("Goal: ");
+            string goalName = AI_.CurrentGoal_.ToString();
+            planString.Append(goalName.Substring(goalName.LastIndexOf('.')));
+            planString.Append("\n");
+            for (int i = 0; i < currentPlan_.Count; i++)
+            {
+                string planName = currentPlan_[i].ToString();
+                planString.Append(planName.Substring(planName.LastIndexOf('.')));
+                planString.Append("\n");
+            }
+
+            Vector2 prettyOffset = new Vector2(0.0f, -15.0f);
+            Vector2 drawPosition = new Vector2(AI_.Character_.getPosition().X, AI_.Character_.getPosition().Y);
+            drawPosition.X -= GlobalHelper.getInstance().getCurrentCamera().getX();
+            drawPosition.Y -= GlobalHelper.getInstance().getCurrentCamera().getY();
+            drawPosition += prettyOffset;
+            FontMap.getInstance().getFont(FontEnum.Kootenay8).drawStringCentered(planString.ToString(), drawPosition, Microsoft.Xna.Framework.Graphics.Color.White, 0.0f, 0.9f);
+#endif
         }
     }
 }

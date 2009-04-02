@@ -29,7 +29,7 @@ namespace Commando.ai.planning
 {
     class ActionFleeType : ActionType
     {
-        internal const float COST = 10.0f;
+        internal const float COST = 20.0f;
 
         internal ActionFleeType(NonPlayableCharacterAbstract character)
             : base(character)
@@ -75,15 +75,19 @@ namespace Commando.ai.planning
             return true;
         }
 
-        internal override bool update()
+        internal override ActionStatus update()
         {
             counter++;
             if (counter >= THRESHOLD)
-                return true;
+            {
+                return ActionStatus.SUCCESS;
+            }
 
             Belief bestTarget = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
             if (bestTarget == null)
-                return true;
+            {
+                return ActionStatus.SUCCESS;
+            }
             //CharacterAbstract enemy = bestTarget.handle_ as CharacterAbstract;
             Vector2 opposite = bestTarget.position_ - character_.getPosition();
             opposite = -opposite;
@@ -91,7 +95,7 @@ namespace Commando.ai.planning
 
             (character_.getActuator() as DefaultActuator).moveTo(character_.getPosition() + opposite * 5);
 
-            return false;
+            return ActionStatus.IN_PROGRESS;
         }
     }
 }
