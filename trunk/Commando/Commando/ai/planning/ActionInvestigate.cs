@@ -37,7 +37,7 @@ namespace Commando.ai.planning
 
         internal override bool testPreConditions(SearchNode node)
         {
-            return true;
+            return (character_.AI_.Memory_.getFirstBelief(BeliefType.InvestigateTarget) != null);
         }
 
         internal override SearchNode unifyRegressive(ref SearchNode node)

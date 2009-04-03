@@ -64,7 +64,12 @@ namespace Commando
 
         public Inventory Inventory_ { get; set; }
 
-        internal int allegiance_ { get; set; }
+        // We override Allegiance_ in NonPlayableCharacterAbstract, which is why
+        //  this is done this way.  May still be a better way though.
+        protected int allegiance_;
+        internal virtual int Allegiance_ {
+            get { return allegiance_; }
+            set { allegiance_ = value; } }
 
         /// <summary>
         /// Create a default Character

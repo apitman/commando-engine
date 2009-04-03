@@ -68,7 +68,7 @@ namespace Commando.objects
             atLocation_ = false;
             collisionDetector_ = null;
             radius_ = RADIUS;
-            allegiance_ = 2; 
+            Allegiance_ = 2; 
             height_ = new Height(true, false);
             boundsPolygon_ = new CircularConvexPolygon(radius_, position_);
 

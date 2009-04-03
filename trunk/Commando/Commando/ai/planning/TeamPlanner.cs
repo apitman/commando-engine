@@ -25,12 +25,24 @@ namespace Commando.ai.planning
 {
     internal class TeamPlanner
     {
+        protected int allegiance_;
+
         protected int counter = 0;
-        protected const int UPDATE_RATE = 150; // every five seconds
+        protected const int UPDATE_RATE = 90; // every three seconds
 
         protected List<AI> teamMembers_ = new List<AI>();
         protected List<TeamGoal> teamGoals_ = new List<TeamGoal>();
 
+        internal TeamPlanner(int allegiance)
+        {
+            allegiance_ = allegiance;
+            counter = RandomManager.get().Next(UPDATE_RATE);
+        }
+
+        /// <summary>
+        /// Refreshes the team, detects the current goal, and allocates
+        /// tasks to individual team members.
+        /// </summary>
         internal void update()
         {
             counter++;
@@ -41,8 +53,14 @@ namespace Commando.ai.planning
             counter = 0;
 
             refreshTeamMembers();
+
+            selectBestGoal();
         }
 
+        /// <summary>
+        /// This method makes sure that dead team members aren't a
+        /// part of the team.
+        /// </summary>
         protected void refreshTeamMembers()
         {
             for (int i = 0; i < teamMembers_.Count; i++)
@@ -63,6 +81,52 @@ namespace Commando.ai.planning
         {
             // TODO
             throw new NotImplementedException();
+        }
+
+        protected void selectBestGoal()
+        {
+            float highestRelevance = float.MinValue;
+            TeamGoal mostRelevant = null;
+            for (int i = 0; i < teamGoals_.Count; i++)
+            {
+                teamGoals_[i].refresh(teamMembers_);
+                if (!teamGoals_[i].HasFailed_ && teamGoals_[i].isValid(teamMembers_) && teamGoals_[i].Relevance_ > highestRelevance)
+                {
+                    highestRelevance = teamGoals_[i].Relevance_;
+                    mostRelevant = teamGoals_[i];
+                }
+            }
+
+            if (mostRelevant == null)
+            {
+                clearTeamGoals();
+                return;
+            }
+
+            mostRelevant.allocateTasks(teamMembers_);
+        }
+
+        protected void clearTeamGoals()
+        {
+            for (int i = 0; i < teamMembers_.Count; i++)
+            {
+                teamMembers_[i].GoalManager_.getTeamGoal().HasFailed_ = true;
+            }
+        }
+
+        internal void addMember(AI ai)
+        {
+            teamMembers_.Add(ai);
+        }
+
+        internal void removeMember(AI ai)
+        {
+            teamMembers_.Remove(ai);
+        }
+
+        internal void addGoal(TeamGoal goal)
+        {
+            teamGoals_.Add(goal);
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Commando.ai
         protected AI AI_;
 
         protected List<Goal> goals_ = new List<Goal>();
+        protected GoalTeamwork teamworkGoal_;
 
         internal GoalManager(AI ai)
         {
@@ -40,9 +41,20 @@ namespace Commando.ai
             goals_.Add(goal);
         }
 
-        internal void setTeamGoal(Goal goal)
+        internal GoalTeamwork getTeamGoal()
         {
-            throw new NotImplementedException();
+            if (teamworkGoal_ == null)
+            {
+                teamworkGoal_ = new GoalTeamwork(AI_);
+            }
+            return teamworkGoal_;
+        }
+
+        internal void setTeamGoal(GoalTeamwork goal)
+        {
+            goals_.Remove(teamworkGoal_);
+            teamworkGoal_ = goal;
+            goals_.Add(teamworkGoal_);
         }
 
         internal void update()

@@ -45,6 +45,7 @@ namespace Commando.ai.sensors
                     bel.confidence_ /= 2;
                 }
                 Belief temp = bel.convert(BeliefType.InvestigateTarget);
+                temp.relevance_ = bel.confidence_;
                 AI_.Memory_.setBelief(temp);
             }
         }
@@ -60,7 +61,7 @@ namespace Commando.ai.sensors
                     b.position_ = stim.position_;
                     AI_.Memory_.setBelief(b);
                 }
-                else if (stim.type_ == StimulusType.Message && stim.sourceAllegiance_ == AI_.Character_.allegiance_)
+                else if (stim.type_ == StimulusType.Message && stim.sourceAllegiance_ == AI_.Character_.Allegiance_)
                 {
                     // For now, we believe messages that we receive with 100% certainty
                     AI_.Memory_.setBelief(stim.message_);

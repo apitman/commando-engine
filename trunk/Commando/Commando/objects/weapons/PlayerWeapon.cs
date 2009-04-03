@@ -63,7 +63,7 @@ namespace Commando.objects.weapons
                 weaponFired_ = false;
                 WorldState.Audial_.Add(
                     audialStimulusId_,
-                    new Stimulus(StimulusSource.CharacterAbstract, this.character_.allegiance_, StimulusType.Position, SOUND_RADIUS, this.position_, this)
+                    new Stimulus(StimulusSource.CharacterAbstract, this.character_.Allegiance_, StimulusType.Position, SOUND_RADIUS, this.position_, this)
                 );
             }
         }

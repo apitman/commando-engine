@@ -25,13 +25,21 @@ namespace Commando.ai.planning
 {
     class TeamGoalEliminate : TeamGoal
     {
-        protected const float RELEVANCE = 0.5f;
+        protected const float RELEVANCE = 100f;
 
         protected CharacterAbstract target_;
 
+        private static readonly SearchNode node;
+
+        static TeamGoalEliminate()
+        {
+            node = new SearchNode();
+            node.setTask(TeamTask.SUPPRESS);
+        }
+
         internal override bool isValid(List<AI> teamMembers)
         {
-            if (teamMembers.Count < 3)
+            if (teamMembers.Count < 2)
             {
                 return false;
             }
@@ -82,7 +90,17 @@ namespace Commando.ai.planning
 
         internal override void allocateTasks(List<AI> teamMembers)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < teamMembers.Count; i++)
+            {
+                GoalTeamwork goal = teamMembers[i].GoalManager_.getTeamGoal();
+                goal.setNode(node);
+                goal.HasFailed_ = false;
+                goal.Relevance_ = Relevance_;
+
+                teamMembers[i].Memory_.removeBeliefs(BeliefType.TeamInfo);
+                Belief teamBelief = new Belief(BeliefType.TeamInfo, target_, 100);
+                teamMembers[i].Memory_.setBelief(teamBelief);
+            }
         }
     }
 }

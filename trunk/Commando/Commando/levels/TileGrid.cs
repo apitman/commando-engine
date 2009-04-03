@@ -116,6 +116,10 @@ namespace Commando.levels
 
     public struct Height
     {
+        internal static readonly Height TALL = new Height(true, true);
+        internal static readonly Height SHORT = new Height(true, false);
+        internal static readonly Height FLOOR = new Height(false, false);
+
         public Height(bool blocksLow, bool blocksHigh)
         {
             blocksLow_ = blocksLow;

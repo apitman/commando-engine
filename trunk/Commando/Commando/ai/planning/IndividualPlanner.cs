@@ -25,7 +25,8 @@ namespace Commando.ai.planning
 {
 
     /// <summary>
-    /// Performs goal-oriented action planning for a single agent.
+    /// Performs a regressive A* state space search in order to create a plan
+    /// for a single agent to accomplish a given goal.
     /// </summary>
     internal class IndividualPlanner
     {
@@ -54,9 +55,10 @@ namespace Commando.ai.planning
         }
 
         /// <summary>
-        /// Create a plan from the initial state to the goal.
+        /// Construct a plan from the initial state to the goal using regressive
+        /// A* with variable unification.
         /// </summary>
-        /// <param name="initial">Current believed state of the world.</param>
+        /// <param name="initial">Current perceived state of the world.</param>
         /// <param name="goal">Desired state of the world.</param>
         public void execute(SearchNode initial, SearchNode goal)
         {

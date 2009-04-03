@@ -106,7 +106,7 @@ namespace Commando.objects.enemies
             boundsPolygonHigh_.rotate(direction_, position_);
             boundsPolygonLow_.rotate(direction_, position_);
             radius_ = RADIUS;
-            allegiance_ = 2;
+            Allegiance_ = 2;
 
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
@@ -254,7 +254,7 @@ namespace Commando.objects.enemies
             }
             else
             {
-                if (allegiance_ == 2)
+                if (Allegiance_ == 2)
                     currentDrawColor_ = Color.Black;
                 else
                     currentDrawColor_ = Color.White;

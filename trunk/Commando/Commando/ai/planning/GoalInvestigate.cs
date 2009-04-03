@@ -43,7 +43,7 @@ namespace Commando.ai.planning
                     HasFailed_ = false;
                 }
                 this.handle_ = investigateTarget.handle_;
-                Relevance_ = 0.1f + investigateTarget.confidence_ / 2;
+                Relevance_ = 10f + investigateTarget.confidence_ / 2;
             }
             else
             {

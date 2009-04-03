@@ -36,6 +36,7 @@ namespace Commando.ai.brains
             GoalManager_.addGoal(new GoalPatrol(this));
             GoalManager_.addGoal(new GoalInvestigate(this));
             GoalManager_.addGoal(new GoalKill(this));
+            GoalManager_.setTeamGoal(new GoalTeamwork(this));
 
             PlanManager_.addAction(new ActionTypeTakeCover(npc));
             PlanManager_.addAction(new ActionTypeInvestigate(npc));
@@ -45,6 +46,8 @@ namespace Commando.ai.brains
             PlanManager_.addAction(new ActionTypeAttackRangedCover(npc));
             PlanManager_.addAction(new ActionTypeFlee(npc));
             PlanManager_.addAction(new ActionTypePickupAmmo(npc));
+
+            PlanManager_.addAction(new TeamActionTypeSuppress(npc));
 
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));

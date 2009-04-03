@@ -118,6 +118,7 @@
     <Compile Include="ai\planning\GoalKill.cs" />
     <Compile Include="ai\planning\GoalManager.cs" />
     <Compile Include="ai\planning\GoalPatrol.cs" />
+    <Compile Include="ai\planning\GoalTeamwork.cs" />
     <Compile Include="ai\planning\TeamActionSuppress.cs" />
     <Compile Include="ai\planning\TeamPlanner.cs" />
     <Compile Include="ai\planning\IndividualPlanner.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="ai\planning\SearchNode.cs" />
     <Compile Include="ai\planning\TeamGoal.cs" />
     <Compile Include="ai\planning\TeamGoalEliminate.cs" />
+    <Compile Include="ai\planning\TeamPlannerManager.cs" />
     <Compile Include="ai\Raycaster.cs" />
     <Compile Include="ai\sensors\Sensor.cs" />
     <Compile Include="ai\sensors\SensorAmmo.cs" />

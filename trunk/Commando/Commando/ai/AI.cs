@@ -57,13 +57,9 @@ namespace Commando.ai
             CurrentGoal_ = null;
             PlanManager_ = new PlanManager(this);
 
-            //systems_.Add(new SystemAiming(this));
             systems_.Add(new SystemTargetSelection(this));
             systems_.Add(new SystemCoverSelection(this));
             systems_.Add(new SystemMemoryCleanup(this));
-
-            //path_ = new List<TileIndex>();
-            //lastPathfindUpdate_ = 0;
 
             CommunicationSystem_ = new SystemCommunication(this, 100);
         }
@@ -89,8 +85,8 @@ namespace Commando.ai
 
         public void draw()
         {
-            CommunicationSystem_.draw();
-            //PlanManager_.draw();
+            //CommunicationSystem_.draw();
+            PlanManager_.draw();
         }
 
         public void die()

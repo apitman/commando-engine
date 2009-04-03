@@ -24,12 +24,26 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.ai;
 using Commando.collisiondetection;
+using Commando.ai.planning;
 
 namespace Commando.objects
 {
     public abstract class NonPlayableCharacterAbstract : CharacterAbstract
     {
         internal AI AI_ { get; set; }
+
+        internal override int Allegiance_
+        {
+            get
+            {
+                return base.Allegiance_;
+            }
+            set
+            {
+                base.Allegiance_ = value;
+                TeamPlannerManager.register(AI_);
+            }
+        }
 
         /// <summary>
         /// Create a default NonPlayableCharacter
