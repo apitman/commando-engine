@@ -38,7 +38,7 @@ namespace Commando
         public static float distance(Vector2 point1, Vector2 point2)
         {
             point1.X -= point2.X;
-            point1.Y -= point1.Y;
+            point1.Y -= point2.Y;
             return point1.Length();
             //return (float)Math.Sqrt(point1.X * point1.X + point1.Y * point1.Y);
         }
