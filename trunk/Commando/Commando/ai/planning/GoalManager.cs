@@ -24,6 +24,9 @@ using Commando.ai.planning;
 
 namespace Commando.ai
 {
+    /// <summary>
+    /// Manages an agent's Goals and selects the most relevant.
+    /// </summary>
     class GoalManager
     {
         protected AI AI_;
@@ -36,11 +39,20 @@ namespace Commando.ai
             AI_ = ai;
         }
 
+        /// <summary>
+        /// Add a goal for the agent to consider.
+        /// </summary>
+        /// <param name="goal">Goal to be considered.</param>
         internal void addGoal(Goal goal)
         {
             goals_.Add(goal);
         }
 
+        /// <summary>
+        /// Used by TeamPlanner to push information about team goals
+        /// to the agent.
+        /// </summary>
+        /// <returns>The agent's GoalTeamwork object.</returns>
         internal GoalTeamwork getTeamGoal()
         {
             if (teamworkGoal_ == null)
@@ -50,6 +62,10 @@ namespace Commando.ai
             return teamworkGoal_;
         }
 
+        /// <summary>
+        /// Sets a GoalTeamwork object which will be used by a TeamPlanner.
+        /// </summary>
+        /// <param name="goal">The GoalTeamwork object being set.</param>
         internal void setTeamGoal(GoalTeamwork goal)
         {
             goals_.Remove(teamworkGoal_);
@@ -57,6 +73,10 @@ namespace Commando.ai
             goals_.Add(teamworkGoal_);
         }
 
+        /// <summary>
+        /// Refresh all Goals to get updated relevance ratings, then select
+        /// the most relevant as the agent's current goal.
+        /// </summary>
         internal void update()
         {
             float highestRelevance = float.MinValue;

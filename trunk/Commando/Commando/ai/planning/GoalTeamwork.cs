@@ -23,6 +23,11 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// GoalTeamwork is a placeholder goal which will be filled in by the TeamGoal
+    /// that a TeamPlanner has deemed the most relevant.  Essentially, it stores the
+    /// logic to tell an agent what its team wants it to accomplish.
+    /// </summary>
     internal class GoalTeamwork : Goal
     {
 
@@ -33,14 +38,22 @@ namespace Commando.ai.planning
             node_ = new SearchNode();
         }
 
+        /// <summary>
+        /// Sets the goal state to be used by IndividualPlanner.
+        /// </summary>
+        /// <param name="node">The goal state.</param>
         internal void setNode(SearchNode node)
         {
             node_ = node;
         }
 
+        /// <summary>
+        /// Required by Goal, this normally makes the goal contain a recent assessment.
+        /// However, that is handled for this class by TeamPlanner in a push manner.
+        /// </summary>
         internal override void refresh()
         {
-            // Do nothing... this is accomplished by the TeamPlanner
+            // Do nothing
         }
     }
 }

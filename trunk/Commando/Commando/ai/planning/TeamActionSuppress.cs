@@ -26,6 +26,10 @@ using Commando.graphics;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// Action causing the agent to fire in the area near a known target.
+    /// Satisfies TeamTask of providing suppressive fire for the team.
+    /// </summary>
     internal class TeamActionTypeSuppress : ActionType
     {
         protected internal const int COST = 3;

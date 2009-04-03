@@ -23,6 +23,10 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// Performs team maintenance and cleanup, as well as selecting the TeamGoal
+    /// whose subtasks will be distributed to team members.
+    /// </summary>
     internal class TeamPlanner
     {
         protected int allegiance_;
@@ -83,6 +87,10 @@ namespace Commando.ai.planning
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Runs through all TeamGoals and selects the most relevant, if any.
+        /// This goal is then pushed via GoalTeamwork to individual agents.
+        /// </summary>
         protected void selectBestGoal()
         {
             float highestRelevance = float.MinValue;
@@ -106,6 +114,9 @@ namespace Commando.ai.planning
             mostRelevant.allocateTasks(teamMembers_);
         }
 
+        /// <summary>
+        /// Tell all team members that there is no team goal.
+        /// </summary>
         protected void clearTeamGoals()
         {
             for (int i = 0; i < teamMembers_.Count; i++)
@@ -114,16 +125,29 @@ namespace Commando.ai.planning
             }
         }
 
+        /// <summary>
+        /// Add a team member.
+        /// </summary>
+        /// <param name="ai">AI of the team member to be added.</param>
         internal void addMember(AI ai)
         {
             teamMembers_.Add(ai);
         }
 
+        /// <summary>
+        /// Remove a team member.
+        /// </summary>
+        /// <param name="ai">Ai of the team member to be removed.</param>
         internal void removeMember(AI ai)
         {
             teamMembers_.Remove(ai);
         }
 
+        /// <summary>
+        /// Add a TeamGoal for this planner to push to team members when it
+        /// is the most relevant.
+        /// </summary>
+        /// <param name="goal">The possible team goal.</param>
         internal void addGoal(TeamGoal goal)
         {
             teamGoals_.Add(goal);

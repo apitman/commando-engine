@@ -42,13 +42,26 @@ namespace Commando.ai.planning
             AI_ = ai;
         }
 
+        /// <summary>
+        /// Force the goal to recalculate its relevance value.
+        /// </summary>
         internal abstract void refresh();
 
+        /// <summary>
+        /// Get a SearchNode from the goal which can be used by the IndividualPlanner.
+        /// </summary>
+        /// <returns>The goal SearchNode.</returns>
         internal SearchNode getNode()
         {
             return node_;
         }
 
+        /// <summary>
+        /// Determine whether two goals are identical.
+        /// </summary>
+        /// <param name="lhs">First goal.</param>
+        /// <param name="rhs">Second goal.</param>
+        /// <returns>True if the two goals might accomplish the same end state, false otherwise.</returns>
         internal static bool areSame(Goal lhs, Goal rhs)
         {
             if (lhs == null && rhs == null) return true;
@@ -56,6 +69,12 @@ namespace Commando.ai.planning
             return (lhs.handle_ == rhs.handle_) && testNodeEquality(lhs.node_, rhs.node_);
         }
 
+        /// <summary>
+        /// Determine whether two goal SearchNodes could unify to the same state.
+        /// </summary>
+        /// <param name="lhs">First SearchNode.</param>
+        /// <param name="rhs">Second SearchNode.</param>
+        /// <returns>True if the goals could both be resolved by a state, false otherwise.</returns>
         protected internal static bool testNodeEquality(SearchNode lhs, SearchNode rhs)
         {
             if (lhs == null && rhs == null)
