@@ -23,15 +23,32 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// Encapsulation of a goal to be achieved by a team of agents.
+    /// </summary>
     internal abstract class TeamGoal
     {
         internal bool HasFailed_ { get; set; }
         internal float Relevance_ { get; set; } // TODO figure out why protected internal doesn't work
 
+        /// <summary>
+        /// Whether or not the goal is valid, and whether or not the
+        /// team should even attempt to achieve it.
+        /// </summary>
+        /// <param name="teamMembers">Team to check for validity.</param>
+        /// <returns>True if the goal is valid and achievable, false otherwise.</returns>
         internal abstract bool isValid(List<AI> teamMembers);
 
+        /// <summary>
+        /// Update the current relevance and failure flags.
+        /// </summary>
+        /// <param name="teamMembers">The team considering the goal.</param>
         internal abstract void refresh(List<AI> teamMembers);
 
+        /// <summary>
+        /// Adjust a team's GoalTeamwork goals to match this goal.
+        /// </summary>
+        /// <param name="teamMembers">The team carrying out the goal.</param>
         internal abstract void allocateTasks(List<AI> teamMembers);
     }
 }

@@ -26,19 +26,31 @@ using Commando.levels;
 namespace Commando.ai.planning
 {
     /// <summary>
-    /// A node in the search space used by IndividualPlanner.
+    /// A node in the search space used by IndividualPlanner for
+    /// goal-oriented action planning.
     /// </summary>
     internal class SearchNode : IComparer<SearchNode>
     {
-        internal Action action;
+        internal Action action; // action performed from this node to reach the next
 
-        internal float fValue;
-        internal float cost;
+        internal float fValue; // A* cost + heuristic value for search space ordering
+        internal float cost; // cost to reach this node in the space
+
+        // descendent of this node in time, predecessor in search space
+        // i.e., the node after 'action' is performed on this node
         internal SearchNode next;
 
+        // values associated with variables used to describe the state of the world
         internal VariableValue[] values = new VariableValue[Variable.LENGTH];
+
+        // whether each of those variables has actually unified to a value
         internal bool[] resolved = new bool[Variable.LENGTH];
 
+        /// <summary>
+        /// Essentially, copy this node so that an action can 'undo' itself from the
+        /// node.
+        /// </summary>
+        /// <returns>A node which might have preceded this node in time.</returns>
         internal SearchNode getPredecessor()
         {
             SearchNode node = new SearchNode();
@@ -52,6 +64,13 @@ namespace Commando.ai.planning
             return node;
         }
 
+        /// <summary>
+        /// Whether a particular variable in this node could have a
+        /// particular Boolean value.
+        /// </summary>
+        /// <param name="var">Variable identifier<./param>
+        /// <param name="val">Possible value.</param>
+        /// <returns>True if it is possible, false otherwise</returns>
         internal bool boolPasses(int var, bool val)
         {
             return
@@ -59,6 +78,13 @@ namespace Commando.ai.planning
                 this.values[var].b == val;
         }
 
+        /// <summary>
+        /// Whether a particular variable in this node could have a
+        /// particular TeamTask enumeration value.
+        /// </summary>
+        /// <param name="var">Variable identifier.</param>
+        /// <param name="val">Possible value.</param>
+        /// <returns>True if it is possible, false otherwise</returns>
         internal bool taskPasses(int var, TeamTask val)
         {
             return
@@ -66,35 +92,68 @@ namespace Commando.ai.planning
                 this.values[var].task == val;
         }
 
+        /// <summary>
+        /// Unify a Boolean value to a particular Variable.
+        /// </summary>
+        /// <param name="var">Variable identifier.</param>
+        /// <param name="val">Value to set.</param>
         internal void setBool(int var, bool val)
         {
             this.values[var].b = val;
             this.resolved[var] = true;
         }
 
+        /// <summary>
+        /// Unify an integer value to a particular Variable.
+        /// </summary>
+        /// <param name="var">Variable identifier.</param>
+        /// <param name="val">Value to set.</param>
         internal void setInt(int var, int val)
         {
             this.values[var].i = val;
             this.resolved[var] = true;
         }
 
+        /// <summary>
+        /// Unify a TileIndex value to a particular Variable.
+        /// </summary>
+        /// <param name="var">Variable identifier.</param>
+        /// <param name="val">Value to set.</param>
         internal void setPosition(int var, ref TileIndex tile)
         {
             this.values[var].t = tile;
             this.resolved[var] = true;
         }
 
+        /// <summary>
+        /// Unify a TeamTask enum value to a particular Variable.
+        /// </summary>
+        /// <param name="var">Variable identifier.</param>
+        /// <param name="val">Value to set.</param>
         internal void setTask(TeamTask val)
         {
             this.values[Variable.TeamTask].task = val;
             this.resolved[Variable.TeamTask] = true;
         }
 
+        /// <summary>
+        /// Clear a unified Variable so that it could have any value.
+        /// </summary>
+        /// <param name="var">Variable identifier to clear.</param>
         internal void unresolve(int var)
         {
             this.resolved[var] = false;
         }
 
+        /// <summary>
+        /// Determine whether another search node could be the same as
+        /// this one, i.e., if variable values could unify.
+        /// </summary>
+        /// <param name="other">The node being compared.</param>
+        /// <param name="failures">
+        /// A list which will be filled with Variable
+        /// identifiers which conflicted.
+        /// </param>
         internal void unifiesWith(SearchNode other, List<int> failures)
         {
             failures.Clear();
@@ -110,6 +169,12 @@ namespace Commando.ai.planning
             }
         }
         
+        /// <summary>
+        /// Guess how many actions would take to get from this SearchNode to
+        /// another based on how many Variables conflict.
+        /// </summary>
+        /// <param name="other">The other SearchNode.</param>
+        /// <returns>Number of variables which conflict.</returns>
         internal int dist(SearchNode other)
         {
             int dist = 0;
@@ -126,32 +191,12 @@ namespace Commando.ai.planning
             return dist;
         }
 
-        // Remove this when a wrapper Goal class is used
-        /*
-        public static bool testGoalEquality(SearchNode lhs, SearchNode rhs)
-        {
-            if (lhs == null && rhs == null)
-                return true;
-
-            if (lhs == null || rhs == null)
-                return false;
-
-            if (lhs.values.Length != rhs.resolved.Length)
-                return false;
-
-            for (int i = 0; i < lhs.values.Length; i++)
-            {
-                if (lhs.values[i].i != rhs.values[i].i)
-                    return false;
-                if (rhs.resolved[i] != rhs.resolved[i])
-                    return false;
-            }
-            return true;
-        }
-         */
-
-        #region IComparer<SearchNode> Members
-
+        /// <summary>
+        /// Used by C# library functions to sort SearchNodes.
+        /// </summary>
+        /// <param name="x">First node in current ordering.</param>
+        /// <param name="y">Second node in current ordering.</param>
+        /// <returns>lt = -1, eq = 0, gt = 1</returns>
         public int Compare(SearchNode x, SearchNode y)
         {
             if (x.fValue < y.fValue)
@@ -161,9 +206,12 @@ namespace Commando.ai.planning
             return 0;
         }
 
-        #endregion
     }
 
+    /// <summary>
+    /// A C-style Union used to store different value types for
+    /// different Variables.
+    /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     internal struct VariableValue
     {
@@ -178,7 +226,7 @@ namespace Commando.ai.planning
     }
 
     /// <summary>
-    /// Class for maintaining an enumeration for the variables stored
+    /// Class for maintaining an enumeration for the Variables stored
     /// in the SearchNode class.
     /// </summary>
     internal static class Variable
@@ -196,6 +244,9 @@ namespace Commando.ai.planning
         internal const int LENGTH = 9;
     }
 
+    /// <summary>
+    /// Enumeration representing different tasks requested by the team.
+    /// </summary>
     internal enum TeamTask
     {
         CLEAR,

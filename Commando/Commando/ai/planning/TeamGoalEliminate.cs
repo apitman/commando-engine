@@ -23,6 +23,9 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// Represents a team's desire to eliminate a single enemy threat.
+    /// </summary>
     class TeamGoalEliminate : TeamGoal
     {
         protected const float RELEVANCE = 100f;

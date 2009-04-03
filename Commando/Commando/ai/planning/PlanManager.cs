@@ -25,6 +25,9 @@ using Microsoft.Xna.Framework;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// Manages an agent's action plan and replans when necessary.
+    /// </summary>
     internal class PlanManager
     {
         protected AI AI_;
@@ -40,6 +43,10 @@ namespace Commando.ai.planning
             HasFailed_ = false;
         }
 
+        /// <summary>
+        /// Determine whether goals have changed or plans have failed, and
+        /// replan if necessary.  Then execute the plan.
+        /// </summary>
         internal void update()
         {
             bool differencesFlag =
@@ -76,6 +83,10 @@ namespace Commando.ai.planning
             }
         }
 
+        /// <summary>
+        /// Execute current action in the plan and handle the result
+        /// of that action.
+        /// </summary>
         internal void executePlan()
         {
             if (currentPlan_ != null && currentPlan_.Count > 0)
@@ -126,6 +137,10 @@ namespace Commando.ai.planning
             }
         }
 
+        /// <summary>
+        /// Get the current perceived world state to be used by IndividualPlanner.
+        /// </summary>
+        /// <returns>An initial search node for the planner.</returns>
         internal SearchNode getInitialState()
         {
             SearchNode initial = new SearchNode();
@@ -152,6 +167,10 @@ namespace Commando.ai.planning
             return initial;
         }
 
+        /// <summary>
+        /// Reserve the resources necessary for a plan.
+        /// </summary>
+        /// <param name="plan">Plan being reserved.</param>
         protected void reservePlan(List<Action> plan)
         {
             for (int i = 0; i < plan.Count; i++)
@@ -160,6 +179,10 @@ namespace Commando.ai.planning
             }
         }
 
+        /// <summary>
+        /// Unreserve resources of a plan being discarded.
+        /// </summary>
+        /// <param name="plan">The plan being discarded.</param>
         protected void cleanupPlan(List<Action> plan)
         {
             if (plan == null)
@@ -171,16 +194,27 @@ namespace Commando.ai.planning
             plan.Clear();
         }
 
+        /// <summary>
+        /// Add an action type which the agent can use in planning.
+        /// </summary>
+        /// <param name="action">Type of action which the agent can perform.</param>
         internal void addAction(ActionType action)
         {
             actions_.Add(action);
         }
 
+        /// <summary>
+        /// Cleanup resources used by the planner.
+        /// </summary>
         internal void die()
         {
             cleanupPlan(currentPlan_);
         }
 
+        /// <summary>
+        /// Draw current goal and plan above an agent's head.
+        /// For debugging and demoing purposes.
+        /// </summary>
         internal void draw()
         {
 #if !XBOX

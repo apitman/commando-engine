@@ -23,10 +23,14 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
+    /// <summary>
+    /// Provide global access to all TeamPlanners; enforces a limit of one
+    /// TeamPlanner per allegiance value and one team per agent.
+    /// </summary>
     static class TeamPlannerManager
     {
-        private static Dictionary<AI, int> registry_;
-        private static Dictionary<int, TeamPlanner> map_;
+        private static Dictionary<AI, int> registry_; // Map of agents to allegiances
+        private static Dictionary<int, TeamPlanner> map_; // Map of allegiances to planners
 
         static TeamPlannerManager()
         {
@@ -34,6 +38,11 @@ namespace Commando.ai.planning
             map_ = new Dictionary<int, TeamPlanner>();
         }
 
+        /// <summary>
+        /// Add an AI to the appropriate TeamPlanner, or move it to the
+        /// appropriate TeamPlanner if it is already in one.
+        /// </summary>
+        /// <param name="ai">Agent's AI to be registered.</param>
         internal static void register(AI ai)
         {
             if (ai == null)
@@ -67,6 +76,9 @@ namespace Commando.ai.planning
             }
         }
 
+        /// <summary>
+        /// Run all known TeamPlanners.
+        /// </summary>
         internal static void update()
         {
             Dictionary<int, TeamPlanner>.ValueCollection planners = map_.Values;
