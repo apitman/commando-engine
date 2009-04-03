@@ -28,6 +28,7 @@ using Commando.collisiondetection;
 using Commando.ai;
 using Microsoft.Xna.Framework.Storage;
 using Commando.objects.enemies;
+using Commando.ai.planning;
 
 namespace Commando
 {
@@ -399,6 +400,9 @@ namespace Commando
             {
                 player_.setInputSet(inputs);
             }
+
+            // Update enemy team AI
+            TeamPlannerManager.update();
 
             // Update all of the objects in the drawing pipeline
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)

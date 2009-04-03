@@ -23,33 +23,24 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
-    class GoalKill : Goal
+    internal class GoalTeamwork : Goal
     {
-        internal GoalKill(AI ai)
+
+        internal GoalTeamwork(AI ai)
             : base(ai)
         {
+            // This will be replaced by the TeamPlanner using setNode()
             node_ = new SearchNode();
-            node_.setInt(Variable.TargetHealth, 0);
+        }
+
+        internal void setNode(SearchNode node)
+        {
+            node_ = node;
         }
 
         internal override void refresh()
         {
-            Belief target = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-            if (target != null)
-            {
-                if (target.handle_ != this.handle_)
-                {
-                    // new target, so reset the HasFailed flag
-                    HasFailed_ = false;
-                }
-                this.handle_ = target.handle_;
-                Relevance_ = 50f + target.confidence_ / 2;
-            }
-            else
-            {
-                this.handle_ = null;
-                Relevance_ = 0.0f;
-            }
+            // Do nothing... this is accomplished by the TeamPlanner
         }
     }
 }

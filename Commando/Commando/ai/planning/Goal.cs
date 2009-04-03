@@ -34,8 +34,8 @@ namespace Commando.ai.planning
         protected Object handle_;
 
         internal AI AI_ { get; private set; }
-        internal bool HasFailed_ { get; set; }
-        internal float Relevance_ { get; set; } // TODO figure out why protected internal doesn't work
+        internal virtual bool HasFailed_ { get; set; }
+        internal virtual float Relevance_ { get; set; } // TODO figure out why protected internal doesn't work
 
         internal Goal(AI ai)
         {

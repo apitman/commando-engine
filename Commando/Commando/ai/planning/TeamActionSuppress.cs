@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
+using Commando.levels;
+using Commando.graphics;
 
 namespace Commando.ai.planning
 {
@@ -63,7 +65,12 @@ namespace Commando.ai.planning
 
     internal class TeamActionSuppress : Action
     {
+        protected const int SUPPRESSION_LENGTH = 30; // full second of suppression
+
+        protected int counter_ = 0;
+
         protected Object handle_;
+        protected CharacterAbstract enemy_;
 
         internal TeamActionSuppress(NonPlayableCharacterAbstract character, Object handle)
             : base(character)
@@ -73,12 +80,36 @@ namespace Commando.ai.planning
 
         internal override bool initialize()
         {
-            throw new NotImplementedException();
+            enemy_ = (handle_ as CharacterAbstract);
+            return (enemy_ != null);
         }
 
         internal override ActionStatus update()
         {
-            throw new NotImplementedException();
+            counter_++;
+            if (counter_ >= SUPPRESSION_LENGTH)
+            {
+                return ActionStatus.SUCCESS;
+            }
+
+            Belief belief = character_.AI_.Memory_.getBelief(BeliefType.EnemyLoc, handle_);
+
+            if (belief != null)
+            {
+                if (character_.Weapon_.CurrentAmmo_ <= 0 &&
+                    character_.Inventory_.Ammo_[character_.Weapon_.AmmoType_] <= 0)
+                {
+                    return ActionStatus.FAILED;
+                }
+
+                if (Raycaster.canSeePoint(character_.getPosition(), belief.position_, character_.getHeight(), Height.TALL))
+                {
+                    (character_.getActuator() as DefaultActuator).lookAt(belief.position_);
+                    character_.Weapon_.shoot();
+                }
+            }
+
+            return ActionStatus.IN_PROGRESS;
         }
     }
 }

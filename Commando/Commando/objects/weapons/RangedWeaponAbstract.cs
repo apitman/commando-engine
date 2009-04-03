@@ -139,5 +139,22 @@ namespace Commando
         {
             collisionDetector_ = detector;
         }
+
+        protected double getInaccuracyAdjustment(float maxInaccuracy)
+        {
+            Random r = RandomManager.get();
+            int num = r.Next(2001);
+            num -= 1000;
+            return num * maxInaccuracy / 1000f;
+        }
+
+        protected Vector2 adjustForInaccuracy(Vector2 rotation, float maxInaccuracy)
+        {
+            return
+                CommonFunctions.rotate(
+                    rotation,
+                    getInaccuracyAdjustment(maxInaccuracy)
+                );
+        }
     }
 }

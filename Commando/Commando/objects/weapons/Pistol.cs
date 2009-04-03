@@ -32,7 +32,10 @@ namespace Commando.objects.weapons
         protected const AmmoTypeEnum AMMO_TYPE = AmmoTypeEnum.BULLETS;
         protected const int TIME_TO_REFIRE = 10;
         protected const float PISTOL_SOUND_RADIUS = 150.0f;
+
         internal const int CLIP_SIZE = 20;
+
+        internal const float MAX_INACCURACY = 0.05f;
 
         public Pistol(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle, AMMO_TYPE, CLIP_SIZE)
@@ -49,7 +52,7 @@ namespace Commando.objects.weapons
             {
                 rotation_.Normalize();
                 Vector2 bulletPos = position_ + rotation_ * 15f;
-                Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, rotation_);
+                Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, adjustForInaccuracy(rotation_, MAX_INACCURACY));
                 refireCounter_ = TIME_TO_REFIRE;
                 CurrentAmmo_--;
                 character_.getAmmo().update(CurrentAmmo_);

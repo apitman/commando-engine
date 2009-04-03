@@ -46,7 +46,7 @@ namespace Commando.ai.sensors
                 CharacterAbstract character = WorldState.CharacterList_[i];
                 BeliefType locationType;
                 BeliefType healthType;
-                if (me.allegiance_ == character.allegiance_)
+                if (me.Allegiance_ == character.Allegiance_)
                 {
                     locationType = BeliefType.AllyLoc;
                     healthType = BeliefType.AllyHealth;

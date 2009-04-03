@@ -23,32 +23,56 @@ using System.Text;
 
 namespace Commando.ai.planning
 {
-    class GoalKill : Goal
+    static class TeamPlannerManager
     {
-        internal GoalKill(AI ai)
-            : base(ai)
+        private static Dictionary<AI, int> registry_;
+        private static Dictionary<int, TeamPlanner> map_;
+
+        static TeamPlannerManager()
         {
-            node_ = new SearchNode();
-            node_.setInt(Variable.TargetHealth, 0);
+            registry_ = new Dictionary<AI, int>();
+            map_ = new Dictionary<int, TeamPlanner>();
         }
 
-        internal override void refresh()
+        internal static void register(AI ai)
         {
-            Belief target = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-            if (target != null)
+            if (ai == null)
             {
-                if (target.handle_ != this.handle_)
-                {
-                    // new target, so reset the HasFailed flag
-                    HasFailed_ = false;
-                }
-                this.handle_ = target.handle_;
-                Relevance_ = 50f + target.confidence_ / 2;
+                return;
+            }
+
+            int allegiance = ai.Character_.Allegiance_;
+            if (registry_.ContainsKey(ai))
+            {
+                int previousAllegiance =
+                    registry_[ai];
+                map_[previousAllegiance].removeMember(ai);
+                registry_[ai] = ai.Character_.Allegiance_;
             }
             else
             {
-                this.handle_ = null;
-                Relevance_ = 0.0f;
+                registry_.Add(ai, allegiance);
+            }
+
+            if (map_.ContainsKey(allegiance))
+            {
+                map_[allegiance].addMember(ai);
+            }
+            else
+            {
+                TeamPlanner tp = new TeamPlanner(allegiance);
+                tp.addMember(ai);
+                tp.addGoal(new TeamGoalEliminate());
+                map_.Add(allegiance, tp);
+            }
+        }
+
+        internal static void update()
+        {
+            Dictionary<int, TeamPlanner>.ValueCollection planners = map_.Values;
+            foreach (TeamPlanner tp in planners)
+            {
+                tp.update();
             }
         }
     }

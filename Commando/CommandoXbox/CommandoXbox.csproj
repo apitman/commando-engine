@@ -130,6 +130,9 @@
     <Compile Include="..\Commando\ai\planning\GoalPatrol.cs">
       <Link>ai\planning\GoalPatrol.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\GoalTeamwork.cs">
+      <Link>ai\planning\GoalTeamwork.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\IndividualPlanner.cs">
       <Link>ai\planning\IndividualPlanner.cs</Link>
     </Compile>
@@ -153,6 +156,9 @@
     </Compile>
     <Compile Include="..\Commando\ai\planning\TeamPlanner.cs">
       <Link>ai\planning\TeamPlanner.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\TeamPlannerManager.cs">
+      <Link>ai\planning\TeamPlannerManager.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\Raycaster.cs">
       <Link>ai\Raycaster.cs</Link>

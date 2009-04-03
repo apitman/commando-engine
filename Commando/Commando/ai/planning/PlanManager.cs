@@ -90,10 +90,23 @@ namespace Commando.ai.planning
                     ActionStatus status = currentPlan_[0].update();
                     if (status == ActionStatus.SUCCESS)
                     {
+                        // Go to next step in plan
                         currentPlan_.RemoveAt(0);
                         if (currentPlan_.Count > 0)
                         {
                             currentPlan_[0].initialize();
+                        }
+
+                        // Unless there isn't one
+                        else
+                        {
+                            // If the goal was GoalTeamwork, mark it as
+                            //  irrelevant so we don't try it again until the
+                            //  team goals refresh
+                            if (AI_.CurrentGoal_ is GoalTeamwork)
+                            {
+                                AI_.CurrentGoal_.Relevance_ = 0f;
+                            }
                         }
                     }
                     else if (status == ActionStatus.FAILED)
@@ -105,13 +118,16 @@ namespace Commando.ai.planning
                     {
                         // Do nothing
                     }
+                    else if (status == ActionStatus.UNKNOWN)
+                    {
+                        throw new NotImplementedException();
+                    }
                 }
             }
         }
 
         internal SearchNode getInitialState()
         {
-            // And now get a new one
             SearchNode initial = new SearchNode();
 
             bool hasWeapon = AI_.Character_.Weapon_ != null;
@@ -187,7 +203,7 @@ namespace Commando.ai.planning
             drawPosition.X -= GlobalHelper.getInstance().getCurrentCamera().getX();
             drawPosition.Y -= GlobalHelper.getInstance().getCurrentCamera().getY();
             drawPosition += prettyOffset;
-            FontMap.getInstance().getFont(FontEnum.Kootenay8).drawStringCentered(planString.ToString(), drawPosition, Microsoft.Xna.Framework.Graphics.Color.White, 0.0f, 0.9f);
+            FontMap.getInstance().getFont(FontEnum.Kootenay14).drawStringCentered(planString.ToString(), drawPosition, Microsoft.Xna.Framework.Graphics.Color.White, 0.0f, 0.9f);
 #endif
         }
     }

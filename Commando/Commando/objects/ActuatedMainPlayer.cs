@@ -128,7 +128,7 @@ namespace Commando.objects
             boundsPolygonLowCrouch_ = new ConvexPolygon(BOUNDSPOINTSLOWCROUCH, Vector2.Zero);
             boundsPolygonLowCrouch_.rotate(direction_, position_);
 
-            allegiance_ = 1;
+            Allegiance_ = 1;
 
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
