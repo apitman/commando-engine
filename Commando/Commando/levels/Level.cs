@@ -172,6 +172,30 @@ namespace Commando.levels
                         {
                             dumDum.Allegiance_ = Convert.ToInt32(team);
                         }
+
+                        string commLevel = ele2.GetAttribute("commLevel");
+                        if (commLevel != string.Empty)
+                        {
+                            Commando.ai.SystemCommunication.CommunicationLevel cL;
+                            if (commLevel == "Low")
+                            {
+                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Low;
+                            }
+                            else if (commLevel == "Medium")
+                            {
+                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
+                            }
+                            else if (commLevel == "High")
+                            {
+                                cL = Commando.ai.SystemCommunication.CommunicationLevel.High;
+                            }
+                            else
+                            {
+                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
+                            }
+                            dumDum.AI_.CommunicationSystem_.communicationLevel_ = cL;
+                        }
+
                         // TODO: AMP Fix it so we don't have to do this next line of code
                         dumDum.getActuator().update(); // Makes it so the enemies are drawn in the correct position
 
@@ -189,6 +213,28 @@ namespace Commando.levels
                             Humie.Allegiance_ = Convert.ToInt32(team);
                         }
 
+                        string commLevel = ele2.GetAttribute("commLevel");
+                        if (commLevel != string.Empty)
+                        {
+                            Commando.ai.SystemCommunication.CommunicationLevel cL;
+                            if (commLevel == "Low")
+                            {
+                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Low;
+                            }
+                            else if (commLevel == "Medium")
+                            {
+                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
+                            }
+                            else if (commLevel == "High")
+                            {
+                                cL = Commando.ai.SystemCommunication.CommunicationLevel.High;
+                            }
+                            else
+                            {
+                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
+                            }
+                            Humie.AI_.CommunicationSystem_.communicationLevel_ = cL;
+                        }
                      
                         // TODO: AMP Fix it so we don't have to do this next line of code
                         Humie.getActuator().update(); // Makes it so the enemies are drawn in the correct position

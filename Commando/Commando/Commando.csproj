@@ -102,6 +102,7 @@
     <Compile Include="ai\brains\DummyAI.cs" />
     <Compile Include="ai\brains\HumanAI.cs" />
     <Compile Include="ai\Memory.cs" />
+    <Compile Include="ai\Message.cs" />
     <Compile Include="ai\planning\Action.cs" />
     <Compile Include="ai\planning\ActionAttackRanged.cs" />
     <Compile Include="ai\planning\ActionAttackRangedCover.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="ai\planning\ActionTakeCover.cs" />
     <Compile Include="ai\planning\ActionThrowGrenade.cs" />
     <Compile Include="ai\planning\Goal.cs" />
+    <Compile Include="ai\planning\GoalIdle.cs" />
     <Compile Include="ai\planning\GoalInvestigate.cs" />
     <Compile Include="ai\planning\GoalKill.cs" />
     <Compile Include="ai\planning\GoalManager.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="ai\sensors\SensorCover.cs" />
     <Compile Include="ai\sensors\SensorEars.cs" />
     <Compile Include="ai\sensors\SensorSeeCharacter.cs" />
+    <Compile Include="ai\sensors\SensorSeeIncomingFire.cs" />
     <Compile Include="ai\sensors\SensorVisual.cs" />
     <Compile Include="ai\Stimulus.cs" />
     <Compile Include="ai\System.cs" />

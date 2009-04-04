@@ -27,21 +27,50 @@ namespace Commando.ai
 {
     public class SystemCommunication
     {
+        /// <summary>
+        /// The number of frames per second
+        /// </summary>
+        private const int FRAMERATE = 30;
+
+        private const int SECONDS_BEFORE_REPEATING_SELF = 5;
+
         public AI AI_;
 
         public bool isBroadcasting_;
 
         public string broadcastMessage_;
 
-        public bool talkative_;
+        public CommunicationLevel communicationLevel_;
 
-        public bool isListening_;
+        public bool IsListening_
+        {
+            get
+            {
+                return isListening_;
+            }
+            set
+            {
+                isListening_ = value;
+                if (value)
+                {
+                    framesSinceLastCommunication_ = 0;
+                }
+            }
+        }
+
+        public bool communicationRequested_;
+
+        protected bool isListening_;
 
         protected int framesLeftToBroadcast_;
 
         protected int broadcastRadius_;
 
         protected int key_;
+
+        protected int framesSinceLastCommunication_;
+
+        protected Dictionary<BeliefType, int> framesSinceCommunicatingThisType_;
 
         /// <summary>
         /// Basic constructor
@@ -54,8 +83,23 @@ namespace Commando.ai
             broadcastMessage_ = "Default Message";
             framesLeftToBroadcast_ = 0;
             key_ = StimulusIDGenerator.getNext();
-            talkative_ = true;
+            communicationLevel_ = CommunicationLevel.Medium;
             isListening_ = false;
+            communicationRequested_ = false;
+            framesSinceLastCommunication_ = 100;
+            framesSinceCommunicatingThisType_ = new Dictionary<BeliefType, int>();
+            framesSinceCommunicatingThisType_[BeliefType.AllyHealth] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.AllyLoc] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.AmmoLoc] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.AvailableCover] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.BestTarget] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.CoverLoc] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.EnemyHealth] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.EnemyLoc] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.Error] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.InvestigateTarget] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.SuspiciousNoise] = 0;
+            framesSinceCommunicatingThisType_[BeliefType.TeamInfo] = 0;
         }
 
         /// <summary>
@@ -76,6 +120,7 @@ namespace Commando.ai
             else if (!isListening_)
             {
                 decideWhatToBroadcast();
+                framesSinceLastCommunication_++;
             }
         }
 
@@ -83,12 +128,12 @@ namespace Commando.ai
         {
             if (isBroadcasting_)
             {
-                Vector2 prettyOffset = new Vector2(0.0f, -15.0f);
+                Vector2 prettyOffset = new Vector2(0.0f, -30.0f);
                 Vector2 drawPosition = new Vector2(AI_.Character_.getPosition().X, AI_.Character_.getPosition().Y);
                 drawPosition.X -= GlobalHelper.getInstance().getCurrentCamera().getX();
                 drawPosition.Y -= GlobalHelper.getInstance().getCurrentCamera().getY();
                 drawPosition += prettyOffset;
-                FontMap.getInstance().getFont(FontEnum.Miramonte).drawStringCentered(broadcastMessage_, drawPosition, Microsoft.Xna.Framework.Graphics.Color.White, 0.0f, 0.9f);
+                FontMap.getInstance().getFont(FontEnum.Miramonte).drawStringCentered(broadcastMessage_, drawPosition, Microsoft.Xna.Framework.Graphics.Color.DeepPink, 0.0f, 0.9f);
             }
 
             // DEBUG STUFF
@@ -113,35 +158,113 @@ namespace Commando.ai
         /// <summary>
         /// Broadcasts the belief to all agents within the broadcast radius
         /// </summary>
-        /// <param name="belief"></param>
-        protected void broadcastBelief(Belief belief)
+        /// <param name="message">The message to broadcast</param>
+        protected void broadcastMessage(Message message)
         {
             isBroadcasting_ = true;
-            framesLeftToBroadcast_ = 60;
-            broadcastMessage_ = belief.ToString();
-            // Resume here
+            //communicationRequested_ = false;
+            framesSinceLastCommunication_ = 0;
+
+            framesLeftToBroadcast_ = message.TimeToBroadcast();
+            broadcastMessage_ = message.ToString();
+
             WorldState.Audial_.Remove(key_);
             WorldState.Audial_.Add(key_,
-                new Stimulus(StimulusSource.CharacterAbstract, AI_.Character_.Allegiance_, StimulusType.Message, broadcastRadius_, AI_.Character_.getPosition(), this, belief));
+                new Stimulus(StimulusSource.CharacterAbstract, AI_.Character_.Allegiance_, StimulusType.Message, broadcastRadius_, AI_.Character_.getPosition(), this, message));
         }
 
         /// <summary>
-        /// Decides which beliefs to broadcast
+        /// Decides which belief to broadcast
         /// </summary>
         protected void decideWhatToBroadcast()
         {
-            List<Belief> bList = AI_.Memory_.getBeliefs(BeliefType.EnemyLoc);
-            if (bList.Count > 0)
+            List<BeliefType> bTList = new List<BeliefType>();
+            switch (communicationLevel_)
             {
-                broadcastBelief(bList[0]);
-                return; // Only broadcast one thing at a time
+                case CommunicationLevel.Low:
+                    // Only broadcast EnemyLoc beliefs.
+                    // Periodically request communication.
+                    bTList.Add(BeliefType.EnemyLoc);
+                    broadcastHelper(bTList, 8);
+                    break;
+                case CommunicationLevel.Medium:
+                default:
+                    // Broadcast EnemyLoc, SuspiciousNoise, and EnemyHealth.
+                    // Request commmunication more frequently.
+                    bTList.Add(BeliefType.EnemyLoc);
+                    bTList.Add(BeliefType.SuspiciousNoise);
+                    bTList.Add(BeliefType.EnemyHealth);
+                    broadcastHelper(bTList, 4);
+                    break;
+                case CommunicationLevel.High:
+                    // Broadcast nearly any BeliefType.
+                    // Request communication very frequently.
+                    bTList.Add(BeliefType.EnemyLoc);
+                    bTList.Add(BeliefType.SuspiciousNoise);
+                    bTList.Add(BeliefType.AmmoLoc);
+                    bTList.Add(BeliefType.EnemyHealth);
+                    //bTList.Add(BeliefType.CoverLoc);
+                    broadcastHelper(bTList, 2);
+                    break;
             }
-            if (talkative_)
+        }
+
+        /// <summary>
+        /// Try to broadcast something based on a preference list of BeliefTypes
+        /// </summary>
+        /// <param name="bTList">The preference list of BeliefTypes</param>
+        /// <param name="hiTime">How long to wait before issuing a Hi message</param>
+        protected void broadcastHelper(List<BeliefType> bTList, int hiTime)
+        {
+            for (int i = 0; i < bTList.Count; i++)
             {
-                bList = AI_.Memory_.getBeliefs(BeliefType.SuspiciousNoise);
-                if (bList.Count > 0)
+                framesSinceCommunicatingThisType_[bTList[i]]++;
+            }
+
+            bool communicatedSomething = false;
+
+            if (communicationRequested_)
+            {
+                // Attempt to broadcast new info
+                for (int i = 0; i < bTList.Count; i++)
                 {
-                    broadcastBelief(bList[0]);
+                    if (AI_.Memory_.getBeliefs(bTList[i]).Count > 0 && framesSinceCommunicatingThisType_[bTList[i]] > SECONDS_BEFORE_REPEATING_SELF * FRAMERATE)
+                    {
+                        Message msg = new Message(Message.MessageType.Data);
+                        msg.Belief_ = AI_.Memory_.getFirstBelief(bTList[i]);
+                        broadcastMessage(msg);
+                        framesSinceCommunicatingThisType_[bTList[i]] = 0;
+                        communicatedSomething = true;
+                        break;
+                    }
+                }
+
+                // If we can't broadcast new info, then re-broadcast old info.
+                if (!communicatedSomething)
+                {
+                    for (int i = 0; i < bTList.Count; i++)
+                    {
+                        if (AI_.Memory_.getBeliefs(bTList[i]).Count > 0)
+                        {
+                            Message msg = new Message(Message.MessageType.Data);
+                            msg.Belief_ = AI_.Memory_.getFirstBelief(bTList[i]);
+                            broadcastMessage(msg);
+                            framesSinceCommunicatingThisType_[bTList[i]] = 0;
+                            communicatedSomething = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // If there is still nothing to be communicated, then we announce
+            // that we are ready to communicate.
+            if (!communicatedSomething)
+            {
+                if (framesSinceLastCommunication_ > hiTime * FRAMERATE)
+                {
+                    Message msg = new Message(Message.MessageType.Hi);
+                    broadcastMessage(msg);
                 }
             }
         }
@@ -149,6 +272,13 @@ namespace Commando.ai
         public void die()
         {
             WorldState.Audial_.Remove(key_);
+        }
+
+        public enum CommunicationLevel
+        {
+            Low,
+            Medium,
+            High
         }
     }
 }

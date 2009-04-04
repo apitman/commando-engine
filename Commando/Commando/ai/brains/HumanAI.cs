@@ -34,6 +34,7 @@ namespace Commando.ai.brains
             : base(npc)
         {
             GoalManager_.addGoal(new GoalPatrol(this));
+            //GoalManager_.addGoal(new GoalIdle(this));
             GoalManager_.addGoal(new GoalInvestigate(this));
             GoalManager_.addGoal(new GoalKill(this));
             GoalManager_.setTeamGoal(new GoalTeamwork(this));
