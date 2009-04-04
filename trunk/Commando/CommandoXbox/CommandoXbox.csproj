@@ -82,6 +82,9 @@
     <Compile Include="..\Commando\ai\Memory.cs">
       <Link>ai\Memory.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\Message.cs">
+      <Link>ai\Message.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\Action.cs">
       <Link>ai\planning\Action.cs</Link>
     </Compile>
@@ -117,6 +120,9 @@
     </Compile>
     <Compile Include="..\Commando\ai\planning\Goal.cs">
       <Link>ai\planning\Goal.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\planning\GoalIdle.cs">
+      <Link>ai\planning\GoalIdle.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\planning\GoalInvestigate.cs">
       <Link>ai\planning\GoalInvestigate.cs</Link>
@@ -177,6 +183,9 @@
     </Compile>
     <Compile Include="..\Commando\ai\sensors\SensorSeeCharacter.cs">
       <Link>ai\sensors\SensorSeeCharacter.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\sensors\SensorSeeIncomingFire.cs">
+      <Link>ai\sensors\SensorSeeIncomingFire.cs</Link>
     </Compile>
     <Compile Include="..\Commando\ai\sensors\SensorVisual.cs">
       <Link>ai\sensors\SensorVisual.cs</Link>

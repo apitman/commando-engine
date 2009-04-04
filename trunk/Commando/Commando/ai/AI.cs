@@ -66,7 +66,7 @@ namespace Commando.ai
 
         public void update()
         {
-            CommunicationSystem_.isListening_ = false;
+            CommunicationSystem_.IsListening_ = false;
             for (int i = 0; i < sensors_.Count; i++)
             {
                 sensors_[i].collect();
@@ -85,7 +85,7 @@ namespace Commando.ai
 
         public void draw()
         {
-            //CommunicationSystem_.draw();
+            CommunicationSystem_.draw();
             PlanManager_.draw();
         }
 

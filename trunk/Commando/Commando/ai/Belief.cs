@@ -90,9 +90,53 @@ namespace Commando.ai
 
         public override string ToString()
         {
-            string retVal = type_.ToString();
-            retVal += " at ";
-            retVal += position_.ToString();
+            string retVal = "";
+            switch (type_)
+            {
+                case BeliefType.Error:
+                    retVal = "ERROR";
+                    break;
+                case BeliefType.TeamInfo:
+                    retVal = "I have TeamInfo";
+                    break;
+                case BeliefType.EnemyLoc:
+                    retVal = "He's over there!";
+                    break;
+                case BeliefType.EnemyHealth:
+                    retVal = "His health is";
+                    retVal += data_.int1;
+                    break;
+                case BeliefType.AllyLoc:
+                    retVal = "You're right here";
+                    break;
+                case BeliefType.AllyHealth:
+                    retVal = "Your health is";
+                    retVal += data_.int1;
+                    break;
+                case BeliefType.SuspiciousNoise:
+                    retVal = "I heard something!";
+                    break;
+                case BeliefType.CoverLoc:
+                    retVal = "There's cover here";
+                    break;
+                case BeliefType.AmmoLoc:
+                    retVal = "There's ammo here";
+                    break;
+                case BeliefType.BestTarget:
+                    retVal = "This is my target";
+                    break;
+                case BeliefType.AvailableCover:
+                    retVal = "This cover is available";
+                    break;
+                case BeliefType.InvestigateTarget:
+                    retVal = "I'm investigating...";
+                    break;
+                default:
+                    retVal = type_.ToString();
+                    retVal += " at ";
+                    retVal += position_.ToString();
+                    break;
+            }
             return retVal;
         }
     }
