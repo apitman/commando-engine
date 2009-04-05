@@ -29,6 +29,7 @@ using Commando.objects;
 using Microsoft.Xna.Framework.Storage;
 using System.IO;
 using Commando.objects.enemies;
+using Microsoft.Xna.Framework.Input;
 
 namespace Commando
 {
@@ -187,8 +188,8 @@ namespace Commando
             currentFilepath_ = filepath;
 
             engine_ = engine;
-            engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
-            engine_.IsMouseVisible = true;
+            //engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            //engine_.IsMouseVisible = true;
             returnState_ = returnState;
             enemyIndex_ = 0;
             isObjSelected_ = false;
@@ -834,6 +835,20 @@ namespace Commando
         {
             InputSet inputs = InputSet.getInstance();
             engine_.GraphicsDevice.Clear(Color.Firebrick);
+
+            // Draw the cursor
+#if !XBOX
+            if (Settings.getInstance().IsUsingMouse_)
+            {
+                MouseState ms = Mouse.GetState();
+                Vector2 mpos = new Vector2(ms.X, ms.Y) - new Vector2(2.5f, 2.5f);
+                TextureDrawer td = TextureMap.fetchTexture("laserpointer")
+                    .getDrawer(mpos, Constants.DEPTH_LASER);
+                td.Color = Color.Green;
+                td.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
+                td.draw();
+            }
+#endif
 
             // Draw all the DrawableObjectAbstracts in our pipeline
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)
