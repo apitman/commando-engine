@@ -13,7 +13,7 @@
 == Build 6: Mar. 31 - Apr. 8 ==
 
   === Gameplay ===
-  # User's enemies will create dynamic squad-based plans to combat the player
+  # User's enemies will create dynamic squad-based plans to combat the player (Ken)
   # User can either hear or see enemy agents communicating (either via sound or text)
   # User can hear some sound effects
   # User can view slides telling the story between areas
