@@ -14,13 +14,17 @@
 
   === Gameplay ===
   # User's enemies will create dynamic squad-based plans to combat the player (Ken)
-  # User can either hear or see enemy agents communicating (either via sound or text)
-  # User can hear some sound effects
-  # User can view slides telling the story between areas
+  # User can either hear or see enemy agents communicating, either via sound or text (Andrew)
+  # User can hear some sound effects (Ken)
+  # User can view slides telling the story between areas (Andrew)
+  # Menus used by the user will scroll when they do not fit in the window (Eric)
+  # Settings will be persistent across play sessions (Ken, Andrew)
+  # User's character will have animations for throwing grenades, reloading (Jared)
+  # User's grenades will bounce off of walls (Jared)
 
   === Level Editor ===
-  # User can create overlay sprites for different layers of the map
-  # User can load in different tilesets
+  # User can create overlay sprites for different layers of the map (Jared)
+  # User can load in different tilesets (Eric, Andrew)
 
 == Build 5: Mar. 17 - Mar. 26 ==
 
