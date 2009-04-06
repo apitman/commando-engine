@@ -32,12 +32,16 @@ namespace Commando.ai.planning
 
         protected CharacterAbstract target_;
 
-        private static readonly SearchNode node;
+        private static readonly SearchNode suppressTask;
+        private static readonly SearchNode flushTask;
 
         static TeamGoalEliminate()
         {
-            node = new SearchNode();
-            node.setTask(TeamTask.SUPPRESS);
+            suppressTask = new SearchNode();
+            suppressTask.setTask(TeamTask.SUPPRESS);
+
+            flushTask = new SearchNode();
+            flushTask.setTask(TeamTask.FLUSH);
         }
 
         internal override bool isValid(List<AI> teamMembers)
@@ -93,10 +97,20 @@ namespace Commando.ai.planning
 
         internal override void allocateTasks(List<AI> teamMembers)
         {
+            bool isFlushed = false;
             for (int i = 0; i < teamMembers.Count; i++)
             {
                 GoalTeamwork goal = teamMembers[i].GoalManager_.getTeamGoal();
-                goal.setNode(node);
+
+                if (!isFlushed && teamMembers[i].Memory_.getBelief(BeliefType.BestTarget, target_) != null)
+                {
+                    goal.setNode(flushTask);
+                    isFlushed = true;
+                }
+                else
+                {
+                    goal.setNode(suppressTask);
+                }
                 goal.HasFailed_ = false;
                 goal.Relevance_ = Relevance_;
 
