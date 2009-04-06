@@ -74,9 +74,17 @@ namespace Commando
 
         public void setScreenSize(int x, int y)
         {
+            graphics_.IsFullScreen = false;
+
+#if !XBOX
+            if (!graphics_.IsFullScreen)
+            {
+                y -= 100;
+            }
+#endif
+
             graphics_.PreferredBackBufferHeight = y;
             graphics_.PreferredBackBufferWidth = x;
-            graphics_.IsFullScreen = false;
             graphics_.ApplyChanges();
         }
 
