@@ -39,6 +39,8 @@ namespace Commando.objects.weapons
 
         public override void explode()
         {
+            SoundEngine.getInstance().playCue("firework-explosion-1");
+
             double fractionAngle = MathHelper.TwoPi / NUM_PIECES;
 
             for (int i = 0; i < NUM_PIECES; i++)

@@ -63,12 +63,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\music\epic.wav">
+    <None Include="Audio\music\epic.wav">
       <Name>epic</Name>
       <Importer>WavImporter</Importer>
       <Processor>SongProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="healthBarOutline.png">
@@ -559,6 +558,76 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <None Include="Audio\music\alarm.wav">
+      <Name>alarm</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <None Include="Audio\music\sneak.wav">
+      <Name>sneak</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </None>
+    <Compile Include="Audio\effects\aahhzz.wav">
+      <Name>aahhzz</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\bang_1.wav">
+      <Name>bang_1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\bang_2.wav">
+      <Name>bang_2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\bang_3.wav">
+      <Name>bang_3</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\fart-1.wav">
+      <Name>fart-1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\fart-2.wav">
+      <Name>fart-2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\fart-3.wav">
+      <Name>fart-3</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\fart-4.wav">
+      <Name>fart-4</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\firework-explosion-1.wav">
+      <Name>firework-explosion-1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\goddamnit.wav">
+      <Name>goddamnit</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\gun-reload-1.wav">
+      <Name>gun-reload-1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\effects\gunshot.wav">
+      <Name>gunshot</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
     <Content Include="XML\defaultlevel.xml">
       <Name>defaultlevel</Name>
       <Importer>XmlImporter</Importer>
@@ -652,7 +721,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Audio\effects\" />
     <Folder Include="XML\Actions\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>

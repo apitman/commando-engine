@@ -59,5 +59,21 @@ namespace Commando
 
             return container_[index];
         }
+
+        internal static void cleanupContainer()
+        {
+            cleanupContainer(Settings.getInstance().CurrentPlayer_);
+        }
+
+        internal static void cleanupContainer(PlayerIndex player)
+        {
+            int index = (int)player;
+            if (container_[index] == null)
+            {
+                return;
+            }
+            container_[index].Dispose();
+            container_[index] = null;
+        }
     }
 }

@@ -24,6 +24,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.controls;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Commando
 {
@@ -58,6 +59,8 @@ namespace Commando
         {
             engine_ = engine;
             duration_ = new TimeSpan();
+
+            SoundEngine.getInstance().playCue("goddamnit");
         }
 
         public EngineStateInterface update(GameTime gameTime)

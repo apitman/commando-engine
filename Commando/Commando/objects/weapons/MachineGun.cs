@@ -71,6 +71,8 @@ namespace Commando.objects.weapons
                 recoil_ += RECOIL_PER_SHOT_FIRED;
                 if (recoil_ > MAX_RECOIL)
                     recoil_ = MAX_RECOIL;
+
+                SoundEngine.getInstance().playCue("gunshot");
             }
             else if (refireCounter_ == 0)
             {

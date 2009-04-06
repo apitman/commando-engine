@@ -215,6 +215,7 @@ namespace Commando.objects.enemies
             if (health_.getValue() <= 0)
             {
                 die();
+                SoundEngine.getInstance().playCue("aahhzz");
                 currentDrawColor_ = Color.Brown;
             }
             else

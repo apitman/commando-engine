@@ -48,16 +48,7 @@ namespace Commando.objects.weapons
             {
                 Random rand = RandomManager.get();
                 rotation_.Normalize();
-                /*Vector2 rotation2 = CommonFunctions.rotate(rotation_, -10 * Math.PI / 180f);
-                Vector2 rotation3 = CommonFunctions.rotate(rotation_, 10 * Math.PI / 180f);
-                rotation2.Normalize();
-                rotation3.Normalize();
-                Vector2 bulletPos = position_ + rotation_ * gunLength_;
-                Vector2 bulletPos2 = position_ + rotation_ * gunLength_;
-                Vector2 bulletPos3 = position_ + rotation_ * gunLength_;
-                Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, rotation_);
-                Bullet bullet2 = new Bullet(drawPipeline_, collisionDetector_, bulletPos2, rotation2);
-                Bullet bullet3 = new Bullet(drawPipeline_, collisionDetector_, bulletPos3, rotation3);*/
+                
                 Vector2 bulletPos = position_ + rotation_ * gunLength_;
                 for (int i = 0; i < NUM_SHOTS; i++)
                 {
@@ -76,6 +67,8 @@ namespace Commando.objects.weapons
                 InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
 
                 weaponFired_ = true;
+
+                SoundEngine.getInstance().playCue("bang_2");
             }
             else if (refireCounter_ == 0)
             {
