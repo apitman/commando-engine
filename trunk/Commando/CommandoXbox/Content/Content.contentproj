@@ -424,6 +424,12 @@
       <Importer>XactImporter</Importer>
       <Processor>XactProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\Kootenay8.spritefont">
+      <Link>SpriteFonts\Kootenay8.spritefont</Link>
+      <Name>Kootenay8</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="..\..\Commando\Content\XML\Sprites\Pixel.xml">
       <Link>XML\Sprites\Pixel.xml</Link>
       <Name>Pixel</Name>
@@ -431,14 +437,6 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\Commando\Content\Audio\music\epic.wav">
-      <Link>Audio\music\epic.wav</Link>
-      <Name>epic</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Commando\Content\Sprites\mouse.png">
@@ -729,6 +727,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\effects\" />
+    <Folder Include="Audio\music\" />
     <Folder Include="XML\Animations\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

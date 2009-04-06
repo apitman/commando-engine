@@ -60,6 +60,8 @@ namespace Commando.objects.weapons
                 InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
 
                 weaponFired_ = true;
+
+                SoundEngine.getInstance().playCue("bang_1");
             }
             else if (refireCounter_ == 0)
             {

@@ -97,7 +97,19 @@ namespace Commando
             }
         }
 
-        internal StorageDevice StorageDevice_ { get; set; }
+        private StorageDevice storageDevice_;
+        internal StorageDevice StorageDevice_
+        {
+            get
+            {
+                return storageDevice_;
+            }
+            set
+            {
+                ContainerManager.cleanupContainer();
+                storageDevice_ = value;
+            }
+        }
 
         internal static void initialize(Engine engine_)
         {

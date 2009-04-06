@@ -153,6 +153,7 @@ namespace Commando.objects
             if (health_.getValue() <= 0)
             {
                 die();
+                SoundEngine.getInstance().playCue("fart-3");
                 currentDrawColor_ = Color.Brown;
             }
             else

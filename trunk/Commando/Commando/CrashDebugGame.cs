@@ -27,13 +27,19 @@ namespace Commando
 
         protected override void LoadContent()
         {
-            font = FontMap.getInstance().getFont(FontEnum.Kootenay14).getFont();
+            font = Content.Load<SpriteFont>("SpriteFonts/Kootenay");
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                Exit();
+            if (GamePad.GetState(PlayerIndex.Two).Buttons.Back == ButtonState.Pressed)
+                Exit();
+            if (GamePad.GetState(PlayerIndex.Three).Buttons.Back == ButtonState.Pressed)
+                Exit();
+            if (GamePad.GetState(PlayerIndex.Four).Buttons.Back == ButtonState.Pressed)
                 Exit();
 
             base.Update(gameTime);

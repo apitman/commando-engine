@@ -104,8 +104,10 @@ namespace Commando
 
         public void changeAllVolume(float amount)
         {
-            AudioCategory cat = audio_.GetCategory("Music");
-            cat.SetVolume(amount);
+            AudioCategory music = audio_.GetCategory("Music");
+            music.SetVolume(amount);
+            AudioCategory effects = audio_.GetCategory("Effect");
+            effects.SetVolume(amount);
         }
     }
 }
