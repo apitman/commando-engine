@@ -30,6 +30,9 @@ namespace Commando
     /// </summary>
     public static class RandomManager
     {
+        private static double cachedValue = 0f;
+        private static bool cached = false;
+
         private static Random random;
 
         static RandomManager()
@@ -40,6 +43,44 @@ namespace Commando
         public static Random get()
         {
             return random;
+        }
+
+        public static float nextNormalDistValue(float mean, float std)
+        {
+            return (float)nextNormalDistValue((double)mean, (double)std);
+        }
+
+        public static double nextNormalDistValue(double mean, double std)
+        {
+            if (cached)
+            {
+                cached = false;
+                return cachedValue*std + mean;
+            }
+
+            // Box-Muller algorithm, polar-style, takes two random numbers
+            //  from a uniform distribution over [-1, +1] and converts them
+            //  to a standard normal distribution (Z)
+            Random r = get();
+            while (!cached)
+            {
+                double u = r.NextDouble() * 2 - 1;
+                double v = r.NextDouble() * 2 - 1;
+                double s = u * u + v * v;
+                if (s == 0 || s > 1)
+                    continue;
+
+                double rad = Math.Sqrt((-2 * Math.Log(s))/s);
+                double z0 = u * rad;
+                double z1 = v * rad;
+                cached = true;
+                cachedValue = z1;
+                return (z0 * std + mean);
+            }
+
+            // make compiler happy - otherwise it thinks not all code paths
+            //  return a value
+            throw new Exception("Unexpected code path in RandomManager");
         }
     }
 }

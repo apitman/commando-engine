@@ -35,7 +35,7 @@ namespace Commando.objects.weapons
 
         internal const int CLIP_SIZE = 20;
 
-        internal const float MAX_INACCURACY = 0.05f;
+        internal const float MAX_INACCURACY = 0.035f;
 
         public Pistol(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, TextureMap.fetchTexture(WEAPON_TEXTURE_NAME), gunHandle, AMMO_TYPE, CLIP_SIZE)

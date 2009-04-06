@@ -250,6 +250,7 @@ namespace Commando.ai.planning
     internal enum TeamTask
     {
         CLEAR,
-        SUPPRESS
+        SUPPRESS,
+        FLUSH
     }
 }

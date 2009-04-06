@@ -65,7 +65,9 @@ namespace Commando
         /// <summary>
         /// Amount of time before the gun can fire again.
         /// </summary>
-        protected int refireCounter_;
+        protected int refireCounter_ = 0;
+
+        protected int recoil_ = 0;
 
         internal int CurrentAmmo_ { get; set; }
         internal int ClipSize_ { get; set; }
@@ -90,7 +92,6 @@ namespace Commando
             position_ = Vector2.Zero;
             rotation_ = Vector2.Zero;
             gunLength_ = animation.getImageDimensions()[0].Width;
-            refireCounter_ = 0;
             audialStimulusId_ = StimulusIDGenerator.getNext();
             drawOffset_ = gunLength_ / 2f;
             gunTip_ = gunLength_;
@@ -124,6 +125,8 @@ namespace Commando
             position_ = newPos;
             if (refireCounter_ > 0)
                 refireCounter_--;
+            if (recoil_ > 0)
+                recoil_--;
         }
 
         public virtual void draw()
@@ -140,20 +143,12 @@ namespace Commando
             collisionDetector_ = detector;
         }
 
-        protected double getInaccuracyAdjustment(float maxInaccuracy)
-        {
-            Random r = RandomManager.get();
-            int num = r.Next(2001);
-            num -= 1000;
-            return num * maxInaccuracy / 1000f;
-        }
-
         protected Vector2 adjustForInaccuracy(Vector2 rotation, float maxInaccuracy)
         {
             return
                 CommonFunctions.rotate(
                     rotation,
-                    getInaccuracyAdjustment(maxInaccuracy)
+                    RandomManager.nextNormalDistValue(0, maxInaccuracy)
                 );
         }
     }

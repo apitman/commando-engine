@@ -20,18 +20,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
-using Commando.levels;
-using Microsoft.Xna.Framework;
 using Commando.graphics;
+using Commando.objects.weapons;
+using Commando.objects;
 
 namespace Commando.ai.planning
 {
-    class ActionTypeFlee : ActionType
+    internal class TeamActionTypeFlush : ActionType
     {
-        internal const float COST = 200.0f;
+        protected internal const int COST = 5;
 
-        internal ActionTypeFlee(NonPlayableCharacterAbstract character)
+        internal TeamActionTypeFlush(NonPlayableCharacterAbstract character)
             : base(character)
         {
 
@@ -39,63 +38,73 @@ namespace Commando.ai.planning
 
         internal override bool testPreConditions(SearchNode node)
         {
-            return true;
+            return
+                node.taskPasses(Variable.TeamTask, TeamTask.FLUSH) &&
+                node.boolPasses(Variable.Cover, true);
         }
 
         internal override SearchNode unifyRegressive(ref SearchNode node)
         {
-            SearchNode parent = node.getPredecessor();
-            parent.action = new ActionFlee(character_);
-            parent.cost += COST;
-            parent.setInt(Variable.TargetHealth, node.values[Variable.TargetHealth].i + 1);
+            Belief target = character_.AI_.Memory_.getFirstBelief(BeliefType.TeamInfo);
 
+            SearchNode parent = node.getPredecessor();
+            parent.action = new TeamActionFlush(character_, target.handle_);
+            parent.cost += COST;
+            parent.setBool(Variable.Cover, true);
+            parent.setTask(TeamTask.CLEAR);
             return parent;
         }
 
         internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
-            actionMap[Variable.TargetHealth].Add(this);
+            actionMap[Variable.TeamTask].Add(this);
         }
     }
 
-    internal class ActionFlee : Action
+    internal class TeamActionFlush : Action
     {
-        internal const int THRESHOLD = 60;
+        protected Object handle_;
+        protected CharacterAbstract enemy_;
 
-        protected int counter = 0;
-
-        internal ActionFlee(NonPlayableCharacterAbstract character)
+        internal TeamActionFlush(NonPlayableCharacterAbstract character, Object handle)
             : base(character)
         {
-
+            handle_ = handle;
         }
 
         internal override bool initialize()
         {
+            enemy_ = (handle_ as CharacterAbstract);
+
+            Belief belief = character_.AI_.Memory_.getBelief(BeliefType.EnemyLoc, handle_);
+
+            if ((enemy_ == null) || (belief == null))
+            {
+                return false;
+            }
+
+            (character_.getActuator() as DefaultActuator).throwGrenade(
+                new FragGrenade(character_.pipeline_,
+                    character_.getCollisionDetector(),
+                    belief.position_ - character_.getPosition(),
+                    character_.getPosition(),
+                    character_.getDirection())
+            );
+
             return true;
         }
 
         internal override ActionStatus update()
         {
-            counter++;
-            if (counter >= THRESHOLD)
+            bool done =
+                (character_.getActuator() as DefaultActuator).isFinished();
+
+            if (done)
             {
                 return ActionStatus.SUCCESS;
             }
-
-            Belief bestTarget = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
-            if (bestTarget == null)
-            {
-                return ActionStatus.SUCCESS;
-            }
-            //CharacterAbstract enemy = bestTarget.handle_ as CharacterAbstract;
-            Vector2 opposite = bestTarget.position_ - character_.getPosition();
-            opposite = -opposite;
-            opposite.Normalize();
-
-            (character_.getActuator() as DefaultActuator).moveTo(character_.getPosition() + opposite * 5);
-
-            return ActionStatus.IN_PROGRESS;
+            
+            return ActionStatus.FAILED;
         }
     }
 }

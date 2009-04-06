@@ -36,6 +36,11 @@ namespace Commando.objects.weapons
         protected static readonly GameTexture BULLET_TEXTURE;
         internal const int CLIP_SIZE = 30;
 
+        internal const float MAX_BASE_INACCURACY = 0.01f;
+        internal const float INACCURACY_PER_RECOIL = 0.002f;
+        internal const int RECOIL_PER_SHOT_FIRED = 12;
+        internal const int MAX_RECOIL = 50;
+
         static MachineGun()
         {
             BULLET_TEXTURE = TextureMap.fetchTexture("BulletSmall");
@@ -56,12 +61,16 @@ namespace Commando.objects.weapons
             {
                 rotation_.Normalize();
                 Vector2 bulletPos = position_ + rotation_ * gunTip_;
-                Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, rotation_);
+                float inaccuracy = MAX_BASE_INACCURACY + INACCURACY_PER_RECOIL * recoil_;
+                Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, adjustForInaccuracy(rotation_,inaccuracy));
                 refireCounter_ = TIME_TO_REFIRE;
                 CurrentAmmo_--;
                 character_.getAmmo().update(CurrentAmmo_);
 
                 weaponFired_ = true;
+                recoil_ += RECOIL_PER_SHOT_FIRED;
+                if (recoil_ > MAX_RECOIL)
+                    recoil_ = MAX_RECOIL;
             }
             else if (refireCounter_ == 0)
             {
