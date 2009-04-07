@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework;
+using System.Xml;
 
 namespace Commando
 {
@@ -154,6 +155,57 @@ namespace Commando
         public MovementType getMovementType()
         {
             return movementType_;
+        }
+
+        public void loadSettings(XmlDocument doc)
+        {
+            XmlNode root = doc.ChildNodes[1]; // index 0 is XML declaration
+            if (root.Name != "commando-settings")
+            {
+                throw new XmlException("commando-settings missing from settings file");
+            }
+
+            XmlNodeList settings = root.ChildNodes;
+            for (int i = 0; i < settings.Count; i++)
+            {
+                XmlNode cur = settings[i];
+                switch (cur.Name)
+                {
+                    case "resolution":
+                        Resolution_ = (Resolution)Convert.ToInt32(cur.InnerText);
+                        break;
+                    case "movement":
+                        movementType_ = (MovementType)Convert.ToInt32(cur.InnerText);
+                        break;
+                    case "sound":
+                        IsSoundAllowed_ = Convert.ToBoolean(cur.InnerText);
+                        break;
+                    case "debug":
+                        IsInDebugMode_ = Convert.ToBoolean(cur.InnerText);
+                        break;
+                }
+            }
+        }
+
+        public XmlDocument saveSettings()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement root = doc.CreateElement("commando-settings");
+            doc.AppendChild(root);
+            XmlElement res = doc.CreateElement("resolution");
+            res.Value = Convert.ToString((int)resolution_);
+            XmlElement movement = doc.CreateElement("movement");
+            movement.Value = Convert.ToString((int)movementType_);
+            XmlElement sound = doc.CreateElement("sound");
+            sound.Value = Convert.ToString(IsSoundAllowed_);
+            XmlElement debug = doc.CreateElement("debug");
+            debug.Value = Convert.ToString(IsInDebugMode_);
+            root.AppendChild(res);
+            root.AppendChild(movement);
+            root.AppendChild(sound);
+            root.AppendChild(debug);
+
+            return doc;
         }
     }
 

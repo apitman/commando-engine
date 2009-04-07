@@ -634,6 +634,11 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="XML\defaultsettings.xml">
+      <Name>defaultsettings</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
     <Content Include="XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml">
       <Name>GreenPlayer_Crouch_Pistol_Walk</Name>
       <Importer>XmlImporter</Importer>
@@ -719,6 +724,12 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PlainXMLProcessor\PlainXMLProcessor.csproj">
+      <Project>{4F0C779F-B18C-434E-A47B-3B369A44E7B6}</Project>
+      <Name>PlainXMLProcessor</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="XML\Actions\" />

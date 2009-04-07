@@ -104,10 +104,16 @@ namespace Commando
 
         public void changeAllVolume(float amount)
         {
+            /*
             AudioCategory music = audio_.GetCategory("Music");
             music.SetVolume(amount);
             AudioCategory effects = audio_.GetCategory("Effect");
             effects.SetVolume(amount);
+            */
+
+            // We can use root category Global instead of the above
+            AudioCategory cat = audio_.GetCategory("Global");
+            cat.SetVolume(amount);
         }
     }
 }

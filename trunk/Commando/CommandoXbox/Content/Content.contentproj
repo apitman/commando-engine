@@ -610,6 +610,12 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="..\..\Commando\Content\XML\defaultsettings.xml">
+      <Link>XML\defaultsettings.xml</Link>
+      <Name>defaultsettings</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml">
       <Link>XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml</Link>
       <Name>GreenPlayer_Crouch_Pistol_Walk</Name>
@@ -724,6 +730,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PlainXMLProcessor\PlainXMLProcessor.csproj">
+      <Project>{4F0C779F-B18C-434E-A47B-3B369A44E7B6}</Project>
+      <Name>PlainXMLProcessor</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\effects\" />
