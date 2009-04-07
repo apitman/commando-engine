@@ -26,6 +26,7 @@ using Commando.controls;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using System.Xml;
 
 namespace Commando
 {
@@ -222,6 +223,7 @@ namespace Commando
             if (storageDevice != null)
             {
                 Settings.getInstance().StorageDevice_ = storageDevice;
+                Settings.getInstance().loadSettings(engine_.Content.Load<XmlDocument>(@"XML\defaultsettings"));
                 returnFlag_ = true;
             }
 
@@ -229,6 +231,7 @@ namespace Commando
             else
             {
                 engine_.Controls_ = null;
+                Settings.getInstance().loadSettings(engine_.Content.Load<XmlDocument>(@"XML\defaultsettings"));
                 returnFlag_ = false;
             }
         }
