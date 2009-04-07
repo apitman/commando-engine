@@ -23,6 +23,8 @@ using System.Text;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework;
 using System.Xml;
+using System.IO;
+using PlainXMLProcessor;
 
 namespace Commando
 {
@@ -31,6 +33,10 @@ namespace Commando
     /// </summary>
     public class Settings
     {
+        protected const string DEFAULT_SETTINGS = @"XML\defaultsettings";
+        protected const string SETTINGS_FOLDER = "settings";
+        protected const string SETTINGS_FILE = "settings.xml";
+
         protected static Settings instance_;
 
         protected MovementType movementType_;
@@ -157,7 +163,11 @@ namespace Commando
             return movementType_;
         }
 
-        public void loadSettings(XmlDocument doc)
+        /// <summary>
+        /// Pulls settings from an XmlDocument
+        /// </summary>
+        /// <param name="doc">XmlDocument containing the appropriate commando-settings tag</param>
+        protected void pullSettings(XmlDocument doc)
         {
             XmlNode root = doc.ChildNodes[1]; // index 0 is XML declaration
             if (root.Name != "commando-settings")
@@ -187,25 +197,97 @@ namespace Commando
             }
         }
 
-        public XmlDocument saveSettings()
+        /// <summary>
+        /// Pushes current settings to an XmlDocument
+        /// </summary>
+        /// <returns>An XmlDocument containing the current settings</returns>
+        protected XmlDocument pushSettings()
         {
             XmlDocument doc = new XmlDocument();
+
+            XmlNode declaration = doc.CreateNode(XmlNodeType.XmlDeclaration, "", "");
+            doc.AppendChild(declaration);
+
             XmlElement root = doc.CreateElement("commando-settings");
             doc.AppendChild(root);
+
             XmlElement res = doc.CreateElement("resolution");
-            res.Value = Convert.ToString((int)resolution_);
+            res.InnerText = Convert.ToString((int)resolution_);
             XmlElement movement = doc.CreateElement("movement");
-            movement.Value = Convert.ToString((int)movementType_);
+            movement.InnerText = Convert.ToString((int)movementType_);
             XmlElement sound = doc.CreateElement("sound");
-            sound.Value = Convert.ToString(IsSoundAllowed_);
+            sound.InnerText = Convert.ToString(IsSoundAllowed_);
             XmlElement debug = doc.CreateElement("debug");
-            debug.Value = Convert.ToString(IsInDebugMode_);
+            debug.InnerText = Convert.ToString(IsInDebugMode_);
             root.AppendChild(res);
             root.AppendChild(movement);
             root.AppendChild(sound);
             root.AppendChild(debug);
 
             return doc;
+        }
+
+
+        /// <summary>
+        /// Copies the current settings into a local file
+        /// </summary>
+        internal void saveSettingsToFile()
+        {
+            XmlDocument doc = pushSettings();
+
+            // No storage device, so we'll store/load the settings in a directory
+            //  with the executable
+            if (storageDevice_ == null)
+            {
+                const string folderpath = @".\" + SETTINGS_FOLDER;
+                Directory.CreateDirectory(folderpath);
+                const string filepath = folderpath + @"\" + SETTINGS_FILE;
+                doc.Save(filepath);
+            }
+
+            // We have a storage device, so we'll store the settings in the associated
+            //  container
+            else
+            {
+                StorageContainer sc = ContainerManager.getOpenContainer();
+                string folderpath = Path.Combine(sc.Path, SETTINGS_FOLDER);
+                Directory.CreateDirectory(folderpath);
+                string filepath = Path.Combine(folderpath, SETTINGS_FILE);
+                doc.Save(filepath);
+            }
+        }
+
+        internal void loadSettingsFromFile()
+        {
+            try
+            {
+                // No storage device, so we'll store/load the settings in a directory
+                //  with the executable
+                if (storageDevice_ == null)
+                {
+                    const string filepath = @".\" + SETTINGS_FOLDER + @"\" + SETTINGS_FILE;
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(filepath);
+                    pullSettings(doc);
+                }
+
+                // We have a storage device, so we'll store the settings in the associated
+                //  container
+                else
+                {
+                    StorageContainer sc = ContainerManager.getOpenContainer();
+                    string folderpath = Path.Combine(sc.Path, SETTINGS_FOLDER);
+                    string filepath = Path.Combine(folderpath, SETTINGS_FILE);
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(filepath);
+                    pullSettings(doc);
+                }
+            }
+            catch
+            {
+                XmlDocument doc = EngineHandle_.Content.Load<XmlDocument>(DEFAULT_SETTINGS);
+                pullSettings(doc);
+            }
         }
     }
 

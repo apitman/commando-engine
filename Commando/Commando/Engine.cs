@@ -211,6 +211,12 @@ namespace Commando
             base.Draw(gameTime);
         }
 
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            base.OnExiting(sender, args);
+            Settings.getInstance().saveSettingsToFile();
+        }
+
 #if !XBOX
         /// <summary>
         /// Whether or not the mouse is outside the game window.
