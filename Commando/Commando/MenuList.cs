@@ -41,7 +41,7 @@ namespace Commando
         const float DEFAULT_SCALE = 1.0f;
         const float DEFAULT_DEPTH = Constants.DEPTH_MENU_TEXT;
         const SpriteEffects DEFAULT_SPRITE_EFFECTS = SpriteEffects.None;
-
+        const float DEFAULT_SPACE_AVAILABE = 400.0f;
         //list of strings used to make each menu item
         //each string in the list makes up a different line
         public List<string> StringList_ { get; private set; }
@@ -73,6 +73,12 @@ namespace Commando
         //space between each line in the menu
         public float Spacing_ { get; set; }
 
+        public float spaceAvailable_ { get; set; }
+
+
+
+        protected int visibleBase_ { get; set; }
+
         //font to display menu
         public FontEnum Font_
         {
@@ -98,6 +104,7 @@ namespace Commando
             this.SpriteEffects_ = DEFAULT_SPRITE_EFFECTS;
             this.LayerDepth_ = DEFAULT_DEPTH;
             this.Font_ = DEFAULT_FONT;
+            this.spaceAvailable_ = DEFAULT_SPACE_AVAILABE;
         }
 
         public MenuList(List<string> stringList, Vector2 position)
@@ -129,19 +136,25 @@ namespace Commando
                 {
                     myColor = BaseColor_;
                 }
-                string curString = StringList_[i];
+                int itemsVisible = (int)spaceAvailable_ / (int)Spacing_;
+                if (itemsVisible >= StringList_.Count)
+                { itemsVisible = StringList_.Count + 1; }
 
-                font_.drawStringCentered(curString,
+                if (i >= visibleBase_ && ((i < visibleBase_ + itemsVisible)))
+                {
+                    string curString = StringList_[i];
+                    font_.drawStringCentered(curString,
                                           curPos,
                                           myColor,
                                           Rotation_,
                                           Scale_,
                                           SpriteEffects_,
                                           LayerDepth_);
-                curPos.Y = curPos.Y + Spacing_;
+                    curPos.Y = curPos.Y + Spacing_;
+                }
+
             }
         }
-
         public int getCursorPos()
         {
             return CursorPos_;
@@ -157,8 +170,22 @@ namespace Commando
         /// </summary>
         public void incrementCursorPos()
         {
-            CursorPos_++;
-            CursorPos_ = CursorPos_ % StringList_.Count;
+
+            int itemsVisible = (int)spaceAvailable_ / (int)Spacing_;
+            //int itemsVisible = 2;
+            if (itemsVisible >= StringList_.Count)
+            { itemsVisible = StringList_.Count + 1; }
+            if (CursorPos_ < StringList_.Count - 1)
+            {
+                CursorPos_++;
+                if (((CursorPos_ + visibleBase_) + 1 >= itemsVisible))
+                {
+                    visibleBase_++;
+                }
+
+            }
+
+
         }
 
         /// <summary>
@@ -166,13 +193,20 @@ namespace Commando
         /// </summary>
         public void decrementCursorPos()
         {
-            CursorPos_--;
-            if (CursorPos_ < 0) 
-            {
-                CursorPos_ = StringList_.Count - 1;
-            }
-        }
 
+            if (CursorPos_ != 0)
+            {
+                if (visibleBase_ != 0)
+                {
+                    visibleBase_--;
+                }
+                CursorPos_--;
+
+
+            }
+
+
+        }
         public string getCurrentString()
         {
             return StringList_[CursorPos_];
@@ -187,4 +221,3 @@ namespace Commando
 
     }
 }
-    
