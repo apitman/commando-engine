@@ -17,8 +17,8 @@
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can either hear or see enemy agents communicating, either via sound or text (Andrew)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]User can hear some sound effects (Ken)
   # User can view slides telling the story between areas (Andrew)
-  # Menus used by the user will scroll when they do not fit in the window (Eric)
-  # Settings will be persistent across play sessions (Ken, Andrew)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]Menus used by the user will scroll when they do not fit in the window (Eric)
+  # [http://1sync.ontuet.com/images/layout/check_mark.gif]Settings will be persistent across play sessions (Ken)
   # User's character will have animations for throwing grenades, reloading (Jared)
   # User's grenades will bounce off of walls (Jared)
   # [http://1sync.ontuet.com/images/layout/check_mark.gif]Extra: User can see stack traces of exceptions when game crashes on Xbox 360
