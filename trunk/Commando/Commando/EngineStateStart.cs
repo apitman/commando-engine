@@ -223,7 +223,6 @@ namespace Commando
             if (storageDevice != null)
             {
                 Settings.getInstance().StorageDevice_ = storageDevice;
-                Settings.getInstance().loadSettings(engine_.Content.Load<XmlDocument>(@"XML\defaultsettings"));
                 returnFlag_ = true;
             }
 
@@ -231,9 +230,10 @@ namespace Commando
             else
             {
                 engine_.Controls_ = null;
-                Settings.getInstance().loadSettings(engine_.Content.Load<XmlDocument>(@"XML\defaultsettings"));
                 returnFlag_ = false;
             }
+
+            Settings.getInstance().loadSettingsFromFile();
         }
 
     }
