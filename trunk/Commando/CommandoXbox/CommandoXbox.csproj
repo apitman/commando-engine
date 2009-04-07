@@ -217,6 +217,9 @@
     <Compile Include="..\Commando\AnimationSet.cs">
       <Link>AnimationSet.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\Binary2XMLReader.cs">
+      <Link>Binary2XMLReader.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\CharacterAmmo.cs">
       <Link>CharacterAmmo.cs</Link>
     </Compile>

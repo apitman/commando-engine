@@ -23,7 +23,6 @@ using System.Text;
 using Microsoft.Xna.Framework.Content;
 using System.Xml;
 using System.IO;
-using Microsoft.Xna.Framework.Content.Pipeline;
 
 namespace PlainXMLProcessor
 {
@@ -46,7 +45,7 @@ namespace PlainXMLProcessor
             }
             catch (Exception e)
             {
-                throw new InvalidContentException("Could not load resource file as XML", e);
+                throw new Exception("Could not load resource file as XML", e);
             }
             return xmldoc;
         }

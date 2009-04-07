@@ -147,6 +147,7 @@
     <Compile Include="ai\SystemMemoryCleanup.cs" />
     <Compile Include="ai\SystemTargetSelection.cs" />
     <Compile Include="ai\WorldState.cs" />
+    <Compile Include="Binary2XMLReader.cs" />
     <Compile Include="CharacterStatusElementInterface.cs" />
     <Compile Include="collisiondetection\BoundingLine.cs" />
     <Compile Include="collisiondetection\BoundingPolygon.cs" />

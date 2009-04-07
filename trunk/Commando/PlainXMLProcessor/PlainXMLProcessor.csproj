@@ -105,7 +105,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Binary2XMLReader.cs" />
     <Compile Include="XML2BinaryWriter.cs" />
     <Compile Include="XMLProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
