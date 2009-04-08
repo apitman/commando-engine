@@ -160,8 +160,8 @@ namespace Commando
         protected Vector2 weaponIconPos_;
         protected Vector2 healthTextPos_;
         protected Vector2 ammoTextPos_;
-        protected bool moveToNextLevel_ = false;
-        protected string nextLevel_;
+
+        protected LevelTransitionObject transition_;
 
         protected Level myLevel_;
 
@@ -171,41 +171,41 @@ namespace Commando
         /// <param name="engine">Reference to the engine running the state</param>
         /// <param name="filepath">Path to level file which should be loaded.</param>
         public EngineStateGameplay(Engine engine, string filepath)
+            : this(engine, Level.getLevelFromFile(filepath))
         {
-            //SoundEngine.getInstance().Music.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored);
+            
+        }
 
+        /// <summary>
+        /// Constructs a state of gameplay using the provided level
+        /// </summary>
+        public EngineStateGameplay(Engine engine, Level level)
+        {
             engine_ = engine;
 
-            SoundEngine.getInstance().Music = SoundEngine.getInstance().playCue("epic");
-
             GlobalHelper.getInstance().setGameplayState(this);
-
-            loadLevel(filepath);
-        }
-
-        public void moveToNextLevel(string filename)
-        {
-            moveToNextLevel_ = true;
-            nextLevel_ = filename;
-        }
-
-        public void loadLevel(string filename)
-        {
-            // Cleanup singletons used by prior EngineStateGameplay
-            WorldState.reset();
 
             GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)engine_.graphics_.PreferredBackBufferWidth);
             GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)engine_.graphics_.PreferredBackBufferHeight);
 
-            drawPipeline_ = new List<DrawableObjectAbstract>();
-            collisionDetector_ = new SeparatingAxisCollisionDetector();
+            loadLevel(level);
 
-            // Load the level from file
-            myLevel_ = Level.getLevelFromFile(filename);
+            SoundEngine.getInstance().Music = SoundEngine.getInstance().playCue("epic");
+        }
+
+        public void moveToNextLevel(LevelTransitionObject next)
+        {
+            transition_ = next;
+        }
+
+        public void loadLevel(Level level)
+        {
+            myLevel_ = level;
+
             drawPipeline_ = myLevel_.Pipeline_;
             collisionDetector_ = myLevel_.CollisionDetector_;
-            
-            if (moveToNextLevel_ && myLevel_.getPlayerStartLocation() != null && myLevel_.getPlayerStartLocation() != Vector2.Zero)
+
+            if (player_ != null && myLevel_.getPlayerStartLocation() != null && myLevel_.getPlayerStartLocation() != Vector2.Zero)
             {
                 player_.setPosition(myLevel_.getPlayerStartLocation());
                 player_.setDrawPipeline(drawPipeline_);
@@ -213,6 +213,7 @@ namespace Commando
             else if (myLevel_.getPlayerStartLocation() != null && myLevel_.getPlayerStartLocation() != Vector2.Zero)
             {
                 player_ = new ActuatedMainPlayer(drawPipeline_, collisionDetector_, myLevel_.getPlayerStartLocation(), new Vector2(1.0f, 0.0f));
+                myLevel_.setPlayer(player_);
             }
             else
             {
@@ -230,6 +231,7 @@ namespace Commando
                 engine_.IsMouseVisible = false;
             }
 
+            WorldState.reset();
             myLevel_.initializeForGameplay();
 
             // Initialize player and HUD
@@ -247,8 +249,6 @@ namespace Commando
                 player_.getAmmo().addObserver(ammo_);
                 player_.setCollisionDetector(collisionDetector_);
             }
-
-            
         }
 
         /// <summary>
@@ -259,11 +259,9 @@ namespace Commando
         /// <returns>The state of the game for the next frame</returns>
         public EngineStateInterface update(GameTime gameTime)
         {
-            if (moveToNextLevel_)
+            if (transition_ != null)
             {
-                loadLevel(nextLevel_);
-                moveToNextLevel_ = false;
-                return this;
+                return transition_.go();
             }
 
             InputSet inputs = InputSet.getInstance();
