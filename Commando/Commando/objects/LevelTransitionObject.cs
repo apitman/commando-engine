@@ -31,6 +31,10 @@ namespace Commando.objects
 {
     class LevelTransitionObject : LevelObjectAbstract, CollisionObjectInterface
     {
+        protected const float RADIUS = 20f;
+        protected static readonly Height HEIGHT = new Height(true, true);
+        protected const float DRAW_DEPTH = Constants.DEPTH_LOW;
+
         protected float radius_;
 
         protected ConvexPolygonInterface bounds_;
@@ -60,13 +64,13 @@ namespace Commando.objects
         }
 
 
-        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, float radius, Height height, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth)
-            : base(pipeline, image, position, direction, depth)
+        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction)
+            : base(pipeline, TextureMap.fetchTexture("leveltransition"), position, direction, DRAW_DEPTH)
         {
             bounds_ = new ConvexPolygon(BOUND_POINTS, center);
             bounds_.rotate(direction_, position_);
-            radius_ = radius;
-            height_ = height;
+            radius_ = RADIUS;
+            height_ = HEIGHT;
             if (detector != null)
             {
                 detector.register(this);

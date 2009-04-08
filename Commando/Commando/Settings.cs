@@ -227,7 +227,6 @@ namespace Commando
             return doc;
         }
 
-
         /// <summary>
         /// Copies the current settings into a local file
         /// </summary>

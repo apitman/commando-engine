@@ -58,7 +58,7 @@ namespace Commando
         /// Create a GameTexture from the specified name, with the specified SpriteBatch and
         /// GraphicsDevice.
         /// </summary>
-        /// <param name="filename">Name of the image file</param>
+        /// <param name="filepath">Name of the image file</param>
         /// <param name="spriteBatch">SpriteBatch for the game</param>
         /// <param name="graphics">GraphicsDevice for the game</param>
         public GameTexture(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
@@ -77,7 +77,7 @@ namespace Commando
         /// <summary>
         /// Create a GameTexture with the specified imageDimensions.
         /// </summary>
-        /// <param name="filename">Name of the image file</param>
+        /// <param name="filepath">Name of the image file</param>
         /// <param name="spriteBatch">SpriteBatch for the game</param>
         /// <param name="graphics">GraphicsDevice for the game</param>
         /// <param name="imageDimensions">ImageDimensions for the texture</param>
@@ -110,7 +110,7 @@ namespace Commando
         /// <summary>
         /// Load a texture from an xml file.
         /// </summary>
-        /// <param name="filename">Filename of the xml file</param>
+        /// <param name="filepath">Filename of the xml file</param>
         /// <param name="spriteBatch">SpriteBatch of the game</param>
         /// <param name="graphics">GraphicsDevice of the game</param>
         /// <returns>KeyValuePair with the key(name of the texture) and value(GameTexture loaded)</returns>

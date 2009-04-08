@@ -197,8 +197,8 @@ namespace Commando
             selectedIndex_ = 0;
             myObjects_ = new List<objectRepresentation>(MAX_NUM_ENEMIES);
 
-            myLevel_ = new Level(new Tileset(), null);
-            myLevel_.getLevelFromFile(filepath, drawPipeline_);
+            myLevel_ = Level.getLevelFromFile(filepath);
+            drawPipeline_ = myLevel_.Pipeline_;
 
             maxCursorX = numTilesWide_ - 3;
             maxCursorY = numTilesTall_ - 3;
@@ -254,7 +254,7 @@ namespace Commando
             // Check the inputs
             if (placeTransition_)
             {
-                LevelTransitionObject myTransition = new LevelTransitionObject(transLevel_, null, Vector2.Zero, 20f, new Height(true, true), drawPipeline_, TextureMap.fetchTexture("levelTransition"), new Vector2(transitionPos_.X, transitionPos_.Y), new Vector2(1f, 0f), Constants.DEPTH_LOW);
+                LevelTransitionObject myTransition = new LevelTransitionObject(transLevel_, null, Vector2.Zero, drawPipeline_, new Vector2(transitionPos_.X, transitionPos_.Y), new Vector2(1f, 0f));
                 myLevel_.getItems().Add(myTransition);
 
 
