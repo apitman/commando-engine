@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Commando.levels
 {
@@ -35,6 +36,36 @@ namespace Commando.levels
         public static Tileset constructTileset(string filepath)
         {
             throw new NotImplementedException("Tileset class not ready");
+        }
+
+        internal void test()
+        {
+            int totalTiles = 15;
+            int tilesWide = 5;
+            int tilesHigh = 3;
+
+            int width = 15;
+            int height = 15;
+
+            Rectangle[] imageDimensions = new Rectangle[totalTiles];
+
+            for (int i = 0; i < totalTiles; i++)
+            {
+                int row = i / tilesWide;
+                int col = (i - row * tilesWide);
+                imageDimensions[i].X = row * (width + 1);
+                imageDimensions[i].Y = col * (height + 1);
+                imageDimensions[i].Width = width;
+                imageDimensions[i].Height = height;
+            }
+
+            /*
+            GameTexture texture = new GameTexture(
+                filepath,
+                spriteBatch,
+                graphics,
+                imageDimensions);
+             */
         }
     }
 }

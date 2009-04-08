@@ -25,11 +25,21 @@ using System.Xml;
 using Commando.objects;
 using Microsoft.Xna.Framework;
 using Commando.objects.enemies;
+using Commando.collisiondetection;
+using Commando.ai;
 
 namespace Commando.levels
 {
     public class Level
     {
+        // Drawing pipeline containing all drawable entities in the level
+        public List<DrawableObjectAbstract> Pipeline_ =
+            new List<DrawableObjectAbstract>();
+
+        // Collision detector containing all collidables in the level
+        public CollisionDetectorInterface CollisionDetector_ =
+            new SeparatingAxisCollisionDetector();
+
         protected Tileset tileSet_;
 
         protected int height_;
@@ -49,7 +59,13 @@ namespace Commando.levels
 
         protected List<LevelObjectAbstract> items_;
 
-        public Level(Tileset tileSet, TileObject[,] tiles)
+        /// <summary>
+        /// True if this level was loaded from Content, false if it was
+        /// loaded from the file system.
+        /// </summary>
+        protected bool isPackagedLevel_;
+
+        private Level(Tileset tileSet, TileObject[,] tiles, bool isPackaged)
         {
             //tileSet_ = tileSet;
             //tiles_ = tiles;
@@ -115,232 +131,80 @@ namespace Commando.levels
             player_ = player;
         }
 
-        public Level getLevelFromFile(string filename, List<DrawableObjectAbstract> pipeline)
+        public static Level getLevelFromFile(string filepath)
         {
-            // Load the user's level from XML
-            /*try
-            {*/
-                XmlDocument doc = new XmlDocument();
-                doc.Load(filename);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filepath);
+            Level level = new Level(new Tileset(), null, false);
+            return level.getLevelFromXml(doc);
+        }
 
-                // First load the tiles
-                XmlElement ele = (XmlElement)doc.GetElementsByTagName("level")[0];
-                width_ = Convert.ToInt32(ele.GetAttribute("numTilesWide"));
-                height_ = Convert.ToInt32(ele.GetAttribute("numTilesTall"));
+        public static Level getLevelFromContent(string levelname, Engine engine)
+        {
+            XmlDocument doc = engine.Content.Load<XmlDocument>(levelname);
+            Level level = new Level(new Tileset(), null, true);
+            return level.getLevelFromXml(doc);
+        }
 
-                int[,] loadedTiles = new int[height_, width_];
-                tiles_ = new TileObject[height_, width_];
+        protected Level getLevelFromXml(XmlDocument doc)
+        {
+            // First load the tiles
+            XmlElement ele = (XmlElement)doc.GetElementsByTagName("level")[0];
+            width_ = Convert.ToInt32(ele.GetAttribute("numTilesWide"));
+            height_ = Convert.ToInt32(ele.GetAttribute("numTilesTall"));
 
-                XmlNodeList tList = doc.GetElementsByTagName("tile");
-                for (int i = 0; i < height_; i++)
-                {
-                    for (int j = 0; j < width_; j++)
-                    {
-                        XmlElement ele2 = (XmlElement)tList[j + i * width_];
-                        int tempInt = Convert.ToInt32(ele2.GetAttribute("index"));
-                        loadedTiles[i, j] = tempInt;
-                    }
-                }
+            int[,] loadedTiles = new int[height_, width_];
+            tiles_ = new TileObject[height_, width_];
 
-                List<TileObject> tileList = Tiler.getTiles(pipeline, loadedTiles);
-                for (int i = 0; i < height_; i++)
-                {
-                    for (int j = 0; j < width_; j++)
-                    {
-                        tiles_[i, j] = tileList[i * width_ + j];
-                    }
-                }
-
-                // Now load the enemies
-                tList = doc.GetElementsByTagName("enemy");
-                for (int i = 0; i < tList.Count; i++)
-                {
-                    XmlElement ele2 = (XmlElement)tList[i];
-                    // TODO: Check the "name" attribute of the enemy and instantiate
-                    // other enemies if they are specified.
-                    string name = ele2.GetAttribute("name");
-
-
-                    if (name == "dummy")
-                    {
-                        DummyEnemy dumDum = new DummyEnemy(pipeline, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
-                        //Vector2 rotation = CommonFunctions.getVector(Convert.ToInt32(ele2.GetAttribute("rotation")) * Math.PI / 180);
-                        Vector2 rotation = new Vector2(Convert.ToInt32(ele2.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(ele2.GetAttribute("rotationY")) / 100.0f);
-                        dumDum.setDirection(rotation);
-                        string team = ele2.GetAttribute("allegiance");
-                        if (team != null && team != string.Empty)
-                        {
-                            dumDum.Allegiance_ = Convert.ToInt32(team);
-                        }
-
-                        string commLevel = ele2.GetAttribute("commLevel");
-                        if (commLevel != string.Empty)
-                        {
-                            Commando.ai.SystemCommunication.CommunicationLevel cL;
-                            if (commLevel == "Low")
-                            {
-                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Low;
-                            }
-                            else if (commLevel == "Medium")
-                            {
-                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
-                            }
-                            else if (commLevel == "High")
-                            {
-                                cL = Commando.ai.SystemCommunication.CommunicationLevel.High;
-                            }
-                            else
-                            {
-                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
-                            }
-                            dumDum.AI_.CommunicationSystem_.communicationLevel_ = cL;
-                        }
-
-                        // TODO: AMP Fix it so we don't have to do this next line of code
-                        dumDum.getActuator().update(); // Makes it so the enemies are drawn in the correct position
-
-                        enemies_.Add(dumDum);
-                    }
-                    else if (name == "human")
-                    {
-                        HumanEnemy Humie = new HumanEnemy(pipeline, new Vector2((float)Convert.ToInt32(ele2.GetAttribute("posX")), (float)Convert.ToInt32(ele2.GetAttribute("posY"))));
-                        //Vector2 rotation = CommonFunctions.getVector(Convert.ToInt32(ele2.GetAttribute("rotation")) * Math.PI / 180);
-                        Vector2 rotation = new Vector2(Convert.ToInt32(ele2.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(ele2.GetAttribute("rotationY")) / 100.0f);
-                        Humie.setDirection(rotation);
-                        string team = ele2.GetAttribute("allegiance");
-                        if (team != null && team != string.Empty)
-                        {
-                            Humie.Allegiance_ = Convert.ToInt32(team);
-                        }
-
-                        string commLevel = ele2.GetAttribute("commLevel");
-                        if (commLevel != string.Empty)
-                        {
-                            Commando.ai.SystemCommunication.CommunicationLevel cL;
-                            if (commLevel == "Low")
-                            {
-                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Low;
-                            }
-                            else if (commLevel == "Medium")
-                            {
-                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
-                            }
-                            else if (commLevel == "High")
-                            {
-                                cL = Commando.ai.SystemCommunication.CommunicationLevel.High;
-                            }
-                            else
-                            {
-                                cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
-                            }
-                            Humie.AI_.CommunicationSystem_.communicationLevel_ = cL;
-                        }
-                     
-                        // TODO: AMP Fix it so we don't have to do this next line of code
-                        Humie.getActuator().update(); // Makes it so the enemies are drawn in the correct position
-                        
-                        enemies_.Add(Humie);
-                    }
-                }
-                // Now load the healthBoxes and ammoBoxes
-                tList = doc.GetElementsByTagName("item");
-                for (int i = 0; i < tList.Count; i++)
-                {
-                    XmlElement itemElement = (XmlElement)tList[i];
-                    if (itemElement.GetAttribute("type") == "hBox")
-                    {
-                        Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
-                        items_.Add(new HealthBox(null, pipeline, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW));
-                    }
-                    else if (itemElement.GetAttribute("type") == "aBox")
-                    {
-                        Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
-                        items_.Add(new AmmoBox(null, pipeline, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW));
-                    }
-                    else if (itemElement.GetAttribute("type") == "aTrans")
-                    {
-                        Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
-                        string nextLevel;
-                        nextLevel = itemElement.GetAttribute("nextLevel");
-                        //List<Vector2> pointsList = new List<Vector2>((float)Convert.ToInt32(itemElement.GetAttribute("points")));
-                        items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, 20f, new Height(true, true), pipeline, TextureMap.fetchTexture("levelTransition"), new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), Constants.DEPTH_LOW));
-                    }
-                    else if (itemElement.GetAttribute("type") == "aWpnBox")
-                    {
-                        Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
-                        WeaponBox.WeaponType mytype;
-                        if (itemElement.GetAttribute("weaponType") == "machineGun")
-                            mytype = WeaponBox.WeaponType.MachineGun;
-                        else if (itemElement.GetAttribute("weaponType") == "pistol")
-                             mytype = WeaponBox.WeaponType.Pistol;
-                        else 
-                            mytype = WeaponBox.WeaponType.Shotgun;
-                        items_.Add(new WeaponBox(null, pipeline, pos, Vector2.Zero, Constants.DEPTH_LOW, mytype));
-                    }
-                }
-
-                // Load player location from file
-                if (doc.GetElementsByTagName("playerLocation").Count > 0)
-                {
-                    XmlElement playerLocation = (XmlElement)doc.GetElementsByTagName("playerLocation")[0];
-                    playerStartLocation_ = new Vector2((float)Convert.ToInt32(playerLocation.GetAttribute("x")), (float)Convert.ToInt32(playerLocation.GetAttribute("y")));
-                }
-
-
-                //TODO: get from XML
-                //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
-                //
-                player_ = null;
-            /*
-            }
-            catch (Exception)
+            XmlNodeList tList = doc.GetElementsByTagName("tile");
+            for (int i = 0; i < height_; i++)
             {
-                int[,] defaultTiles = new int[,] {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                                    {0,0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,10,11,12,10,11,12,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,13,14,15,13,14,15,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,16,17,18,16,17,18,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                                    {0,0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0},
-                                                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-
-                List<TileObject> tileList = Tiler.getTiles(pipeline, defaultTiles);
-                tiles_ = new TileObject[height_, width_];
-                for (int i = 0; i < height_; i++)
+                for (int j = 0; j < width_; j++)
                 {
-                    for (int j = 0; j < width_; j++)
-                    {
-                        tiles_[i, j] = tileList[i * width_ + j];
-                    }
+                    XmlElement ele2 = (XmlElement)tList[j + i * width_];
+                    int tempInt = Convert.ToInt32(ele2.GetAttribute("index"));
+                    loadedTiles[i, j] = tempInt;
                 }
-
-                // We no longer have a default enemy
-                DummyEnemy dumDum = new DummyEnemy(pipeline, new Vector2(200.0f, 150.0f));
-                //// TODO: AMP Fix it so we don't have to do this next line of code
-                dumDum.getActuator().update(); // Makes it so the enemies are drawn in the correct position
-
-                enemies_.Add(dumDum);
             }
-             */
 
+            List<TileObject> tileList = Tiler.getTiles(Pipeline_, loadedTiles);
+            for (int i = 0; i < height_; i++)
+            {
+                for (int j = 0; j < width_; j++)
+                {
+                    tiles_[i, j] = tileList[i * width_ + j];
+                }
+            }
+
+            // Now load the enemies
+            tList = doc.GetElementsByTagName("enemy");
+            for (int i = 0; i < tList.Count; i++)
+            {
+                parseEnemy(tList[i]);
+            }
+            // Now load the healthBoxes and ammoBoxes
+            tList = doc.GetElementsByTagName("item");
+            for (int i = 0; i < tList.Count; i++)
+            {
+                parseItem(tList[i]);
+            }
+
+            // Load player location from file
+            if (doc.GetElementsByTagName("playerLocation").Count > 0)
+            {
+                XmlElement playerLocation = (XmlElement)doc.GetElementsByTagName("playerLocation")[0];
+                playerStartLocation_ = new Vector2((float)Convert.ToInt32(playerLocation.GetAttribute("x")), (float)Convert.ToInt32(playerLocation.GetAttribute("y")));
+            }
+
+            //TODO: get from XML
+            //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
+            //
+            player_ = null;
+            
             return this;
         }
         
-        public void writeLevelToFile(string filename)
+        public void writeLevelToFile(string filepath)
         {
             // Create the document
             XmlDocument doc = new XmlDocument();
@@ -452,7 +316,7 @@ namespace Commando.levels
 
             // Finish up and save the document
             doc.AppendChild(levelElement);
-            doc.Save(filename);
+            doc.Save(filepath);
         }
 
         /// <summary>
@@ -541,6 +405,177 @@ namespace Commando.levels
                 // No expansion, replace a TileObject in tiles_
                 tiles_[newTilePosY, newTilePosX].setTileNumber(newTileIndex);
             }
+        }
+
+        protected void parseEnemy(XmlNode enemyNode)
+        {
+            NonPlayableCharacterAbstract enemy;
+            XmlElement enemyEle = (XmlElement)enemyNode;
+
+            string name = enemyEle.GetAttribute("name");
+            switch (name)
+            {
+                case "dummy":
+                    enemy = new DummyEnemy(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
+                    break;
+                case "human":
+                    enemy = new HumanEnemy(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
+                    break;
+                default:
+                    throw new NotImplementedException("Unknown enemy name in level file");
+            }
+ 
+            Vector2 rotation = new Vector2(Convert.ToInt32(enemyEle.GetAttribute("rotationX")) / 100.0f, Convert.ToInt32(enemyEle.GetAttribute("rotationY")) / 100.0f);
+            enemy.setDirection(rotation);
+            string team = enemyEle.GetAttribute("allegiance");
+            if (team != null && team != string.Empty)
+            {
+                enemy.Allegiance_ = Convert.ToInt32(team);
+            }
+
+            string commLevel = enemyEle.GetAttribute("commLevel");
+            if (commLevel != string.Empty)
+            {
+                Commando.ai.SystemCommunication.CommunicationLevel cL;
+                if (commLevel == "Low")
+                {
+                    cL = Commando.ai.SystemCommunication.CommunicationLevel.Low;
+                }
+                else if (commLevel == "Medium")
+                {
+                    cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
+                }
+                else if (commLevel == "High")
+                {
+                    cL = Commando.ai.SystemCommunication.CommunicationLevel.High;
+                }
+                else
+                {
+                    cL = Commando.ai.SystemCommunication.CommunicationLevel.Medium;
+                }
+                enemy.AI_.CommunicationSystem_.communicationLevel_ = cL;
+            }
+
+            // TODO: AMP Fix it so we don't have to do this next line of code
+            enemy.getActuator().update(); // Makes it so the enemies are drawn in the correct position
+
+            enemies_.Add(enemy);
+        }
+
+        protected void parseItem(XmlNode itemNode)
+        {
+            XmlElement itemElement = (XmlElement)itemNode;
+            if (itemElement.GetAttribute("type") == "hBox")
+            {
+                Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
+                items_.Add(new HealthBox(null, Pipeline_, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW));
+            }
+            else if (itemElement.GetAttribute("type") == "aBox")
+            {
+                Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
+                items_.Add(new AmmoBox(null, Pipeline_, pos, new Vector2(1.0f, 0.0f), Constants.DEPTH_LOW));
+            }
+            else if (itemElement.GetAttribute("type") == "aTrans")
+            {
+                Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
+                string nextLevel;
+                nextLevel = itemElement.GetAttribute("nextLevel");
+                items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, Pipeline_, new Vector2(pos.X, pos.Y), new Vector2(1f, 0f)));
+            }
+            else if (itemElement.GetAttribute("type") == "aWpnBox")
+            {
+                Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
+                WeaponBox.WeaponType mytype;
+                if (itemElement.GetAttribute("weaponType") == "machineGun")
+                    mytype = WeaponBox.WeaponType.MachineGun;
+                else if (itemElement.GetAttribute("weaponType") == "pistol")
+                    mytype = WeaponBox.WeaponType.Pistol;
+                else
+                    mytype = WeaponBox.WeaponType.Shotgun;
+                items_.Add(new WeaponBox(null, Pipeline_, pos, Vector2.Zero, Constants.DEPTH_LOW, mytype));
+            }
+        }
+
+        /// <summary>
+        /// Performs several functions to prepare a Level for the Gameplay state,
+        /// including setting up the WorldState, TileGrid, determining cover positions,
+        /// adding objects to the collision detector, etc.
+        /// </summary>
+        public void initializeForGameplay()
+        {
+            Tile[,] tilesForCollisionGeneration = new Tile[getHeight(), getWidth()];
+            for (int i = 0; i < getHeight(); i++)
+            {
+                for (int j = 0; j < getWidth(); j++)
+                {
+                    if (getTiles()[i, j].getTileNumber() >= 10 && getTiles()[i, j].getTileNumber() <= 18)
+                    {
+                        tilesForCollisionGeneration[i, j].highDistance_ = 1f;
+                        tilesForCollisionGeneration[i, j].lowDistance_ = 0f;
+                    }
+                    else if (getTiles()[i, j].getTileNumber() != 1)
+                    {
+                        tilesForCollisionGeneration[i, j].highDistance_ = 0f;
+                        tilesForCollisionGeneration[i, j].lowDistance_ = 0f;
+                    }
+                    else
+                    {
+                        tilesForCollisionGeneration[i, j].highDistance_ = 1f;
+                        tilesForCollisionGeneration[i, j].lowDistance_ = 1f;
+                    }
+                }
+            }
+            List<BoxObject> boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForCollisionGeneration);
+
+            // Calculate distances from walls to each tile
+            Tile[,] tilesForGrid = CoverGenerator.generateRealTileDistances(tilesForCollisionGeneration);
+            if (Settings.getInstance().IsInDebugMode_)
+            {
+                for (int i = 0; i < tilesForGrid.GetLength(0); i++)
+                {
+                    for (int j = 0; j < tilesForGrid.GetLength(1); j++)
+                    {
+                        Console.Write(tilesForGrid[i, j].highDistance_.ToString("F1"));
+                        Console.Write(" ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
+
+            // Generate cover objects and add them to collision detection
+            List<CoverObject> coverObjects = CoverGenerator.generateCoverObjects(tilesForGrid);
+            for (int i = 0; i < boxesToBeAddedForReal.Count; i++)
+            {
+                CollisionDetector_.register(boxesToBeAddedForReal[i]);
+            }
+
+            // Add other entities to collision detection and WorldState
+            for (int i = 0; i < getEnemies().Count; i++)
+            {
+                getEnemies()[i].setCollisionDetector(CollisionDetector_);
+            }
+            for (int i = 0; i < getItems().Count; i++)
+            {
+                getItems()[i].setCollisionDetector(CollisionDetector_);
+                if (getItems()[i] is AmmoBox)
+                    WorldState.AmmoList_.Add(getItems()[i] as AmmoBox);
+            }
+            for (int i = 0; i < coverObjects.Count; i++)
+            {
+                coverObjects[i].setCollisionDetector(CollisionDetector_);
+                WorldState.CoverList_.Add(coverObjects[i]);
+            }
+            List<CharacterAbstract> characterList = new List<CharacterAbstract>();
+            for (int i = 0; i < getEnemies().Count; i++)
+            {
+                characterList.Add(getEnemies()[i]);
+            }
+            if (player_ != null)
+            {
+                characterList.Add(player_);
+            }
+            WorldState.CharacterList_ = characterList;
         }
     }
 }

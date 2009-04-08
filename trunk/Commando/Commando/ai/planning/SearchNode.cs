@@ -68,7 +68,7 @@ namespace Commando.ai.planning
         /// Whether a particular variable in this node could have a
         /// particular Boolean value.
         /// </summary>
-        /// <param name="var">Variable identifier<./param>
+        /// <param name="var">Variable identifier.</param>
         /// <param name="val">Possible value.</param>
         /// <returns>True if it is possible, false otherwise</returns>
         internal bool boolPasses(int var, bool val)

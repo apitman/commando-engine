@@ -176,6 +176,8 @@ namespace Commando
 
             engine_ = engine;
 
+            SoundEngine.getInstance().Music = SoundEngine.getInstance().playCue("epic");
+
             GlobalHelper.getInstance().setGameplayState(this);
 
             loadLevel(filepath);
@@ -196,46 +198,13 @@ namespace Commando
             GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)engine_.graphics_.PreferredBackBufferHeight);
 
             drawPipeline_ = new List<DrawableObjectAbstract>();
-            
-            //List<BoxObject> boxesToBeAdded = new List<BoxObject>();
-            Tile[,] tilesForGrid;
-            List<Vector2> tileBox = new List<Vector2>();
-            tileBox.Add(new Vector2(-7.5f, -7.5f));
-            tileBox.Add(new Vector2(7.5f, -7.5f));
-            tileBox.Add(new Vector2(7.5f, 7.5f));
-            tileBox.Add(new Vector2(-7.5f, 7.5f));
-            int[,] tiles = new int[,]   {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                        {0,0,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,10,11,12,10,11,12,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,13,14,15,13,14,15,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,16,17,18,16,17,18,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,0,0},
-                                        {0,0,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,9,0,0},
-                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-            // Load the user's level from XML
-            //BoxObject[,] boxesToBeAdded;
-            bool[,] boxesToBeAdded;
-            List<BoxObject> boxesToBeAddedForReal = new List<BoxObject>();
+            collisionDetector_ = new SeparatingAxisCollisionDetector();
 
-            // Load the level and create bounding boxes
-            myLevel_ = new Level(new Tileset(), null);
-            myLevel_.getLevelFromFile(filename, drawPipeline_);
+            // Load the level from file
+            myLevel_ = Level.getLevelFromFile(filename);
+            drawPipeline_ = myLevel_.Pipeline_;
+            collisionDetector_ = myLevel_.CollisionDetector_;
             
-            //player_ = (ActuatedMainPlayer)myLevel_.getPlayer(); // AMP: I don't like this in the Level class
             if (moveToNextLevel_ && myLevel_.getPlayerStartLocation() != null && myLevel_.getPlayerStartLocation() != Vector2.Zero)
             {
                 player_.setPosition(myLevel_.getPlayerStartLocation());
@@ -250,6 +219,7 @@ namespace Commando
                 player_ = null;
             }
 
+            // Initialize mouse and/or camera
             if (player_ == null)
             {
                 engine_.IsMouseVisible = true;
@@ -260,65 +230,9 @@ namespace Commando
                 engine_.IsMouseVisible = false;
             }
 
-            boxesToBeAdded = new bool[myLevel_.getHeight(), myLevel_.getWidth()];
-            tilesForGrid = new Tile[myLevel_.getHeight(), myLevel_.getWidth()];
-            for (int i = 0; i < myLevel_.getHeight(); i++)
-            {
-                for (int j = 0; j < myLevel_.getWidth(); j++)
-                {
-                    if (myLevel_.getTiles()[i, j].getTileNumber() >= 10 && myLevel_.getTiles()[i, j].getTileNumber() <= 18)
-                    {
-                        //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
-                        boxesToBeAdded[i, j] = true;
-                        tilesForGrid[i, j].highDistance_ = 1f;
-                        tilesForGrid[i, j].lowDistance_ = 0f;
-                    }
-                    else if (myLevel_.getTiles()[i, j].getTileNumber() != 1)
-                    {
-                        //boxesToBeAdded[i, j] = new BoxObject(tileBox, new Vector2((float)j * 15f + 7.5f, (float)i * 15f + 7.5f));
-                        boxesToBeAdded[i, j] = true;
-                        tilesForGrid[i, j].highDistance_ = 0f;
-                        tilesForGrid[i, j].lowDistance_ = 0f;
-                    }
-                    else
-                    {
-                        //boxesToBeAdded[i, j] = null;
-                        boxesToBeAdded[i, j] = false;
-                        tilesForGrid[i, j].highDistance_ = 1f;
-                        tilesForGrid[i, j].lowDistance_ = 1f;
-                    }
-                }
-            }
-            boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForGrid);
-            tilesForGrid = CoverGenerator.generateRealTileDistances(tilesForGrid);
-            //DEBUG PRINT
-            if (Settings.getInstance().IsInDebugMode_)
-            {
-                for (int i = 0; i < tilesForGrid.GetLength(0); i++)
-                {
-                    for (int j = 0; j < tilesForGrid.GetLength(1); j++)
-                    {
-                        Console.Write(tilesForGrid[i, j].highDistance_.ToString("F1"));
-                        Console.Write(" ");
-                    }
-                    Console.WriteLine();
-                }
-            }
-            //END
-            GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
+            myLevel_.initializeForGameplay();
 
-            //collisionDetector_ = new CollisionDetector(polygons);
-            collisionDetector_ = new SeparatingAxisCollisionDetector();
-
-            List<CoverObject> coverObjects = CoverGenerator.generateCoverObjects(tilesForGrid);
-            
-            foreach (BoxObject boxOb in boxesToBeAddedForReal)
-            {
-                //boxOb.getBounds().rotate(new Vector2(1.0f, 0.0f), boxOb.getPosition());
-                collisionDetector_.register(boxOb);
-            }
-            //END Jared's test stuff
-
+            // Initialize player and HUD
             if (player_ != null)
             {
                 healthBarPos_ = HEALTH_BAR_POSITION;
@@ -333,33 +247,8 @@ namespace Commando
                 player_.getAmmo().addObserver(ammo_);
                 player_.setCollisionDetector(collisionDetector_);
             }
-            for (int i = 0; i < myLevel_.getEnemies().Count; i++)
-            {
-                myLevel_.getEnemies()[i].setCollisionDetector(collisionDetector_);
-            }
-            for (int i = 0; i < myLevel_.getItems().Count; i++)
-            {
-                myLevel_.getItems()[i].setCollisionDetector(collisionDetector_);
-                if (myLevel_.getItems()[i] is AmmoBox)
-                    WorldState.AmmoList_.Add(myLevel_.getItems()[i] as AmmoBox);
-            }
-            foreach (CoverObject coverOb in coverObjects)
-            {
-                coverOb.setCollisionDetector(collisionDetector_);
-                WorldState.CoverList_.Add(coverOb);
-            }
 
-            //WorldState.EnemyList_ = (List<NonPlayableCharacterAbstract>)myLevel_.getEnemies();
-            List<CharacterAbstract> characterList = new List<CharacterAbstract>();
-            for (int i = 0; i < myLevel_.getEnemies().Count; i++)
-            {
-                characterList.Add(myLevel_.getEnemies()[i]);
-            }
-            if (player_ != null)
-            {
-                characterList.Add(player_);
-            }
-            WorldState.CharacterList_ = characterList;
+            
         }
 
         /// <summary>
@@ -419,32 +308,8 @@ namespace Commando
 
             WorldState.refresh();
 
-            if (player_ == null)
-            {
-                Vector2 moveVector = Vector2.Zero;
-                Vector2 cameraPosition = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
-                if (cameraPosition.X < 100.0f)
-                {
-                    moveVector.X = -3f;
-                }
-                else if (cameraPosition.X > engine_.GraphicsDevice.Viewport.Width - 100.0f)
-                {
-                    moveVector.X = 3f;
-                }
-                if (cameraPosition.Y < 100.0f)
-                {
-                    moveVector.Y = -3f;
-                }
-                else if (cameraPosition.Y > engine_.GraphicsDevice.Viewport.Height - 100.0f)
-                {
-                    moveVector.Y = 3f;
-                }
-                GlobalHelper.getInstance().getCurrentCamera().move(moveVector.X, moveVector.Y);
-            }
-            else
-            {
-                GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
-            }
+            adjustCamera(inputs);
+
             if (player_ != null && player_.isDead())
             {
                 return new EngineStateGameOver(engine_);
@@ -505,5 +370,38 @@ namespace Commando
             /* end section*/
         }
 
+        /// <summary>
+        /// Moves the Gameplay camera based upon either player or mouse position
+        /// </summary>
+        /// <param name="inputs">This frame's controller input</param>
+        protected void adjustCamera(InputSet inputs)
+        {
+            if (player_ == null)
+            {
+                Vector2 moveVector = Vector2.Zero;
+                Vector2 cameraPosition = new Vector2(inputs.getRightDirectionalX(), inputs.getRightDirectionalY());
+                if (cameraPosition.X < 100.0f)
+                {
+                    moveVector.X = -3f;
+                }
+                else if (cameraPosition.X > engine_.GraphicsDevice.Viewport.Width - 100.0f)
+                {
+                    moveVector.X = 3f;
+                }
+                if (cameraPosition.Y < 100.0f)
+                {
+                    moveVector.Y = -3f;
+                }
+                else if (cameraPosition.Y > engine_.GraphicsDevice.Viewport.Height - 100.0f)
+                {
+                    moveVector.Y = 3f;
+                }
+                GlobalHelper.getInstance().getCurrentCamera().move(moveVector.X, moveVector.Y);
+            }
+            else
+            {
+                GlobalHelper.getInstance().getCurrentCamera().setCenter(player_.getPosition().X, player_.getPosition().Y);
+            }
+        }
     }
 }

@@ -436,9 +436,6 @@
     <Compile Include="..\Commando\levels\Tileset.cs">
       <Link>levels\Tileset.cs</Link>
     </Compile>
-    <Compile Include="..\Commando\MediaPlayerHelper.cs">
-      <Link>MediaPlayerHelper.cs</Link>
-    </Compile>
     <Compile Include="..\Commando\MenuList.cs">
       <Link>MenuList.cs</Link>
     </Compile>

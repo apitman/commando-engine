@@ -58,7 +58,7 @@ namespace Commando
         /// <summary>
         /// This is the constructor that should almost always be used
         /// </summary>
-        /// <param name="filename">The path to the .spritefont file, without .spritefont at the end</param>
+        /// <param name="filepath">The path to the .spritefont file, without .spritefont at the end</param>
         /// <param name="spriteBatch">The spriteBatch to be used when drawing text</param>
         /// <param name="engine">The main Engine class</param>
         public GameFont(string filename, SpriteBatch spriteBatch, Engine engine)

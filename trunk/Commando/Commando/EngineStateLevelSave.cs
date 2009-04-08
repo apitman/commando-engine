@@ -115,7 +115,7 @@ namespace Commando
                 else
                 {
                     // TODO
-                    // Create Windows filename dialog box here if on PC
+                    // Create Windows filepath dialog box here if on PC
                 }
             }
 

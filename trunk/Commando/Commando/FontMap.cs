@@ -64,7 +64,7 @@ namespace Commando
         /// <summary>
         /// Loads SpriteFont information from file
         /// </summary>
-        /// <param name="filename">The .xml file that contains all the Font information</param>
+        /// <param name="filepath">The .xml file that contains all the Font information</param>
         /// <param name="spriteBatch">The spriteBatch that will be used to draw text</param>
         /// <param name="engine">The main Engine class</param>
         public void loadFonts(string filename, SpriteBatch spriteBatch, Engine engine)

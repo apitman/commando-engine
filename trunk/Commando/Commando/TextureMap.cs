@@ -91,7 +91,7 @@ namespace Commando
         /// <summary>
         /// Load all the textures for the game.
         /// </summary>
-        /// <param name="filename">Filename of the texture document</param>
+        /// <param name="filepath">Filename of the texture document</param>
         /// <param name="spriteBatch">SpriteBatch for the game</param>
         /// <param name="graphics">GraphicsDevice for the game</param>
         public void loadTextures(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
