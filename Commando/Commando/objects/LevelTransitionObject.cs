@@ -29,7 +29,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace Commando.objects
 {
-    class LevelTransitionObject : LevelObjectAbstract, CollisionObjectInterface
+    public class LevelTransitionObject : LevelObjectAbstract, CollisionObjectInterface
     {
         protected const float RADIUS = 20f;
         protected static readonly Height HEIGHT = new Height(true, true);
@@ -43,13 +43,13 @@ namespace Commando.objects
 
         protected CollisionDetectorInterface detector_;
 
-        protected string nextLevel_;
+        protected string nextLevelName_;
 
         protected List<Vector2> points_;
 
         protected string nextLevelPath_;
 
-
+        protected bool isPackaged_;
 
         protected static readonly List<Vector2> BOUND_POINTS;
         static LevelTransitionObject()
@@ -59,12 +59,10 @@ namespace Commando.objects
             BOUND_POINTS.Add(new Vector2(15.0f, -15.0f));
             BOUND_POINTS.Add(new Vector2(15.0f, 15.0f));
             BOUND_POINTS.Add(new Vector2(-15.0f, 15.0f));
-
-
         }
 
 
-        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction)
+        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction, bool isPackaged)
             : base(pipeline, TextureMap.fetchTexture("leveltransition"), position, direction, DRAW_DEPTH)
         {
             bounds_ = new ConvexPolygon(BOUND_POINTS, center);
@@ -76,15 +74,8 @@ namespace Commando.objects
                 detector.register(this);
             }
             detector_ = detector;
-            nextLevel_ = nextLevel;
-
-            //StorageDevice storageDevice = Settings.getInstance().StorageDevice_;
-            StorageContainer container = ContainerManager.getOpenContainer();
-            string directory = Path.Combine(container.Path, EngineStateLevelSave.DIRECTORY_NAME);
-            nextLevelPath_ = Path.Combine(directory, nextLevel_);
-            nextLevelPath_ = nextLevelPath_ + EngineStateLevelSave.LEVEL_EXTENSION;
-       
-
+            nextLevelName_ = nextLevel;
+            isPackaged_ = isPackaged;
         }
 
         public float getRadius()
@@ -93,11 +84,11 @@ namespace Commando.objects
         }
         public string getNextLevel()
         {
-            return nextLevel_;
+            return nextLevelName_;
         }
         public void setNextLevel(string nextLevel)
         {
-            nextLevel_ = nextLevel;
+            nextLevelName_ = nextLevel;
         }
         public ConvexPolygonInterface getBounds(HeightEnum height)
         {
@@ -121,11 +112,9 @@ namespace Commando.objects
 
         public void handleCollision(CollisionObjectInterface obj)
         {
-            
-
             if (obj is PlayableCharacterAbstract)
             {
-                GlobalHelper.getInstance().getGameplayState().moveToNextLevel(nextLevelPath_);
+                GlobalHelper.getInstance().getGameplayState().moveToNextLevel(this);
             }
         }
 
@@ -146,10 +135,7 @@ namespace Commando.objects
 
         public override void draw(GameTime gameTime)
         {
-            if (image_ != null)
-            {
-                image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
-            }
+            image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
         }
 
         public override void die()
@@ -172,6 +158,25 @@ namespace Commando.objects
             {
                 detector_.register(this);
             }
+        }
+
+        public EngineStateInterface go()
+        {
+            Engine engine = Settings.getInstance().EngineHandle_;
+            Level level;
+            if (isPackaged_)
+            {
+                level = Level.getLevelFromContent(nextLevelName_, engine);
+            }
+            else
+            {
+                StorageContainer container = ContainerManager.getOpenContainer();
+                string directory = Path.Combine(container.Path, EngineStateLevelSave.DIRECTORY_NAME);
+                string nextLevelPath = Path.Combine(directory, nextLevelName_) + EngineStateLevelSave.LEVEL_EXTENSION;
+
+                level = Level.getLevelFromFile(nextLevelPath);
+            }
+            return new EngineStateGameplay(engine, level);
         }
     }
 }

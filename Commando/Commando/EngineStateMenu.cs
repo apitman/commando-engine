@@ -22,6 +22,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.graphics;
 using System;
+using Commando.levels;
 
 namespace Commando
 {
@@ -81,7 +82,8 @@ namespace Commando
         }
         protected const float LOGO_DEPTH = Constants.DEPTH_LOW;
 
-        protected const string STR_MENU_START_GAME = "Start Game";
+        protected const string STR_MENU_START_GAME = "Start Story Mode";
+        protected const string STR_MENU_CUSTOM_LEVEL = "Play Custom Level";
         protected const string STR_MENU_CONTROLS = "Controls";
         protected const string STR_MENU_LEVEL_EDITOR = "Level Editor";
         protected const string STR_MENU_QUIT = "Quit";
@@ -102,6 +104,7 @@ namespace Commando
 
             List<string> menuString = new List<string>();
             menuString.Add(STR_MENU_START_GAME);
+            menuString.Add(STR_MENU_CUSTOM_LEVEL);
             menuString.Add(STR_MENU_CONTROLS);
             menuString.Add(STR_MENU_LEVEL_EDITOR);
             menuString.Add(STR_MENU_QUIT);
@@ -146,12 +149,15 @@ namespace Commando
                 switch(cursorPos)
                 {
                     case 0:
-                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.GAMEPLAY, this);
+                        Level firstLevel = Level.getLevelFromContent(@"XML\Levels\level1", engine_);
+                        return new EngineStateGameplay(engine_, firstLevel);
                     case 1:
-                        return new EngineStateControls(engine_);
+                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.GAMEPLAY, this);
                     case 2:
-                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_EDITOR, this);
+                        return new EngineStateControls(engine_);
                     case 3:
+                        return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_EDITOR, this);
+                    case 4:
                         engine_.Exit();
                         break;
                 }

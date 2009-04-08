@@ -616,6 +616,12 @@
       <Importer>XMLImporter</Importer>
       <Processor>XMLProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\level1.xml">
+      <Link>XML\Levels\level1.xml</Link>
+      <Name>level1</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml">
       <Link>XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml</Link>
       <Name>GreenPlayer_Crouch_Pistol_Walk</Name>
