@@ -241,6 +241,10 @@
     <key>FragGrenade</key>
     <handle>Sprites\\Grenade</handle>
   </image>
+  <image>
+    <key>overlayLogo</key>
+    <handle>Sprites\\overlayLogo</handle>
+  </image>
 </textures>
   </Asset>
 </XnaContent>
