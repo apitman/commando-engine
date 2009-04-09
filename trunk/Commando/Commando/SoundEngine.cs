@@ -39,7 +39,7 @@ namespace Commando
         private WaveBank waveBank_;
         private SoundBank soundBank_;
 
-        internal Cue Music { get; set; }
+        private Cue music_ = null;
 
         /// <summary>
         /// Private constructor as per the Singleton pattern which reads the
@@ -52,6 +52,11 @@ namespace Commando
             audio_ = new AudioEngine(@"Content\Audio\sounds.xgs");
             waveBank_ = new WaveBank(audio_,@"Content\Audio\waves1.xwb");
             soundBank_ = new SoundBank(audio_,@"Content\Audio\sounds1.xsb");
+
+            AudioCategory music = audio_.GetCategory("Music");
+            music.SetVolume(1f);
+            AudioCategory effects = audio_.GetCategory("Effect");
+            effects.SetVolume(0.4f);
         }
 
         /// <summary>
@@ -102,18 +107,37 @@ namespace Commando
             instance_ = null;
         }
 
+        /// <summary>
+        /// Adjusts the play volume of all sounds.
+        /// </summary>
+        /// <param name="amount">Percentage of max volume?</param>
         public void changeAllVolume(float amount)
         {
-            /*
+            
             AudioCategory music = audio_.GetCategory("Music");
-            music.SetVolume(amount);
+            music.SetVolume(amount * 1f);
             AudioCategory effects = audio_.GetCategory("Effect");
-            effects.SetVolume(amount);
-            */
+            effects.SetVolume(amount * 0.4f);
+            
 
             // We can use root category Global instead of the above
-            AudioCategory cat = audio_.GetCategory("Global");
-            cat.SetVolume(amount);
+            //AudioCategory cat = audio_.GetCategory("Global");
+            //cat.SetVolume(amount);
+        }
+
+        /// <summary>
+        /// Temporary.
+        /// Controls game music to one song at a time.
+        /// </summary>
+        /// <param name="cueName">Name of song to replace current.</param>
+        public void playMusic(string cueName)
+        {
+            if (music_ != null)
+            {
+                music_.Stop(AudioStopOptions.AsAuthored);
+            }
+            music_ = soundBank_.GetCue(cueName);
+            music_.Play();
         }
     }
 }

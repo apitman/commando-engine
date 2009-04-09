@@ -125,6 +125,8 @@ namespace Commando
             mainMenuList_.Font_ = MENU_FONT;
             mainMenuList_.Spacing_ = MENU_SPACING;
             mainMenuList_.LayerDepth_ = MENU_DEPTH;
+
+            SoundEngine.getInstance().playMusic("epic");
         }
 
         #region EngineStateInterface Members
@@ -149,9 +151,11 @@ namespace Commando
                 switch(cursorPos)
                 {
                     case 0:
+                        SoundEngine.getInstance().playMusic("alarm");
                         Level firstLevel = Level.getLevelFromContent(@"XML\Levels\level1", engine_);
                         return new EngineStateGameplay(engine_, firstLevel);
                     case 1:
+                        SoundEngine.getInstance().playMusic("sneak");
                         return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.GAMEPLAY, this);
                     case 2:
                         return new EngineStateControls(engine_);

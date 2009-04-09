@@ -633,6 +633,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Tiles\tileset02.png">
+      <Name>tileset02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="XML\defaultlevel.xml">
       <Name>defaultlevel</Name>
       <Importer>XmlImporter</Importer>
@@ -747,6 +752,11 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="XML\tileset2.xml">
+      <Name>tileset2</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SpriteFonts\Kootenay8.spritefont">
