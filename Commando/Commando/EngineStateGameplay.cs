@@ -161,7 +161,7 @@ namespace Commando
         protected Vector2 healthTextPos_;
         protected Vector2 ammoTextPos_;
 
-        protected LevelTransitionObject transition_;
+        protected TransitionObjectAbstract transition_;
 
         protected Level myLevel_;
 
@@ -193,7 +193,7 @@ namespace Commando
             SoundEngine.getInstance().Music = SoundEngine.getInstance().playCue("epic");
         }
 
-        public void moveToNextLevel(LevelTransitionObject next)
+        public void setTransition(TransitionObjectAbstract next)
         {
             transition_ = next;
         }

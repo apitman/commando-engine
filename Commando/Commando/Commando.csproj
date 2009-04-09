@@ -249,6 +249,7 @@
     <Compile Include="objects\NonPlayableCharacterAbstract.cs" />
     <Compile Include="objects\PipelineObjectAbstract.cs" />
     <Compile Include="objects\PlayableCharacterAbstract.cs" />
+    <Compile Include="objects\TransitionObjectAbstract.cs" />
     <Compile Include="objects\WeaponBox.cs" />
     <Compile Include="objects\weapons\AmmoTypeEnum.cs" />
     <Compile Include="objects\weapons\Bullet.cs" />

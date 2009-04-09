@@ -511,6 +511,9 @@
     <Compile Include="..\Commando\objects\PlayableCharacterAbstract.cs">
       <Link>objects\PlayableCharacterAbstract.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\TransitionObjectAbstract.cs">
+      <Link>objects\TransitionObjectAbstract.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\WeaponBox.cs">
       <Link>objects\WeaponBox.cs</Link>
     </Compile>
