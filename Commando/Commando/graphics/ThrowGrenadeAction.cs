@@ -40,45 +40,96 @@ namespace Commando.graphics
 
         protected bool finished_;
 
-        protected AnimationInterface animation_;
+        protected AnimationInterface[] animation_;
 
-        public ThrowGrenadeAction(CharacterAbstract character, AnimationInterface animation, Vector2 throwOffset)
+        protected string actionLevel_;
+
+        protected int holdFrame_;
+
+        protected int throwFrame_;
+
+        protected int currentFrame_;
+
+        protected int endFrame_;
+
+        public ThrowGrenadeAction(CharacterAbstract character,
+                                    AnimationInterface[] animation,
+                                    Vector2 throwOffset,
+                                    string actionLevel)
+            : this(character, animation, throwOffset, actionLevel, 0, 0)
+        {
+        }
+
+        public ThrowGrenadeAction(CharacterAbstract character,
+                                    AnimationInterface[] animation,
+                                    Vector2 throwOffset,
+                                    string actionLevel,
+                                    int holdFrame,
+                                    int throwFrame)
         {
             character_ = character;
             animation_ = animation;
             throwOffset_ = throwOffset;
             priority_ = PRIORITY;
             finished_ = true;
-        }
-
-        public void throwGrenade(Grenade grenade)
-        {
-            grenade_ = grenade;
+            actionLevel_ = actionLevel;
+            holdFrame_ = holdFrame;
+            throwFrame_ = throwFrame;
+            endFrame_ = animation_[0].getNumFrames();
         }
 
         public void update()
         {
-            Vector2 position = character_.getPosition();
-            Vector2 direction = character_.getDirection();
-            float angle = CommonFunctions.getAngle(direction);
-            float cosA = (float)Math.Cos(angle);
-            float sinA = (float)Math.Sin(angle);
-            Vector2 newPos = Vector2.Zero;
-            newPos.X = (throwOffset_.X) * cosA - (throwOffset_.Y) * sinA + position.X;
-            newPos.Y = (throwOffset_.X) * sinA + (throwOffset_.Y) * cosA + position.Y;
-            grenade_.setPosition(newPos);
-            grenade_.setDirection(direction);
-            finished_ = true;
+            if (currentFrame_ == throwFrame_)
+            {
+                Vector2 position = character_.getPosition();
+                Vector2 direction = character_.getDirection();
+                float angle = CommonFunctions.getAngle(direction);
+                float cosA = (float)Math.Cos(angle);
+                float sinA = (float)Math.Sin(angle);
+                Vector2 newPos = Vector2.Zero;
+                newPos.X = (throwOffset_.X) * cosA - (throwOffset_.Y) * sinA + position.X;
+                newPos.Y = (throwOffset_.X) * sinA + (throwOffset_.Y) * cosA + position.Y;
+                grenade_.setPosition(newPos);
+                grenade_.setDirection(direction);
+                grenade_.setVelocity(direction);
+                grenade_.start();
+            }
+            int animSet = character_.getActuator().getCurrentAnimationSet();
+            animation_[animSet].setPosition(character_.getPosition());
+            animation_[animSet].setRotation(character_.getDirection());
+            animation_[animSet].updateFrameNumber(currentFrame_);
+            currentFrame_++;
+            if (currentFrame_ == endFrame_)
+            {
+                finished_ = true;
+            }
         }
 
         public void draw()
         {
-            animation_.draw();
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                animation_[animSet].draw();
+            }
+            else
+            {
+                animation_[0].draw();
+            }
         }
 
         public void draw(Microsoft.Xna.Framework.Graphics.Color color)
         {
-            animation_.draw(color);
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                animation_[animSet].draw(color);
+            }
+            else
+            {
+                animation_[0].draw(color);
+            }
         }
 
         public bool isFinished()
@@ -109,9 +160,33 @@ namespace Commando.graphics
         public void start()
         {
             finished_ = false;
-            animation_.reset();
-            animation_.setPosition(character_.getPosition());
-            animation_.setRotation(character_.getDirection());
+            currentFrame_ = 0;
+            foreach (AnimationInterface anim in animation_)
+            {
+                anim.reset();
+                anim.setPosition(character_.getPosition());
+                anim.setRotation(character_.getDirection());
+            }
+        }
+
+        public string getActionLevel()
+        {
+            return actionLevel_;
+        }
+
+        public void setParameters(ActionParameters parameters)
+        {
+            grenade_ = (Grenade)parameters.object1;
+        }
+
+        public Commando.collisiondetection.ConvexPolygonInterface getBounds(Commando.levels.HeightEnum height)
+        {
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                return animation_[animSet].getBounds();
+            }
+            return animation_[0].getBounds();
         }
     }
 }

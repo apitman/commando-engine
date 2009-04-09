@@ -68,11 +68,13 @@ namespace Commando.ai
                 velocities_[countUp % REACTION_TIME] = enemy_.getVelocity();
                 countUp++;
                 Vector2 target = predictTargetPosition(enemy_.getPosition());
-                (AI_.Character_.getActuator() as DefaultActuator).lookAt(target);
+                //(AI_.Character_.getActuator() as DefaultActuator).lookAt(target);
+                AI_.Character_.getActuator().perform("lookAt", new ActionParameters(target));
                 if (countUp >= REACTION_TIME)
                 {
                     //AI_.Character_.Weapon_.shoot();
-                    (AI_.Character_.getActuator() as DefaultActuator).shoot(AI_.Character_.Weapon_);
+                    //(AI_.Character_.getActuator() as DefaultActuator).shoot(AI_.Character_.Weapon_)
+                    AI_.Character_.getActuator().perform("shoot", new ActionParameters());
                 }
             }
             else

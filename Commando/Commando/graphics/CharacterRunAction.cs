@@ -24,10 +24,12 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.objects;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.collisiondetection;
+using Commando.levels;
 
 namespace Commando.graphics
 {
-    public class CharacterRunAction : MoveActionInterface
+    public class CharacterRunAction : CharacterActionInterface
     {
         private const int RUNPRIORITY = 10;
 
@@ -45,7 +47,12 @@ namespace Commando.graphics
 
         protected bool finished_;
 
-        public CharacterRunAction(CharacterAbstract character, AnimationInterface animation, float speed)
+        protected string actionLevel_;
+
+        public CharacterRunAction(CharacterAbstract character,
+                                    AnimationInterface animation,
+                                    float speed,
+                                    string actionLevel)
         {
             character_ = character;
             animation_ = animation;
@@ -54,12 +61,7 @@ namespace Commando.graphics
             runDirection_ = Vector2.Zero;
             priority_ = RUNPRIORITY;
             finished_ = true;
-        }
-
-        public void move(Vector2 direction)
-        {
-            runDirection_ = direction;
-            finished_ = false;
+            actionLevel_ = actionLevel;
         }
 
         public void update()
@@ -73,21 +75,15 @@ namespace Commando.graphics
             moving.Y *= speed_;
 
             Vector2 newPosition = position;
-            //newPosition.X += moving.X;
-            //newPosition.Y += moving.Y;
-
+            
             /*
             // TODO: Implement slower movement backwards
             float moveDiff = (float)Math.Atan2(moving.Y, moving.X) - getRotationAngle();
             moveDiff = MathHelper.WrapAngle(moveDiff);
             moveVector *= (MathHelper.TwoPi - Math.Abs(moveDiff)) / MathHelper.Pi;
             */
-            //Console.Out.WriteLine("OldPosBeforeCollision: " + position);
-            //Console.Out.WriteLine("NewPosBeforeCollision: " + newPosition);
 
-            //newPosition = character_.getCollisionDetector().checkCollisions(character_, newPosition);
             character_.getCollisionDetector().checkCollisions(character_, ref moving, ref direction);
-            //Console.Out.WriteLine("NewPosAfterCollision: " + newPosition);
             
             newPosition.X += moving.X;
             newPosition.Y += moving.Y;
@@ -104,7 +100,7 @@ namespace Commando.graphics
 
         public CharacterActionInterface interrupt(CharacterActionInterface newAction)
         {
-            if (newAction == this || newAction.getPriority() <= priority_)
+            if (newAction == this || (newAction.getPriority() <= priority_ && !newAction.isFinished()))
             {
                 return this;
             }
@@ -137,6 +133,22 @@ namespace Commando.graphics
             animation_.reset();
             animation_.setPosition(character_.getPosition());
             animation_.setRotation(character_.getDirection());
+        }
+
+        public string getActionLevel()
+        {
+            return actionLevel_;
+        }
+
+        public void setParameters(ActionParameters parameters)
+        {
+            runDirection_ = parameters.vector1;
+            finished_ = false;
+        }
+
+        public ConvexPolygonInterface getBounds(HeightEnum height)
+        {
+            return animation_.getBounds();
         }
     }
 }

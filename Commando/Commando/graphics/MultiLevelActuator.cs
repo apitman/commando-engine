@@ -50,6 +50,10 @@ namespace Commando.graphics
 
         protected string lowActionLevel_;
 
+        protected bool toPause_ = false;
+
+        protected Dictionary<int, Object> resources_;
+
         public MultiLevelActuator(Dictionary<string, Dictionary<string, CharacterActionInterface>> actions, List<string> actionLevels, CharacterAbstract character, string initialActionSet, string initialAction, string lowActionLevel, string highActionLevel)
         {
             if (ActionSetValidator.validate(actions))
@@ -64,6 +68,7 @@ namespace Commando.graphics
             currentActionSet_ = initialActionSet;
             actionLevels_ = actionLevels;
             CharacterActionInterface initAction = actions_[currentActionSet_][initialAction];
+            currentActions_ = new Dictionary<string, CharacterActionInterface>();
             foreach (string s in actionLevels_)
             {
                 currentActions_.Add(s, initAction);
@@ -71,6 +76,9 @@ namespace Commando.graphics
             restingAction_ = RESTINGSTATE;
             lowActionLevel_ = lowActionLevel;
             highActionLevel_ = highActionLevel;
+            currentAnimationSet_ = 0;
+            resources_ = new Dictionary<int, Object>();
+            toPause_ = false;
         }
 
         public MultiLevelActuator(Dictionary<string, Dictionary<string, CharacterActionInterface>> actions, List<string> actionLevels, CharacterAbstract character, string initialActionSet)
@@ -86,6 +94,7 @@ namespace Commando.graphics
         {
             Vector2 oldPos = character_.getPosition();
             CharacterActionInterface curAction;
+            (actions_[currentActionSet_][restingAction_] as CharacterStayStillAction).reset();
             foreach (string curLevel in actionLevels_)
             {
                 curAction = currentActions_[curLevel];
@@ -98,6 +107,10 @@ namespace Commando.graphics
                 {
                     curAction.update();
                 }
+            }
+            if (toPause_)
+            {
+                pause();
             }
             character_.setVelocity(character_.getPosition() - oldPos);
         }
@@ -127,16 +140,16 @@ namespace Commando.graphics
         {
             if (!actions_[currentActionSet_].ContainsKey(actionName))
             {
-                return false;
+                throw new NotImplementedException("Invalid action name - " + actionName);
             }
             CharacterActionInterface action = actions_[currentActionSet_][actionName];
-            //action.setParameters(parameters);
-            //string actionLevel = action.getActionLevel();
-            //currentActions_[actionLevel] = currentActions_[actionLevel].interrupt(action);
-            //if (currentActions_[actionLevel] == action)
-            //{
-            //    return true;
-            //}
+            action.setParameters(parameters);
+            string actionLevel = action.getActionLevel();
+            currentActions_[actionLevel] = currentActions_[actionLevel].interrupt(action);
+            if (currentActions_[actionLevel] == action)
+            {
+                return true;
+            }
             return false;
         }
 
@@ -144,19 +157,70 @@ namespace Commando.graphics
         {
             if (height == HeightEnum.HIGH)
             {
-                //return currentActions_[highActionLevel_].getBounds(height);
+                return currentActions_[highActionLevel_].getBounds(height);
             }
-            //return currentActions_[lowActionLevel_].getBounds(height);
+            return currentActions_[lowActionLevel_].getBounds(height);
+        }
+
+        public string getCurrentActionSet()
+        {
+            return currentActionSet_;
+        }
+
+        public void setCurrentActionSet(string actionSet)
+        {
+            if (actionSet != currentActionSet_)
+            {
+                toPause_ = true;
+            }
+            currentActionSet_ = actionSet;
+        }
+
+        public int getCurrentAnimationSet()
+        {
+            return currentAnimationSet_;
+        }
+
+        public void setCurrentAnimationSet(int animationSet)
+        {
+            currentAnimationSet_ = animationSet;
+        }
+
+        public void setResource(int resourceid, Object resource)
+        {
+            resources_[resourceid] = resource;
+        }
+
+        public Object getResource(int resourceid)
+        {
+            if (resources_.ContainsKey(resourceid))
+            {
+                return resources_[resourceid];
+            }
             return null;
         }
-    }
 
-    public struct ActionParameters
-    {
-        public Vector2 vector1;
-        public Vector2 vector2;
-        public Object object1;
-        public Object object2;
+        public bool isFinished(string actionName)
+        {
+            if (!actions_[currentActionSet_].ContainsKey(actionName))
+            {
+                throw new NotImplementedException("Invalid action name - "+ actionName);
+            }
+            CharacterActionInterface action = actions_[currentActionSet_][actionName];
+            if(currentActions_[action.getActionLevel()] == action)
+            {
+                return action.isFinished();
+            }
+            return true;
+        }
 
+        protected void pause()
+        {
+            for (int i = 1; i < actionLevels_.Count; i++)
+            {
+                currentActions_[actionLevels_[i]] = actions_[currentActionSet_][restingAction_];
+            }
+            toPause_ = false;
+        }
     }
 }

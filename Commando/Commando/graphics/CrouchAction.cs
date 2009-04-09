@@ -43,7 +43,13 @@ namespace Commando.graphics
 
         protected Height newHeight_;
 
-        public CrouchAction(CharacterAbstract character, AnimationInterface animation, String nextActionSet, Height newHeight)
+        protected string actionLevel_;
+
+        public CrouchAction(CharacterAbstract character,
+                            AnimationInterface animation,
+                            String nextActionSet,
+                            Height newHeight,
+                            string actionLevel)
         {
             priority_ = PRIORITY;
             character_ = character;
@@ -51,13 +57,14 @@ namespace Commando.graphics
             nextActionSet_ = nextActionSet;
             finished_ = false;
             newHeight_ = newHeight;
+            actionLevel_ = actionLevel;
         }
 
         public void update()
         {
             animation_.setPosition(character_.getPosition());
             animation_.setRotation(character_.getDirection());
-            (character_.getActuator() as DefaultActuator).setCurrentActionSet(nextActionSet_);
+            character_.getActuator().setCurrentActionSet(nextActionSet_);
             character_.setHeight(newHeight_);
             finished_ = true;
         }
@@ -103,6 +110,21 @@ namespace Commando.graphics
             animation_.reset();
             animation_.setPosition(character_.getPosition());
             animation_.setRotation(character_.getDirection());
+        }
+
+        public string getActionLevel()
+        {
+            return actionLevel_;
+        }
+
+        public void setParameters(ActionParameters parameters)
+        {
+            
+        }
+
+        public Commando.collisiondetection.ConvexPolygonInterface getBounds(HeightEnum height)
+        {
+            return animation_.getBounds();
         }
     }
 }

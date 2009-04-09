@@ -94,7 +94,8 @@ namespace Commando.ai.planning
         /// <returns>Returns true if successful.</returns>
         internal override bool initialize()
         {
-            (character_.getActuator() as DefaultActuator).cover(cover_);
+            //(character_.getActuator() as DefaultActuator).cover(cover_);
+            character_.getActuator().perform("cover", new ActionParameters(cover_));
             return true;
         }
 
@@ -104,7 +105,8 @@ namespace Commando.ai.planning
         /// <returns>Returns true once attached.</returns>
         internal override ActionStatus update()
         {
-            if ((character_.getActuator() as DefaultActuator).isFinished())
+            //if ((character_.getActuator() as DefaultActuator).isFinished())
+            if(character_.getActuator().isFinished("cover"))
                 return ActionStatus.SUCCESS;
             return ActionStatus.IN_PROGRESS;
         }

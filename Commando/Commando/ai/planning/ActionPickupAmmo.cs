@@ -101,7 +101,8 @@ namespace Commando.ai.planning
             {
                 return ActionStatus.FAILED;
             }
-            (character_.getActuator() as DefaultActuator).moveTo(ammo_.getPosition());
+            //(character_.getActuator() as DefaultActuator).moveTo(ammo_.getPosition());
+            character_.getActuator().perform("moveTo", new ActionParameters(ammo_.getPosition()));
             return ActionStatus.IN_PROGRESS;
         }
 

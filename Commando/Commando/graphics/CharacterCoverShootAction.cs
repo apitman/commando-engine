@@ -26,7 +26,7 @@ using Commando.levels;
 
 namespace Commando.graphics
 {
-    public class CharacterCoverShootAction : ShootActionInterface
+    public class CharacterCoverShootAction : CharacterActionInterface
     {
         private const int PRIORITY = 12;
 
@@ -34,7 +34,9 @@ namespace Commando.graphics
 
         protected CharacterAbstract character_;
 
-        protected AnimationInterface animation_;
+        protected ActuatorInterface actuator_;
+
+        protected AnimationInterface[] animation_;
 
         protected int frameToShoot_;
 
@@ -48,21 +50,30 @@ namespace Commando.graphics
 
         protected Height oldHeight_;
 
-        public CharacterCoverShootAction(CharacterAbstract character, AnimationInterface animation, int frameToShoot)
+        protected string actionLevel_;
+
+        public CharacterCoverShootAction(CharacterAbstract character,
+                                            AnimationInterface[] animation,
+                                            int frameToShoot,
+                                            string actionLevel)
         {
             character_ = character;
             animation_ = animation;
             frameToShoot_ = frameToShoot;
             priority_ = PRIORITY;
+            actionLevel_ = actionLevel;
+            actuator_ = null;
         }
         
-        public void shoot(RangedWeaponAbstract weapon)
-        {
-            weapon_ = weapon;
-        }
         public void update()
         {
-            animation_.updateFrameNumber(currentFrame_);
+            int animSet = 0;
+            if (animation_.GetLength(0) > 1)
+            {
+                animSet = character_.getActuator().getCurrentAnimationSet();
+                
+            }
+            animation_[animSet].updateFrameNumber(currentFrame_);
             if (currentFrame_ == frameToShoot_)
             {
                 weapon_.shoot();
@@ -74,7 +85,7 @@ namespace Commando.graphics
             else
             {
                 currentFrame_++;
-                if (currentFrame_ >= animation_.getNumFrames())
+                if (currentFrame_ >= animation_[animSet].getNumFrames())
                 {
                     finished_ = true;
                     character_.setHeight(oldHeight_);
@@ -82,18 +93,41 @@ namespace Commando.graphics
             }
             Vector2 direction = character_.getDirection();
             Vector2 position = character_.getPosition();
-            animation_.update(position, direction);
+            if (animation_.GetLength(0) > 1)
+            {animSet = character_.getActuator().getCurrentAnimationSet();
+                animation_[animSet].update(position, direction);
+            }
+            else
+            {
+                animation_[0].update(position, direction);
+            }
             holding_ = false;
         }
 
         public void draw()
         {
-            animation_.draw();
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                animation_[animSet].draw();
+            }
+            else
+            {
+                animation_[0].draw();
+            }
         }
 
         public void draw(Color color)
         {
-            animation_.draw(color);
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                animation_[animSet].draw(color);
+            }
+            else
+            {
+                animation_[0].draw(color);
+            }
         }
 
         public bool isFinished()
@@ -128,14 +162,42 @@ namespace Commando.graphics
 
         public void start()
         {
+            if (actuator_ == null)
+            {
+                actuator_ = character_.getActuator();
+            }
             finished_ = false;
             holding_ = false;
             currentFrame_ = 0;
-            animation_.reset();
-            animation_.setPosition(character_.getPosition());
-            animation_.setRotation(character_.getDirection());
+            foreach (AnimationInterface anim in animation_)
+            {
+                anim.reset();
+                anim.setPosition(character_.getPosition());
+                anim.setRotation(character_.getDirection());
+            }
             oldHeight_ = character_.getHeight();
             character_.setHeight(new Height(true, true));
+            weapon_ = character_.Weapon_;
+        }
+
+        public string getActionLevel()
+        {
+            return actionLevel_;
+        }
+
+        public void setParameters(ActionParameters parameters)
+        {
+            
+        }
+
+        public Commando.collisiondetection.ConvexPolygonInterface getBounds(HeightEnum height)
+        {
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                return animation_[animSet].getBounds();
+            }
+            return animation_[0].getBounds();
         }
     }
 }

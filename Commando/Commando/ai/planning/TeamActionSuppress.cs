@@ -108,8 +108,10 @@ namespace Commando.ai.planning
 
                 if (Raycaster.canSeePoint(character_.getPosition(), belief.position_, character_.getHeight(), Height.TALL))
                 {
-                    (character_.getActuator() as DefaultActuator).lookAt(belief.position_);
-                    character_.Weapon_.shoot();
+                    //(character_.getActuator() as DefaultActuator).lookAt(belief.position_);
+                    //character_.Weapon_.shoot();
+                    character_.getActuator().perform("lookAt", new ActionParameters(belief.position_));
+                    character_.getActuator().perform("shoot", new ActionParameters());
                 }
             }
 

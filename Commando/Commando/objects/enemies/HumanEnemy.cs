@@ -38,6 +38,8 @@ namespace Commando.objects.enemies
 
         static readonly float RADIUS;
 
+        static readonly float RADIUSCROUCH;
+
         const float SPEED = 3.0f;
 
         protected float radius_;
@@ -46,11 +48,13 @@ namespace Commando.objects.enemies
 
         protected ConvexPolygonInterface boundsPolygonLow_;
 
-        protected DefaultActuator actuator_;
+        protected ActuatorInterface actuator_;
 
         protected static readonly List<Vector2> BOUNDSPOINTSHIGH;
 
         protected static readonly List<Vector2> BOUNDSPOINTSLOW;
+
+        protected static readonly List<Vector2> BOUNDSPOINTSLOWCROUCH;
 
         protected Color currentDrawColor_ = Color.Black;
 
@@ -93,6 +97,23 @@ namespace Commando.objects.enemies
                     RADIUS = vec.Length();
                 }
             }
+
+            BOUNDSPOINTSLOWCROUCH = new List<Vector2>();
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(22f - 37.5f, 43f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(23f - 37.5f, 32f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(28f - 37.5f, 25f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(54f - 37.5f, 21f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(64f - 37.5f, 46f - 37.5f));
+            BOUNDSPOINTSLOWCROUCH.Add(new Vector2(42f - 37.5f, 55f - 37.5f));
+            RADIUSCROUCH = 0.0f;
+            foreach (Vector2 vec in BOUNDSPOINTSLOWCROUCH)
+            {
+                if (vec.Length() > RADIUSCROUCH)
+                {
+                    RADIUSCROUCH = vec.Length();
+                }
+            }
+            RADIUSCROUCH += 1f;
             RADIUS += 1f;
         }
 
@@ -108,6 +129,7 @@ namespace Commando.objects.enemies
             radius_ = RADIUS;
             Allegiance_ = 2;
 
+            /*
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
@@ -198,6 +220,101 @@ namespace Commando.objects.enemies
             actions["pistol_cover"].Add("throw", new ThrowGrenadeAction(this, pistol_cover_rest, new Vector2(30f, 0f)));
 
             actuator_ = new DefaultActuator(actions, this, "pistol_stand");
+            */
+
+            //YOU MUST CHANGE THIS CODE
+            List<string> levels = new List<string>();
+            levels.Add("transition");
+            levels.Add("turning");
+            levels.Add("lower");
+            levels.Add("upper");
+
+            List<Vector2> boundsPointsLow = BOUNDSPOINTSLOW;
+            List<Vector2> boundsPointsHigh = BOUNDSPOINTSHIGH;
+
+            AnimationInterface[] restAnimations = new AnimationInterface[8];
+            restAnimations[0] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_ - 0.02f, boundsPointsLow);
+            restAnimations[1] = restAnimations[0];
+            restAnimations[2] = restAnimations[0];
+            restAnimations[3] = restAnimations[0];
+            restAnimations[4] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+            restAnimations[5] = restAnimations[4];
+            restAnimations[6] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Pistol_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+            restAnimations[7] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Rifle_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+
+            AnimationInterface[] crouchRestAnimations = new AnimationInterface[8];
+            crouchRestAnimations[0] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_ - 0.02f, BOUNDSPOINTSLOWCROUCH);
+            crouchRestAnimations[1] = crouchRestAnimations[0];
+            crouchRestAnimations[2] = crouchRestAnimations[0];
+            crouchRestAnimations[3] = crouchRestAnimations[0];
+            crouchRestAnimations[4] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Crouch_Stationary"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+            crouchRestAnimations[5] = crouchRestAnimations[4];
+            crouchRestAnimations[6] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Pistol_Crouch"), frameLengthModifier_, depth_, BOUNDSPOINTSLOWCROUCH);
+            crouchRestAnimations[7] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Rifle_Crouch"), frameLengthModifier_, depth_, BOUNDSPOINTSLOWCROUCH);
+
+            AnimationInterface runAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+            AnimationInterface runToAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+            AnimationInterface coverAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+            AnimationInterface crouchAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+
+            AnimationInterface crouchedRunAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Crouch"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+            AnimationInterface crouchedRunToAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Crouch"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+            AnimationInterface crouchedCoverAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Crouch"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+            AnimationInterface crouchedCrouchAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Crouch"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+
+            AnimationInterface[] shootAnimations = new AnimationInterface[2];
+            shootAnimations[0] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Pistol_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+            shootAnimations[1] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Rifle_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+            AnimationInterface[] throwGrenadeAnimations = new AnimationInterface[2];
+            throwGrenadeAnimations[0] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Pistol_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+            throwGrenadeAnimations[1] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Rifle_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+
+            AnimationInterface[] crouchedShootAnimations = new AnimationInterface[2];
+            crouchedShootAnimations[0] = new NonLoopAnimation(TextureMap.fetchTexture("RedPlayer_Pistol_Crouch"), frameLengthModifier_, depth_, boundsPointsHigh);
+            crouchedShootAnimations[1] = new NonLoopAnimation(TextureMap.fetchTexture("RedPlayer_Rifle_Crouch"), frameLengthModifier_, depth_, boundsPointsHigh);
+            AnimationInterface[] crouchedThrowGrenadeAnimations = new AnimationInterface[2];
+            crouchedThrowGrenadeAnimations[0] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Pistol_Crouch"), frameLengthModifier_, depth_, boundsPointsHigh);
+            crouchedThrowGrenadeAnimations[1] = new LoopAnimation(TextureMap.fetchTexture("RedPlayer_Rifle_Crouch"), frameLengthModifier_, depth_, boundsPointsHigh);
+
+            Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
+            
+            actions.Add("crouch", new Dictionary<string, CharacterActionInterface>());
+            actions["crouch"].Add("move", new CharacterRunAction(this, crouchedRunAnimation, SPEED, "lower"));
+            actions["crouch"].Add("moveTo", new CharacterRunToAction(this, crouchedRunToAnimation, SPEED, "lower"));
+            actions["crouch"].Add("rest", new CharacterStayStillAction(this, crouchRestAnimations, levels, "upper", "lower"));
+            actions["crouch"].Add("crouch", new CrouchAction(this, crouchedCrouchAnimation, "stand", new Height(true, true), "transition"));
+            actions["crouch"].Add("cover", new AttachToCoverAction(this, crouchedCoverAnimation, "cover", new Height(true, false), SPEED, "lower"));
+            actions["crouch"].Add("shoot", new CharacterShootAction(this, crouchedShootAnimations, "upper", 0));
+            actions["crouch"].Add("throw", new ThrowGrenadeAction(this, crouchedThrowGrenadeAnimations, new Vector2(30f, 0f), "upper"));
+            actions["crouch"].Add("look", new CharacterLookAction(this, "turning"));
+            actions["crouch"].Add("lookAt", new CharacterLookAtAction(this, "turning"));
+            actions["crouch"].Add("reload", new NoAction("upper"));
+            actions.Add("stand", new Dictionary<string, CharacterActionInterface>());
+            actions["stand"].Add("move", new CharacterRunAction(this, runAnimation, SPEED, "lower"));
+            actions["stand"].Add("moveTo", new CharacterRunToAction(this, runToAnimation, SPEED, "lower"));
+            actions["stand"].Add("rest", new CharacterStayStillAction(this, restAnimations, levels, "upper", "lower"));
+            actions["stand"].Add("crouch", new CrouchAction(this, crouchAnimation, "crouch", new Height(true, false), "transition"));
+            actions["stand"].Add("cover", new AttachToCoverAction(this, coverAnimation, "cover", new Height(true, false), SPEED, "lower"));
+            actions["stand"].Add("shoot", new CharacterShootAction(this, shootAnimations, "upper", 0));
+            actions["stand"].Add("throw", new ThrowGrenadeAction(this, throwGrenadeAnimations, new Vector2(30f, 0f), "upper"));
+            actions["stand"].Add("look", new CharacterLookAction(this, "turning"));
+            actions["stand"].Add("lookAt", new CharacterLookAtAction(this, "turning"));
+            actions["stand"].Add("reload", new NoAction("upper"));
+            actions.Add("cover", new Dictionary<string, CharacterActionInterface>());
+            actions["cover"].Add("move", new CharacterCoverMoveAction(this, crouchedRunAnimation, SPEED, "lower"));
+            actions["cover"].Add("moveTo", new CharacterCoverMoveToAction(this, crouchedRunToAnimation, SPEED, "lower"));
+            actions["cover"].Add("rest", new CharacterStayStillAction(this, crouchRestAnimations, levels, "upper", "lower"));
+            actions["cover"].Add("crouch", new CrouchAction(this, crouchedCrouchAnimation, "stand", new Height(true, true), "transition"));
+            actions["cover"].Add("cover", new DetachFromCoverAction(this, crouchedCoverAnimation, "stand", new Height(true, true), SPEED, "lower"));
+            actions["cover"].Add("shoot", new CharacterCoverShootAction(this, crouchedShootAnimations, 0, "upper"));
+            actions["cover"].Add("throw", new ThrowGrenadeAction(this, crouchedThrowGrenadeAnimations, new Vector2(30f, 0f), "upper"));
+            actions["cover"].Add("look", new CharacterLookAction(this, "turning"));
+            actions["cover"].Add("lookAt", new CharacterLookAtAction(this, "turning"));
+            actions["cover"].Add("reload", new NoAction("upper"));
+
+            actuator_ = new MultiLevelActuator(actions, levels, this, "stand", "rest", "lower", "upper");
+            //END CHANGE NEEDED
+
 
             Weapon_ = new Pistol(pipeline, this, new Vector2(60f - 37.5f, 33.5f - 37.5f));
             height_ = new Height(true, true);
@@ -256,9 +373,9 @@ namespace Commando.objects.enemies
             else
             {
                 if (Allegiance_ == 2)
-                    currentDrawColor_ = Color.Black;
-                else
                     currentDrawColor_ = Color.White;
+                else
+                    currentDrawColor_ = Color.Black;
             }
 
             collidedInto_.Clear();

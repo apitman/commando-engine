@@ -184,7 +184,11 @@
     <Compile Include="graphics\CharacterActionInterface.cs" />
     <Compile Include="graphics\AnimationInterface.cs" />
     <Compile Include="graphics\CharacterCoverMoveAction.cs" />
+    <Compile Include="graphics\CharacterCoverMoveToAction.cs" />
     <Compile Include="graphics\CharacterCoverShootAction.cs" />
+    <Compile Include="graphics\CharacterLookAction.cs" />
+    <Compile Include="graphics\CharacterLookAtAction.cs" />
+    <Compile Include="graphics\CharacterReloadAction.cs" />
     <Compile Include="graphics\CharacterRunToAction.cs" />
     <Compile Include="graphics\CharacterShootAction.cs" />
     <Compile Include="graphics\CharacterStayStillAction.cs" />
@@ -199,6 +203,7 @@
     <Compile Include="graphics\MoveToActionInterface.cs" />
     <Compile Include="graphics\CharacterRunAction.cs" />
     <Compile Include="graphics\MultiLevelActuator.cs" />
+    <Compile Include="graphics\NoAction.cs" />
     <Compile Include="graphics\NonLoopAnimation.cs" />
     <Compile Include="graphics\ShootActionInterface.cs" />
     <Compile Include="graphics\ThrowGrenadeAction.cs" />

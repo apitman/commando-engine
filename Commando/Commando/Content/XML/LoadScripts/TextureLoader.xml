@@ -21,6 +21,56 @@
   <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Stand_Pistol_Walk.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\GreenPlayer_StandToShoot_Pistol.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\GreenPlayer_StandToShoot_Rifle.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Walk_Stand.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Walk_Crouch.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Throw_Stand_Pistol.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Throw_Stand_Rifle.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Throw_Crouch_Pistol.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Throw_Crouch_Rifle.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Reload_Stand_Pistol.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Reload_Stand_Rifle.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Reload_Crouch_Pistol.xml</texture>
+  <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Reload_Crouch_Rifle.xml</texture>
+  <image>
+    <key>GreenPlayer_Crouch_Stationary</key>
+    <handle>Sprites\\GreenPlayer_Crouch_Stationary</handle>
+  </image>
+  <image>
+    <key>RedPlayer_Pistol_Crouch</key>
+    <handle>Sprites\\RedPlayer_Pistol_Crouch</handle>
+  </image>
+  <image>
+    <key>RedPlayer_Rifle_Crouch</key>
+    <handle>Sprites\\RedPlayer_Rifle_Crouch</handle>
+  </image>
+  <image>
+    <key>RedPlayer_Pistol_Stand</key>
+    <handle>Sprites\\RedPlayer_Pistol_Stand</handle>
+  </image>
+  <image>
+    <key>RedPlayer_Rifle_Stand</key>
+    <handle>Sprites\\RedPlayer_Rifle_Stand</handle>
+  </image>
+  <image>
+    <key>GreenPlayer_Pistol_Crouch</key>
+    <handle>Sprites\\GreenPlayer_Pistol_Crouch</handle>
+  </image>
+  <image>
+    <key>GreenPlayer_Rifle_Crouch</key>
+    <handle>Sprites\\GreenPlayer_Rifle_Crouch</handle>
+  </image>
+  <image>
+    <key>GreenPlayer_UpperBody_Pistol_Stand</key>
+    <handle>Sprites\\GreenPlayer_UpperBody_Pistol_Stand</handle>
+  </image>
+  <image>
+    <key>GreenPlayer_Blank</key>
+    <handle>Sprites\\GreenPlayer_Blank</handle>
+  </image>
+  <image>
+    <key>GreenPlayer_UpperBody_Rifle_Stand</key>
+    <handle>Sprites\\GreenPlayer_UpperBody_Rifle_Stand</handle>
+  </image>
   <image>
     <key>GreenPlayer_Crouch_Pistol</key>
     <handle>Sprites\\GreenPlayer_Crouch_Pistol</handle>

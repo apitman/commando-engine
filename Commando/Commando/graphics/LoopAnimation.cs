@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.collisiondetection;
 
 namespace Commando.graphics
 {
@@ -44,7 +45,14 @@ namespace Commando.graphics
 
         protected Vector2 moved_;
 
-        public LoopAnimation(GameTexture sprites, float frameLengthModifier, float depth)
+        protected ConvexPolygonInterface[] boundsPolygon_;
+
+        protected bool perFrameBounds_;
+
+        public LoopAnimation(GameTexture sprites,
+                                float frameLengthModifier,
+                                float depth,
+                                List<List<Vector2>> boundsPoints)
         {
             sprites_ = sprites;
             currentFrame_ = 0;
@@ -54,6 +62,48 @@ namespace Commando.graphics
             frameLengthModifier_ = frameLengthModifier;
             moved_ = Vector2.Zero;
             depth_ = depth;
+            boundsPolygon_ = new ConvexPolygonInterface[boundsPoints.Count];
+            for (int i = 0; i < boundsPoints.Count; i++)
+            {
+                boundsPolygon_[i] = new ConvexPolygon(boundsPoints[i], Vector2.Zero);
+            }
+            perFrameBounds_ = true;
+        }
+        
+        public LoopAnimation(GameTexture sprites,
+                                float frameLengthModifier,
+                                float depth,
+                                List<Vector2> boundsPoints)
+        {
+            sprites_ = sprites;
+            currentFrame_ = 0;
+            totalFrames_ = sprites.getNumberOfImages();
+            position_ = Vector2.Zero;
+            rotation_ = Vector2.Zero;
+            frameLengthModifier_ = frameLengthModifier;
+            moved_ = Vector2.Zero;
+            depth_ = depth;
+            boundsPolygon_ = new ConvexPolygonInterface[1];
+            boundsPolygon_[0] = new ConvexPolygon(boundsPoints, Vector2.Zero);
+            perFrameBounds_ = false;
+        }
+
+        public LoopAnimation(GameTexture sprites,
+                                float frameLengthModifier,
+                                float depth,
+                                ConvexPolygonInterface polygon)
+        {
+            sprites_ = sprites;
+            currentFrame_ = 0;
+            totalFrames_ = sprites.getNumberOfImages();
+            position_ = Vector2.Zero;
+            rotation_ = Vector2.Zero;
+            frameLengthModifier_ = frameLengthModifier;
+            moved_ = Vector2.Zero;
+            depth_ = depth;
+            boundsPolygon_ = new ConvexPolygonInterface[1];
+            boundsPolygon_[0] = polygon;
+            perFrameBounds_ = false;
         }
 
         public void moveNFramesForward(int numFrames)
@@ -149,5 +199,17 @@ namespace Commando.graphics
             sprites_.drawImage(currentFrame_, position, rotation, depth);
         }
         */
+
+        public ConvexPolygonInterface getBounds()
+        {
+            if (perFrameBounds_)
+            {
+                return boundsPolygon_[currentFrame_];
+            }
+            else
+            {
+                return boundsPolygon_[0];
+            }
+        }
     }
 }

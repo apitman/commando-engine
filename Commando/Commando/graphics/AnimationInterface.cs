@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.collisiondetection;
 
 namespace Commando.graphics
 {
@@ -47,6 +48,6 @@ namespace Commando.graphics
 
         int getNumFrames();
 
-        //TODO: Add functionality to get the current frame's bounds
+        ConvexPolygonInterface getBounds();
     }
 }

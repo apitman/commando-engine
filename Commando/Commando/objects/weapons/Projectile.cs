@@ -158,6 +158,10 @@ namespace Commando.objects
                     height_.blocksLow_ = false;
                 }
             }
+            if (height_.blocksHigh_ || height_.blocksLow_)
+            {
+                return Vector2.Zero;
+            }
             return translate;
         }
     }

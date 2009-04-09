@@ -558,6 +558,66 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\GreenPlayer_UpperBody_Pistol_Stand.png">
+      <Name>GreenPlayer_UpperBody_Pistol_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_UpperBody_Rifle_Stand.png">
+      <Name>GreenPlayer_UpperBody_Rifle_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Walk_Stand.png">
+      <Name>GreenPlayer_Walk_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Blank.png">
+      <Name>GreenPlayer_Blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Walk_Crouch.png">
+      <Name>GreenPlayer_Walk_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Pistol_Crouch.png">
+      <Name>GreenPlayer_Pistol_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Rifle_Crouch.png">
+      <Name>GreenPlayer_Rifle_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Crouch_Stationary.png">
+      <Name>GreenPlayer_Crouch_Stationary</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\RedPlayer_Pistol_Crouch.png">
+      <Name>RedPlayer_Pistol_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\RedPlayer_Pistol_Stand.png">
+      <Name>RedPlayer_Pistol_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\RedPlayer_Rifle_Crouch.png">
+      <Name>RedPlayer_Rifle_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\RedPlayer_Rifle_Stand.png">
+      <Name>RedPlayer_Rifle_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <None Include="Audio\music\alarm.wav">
       <Name>alarm</Name>
       <Importer>WavImporter</Importer>
@@ -643,11 +703,85 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Sprites\GreenPlayer_Throw_Stand_Rifle.png">
+      <Name>GreenPlayer_Throw_Stand_Rifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Throw_Stand_Pistol.png">
+      <Name>GreenPlayer_Throw_Stand_Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Throw_Crouch_Pistol.png">
+      <Name>GreenPlayer_Throw_Crouch_Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Throw_Crouch_Rifle.png">
+      <Name>GreenPlayer_Throw_Crouch_Rifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="XML\defaultlevel.xml">
       <Name>defaultlevel</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Throw_Crouch_Pistol.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Throw_Crouch_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Throw_Crouch_Rifle.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Throw_Crouch_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Reload_Crouch_Pistol.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Reload_Crouch_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Reload_Crouch_Rifle.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Reload_Crouch_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Reload_Stand_Pistol.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Reload_Stand_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Reload_Stand_Rifle.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Reload_Stand_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Throw_Stand_Rifle.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Throw_Stand_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Throw_Stand_Pistol.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Throw_Stand_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
+    <Content Include="XML\Sprites\GreenPlayer_Walk_Crouch.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Walk_Crouch</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
     </Content>
     <Compile Include="XML\defaultsettings.xml">
       <Name>defaultsettings</Name>
@@ -679,6 +813,12 @@
       <Importer>XMLImporter</Importer>
       <Processor>XMLProcessor</Processor>
     </Compile>
+    <Content Include="XML\Sprites\GreenPlayer_Walk_Stand.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GreenPlayer_Walk_Stand</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </Content>
     <Content Include="XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml">
       <Name>GreenPlayer_Crouch_Pistol_Walk</Name>
       <Importer>XmlImporter</Importer>

@@ -35,6 +35,8 @@ namespace Commando.objects
 
         private const float GUNHANDLEY = 0.0f;
 
+        const float SPEED = 3.0f;
+
         protected Vector2 movingToward_;
 
         protected bool atLocation_;
@@ -45,9 +47,9 @@ namespace Commando.objects
 
         protected ConvexPolygonInterface boundsPolygon_;
 
-        protected DefaultActuator actuator_;
+        protected ActuatorInterface actuator_;
 
-        protected  const float RADIUS = 12.0f;
+        protected  static readonly float RADIUS = 12.0f;
 
         protected float radius_;
 
@@ -72,18 +74,36 @@ namespace Commando.objects
             height_ = new Height(true, false);
             boundsPolygon_ = new CircularConvexPolygon(radius_, position_);
 
-            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_);
-            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_);
-            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_);
+            
+            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_, boundsPolygon_);
+            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_, boundsPolygon_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_, boundsPolygon_);
+            AnimationInterface[] restAnims = new AnimationInterface[2];
+            restAnims[0] = rest;
+            restAnims[1] = rest;
+            AnimationInterface[] shoot = new AnimationInterface[1];
+            shoot[0] = rest;
+
+            List<string> levels = new List<string>();
+            levels.Add("look");
+            levels.Add("lower");
+
             Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
             actions.Add("default", new Dictionary<string, CharacterActionInterface>());
-            actions["default"].Add("move", new CharacterRunAction(this, run, 2.0f));
-            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 2.0f));
-            actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
-            actions["default"].Add("crouch", new CharacterStayStillAction(this, rest));
-            actions["default"].Add("cover", new CharacterStayStillAction(this, rest));
-            actions["default"].Add("shoot", new CharacterShootAction());
-            actuator_ = new DefaultActuator(actions, this, "default");
+            actions["default"].Add("move", new CharacterRunAction(this, run, 2.0f, "lower"));
+            actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 2.0f, "lower"));
+            actions["default"].Add("rest", new CharacterStayStillAction(this, restAnims, levels, "lower", "lower"));
+            actions["default"].Add("crouch", new NoAction("lower"));
+            actions["default"].Add("cover", new NoAction("lower"));
+            actions["default"].Add("shoot", new CharacterShootAction(this, shoot, "lower", 0));
+            actions["default"].Add("look", new CharacterLookAction(this, "look"));
+            actions["default"].Add("lookAt", new CharacterLookAtAction(this, "look"));
+            actions["default"].Add("reload", new NoAction("lower"));
+            actions["default"].Add("throw", new NoAction("lower"));
+            actuator_ = new MultiLevelActuator(actions, levels, this, "default", "rest", "lower", "lower");
+            
+
+
             
 
             currentDrawColor_ = Color.White;
@@ -122,15 +142,10 @@ namespace Commando.objects
 
         public void moveTo(Vector2 position)
         {
-            actuator_.moveTo(position);
-            //movingToward_ = position;
-            //atLocation_ = false;
         }
 
         public void lookAt(Vector2 location)
         {
-            actuator_.lookAt(location);
-            //lookingAt_ = location;
         }
 
         public override ConvexPolygonInterface getBounds(HeightEnum height)

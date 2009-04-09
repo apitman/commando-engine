@@ -25,6 +25,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.objects;
 using Commando.objects.weapons;
+using Commando.levels;
+using Commando.collisiondetection;
 
 namespace Commando.graphics
 {
@@ -117,10 +119,10 @@ namespace Commando.graphics
         }
 
         public void throwGrenade(Grenade grenade)
-        {
+        {/*
             ThrowGrenadeAction thrw = (ThrowGrenadeAction)actions_[currentActionSet_]["throw"];
             thrw.throwGrenade(grenade);
-            currentAction_ = currentAction_.interrupt(thrw);
+            currentAction_ = currentAction_.interrupt(thrw);*/
         }
 
         public void reload()
@@ -245,5 +247,55 @@ namespace Commando.graphics
                 newDirection_.Y = (float)Math.Sin((double)rotAngle);
             }
         }
+
+        #region ActuatorInterface Members
+
+
+        public bool perform(string actionName, ActionParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ConvexPolygonInterface getBounds(HeightEnum height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getCurrentAnimationSet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void setCurrentAnimationSet(int animationSet)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region ActuatorInterface Members
+
+
+        public void setResource(int resourceid, object resource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object getResource(int resourceid)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region ActuatorInterface Members
+
+
+        public bool isFinished(string actionName)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
