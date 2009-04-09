@@ -1002,4 +1002,5 @@
                   Welcome to COMMANDO!" />
   </items>
   <playerLocation x="71" y="187" />
+  <overlay texture="overlayLogo" posX="150" posY="150" depth="0.1" />
 </level>
