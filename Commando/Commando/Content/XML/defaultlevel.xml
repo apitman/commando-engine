@@ -3,6 +3,7 @@
   <!-- TODO: replace this Asset with your own XML asset data. -->
   <Asset Type="System.String">
     <level numTilesWide="33" numTilesTall="30" screenSizeX="375" screenSizeY="375">
+      <tileset>XML\\defaultTileset.xml</tileset>
       <tiles>
         <tile index="0" />
         <tile index="0" />

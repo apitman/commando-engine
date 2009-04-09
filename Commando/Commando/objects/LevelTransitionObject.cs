@@ -88,7 +88,7 @@ namespace Commando.objects
                 string directory = Path.Combine(container.Path, EngineStateLevelSave.DIRECTORY_NAME);
                 string nextLevelPath = Path.Combine(directory, nextLevelName_) + EngineStateLevelSave.LEVEL_EXTENSION;
 
-                level = Level.getLevelFromFile(nextLevelPath);
+                level = Level.getLevelFromFile(nextLevelPath, engine);
             }
             return new EngineStateGameplay(engine, level);
         }

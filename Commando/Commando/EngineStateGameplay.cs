@@ -43,7 +43,7 @@ namespace Commando
         const string WEAPON_TEX_NAME = "pistol";
         const string HEALTH_TEXT = "Health";
         const string AMMO_TEXT = "%i/";
-         const string AMMO_REPLACE_TEXT = "%i";
+        const string AMMO_REPLACE_TEXT = "%i";
         const string SAVE_PATH = "user level.xml";
         const float HUD_DRAW_DEPTH = Constants.DEPTH_HUD;
         const float FONT_DRAW_DEPTH = Constants.DEPTH_HUD_TEXT;
@@ -171,7 +171,7 @@ namespace Commando
         /// <param name="engine">Reference to the engine running the state</param>
         /// <param name="filepath">Path to level file which should be loaded.</param>
         public EngineStateGameplay(Engine engine, string filepath)
-            : this(engine, Level.getLevelFromFile(filepath))
+            : this(engine, Level.getLevelFromFile(filepath, engine))
         {
             
         }

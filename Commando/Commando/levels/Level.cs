@@ -131,22 +131,22 @@ namespace Commando.levels
             player_ = player;
         }
 
-        public static Level getLevelFromFile(string filepath)
+        public static Level getLevelFromFile(string filepath, Engine engine)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(filepath);
             Level level = new Level(new Tileset(), null, false);
-            return level.getLevelFromXml(doc);
+            return level.getLevelFromXml(doc, engine);
         }
 
         public static Level getLevelFromContent(string levelname, Engine engine)
         {
             XmlDocument doc = engine.Content.Load<XmlDocument>(levelname);
             Level level = new Level(new Tileset(), null, true);
-            return level.getLevelFromXml(doc);
+            return level.getLevelFromXml(doc, engine);
         }
 
-        protected Level getLevelFromXml(XmlDocument doc)
+        protected Level getLevelFromXml(XmlDocument doc, Engine engine)
         {
             // First load the tiles
             XmlElement ele = (XmlElement)doc.GetElementsByTagName("level")[0];
@@ -175,6 +175,10 @@ namespace Commando.levels
                     tiles_[i, j] = tileList[i * width_ + j];
                 }
             }
+
+            // Load the tileset similar to this
+            //XmlElement tilesetEle = (XmlElement)doc.GetElementsByTagName("tileset")[0];
+            //Tileset tileSet_ = Tileset.getTilesetFromContent(tilesetEle.InnerText, engine);
 
             // Now load the enemies
             tList = doc.GetElementsByTagName("enemy");
