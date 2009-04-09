@@ -47,7 +47,6 @@ namespace Commando
         const string SAVE_PATH = "user level.xml";
         const float HUD_DRAW_DEPTH = Constants.DEPTH_HUD;
         const float FONT_DRAW_DEPTH = Constants.DEPTH_HUD_TEXT;
-        const string NEXT_LEVEL = "C:\\Documents and Settings\\segalj\\My Documents\\SavedGames\\CommandoXbox\\AllPlayers\\levels\\defaultlevel.commandolevel";
 
         #region HUD POSITIONING CALCULATIONS AND CONSTANTS
         protected int HUD_BAR_DRAW_X
@@ -342,6 +341,8 @@ namespace Commando
                 td.draw();
             }
             #endif
+
+            myLevel_.draw();
 
             // Draw all the DrawableObjectAbstracts in our pipeline
             for (int i = drawPipeline_.Count - 1; i >= 0; i--)

@@ -48,7 +48,7 @@ namespace Commando.graphics
 
         void start();
 
-        //ConvexPolygonInterface getBounds(HeightEnum height);
+        //ConvexPolygonInterface getBounds(HeightEnum tileHeight);
     }
     /*
     public class InvalidActionParamtersException : System.ApplicationException

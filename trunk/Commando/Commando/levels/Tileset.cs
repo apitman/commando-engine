@@ -33,26 +33,38 @@ namespace Commando.levels
     public class Tileset
     {
         protected Dictionary<int, Height> heights_ { get; private set;}
-        protected Dictionary<int, GameTexture> textures_{ get; private set;}
+        protected GameTexture texture_;
 
-        public Tileset()
+        internal int TILE_SIZE_X;
+        internal int TILE_SIZE_Y;
+
+        /// <summary>
+        /// Private constructor; use factory methods.
+        /// </summary>
+        private Tileset()
         {
             heights_ = new Dictionary<int, Height>();
-            textures_ = new Dictionary<int, GameTexture>();
         }
 
-        public static Tileset constructTileset(string filepath)
+        /// <summary>
+        /// Loads a Tileset from packaged Content.
+        /// </summary>
+        /// <param name="tilesetName">Content-based path for the tileset.</param>
+        /// <param name="engine">The game engine.</param>
+        /// <returns>The tileset with that name.</returns>
+        public static Tileset getTilesetFromContent(string tilesetName, Engine engine)
         {
-            throw new NotImplementedException("Tileset class not ready");
+            XmlDocument doc = engine.Content.Load<XmlDocument>(tilesetName);
+            return Tileset.getTilesetFromXML(doc, engine.spriteBatch_, engine.GraphicsDevice);
         }
 
-        public static Tileset getTilesetFromContent(string tilesetName, Engine e)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(tilesetName);
-            return Tileset.getTilesetFromXML(doc, e.spriteBatch_, e.GraphicsDevice);
-        }
-
+        /// <summary>
+        /// Constructs a TileSet from an XmlDocument.
+        /// </summary>
+        /// <param name="doc">XML data containing Tileset related tags.</param>
+        /// <param name="spriteBatch">Sprite batch which will draw the tiles.</param>
+        /// <param name="graphics">Graphics device which will draw the tiles.</param>
+        /// <returns>The constructed TileSet.</returns>
         protected static Tileset getTilesetFromXML(XmlDocument doc, SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             Tileset returnTileset = new Tileset();
@@ -67,52 +79,104 @@ namespace Commando.levels
             int tiles_high = Convert.ToInt32(ele.InnerText);
             ele = (XmlElement)doc.GetElementsByTagName("tiles-wide")[0];
             int tiles_wide = Convert.ToInt32(ele.InnerText);
-            XmlNodeList heightNodes = doc.GetElementsByTagName("tile-heights");
-            for (int i = 0; i < heightNodes.Count; i++)
+            XmlNodeList heightsNodes = doc.GetElementsByTagName("tile-heights");
+            if (heightsNodes.Count != 1)
             {
-                XmlElement e = (XmlElement)heightNodes[i];
+                throw new Exception("Error in Tileset XML, should be exactly one tile-heights tag");
+            }
+            XmlNode heightsNode = heightsNodes[0];
+            if (heightsNode.ChildNodes.Count != total_tiles)
+            {
+                throw new Exception("Number of height tags do not match total-tiles");
+            }
+            for (int i = 0; i < heightsNode.ChildNodes.Count; i++)
+            {
+                XmlElement e = (XmlElement)heightsNode.ChildNodes[i];
                 bool lowH = e.GetAttribute("l").ToLower() == "true";
                 bool highH = e.GetAttribute("h").ToLower() == "true";
                 Height h = new Height(lowH, highH);
                 returnTileset.heights_.Add(i, h);
-                int xStart = (i * (tile_size_x + 1)) % (tiles_wide * (tile_size_x + 1));
-                int yStart = (tile_size_y + 1) * ((i * (tile_size_x + 1)) / (tiles_wide * (tile_size_x + 1))); // I want integer division here AMP
-                Rectangle r = new Rectangle(xStart, yStart, tile_size_x, tile_size_y);
-                //GameTexture gT = new GameTexture(image_file, SpriteBatch, GraphicsDevice, r);
-                //returnTileset.textures_.Add(i, gT);
             }
+
+            returnTileset.TILE_SIZE_X = tile_size_x;
+            returnTileset.TILE_SIZE_Y = tile_size_y;
+
+            returnTileset.texture_ = new GameTexture(image_file,
+                spriteBatch,
+                graphics,
+                calculateImageDimensions(total_tiles, tiles_wide, tiles_high, tile_size_x, tile_size_y));
 
             return returnTileset;
         }
 
-        internal void test()
+        /// <summary>
+        /// Lookup the height of a specific tile type.
+        /// </summary>
+        /// <param name="tileID">ID of the tile type.</param>
+        /// <returns>The height corresponding to that tile.</returns>
+        public Height getHeight(int tileID)
         {
-            int totalTiles = 15;
-            int tilesWide = 5;
-            int tilesHigh = 3;
+            return heights_[tileID];
+        }
 
-            int width = 15;
-            int height = 15;
+        /// <summary>
+        /// Draw a tile from the tileset
+        /// </summary>
+        /// <param name="position">Top-left corner of the drawing rectangle</param>
+        /// <param name="tileID">ID of the tile to be drawn</param>
+        public void draw(Vector2 position, int tileID)
+        {
+            texture_.drawImage(tileID, position, lookupDepth(tileID));
+        }
 
+        /// <summary>
+        /// Determine appropriate drawing depth based on the height of
+        /// a Tile ID.
+        /// </summary>
+        /// <param name="tileID">ID of the tile being drawn.</param>
+        /// <returns>A depth at which to draw the tile.</returns>
+        protected float lookupDepth(int tileID)
+        {
+            Height h = heights_[tileID];
+            if (h.blocksHigh_)
+                return Constants.DEPTH_HIGH;
+            else if (h.blocksLow_)
+                return Constants.DEPTH_LOW;
+            else
+                return Constants.DEPTH_GROUND;
+        }
+
+        /// <summary>
+        /// Create rectangles for each individual tile within the tileset
+        /// image, based on the parameters.
+        /// </summary>
+        /// <param name="totalTiles">Number of tiles in the image.</param>
+        /// <param name="tilesX">Number of tiles in a row in the image.</param>
+        /// <param name="tilesY">Number of tiles in a col in the image.</param>
+        /// <param name="tileWidth">Width, in pixels, of a single tile.</param>
+        /// <param name="tileHeight">Height, in pixels, of a single tile.</param>
+        /// <returns>An array of rectangles corresponding to tiles, in order of TileID.</returns>
+        private static Rectangle[] calculateImageDimensions(int totalTiles, int tilesX, int tilesY, int tileWidth, int tileHeight)
+        {
             Rectangle[] imageDimensions = new Rectangle[totalTiles];
 
             for (int i = 0; i < totalTiles; i++)
             {
-                int row = i / tilesWide;
-                int col = (i - row * tilesWide);
-                imageDimensions[i].X = row * (width + 1);
-                imageDimensions[i].Y = col * (height + 1);
-                imageDimensions[i].Width = width;
-                imageDimensions[i].Height = height;
+                int row = i / tilesX;
+                int col = (i - row * tilesX);
+
+                // 2 Pixel buffer in each direction to prevent sprite bleeding
+                //  when using texture filtering; 2 because of 1 for each side, so
+                //  the first of 2 pixels is the duplicated right edge of one tile
+                //  and the second is the duplicated left edge of the next tile,
+                //  and similar in the up/down direction as well.
+                imageDimensions[i].X = col * (tileWidth + 2);
+                imageDimensions[i].Y = row * (tileHeight + 2);
+                imageDimensions[i].Width = tileWidth;
+                imageDimensions[i].Height = tileHeight;
             }
 
-            /*
-            GameTexture texture = new GameTexture(
-                filepath,
-                spriteBatch,
-                graphics,
-                imageDimensions);
-             */
+            return imageDimensions;
         }
     }
 }

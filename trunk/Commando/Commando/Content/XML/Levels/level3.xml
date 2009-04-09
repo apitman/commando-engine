@@ -966,7 +966,7 @@
   <items>
     <item type="aBox" posX="62" posY="265" />
     <item type="hBox" posX="111" posY="264" />
-    <item type="aTrans" posX="285" posY="60" nextLevel="defaultlevel" />
+    <item type="aTrans" posX="285" posY="60" nextLevel="XML\\Levels\\level4" />
     <item type="aWpnBox" posX="64" posY="223" weaponType="machineGun" />
     <item type="aWpnBox" posX="115" posY="225" weaponType="shotgun" />
   </items>

@@ -603,6 +603,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\tileset01.png">
+      <Link>Tiles\tileset01.png</Link>
+      <Name>tileset01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
       <Link>XML\defaultlevel.xml</Link>
       <Name>defaultlevel</Name>
@@ -619,6 +625,12 @@
     <Compile Include="..\..\Commando\Content\XML\Levels\level1.xml">
       <Link>XML\Levels\level1.xml</Link>
       <Name>level1</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\defaultTileset.xml">
+      <Link>XML\defaultTileset.xml</Link>
+      <Name>defaultTileset</Name>
       <Importer>XMLImporter</Importer>
       <Processor>XMLProcessor</Processor>
     </Compile>

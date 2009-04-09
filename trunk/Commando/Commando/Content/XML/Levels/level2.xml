@@ -3246,7 +3246,7 @@
     <item type="aBox" posX="119" posY="83" />
     <item type="aWpnBox" posX="166" posY="113" weaponType="machineGun" />
     <item type="aWpnBox" posX="285" posY="112" weaponType="shotgun" />
-    <item type="aTrans" posX="889" posY="70" nextLevel="defaultlevel3" story="true" storyDuration="4" storyText="Robots are fearsome foes." />
+    <item type="aTrans" posX="889" posY="70" nextLevel="XML\\Levels\\level3" story="true" storyDuration="4" storyText="Robots are fearsome foes." />
     <item type="hBox" posX="712" posY="563" />
     <item type="hBox" posX="848" posY="563" />
     <item type="aBox" posX="779" posY="563" />

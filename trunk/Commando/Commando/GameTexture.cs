@@ -39,7 +39,7 @@ namespace Commando
         internal Texture2D texture_ { get; set; }
 
         //Each Vector4 is the bounds (x of top right corner, y of top right corner,
-        //width, height) of each individual frame, or image in this texture
+        //tileWidth, tileHeight) of each individual frame, or image in this texture
         internal Rectangle[] imageDimensions_ { get; set; }
 
         internal SpriteBatch spriteBatch_ { get; set; }
@@ -262,7 +262,7 @@ namespace Commando
         /// Draw the image to the screen with the specified dimensions and a rotation.
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
-        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
+        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the tileWidth and tileHeight</param>
         /// <param name="rotation">Rotation of the image</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageWithDimAbsolute(int imageNumber, Rectangle destinationDims, float rotation, float depth)
@@ -275,7 +275,7 @@ namespace Commando
         /// Draw the image to the screen with the specified dimensions and a rotation.
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
-        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
+        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the tileWidth and tileHeight</param>
         /// <param name="direction">Direction of the image</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageWithDimAbsolute(int imageNumber, Rectangle destinationDims, Vector2 direction, float depth)
@@ -289,7 +289,7 @@ namespace Commando
         /// Draw the image to the screen with the specified dimensions and a rotation.
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
-        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
+        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the tileWidth and tileHeight</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageWithDimAbsolute(int imageNumber, Rectangle destinationDims, float depth)
         {
@@ -376,7 +376,7 @@ namespace Commando
         /// Draw the image to the screen with the specified dimensions and a rotation.
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
-        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
+        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the tileWidth and tileHeight</param>
         /// <param name="rotation">Rotation of the image</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageWithDim(int imageNumber, Rectangle destinationDims, float rotation, float depth)
@@ -391,7 +391,7 @@ namespace Commando
         /// Draw the image to the screen with the specified dimensions and a rotation.
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
-        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
+        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the tileWidth and tileHeight</param>
         /// <param name="direction">Direction of the image</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageWithDim(int imageNumber, Rectangle destinationDims, Vector2 direction, float depth)
@@ -407,7 +407,7 @@ namespace Commando
         /// Draw the image to the screen with the specified dimensions and a rotation.
         /// </summary>
         /// <param name="imageNumber">Number of the image to draw</param>
-        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the width and height</param>
+        /// <param name="destinationDims">Rectange where the image is to be drawn.  First two values are the top left corner, then the tileWidth and tileHeight</param>
         /// <param name="depth">Drawing depth of the image</param>
         public void drawImageWithDim(int imageNumber, Rectangle destinationDims, float depth)
         {

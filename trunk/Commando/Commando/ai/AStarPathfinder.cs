@@ -265,7 +265,7 @@ namespace Commando.ai
         /// <param name="start">Index of the start tile.</param>
         /// <param name="destination">Index of the destination tile.</param>
         /// <param name="radius">Radius of the character performing the search</param>
-        /// <param name="height">Height of the character performing the search</param>
+        /// <param name="tileHeight">Height of the character performing the search</param>
         /// <returns>Waypoints which should allow the character to reach the goal.</returns>
         public static List<TileIndex>
             calculateExactPath(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height)
