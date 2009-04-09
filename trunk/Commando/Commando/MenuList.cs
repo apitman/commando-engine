@@ -184,9 +184,16 @@ namespace Commando
                 }
 
             }
+            else
+            {
+                CursorPos_ = 0; 
+                
+                visibleBase_ = 0;
+            }
 
+         }
 
-        }
+        
 
         /// <summary>
         /// decrements cursor position with wraparound
@@ -204,8 +211,19 @@ namespace Commando
 
 
             }
-
-
+            else
+            {
+                CursorPos_ = StringList_.Count - 1;
+                int itemsVisible = (int)spaceAvailable_ / (int)Spacing_;
+                //int itemsVisible = 3;
+                if (itemsVisible >= StringList_.Count)
+                {
+                }
+                else
+                {
+                    visibleBase_ = CursorPos_ - itemsVisible + 1;
+                }
+            }
         }
         public string getCurrentString()
         {
