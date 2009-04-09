@@ -42,6 +42,14 @@ namespace Commando.objects
 
         protected bool isPackaged_;
 
+        protected bool usesStory_;
+
+        protected string storyText_;
+
+        protected int storyDuration_;
+
+        //protected TransitionType transitionType_;
+
         protected static readonly List<Vector2> BOUND_POINTS;
         static LevelTransitionObject()
         {
@@ -52,7 +60,7 @@ namespace Commando.objects
             BOUND_POINTS.Add(new Vector2(-15.0f, 15.0f));
         }
 
-        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction, bool isPackaged)
+        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction, bool isPackaged, bool usesStory, int storyDuration, string storyText)
             : base(pipeline, detector, TextureMap.fetchTexture("levelTransition"), position, direction, DRAW_DEPTH, RADIUS, HEIGHT)
         {
             bounds_ = new ConvexPolygon(BOUND_POINTS, center);
@@ -60,6 +68,10 @@ namespace Commando.objects
             
             nextLevelName_ = nextLevel;
             isPackaged_ = isPackaged;
+            usesStory_ = usesStory;
+            storyDuration_ = storyDuration;
+            storyText_ = storyText;
+            //transitionType_ = transitionType;
         }
 
         public string getNextLevel()
@@ -90,7 +102,22 @@ namespace Commando.objects
 
                 level = Level.getLevelFromFile(nextLevelPath, engine);
             }
-            return new EngineStateGameplay(engine, level);
+            
+            if (usesStory_)
+            {
+                return new EngineStateStorySegment(engine, new EngineStateGameplay(engine, level), storyDuration_, storyText_);
+            }
+            else
+            {
+                return new EngineStateGameplay(engine, level);
+            }
+        }
+
+        public enum TransitionType
+        {
+            ToLevelFromContent,
+            ToLevelFromFile,
+            ToStorySegment
         }
     }
 }

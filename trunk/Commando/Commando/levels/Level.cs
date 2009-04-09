@@ -488,7 +488,14 @@ namespace Commando.levels
                 Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
                 string nextLevel;
                 nextLevel = itemElement.GetAttribute("nextLevel");
-                items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, Pipeline_, new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), this.isPackagedLevel_));
+                bool usesStory = itemElement.GetAttribute("story") == "true";
+                int storyDuration = 0;
+                if (usesStory)
+                {
+                    storyDuration = Convert.ToInt32(itemElement.GetAttribute("storyDuration"));
+                }
+                string storyText = itemElement.GetAttribute("storyText");
+                items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, Pipeline_, new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), this.isPackagedLevel_, usesStory, storyDuration, storyText));
             }
             else if (itemElement.GetAttribute("type") == "aWpnBox")
             {

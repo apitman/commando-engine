@@ -622,6 +622,24 @@
       <Importer>XMLImporter</Importer>
       <Processor>XMLProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\level2.xml">
+      <Link>XML\Levels\level2.xml</Link>
+      <Name>level2</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\level3.xml">
+      <Link>XML\Levels\level3.xml</Link>
+      <Name>level3</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\level4.xml">
+      <Link>XML\Levels\level4.xml</Link>
+      <Name>level4</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml">
       <Link>XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml</Link>
       <Name>GreenPlayer_Crouch_Pistol_Walk</Name>

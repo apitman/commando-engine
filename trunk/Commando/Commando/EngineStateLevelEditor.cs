@@ -254,7 +254,7 @@ namespace Commando
             // Check the inputs
             if (placeTransition_)
             {
-                LevelTransitionObject myTransition = new LevelTransitionObject(transLevel_, null, Vector2.Zero, drawPipeline_, new Vector2(transitionPos_.X, transitionPos_.Y), new Vector2(1f, 0f), false);
+                LevelTransitionObject myTransition = new LevelTransitionObject(transLevel_, null, Vector2.Zero, drawPipeline_, new Vector2(transitionPos_.X, transitionPos_.Y), new Vector2(1f, 0f), false, false, 3, String.Empty);
                 myLevel_.getItems().Add(myTransition);
 
 

@@ -331,6 +331,9 @@
     <Compile Include="..\Commando\EngineStateStart.cs">
       <Link>EngineStateStart.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateStorySegment.cs">
+      <Link>EngineStateStorySegment.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\FontEnum.cs">
       <Link>FontEnum.cs</Link>
     </Compile>
