@@ -238,7 +238,6 @@ namespace Commando
         {
             InputSet inputs = InputSet.getInstance();
 
-
             for (int i = 0; i < myLevel_.getEnemies().Count; i++)
             {
                 if (myLevel_.getEnemies()[i].getDirection() == Vector2.Zero)

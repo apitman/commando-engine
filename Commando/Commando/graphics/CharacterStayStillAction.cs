@@ -132,7 +132,6 @@ namespace Commando.graphics
             {
                 animation_[animationsToDraw_[i]].draw();
             }
-            numberAnimationsToDraw_ = 0;
         }
 
         public void draw(Color color)
@@ -141,7 +140,6 @@ namespace Commando.graphics
             {
                 animation_[animationsToDraw_[i]].draw(color);
             }
-            numberAnimationsToDraw_ = 0;
         }
 
         public bool isFinished()
