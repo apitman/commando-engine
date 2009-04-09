@@ -240,6 +240,7 @@
     <Compile Include="objects\Inventory.cs" />
     <Compile Include="objects\ItemAbstract.cs" />
     <Compile Include="objects\LevelObjectAbstract.cs" />
+    <Compile Include="objects\LevelOverlay.cs" />
     <Compile Include="objects\LevelTransitionObject.cs" />
     <Compile Include="objects\MovableObjectAbstract.cs" />
     <Compile Include="objects\NonAnimatedMovableObjectAbstract.cs" />

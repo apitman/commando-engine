@@ -493,6 +493,9 @@
     <Compile Include="..\Commando\objects\LevelObjectAbstract.cs">
       <Link>objects\LevelObjectAbstract.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\LevelOverlay.cs">
+      <Link>objects\LevelOverlay.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\LevelTransitionObject.cs">
       <Link>objects\LevelTransitionObject.cs</Link>
     </Compile>
