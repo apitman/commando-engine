@@ -43,7 +43,7 @@ namespace Commando
         const string WEAPON_TEX_NAME = "pistol";
         const string HEALTH_TEXT = "Health";
         const string AMMO_TEXT = "%i/";
-        const string AMMO_REPLACE_TEXT = "%i";
+         const string AMMO_REPLACE_TEXT = "%i";
         const string SAVE_PATH = "user level.xml";
         const float HUD_DRAW_DEPTH = Constants.DEPTH_HUD;
         const float FONT_DRAW_DEPTH = Constants.DEPTH_HUD_TEXT;
