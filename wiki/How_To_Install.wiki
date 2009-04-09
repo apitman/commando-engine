@@ -4,7 +4,7 @@ _Note:_ This page is expected to be updated frequently, so check back often to s
 
 = Installing the COMMANDO engine =
 
-  * Download COMMANDOReleasev0.61.zip from here http://code.google.com/p/commando-engine/downloads/list. Unzip it and run the .exe installer to install the engine and any necessary prerequisites. After installing, it should automatically run for the first time. It can be accessed via Start -> All Programs -> VUSE TransIT Program -> Commando. _Note:_ If you would like to compile the source code, then you will need Microsoft Visual Studio 2008 and XNA Game Studio 3.0, which can be found here http://www.microsoft.com/downloads/details.aspx?FamilyId=7D70D6ED-1EDD-4852-9883-9A33C0AD8FEE&displaylang=en
+  * Download COMMANDOReleasev0.61.zip from here http://code.google.com/p/commando-engine/downloads/list. Unzip it and run setup.exe to install the engine and any necessary prerequisites. After installing, it should automatically run for the first time. It can be accessed via Start -> All Programs -> VUSE TransIT Program -> Commando. _Note:_ If you would like to compile the source code, then you will need Microsoft Visual Studio 2008 and XNA Game Studio 3.0, which can be found here http://www.microsoft.com/downloads/details.aspx?FamilyId=7D70D6ED-1EDD-4852-9883-9A33C0AD8FEE&displaylang=en
 
 = Uninstalling the COMMANDO engine =
   * Go to Start -> Control Panel -> Add or Remove Programs. Find Commando and click Change/Remove. Follow the on screen instructions to uninstall.
