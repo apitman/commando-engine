@@ -188,8 +188,6 @@ namespace Commando
             GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)engine_.graphics_.PreferredBackBufferHeight);
 
             loadLevel(level);
-
-            SoundEngine.getInstance().Music = SoundEngine.getInstance().playCue("epic");
         }
 
         public void setTransition(TransitionObjectAbstract next)

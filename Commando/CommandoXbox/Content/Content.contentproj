@@ -609,6 +609,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\tileset02.png">
+      <Link>Tiles\tileset02.png</Link>
+      <Name>tileset02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
       <Link>XML\defaultlevel.xml</Link>
       <Name>defaultlevel</Name>
@@ -736,6 +742,12 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="..\..\Commando\Content\XML\tileset2.xml">
+      <Link>XML\tileset2.xml</Link>
+      <Name>tileset2</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
     <Compile Include="Sprites\GreenPlayer_Crouch_Pistol.png">
       <Name>GreenPlayer_Crouch_Pistol</Name>
       <Importer>TextureImporter</Importer>

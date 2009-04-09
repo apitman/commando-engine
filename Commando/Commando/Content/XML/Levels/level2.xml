@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <level numTilesWide="66" numTilesTall="49" screenSizeX="375" screenSizeY="375">
+  <tileset>XML\\tileset2</tileset>
   <tiles>
     <tile index="0" />
     <tile index="0" />
