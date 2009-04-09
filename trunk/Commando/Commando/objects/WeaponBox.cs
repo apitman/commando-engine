@@ -40,7 +40,11 @@ namespace Commando.objects
 
         protected static readonly Height HEIGHT = new Height(true, false);
 
-        protected const string TEXTURENAME = "AmmoBoxPistol";
+        protected const string PISTOLTEXTURE = "PistolIcon";
+
+        protected const string MACHINEGUNTEXTURE = "MachineGunIcon";
+
+        protected const string SHOTGUNTEXTURE = "ShotgunIcon";
 
         protected bool toDie_ = false;
 
@@ -55,7 +59,7 @@ namespace Commando.objects
         }
 
         public WeaponBox(CollisionDetectorInterface detector, List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction, float depth, WeaponType type)
-            : base(detector, BOUNDSPOINTS, CENTER, RADIUS, HEIGHT, pipeline, TextureMap.fetchTexture(TEXTURENAME), position, direction, depth)
+            : base(detector, BOUNDSPOINTS, CENTER, RADIUS, HEIGHT, pipeline, TextureMap.fetchTexture(selectTexture(type)), position, direction, depth)
         {
             WeapnType = type;
         }
@@ -135,12 +139,35 @@ namespace Commando.objects
                 die();
             }
         }
-
+        public override void  draw(GameTime gameTime)
+        {       
+             TextureDrawer td = new TextureDrawer(image_, position_, depth_);
+             td.Scale = 0.20f;
+             td.draw();
+ 	        
+        }
         public enum WeaponType
         {
             Pistol,
             Shotgun,
             MachineGun
+        }
+        public static string selectTexture(WeaponType WeapnType)
+        {
+            switch (WeapnType)
+            {
+                case WeaponType.Pistol:
+                    return PISTOLTEXTURE;
+                    
+                case WeaponType.MachineGun:
+                    return MACHINEGUNTEXTURE;
+                    
+                case WeaponType.Shotgun:
+                    return SHOTGUNTEXTURE;
+                    
+                default:throw(new NotImplementedException("not a weapon"));
+            }
+
         }
     }
 }
