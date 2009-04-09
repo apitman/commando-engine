@@ -40,15 +40,15 @@ namespace Commando.graphics
 
         int getPriority();
 
-        //string getActionLevel();
+        string getActionLevel();
 
-        //void setParameters(ActionParameters parameters);
+        void setParameters(ActionParameters parameters);
 
         void setCharacter(CharacterAbstract character);
 
         void start();
 
-        //ConvexPolygonInterface getBounds(HeightEnum tileHeight);
+        ConvexPolygonInterface getBounds(HeightEnum height);
     }
     /*
     public class InvalidActionParamtersException : System.ApplicationException

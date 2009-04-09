@@ -23,14 +23,17 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.objects;
+using Commando.collisiondetection;
 
 namespace Commando.graphics
 {
-    public class CharacterCoverMoveAction : MoveActionInterface, MoveToActionInterface
+    public class CharacterCoverMoveAction : CharacterActionInterface
     {
         private const int PRIORITY = 10;
 
         private const float TURNSPEED = 0.8f;
+
+        private static readonly int COVERKEY;
 
         protected CharacterAbstract character_;
 
@@ -44,7 +47,17 @@ namespace Commando.graphics
 
         protected bool finished_;
 
-        public CharacterCoverMoveAction(CharacterAbstract character, AnimationInterface animation, float speed)
+        protected string actionLevel_;
+
+        static CharacterCoverMoveAction()
+        {
+             COVERKEY = "cover".GetHashCode();
+        }
+
+        public CharacterCoverMoveAction(CharacterAbstract character, 
+                                        AnimationInterface animation, 
+                                        float speed,
+                                        string actionLevel)
         {
             priority_ = PRIORITY;
             character_ = character;
@@ -52,37 +65,7 @@ namespace Commando.graphics
             speed_ = speed;
             moveTo_ = Vector2.Zero;
             finished_ = true;
-        }
-
-        public void move(Vector2 direction)
-        {
-            CoverObject cover = (character_.getActuator() as DefaultActuator).getCoverObject();
-            Vector2 position = character_.getPosition();
-            direction.X *= speed_;
-            direction.Y *= speed_;
-            position.X += direction.X;
-            position.Y += direction.Y;
-            moveTo_ = cover.needsToMove(position, character_.getRadius());
-            finished_ = false;
-        }
-
-        public void moveTo(Vector2 location)
-        {
-            CoverObject cover = (character_.getActuator() as DefaultActuator).getCoverObject();
-            Vector2 position = character_.getPosition();
-            Vector2 dir = cover.needsToFace(position);
-            if (cover.needsToFace(location) != dir)
-            {
-                if (dir.Y != 0)
-                {
-                    location.Y = position.Y;
-                }
-                else
-                {
-                    location.X = position.X;
-                }
-            }
-            moveTo_ = cover.needsToMove(location, character_.getRadius());
+            actionLevel_ = actionLevel;
         }
 
         public void update()
@@ -168,6 +151,29 @@ namespace Commando.graphics
             animation_.reset();
             animation_.setPosition(character_.getPosition());
             animation_.setRotation(character_.getDirection());
+        }
+
+        public string getActionLevel()
+        {
+            return actionLevel_;
+        }
+
+        public void setParameters(ActionParameters parameters)
+        {
+            Vector2 direction = parameters.vector1;
+            CoverObject cover = (CoverObject)character_.getActuator().getResource(COVERKEY);
+            Vector2 position = character_.getPosition();
+            direction.X *= speed_;
+            direction.Y *= speed_;
+            position.X += direction.X;
+            position.Y += direction.Y;
+            moveTo_ = cover.needsToMove(position, character_.getRadius());
+            finished_ = false;
+        }
+
+        public ConvexPolygonInterface getBounds(Commando.levels.HeightEnum height)
+        {
+            return animation_.getBounds();
         }
     }
 }

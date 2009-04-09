@@ -24,17 +24,34 @@ using System.Text;
 
 namespace Commando.graphics
 {
-    public class CharacterShootAction : ShootActionInterface
+    public class CharacterShootAction : CharacterActionInterface
     {
-        private const int PRIORITY = 0;
+        private const int PRIORITY = 10;
 
-        public CharacterShootAction()
-        {
-        }
+        protected int priority_;
 
-        public void shoot(RangedWeaponAbstract weapon)
+        protected string actionLevel_;
+
+        protected AnimationInterface[] animation_;
+
+        protected CharacterAbstract character_;
+
+        protected bool finished_;
+
+        protected int shootFrame_;
+
+        protected RangedWeaponAbstract weapon_;
+
+        public CharacterShootAction(CharacterAbstract character,
+                                    AnimationInterface[] animation,
+                                    string actionLevel,
+                                    int shootFrame)
         {
-            weapon.shoot();
+            character_ = character;
+            animation_ = animation;
+            actionLevel_ = actionLevel;
+            shootFrame_ = shootFrame;
+            finished_ = true;
         }
 
         public void update()
@@ -44,21 +61,42 @@ namespace Commando.graphics
 
         public void draw()
         {
-            
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                animation_[animSet].draw();
+            }
+            else
+            {
+                animation_[0].draw();
+            }
         }
 
         public void draw(Microsoft.Xna.Framework.Graphics.Color color)
         {
-            
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                animation_[animSet].draw(color);
+            }
+            else
+            {
+                animation_[0].draw(color);
+            }
         }
 
         public bool isFinished()
         {
-            return true;
+            return finished_;
         }
 
         public CharacterActionInterface interrupt(CharacterActionInterface newAction)
         {
+            if (newAction == this || (!finished_ && newAction.getPriority() <= priority_))
+            {
+                return this;
+            }
+            newAction.start();
             return newAction;
         }
 
@@ -69,12 +107,36 @@ namespace Commando.graphics
 
         public void setCharacter(CharacterAbstract character)
         {
-            
+            character_ = character;
         }
 
         public void start()
         {
             
+        }
+
+        public string getActionLevel()
+        {
+            return actionLevel_;
+        }
+
+        public void setParameters(ActionParameters parameters)
+        {
+            weapon_ = character_.Weapon_;
+            if (shootFrame_ == 0)
+            {
+                weapon_.shoot();
+            }
+        }
+
+        public Commando.collisiondetection.ConvexPolygonInterface getBounds(Commando.levels.HeightEnum height)
+        {
+            if (animation_.GetLength(0) > 1)
+            {
+                int animSet = character_.getActuator().getCurrentAnimationSet();
+                return animation_[animSet].getBounds();
+            }
+            return animation_[0].getBounds();
         }
     }
 }

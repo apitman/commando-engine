@@ -26,7 +26,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.graphics
 {
-    public class CharacterRunToAction : MoveToActionInterface
+    public class CharacterRunToAction : CharacterActionInterface
     {
         private const int RUNPRIORITY = 10;
 
@@ -42,7 +42,12 @@ namespace Commando.graphics
         
         protected bool finished_;
 
-        public CharacterRunToAction(CharacterAbstract character, AnimationInterface animation, float speed)
+        protected string actionLevel_;
+
+        public CharacterRunToAction(CharacterAbstract character,
+                                    AnimationInterface animation,
+                                    float speed,
+                                    string actionLevel)
         {
             character_ = character;
             animation_ = animation;
@@ -50,11 +55,7 @@ namespace Commando.graphics
             moveToLocation_ = Vector2.Zero;
             finished_ = true;
             priority_ = RUNPRIORITY;
-        }
-
-        public void moveTo(Vector2 location)
-        {
-            moveToLocation_ = location;
+            actionLevel_ = actionLevel;
         }
 
         public void update()
@@ -140,6 +141,21 @@ namespace Commando.graphics
             animation_.reset();
             animation_.setPosition(character_.getPosition());
             animation_.setRotation(character_.getDirection());
+        }
+
+        public string getActionLevel()
+        {
+            return actionLevel_;
+        }
+
+        public void setParameters(ActionParameters parameters)
+        {
+            moveToLocation_ = parameters.vector1;
+        }
+
+        public Commando.collisiondetection.ConvexPolygonInterface getBounds(Commando.levels.HeightEnum height)
+        {
+            return animation_.getBounds();
         }
     }
 }

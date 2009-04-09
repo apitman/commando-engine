@@ -50,7 +50,7 @@ namespace Commando.objects
 
         protected ConvexPolygonInterface boundsPolygonLowCrouch_;
 
-        protected DefaultActuator actuator_;
+        protected ActuatorInterface actuator_;
 
         protected bool pistol_ = false;
 
@@ -119,6 +119,7 @@ namespace Commando.objects
         public ActuatedMainPlayer(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
             : base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "Woger Ru", detector, null, 8.0f, Vector2.Zero, position, direction, 0.5f)
         {
+            /*
             boundsPolygonHigh_ = new ConvexPolygon(BOUNDSPOINTSHIGH, Vector2.Zero);
             boundsPolygonHigh_.rotate(direction_, position_);
 
@@ -127,12 +128,72 @@ namespace Commando.objects
 
             boundsPolygonLowCrouch_ = new ConvexPolygon(BOUNDSPOINTSLOWCROUCH, Vector2.Zero);
             boundsPolygonLowCrouch_.rotate(direction_, position_);
-
+            */
             Allegiance_ = 1;
 
-            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
+            List<string> levels = new List<string>();
+            levels.Add("transition");
+            levels.Add("turning");
+            levels.Add("lower");
+            levels.Add("upper");
+
+            List<Vector2> boundsPointsLow = BOUNDSPOINTSLOW;
+            List<Vector2> boundsPointsHigh = BOUNDSPOINTSHIGH;
+
+            AnimationInterface[] restAnimations = new AnimationInterface[8];
+            restAnimations[0] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_ - 0.02f, boundsPointsLow);
+            restAnimations[1] = restAnimations[0];
+            restAnimations[2] = restAnimations[0];
+            restAnimations[3] = restAnimations[0];
+            restAnimations[4] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+            restAnimations[5] = restAnimations[4];
+            restAnimations[6] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_UpperBody_Pistol_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+            restAnimations[7] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_UpperBody_Rifle_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+
+            AnimationInterface[] crouchRestAnimations = new AnimationInterface[8];
+            crouchRestAnimations[0] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_ - 0.02f, BOUNDSPOINTSLOWCROUCH);
+            crouchRestAnimations[1] = crouchRestAnimations[0];
+            crouchRestAnimations[2] = crouchRestAnimations[0];
+            crouchRestAnimations[3] = crouchRestAnimations[0];
+            crouchRestAnimations[4] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Crouch_Stationary"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+            crouchRestAnimations[5] = crouchRestAnimations[4];
+            crouchRestAnimations[6] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Pistol_Crouch"), frameLengthModifier_, depth_, BOUNDSPOINTSLOWCROUCH);
+            crouchRestAnimations[7] = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Rifle_Crouch"), frameLengthModifier_, depth_, BOUNDSPOINTSLOWCROUCH);
+
+            AnimationInterface runAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+            AnimationInterface runToAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+            AnimationInterface coverAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+            AnimationInterface crouchAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_ - 0.01f, boundsPointsLow);
+
+            AnimationInterface crouchedRunAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Crouch"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+            AnimationInterface crouchedRunToAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Crouch"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+            AnimationInterface crouchedCoverAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Crouch"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+            AnimationInterface crouchedCrouchAnimation = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Walk_Crouch"), frameLengthModifier_, depth_ - 0.01f, BOUNDSPOINTSLOWCROUCH);
+
+            AnimationInterface[] shootAnimations = new AnimationInterface[2];
+            shootAnimations[0] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_UpperBody_Pistol_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+            shootAnimations[1] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_UpperBody_Rifle_Stand"), frameLengthModifier_, depth_, boundsPointsHigh);
+            AnimationInterface[] throwGrenadeAnimations = new AnimationInterface[2];
+            throwGrenadeAnimations[0] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Throw_Stand_Pistol"), frameLengthModifier_, depth_, boundsPointsHigh);
+            throwGrenadeAnimations[1] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Throw_Stand_Rifle"), frameLengthModifier_, depth_, boundsPointsHigh);
+            AnimationInterface[] reloadAnimations = new AnimationInterface[2];
+            reloadAnimations[0] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Reload_Stand_Pistol"), frameLengthModifier_, depth_, boundsPointsHigh);
+            reloadAnimations[1] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Reload_Stand_Rifle"), frameLengthModifier_, depth_, boundsPointsHigh);
+
+            AnimationInterface[] crouchedShootAnimations = new AnimationInterface[2];
+            crouchedShootAnimations[0] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Pistol_Crouch"), frameLengthModifier_, depth_, boundsPointsHigh);
+            crouchedShootAnimations[1] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Rifle_Crouch"), frameLengthModifier_, depth_, boundsPointsHigh);
+            AnimationInterface[] crouchedThrowGrenadeAnimations = new AnimationInterface[2];
+            crouchedThrowGrenadeAnimations[0] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Throw_Crouch_Pistol"), frameLengthModifier_, depth_, boundsPointsHigh);
+            crouchedThrowGrenadeAnimations[1] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Throw_Crouch_Rifle"), frameLengthModifier_, depth_, boundsPointsHigh);
+            AnimationInterface[] crouchedReloadAnimations = new AnimationInterface[2];
+            crouchedReloadAnimations[0] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Reload_Crouch_Pistol"), frameLengthModifier_, depth_, boundsPointsHigh);
+            crouchedReloadAnimations[1] = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_Reload_Crouch_Rifle"), frameLengthModifier_, depth_, boundsPointsHigh);
+
+            /*
+            AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_);
+            AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Walk_Stand"), frameLengthModifier_, depth_);
             AnimationInterface crouch = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface cover = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface crouch_run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Rifle_Walk"), frameLengthModifier_, depth_);
@@ -146,80 +207,47 @@ namespace Commando.objects
             AnimationInterface cover_crouch = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Rifle"), frameLengthModifier_, depth_);
             AnimationInterface cover_cover = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Rifle_Walk"), frameLengthModifier_, depth_);
             AnimationInterface cover_shoot = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_StandToShoot_Rifle"), 1.0f, depth_);
-
-            AnimationInterface pistol_run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_rest = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_crouch = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_cover = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Stand_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_crouch_run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_crouch_runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_crouch_rest = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_crouch_crouch = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_crouch_cover = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_cover_run = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_cover_runTo = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_cover_rest = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_cover_crouch = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_cover_cover = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol_Walk"), frameLengthModifier_, depth_);
-            AnimationInterface pistol_cover_shoot = new NonLoopAnimation(TextureMap.fetchTexture("GreenPlayer_StandToShoot_Pistol"), 1.0f, depth_);
-
+            */
             Dictionary<string, Dictionary<string, CharacterActionInterface>> actions = new Dictionary<string, Dictionary<string, CharacterActionInterface>>();
             //actions.Add("default", new Dictionary<string, CharacterActionInterface>());
             //actions["default"].Add("move", new CharacterRunAction(this, run, 3.0f));
             //actions["default"].Add("moveTo", new CharacterRunToAction(this, runTo, 3.0f));
             //actions["default"].Add("rest", new CharacterStayStillAction(this, rest));
             actions.Add("crouch", new Dictionary<string, CharacterActionInterface>());
-            actions["crouch"].Add("move", new CharacterRunAction(this, crouch_run, SPEED));
-            actions["crouch"].Add("moveTo", new CharacterRunToAction(this, crouch_runTo, SPEED));
-            actions["crouch"].Add("rest", new CharacterStayStillAction(this, crouch_rest));
-            actions["crouch"].Add("crouch", new CrouchAction(this, crouch, "stand", new Height(true, true)));
-            actions["crouch"].Add("cover", new AttachToCoverAction(this, crouch_cover, "cover", new Height(true, false), SPEED));
-            actions["crouch"].Add("shoot", new CharacterShootAction());
-            actions["crouch"].Add("throw", new ThrowGrenadeAction(this, crouch_rest, new Vector2(30f, 0f)));
+            actions["crouch"].Add("move", new CharacterRunAction(this, crouchedRunAnimation, SPEED, "lower"));
+            actions["crouch"].Add("moveTo", new CharacterRunToAction(this, crouchedRunToAnimation, SPEED, "lower"));
+            actions["crouch"].Add("rest", new CharacterStayStillAction(this, crouchRestAnimations, levels, "upper", "lower"));
+            actions["crouch"].Add("crouch", new CrouchAction(this, crouchedCrouchAnimation, "stand", new Height(true, true), "transition"));
+            actions["crouch"].Add("cover", new AttachToCoverAction(this, crouchedCoverAnimation, "cover", new Height(true, false), SPEED, "lower"));
+            actions["crouch"].Add("shoot", new CharacterShootAction(this, crouchedShootAnimations, "upper", 0));
+            actions["crouch"].Add("throw", new ThrowGrenadeAction(this, crouchedThrowGrenadeAnimations, new Vector2(40.5f, 7.5f), "upper", 4, 10));
+            actions["crouch"].Add("look", new CharacterLookAction(this, "turning"));
+            actions["crouch"].Add("lookAt", new CharacterLookAtAction(this, "turning"));
+            actions["crouch"].Add("reload", new CharacterReloadAction(this, crouchedReloadAnimations, "upper"));
             actions.Add("stand", new Dictionary<string, CharacterActionInterface>());
-            actions["stand"].Add("move", new CharacterRunAction(this, run, SPEED));
-            actions["stand"].Add("moveTo", new CharacterRunToAction(this, runTo, SPEED));
-            actions["stand"].Add("rest", new CharacterStayStillAction(this, rest));
-            actions["stand"].Add("crouch", new CrouchAction(this, crouch_crouch, "crouch", new Height(true, false)));
-            actions["stand"].Add("cover", new AttachToCoverAction(this, cover, "cover", new Height(true, false), SPEED));
-            actions["stand"].Add("shoot", new CharacterShootAction());
-            actions["stand"].Add("throw", new ThrowGrenadeAction(this, rest, new Vector2(30f, 0f)));
+            actions["stand"].Add("move", new CharacterRunAction(this, runAnimation, SPEED, "lower"));
+            actions["stand"].Add("moveTo", new CharacterRunToAction(this, runToAnimation, SPEED, "lower"));
+            actions["stand"].Add("rest", new CharacterStayStillAction(this, restAnimations, levels, "upper", "lower"));
+            actions["stand"].Add("crouch", new CrouchAction(this, crouchAnimation, "crouch", new Height(true, false), "transition"));
+            actions["stand"].Add("cover", new AttachToCoverAction(this, coverAnimation, "cover", new Height(true, false), SPEED, "lower"));
+            actions["stand"].Add("shoot", new CharacterShootAction(this, shootAnimations, "upper", 0));
+            actions["stand"].Add("throw", new ThrowGrenadeAction(this, throwGrenadeAnimations, new Vector2(30.5f, 7.5f), "upper", 4, 10));
+            actions["stand"].Add("look", new CharacterLookAction(this, "turning"));
+            actions["stand"].Add("lookAt", new CharacterLookAtAction(this, "turning"));
+            actions["stand"].Add("reload", new CharacterReloadAction(this, reloadAnimations, "upper"));
             actions.Add("cover", new Dictionary<string, CharacterActionInterface>());
-            actions["cover"].Add("move", new CharacterCoverMoveAction(this, cover_run, SPEED));
-            actions["cover"].Add("moveTo", new CharacterCoverMoveAction(this, cover_runTo, SPEED));
-            actions["cover"].Add("rest", new CharacterStayStillAction(this, cover_rest));
-            actions["cover"].Add("crouch", new CrouchAction(this, cover_crouch, "cover", new Height(true, false)));
-            actions["cover"].Add("cover", new DetachFromCoverAction(this, cover_cover, "stand", new Height(true, true), SPEED));
-            actions["cover"].Add("shoot", new CharacterCoverShootAction(this, cover_shoot, 1));
-            actions["cover"].Add("throw", new ThrowGrenadeAction(this, cover_rest, new Vector2(30f, 0f)));
+            actions["cover"].Add("move", new CharacterCoverMoveAction(this, crouchedRunAnimation, SPEED, "lower"));
+            actions["cover"].Add("moveTo", new CharacterCoverMoveToAction(this, crouchedRunToAnimation, SPEED, "lower"));
+            actions["cover"].Add("rest", new CharacterStayStillAction(this, crouchRestAnimations, levels, "upper", "lower"));
+            actions["cover"].Add("crouch", new CrouchAction(this, crouchedCrouchAnimation, "stand", new Height(true, true), "transition"));
+            actions["cover"].Add("cover", new DetachFromCoverAction(this, crouchedCoverAnimation, "stand", new Height(true, true), SPEED, "lower"));
+            actions["cover"].Add("shoot", new CharacterCoverShootAction(this, crouchedShootAnimations, 0, "upper"));
+            actions["cover"].Add("throw", new ThrowGrenadeAction(this, crouchedThrowGrenadeAnimations, new Vector2(40.5f, 7.5f), "upper", 4, 10));
+            actions["cover"].Add("look", new CharacterLookAction(this, "turning"));
+            actions["cover"].Add("lookAt", new CharacterLookAtAction(this, "turning"));
+            actions["cover"].Add("reload", new CharacterReloadAction(this, crouchedReloadAnimations, "upper"));
 
-            actions.Add("pistol_crouch", new Dictionary<string, CharacterActionInterface>());
-            actions["pistol_crouch"].Add("move", new CharacterRunAction(this, pistol_crouch_run, SPEED));
-            actions["pistol_crouch"].Add("moveTo", new CharacterRunToAction(this, pistol_crouch_runTo, SPEED));
-            actions["pistol_crouch"].Add("rest", new CharacterStayStillAction(this, pistol_crouch_rest));
-            actions["pistol_crouch"].Add("crouch", new CrouchAction(this, pistol_crouch, "pistol_stand", new Height(true, true)));
-            actions["pistol_crouch"].Add("cover", new AttachToCoverAction(this, pistol_crouch_cover, "pistol_cover", new Height(true, false), SPEED));
-            actions["pistol_crouch"].Add("shoot", new CharacterShootAction());
-            actions["pistol_crouch"].Add("throw", new ThrowGrenadeAction(this, pistol_crouch_rest, new Vector2(30f, 0f)));
-            actions.Add("pistol_stand", new Dictionary<string, CharacterActionInterface>());
-            actions["pistol_stand"].Add("move", new CharacterRunAction(this, pistol_run, SPEED));
-            actions["pistol_stand"].Add("moveTo", new CharacterRunToAction(this, pistol_runTo, SPEED));
-            actions["pistol_stand"].Add("rest", new CharacterStayStillAction(this, pistol_rest));
-            actions["pistol_stand"].Add("crouch", new CrouchAction(this, pistol_crouch_crouch, "pistol_crouch", new Height(true, false)));
-            actions["pistol_stand"].Add("cover", new AttachToCoverAction(this, pistol_cover, "pistol_cover", new Height(true, false), SPEED));
-            actions["pistol_stand"].Add("shoot", new CharacterShootAction());
-            actions["pistol_stand"].Add("throw", new ThrowGrenadeAction(this, pistol_rest, new Vector2(30f, 0f)));
-            actions.Add("pistol_cover", new Dictionary<string, CharacterActionInterface>());
-            actions["pistol_cover"].Add("move", new CharacterCoverMoveAction(this, pistol_cover_run, SPEED));
-            actions["pistol_cover"].Add("moveTo", new CharacterCoverMoveAction(this, pistol_cover_runTo, SPEED));
-            actions["pistol_cover"].Add("rest", new CharacterStayStillAction(this, pistol_cover_rest));
-            actions["pistol_cover"].Add("crouch", new CrouchAction(this, pistol_cover_crouch, "pistol_cover", new Height(true, false)));
-            actions["pistol_cover"].Add("cover", new DetachFromCoverAction(this, pistol_cover_cover, "pistol_stand", new Height(true, true), SPEED));
-            actions["pistol_cover"].Add("shoot", new CharacterCoverShootAction(this, pistol_cover_shoot, 1));
-            actions["pistol_cover"].Add("throw", new ThrowGrenadeAction(this, pistol_cover_rest, new Vector2(30f, 0f)));
-
-            actuator_ = new DefaultActuator(actions, this, "pistol_stand");
+            actuator_ = new MultiLevelActuator(actions, levels, this, "stand", "rest", "lower", "upper");
 
             List<GameTexture> anims = new List<GameTexture>();
             anims.Add(TextureMap.getInstance().getTexture("PlayerWalk"));
@@ -323,20 +351,23 @@ namespace Commando.objects
 
             if (inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_3))
             {
-                actuator_.crouch();
+                //actuator_.crouch();
+                actuator_.perform("crouch", new ActionParameters());
                 inputSet_.setToggle(Commando.controls.InputsEnum.BUTTON_3);
             }
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.LEFT_TRIGGER))
             {
                 Grenade grenade = new FragGrenade(pipeline_, collisionDetector_, direction_, Vector2.Zero, direction_);
-                actuator_.throwGrenade(grenade);
+                //actuator_.throwGrenade(grenade);
+                actuator_.perform("throw", new ActionParameters(grenade));
                 inputSet_.setToggle(InputsEnum.LEFT_TRIGGER);
             }
 
             if (lastCoverObject_ != null && inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_4))
             {
-                actuator_.cover(lastCoverObject_);
+                //actuator_.cover(lastCoverObject_);
+                actuator_.perform("cover", new ActionParameters(lastCoverObject_));
                 inputSet_.setToggle(Commando.controls.InputsEnum.BUTTON_4);
             }
 
@@ -344,7 +375,7 @@ namespace Commando.objects
             Vector2 leftD = new Vector2(inputSet_.getLeftDirectionalX(), -inputSet_.getLeftDirectionalY());
             Vector2 oldDirection = direction_;
             Vector2 oldPosition = position_;
-            actuator_.look(rightD);
+            actuator_.perform("look", new ActionParameters(rightD));
 
             if (Settings.getInstance().getMovementType() == MovementType.RELATIVE)
             {
@@ -362,29 +393,30 @@ namespace Commando.objects
                 Inventory_.Weapons_.Enqueue(Weapon_);
                 if (Weapon_ is Pistol)
                 {
-                    actuator_.setCurrentActionSet(actuator_.getCurrentActionSet().Substring(7));
+                    actuator_.setCurrentAnimationSet(actuator_.getCurrentAnimationSet() + 1);
                 }
                 Weapon_ = temp;
                 ammo_.update(Weapon_.CurrentAmmo_);
                 if (Weapon_ is Pistol)
                 {
-                    actuator_.setCurrentActionSet("pistol_" + actuator_.getCurrentActionSet());
+                    actuator_.setCurrentAnimationSet(actuator_.getCurrentAnimationSet() - 1);
                 }
             }
 
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {
-                actuator_.shoot(Weapon_);
+                actuator_.perform("shoot", new ActionParameters());
             }
 
             if (inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_1))
             {
-                reload();
+                //reload();
+                actuator_.perform("reload", new ActionParameters());
             }
             
             if (leftD.LengthSquared() > 0.2f)
             {
-                actuator_.move(leftD);
+                actuator_.perform("move", new ActionParameters(leftD));
             }
             lastCoverObject_ = null;
             actuator_.update();
@@ -404,6 +436,8 @@ namespace Commando.objects
 
         public override ConvexPolygonInterface getBounds(HeightEnum height)
         {
+            return actuator_.getBounds(height);
+            /*
             if (height == HeightEnum.HIGH)
             {
                 return boundsPolygonHigh_;
@@ -416,6 +450,7 @@ namespace Commando.objects
             {
                 return boundsPolygonLowCrouch_;
             }
+             */
         }
 
         public override ActuatorInterface getActuator()

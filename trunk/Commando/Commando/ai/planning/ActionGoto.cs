@@ -116,16 +116,20 @@ namespace Commando.ai.planning
                     }
                 }
 
-                (character_.getActuator() as DefaultActuator).moveTo(grid.getTileCenter(path_[0]));
-                (character_.getActuator() as DefaultActuator).lookAt(grid.getTileCenter(path_[0]));
+                //(character_.getActuator() as DefaultActuator).moveTo(grid.getTileCenter(path_[0]));
+                //(character_.getActuator() as DefaultActuator).lookAt(grid.getTileCenter(path_[0]));
+                character_.getActuator().perform("moveTo", new ActionParameters(grid.getTileCenter(path_[0])));
+                character_.getActuator().perform("lookAt", new ActionParameters(grid.getTileCenter(path_[0])));
             }
             else
             {
                 path_ = AStarPathfinder.calculateExactPath(grid, curIndex, target_, character_.getRadius(), character_.getHeight());
                 if (path_ == null) // no path could be found
                 {
-                    (character_.getActuator() as DefaultActuator).moveTo(grid.getTileCenter(target_));
-                    (character_.getActuator() as DefaultActuator).lookAt(grid.getTileCenter(target_));
+                    //(character_.getActuator() as DefaultActuator).moveTo(grid.getTileCenter(target_));
+                    //(character_.getActuator() as DefaultActuator).lookAt(grid.getTileCenter(target_));
+                    character_.getActuator().perform("moveTo", new ActionParameters(grid.getTileCenter(target_)));
+                    character_.getActuator().perform("lookAt", new ActionParameters(grid.getTileCenter(target_)));
                     return ActionStatus.FAILED;
                 }
             }

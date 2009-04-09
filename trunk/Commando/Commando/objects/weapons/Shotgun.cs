@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.controls;
+using Commando.graphics;
 
 namespace Commando.objects.weapons
 {
@@ -73,7 +74,14 @@ namespace Commando.objects.weapons
             else if (refireCounter_ == 0)
             {
                 InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
-                character_.reload();
+                if (character_ is ActuatedMainPlayer)
+                {
+                    character_.getActuator().perform("reload", new ActionParameters());
+                }
+                else
+                {
+                    character_.reload();
+                }
             }
         }
     }

@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Commando.levels;
+using Commando.collisiondetection;
 
 namespace Commando.graphics
 {
@@ -34,6 +37,24 @@ namespace Commando.graphics
         void draw();
 
         void draw(Color color);
+
+        bool perform(String actionName, ActionParameters parameters);
+
+        ConvexPolygonInterface getBounds(HeightEnum height);
+
+        string getCurrentActionSet();
+
+        void setCurrentActionSet(string actionSet);
+
+        int getCurrentAnimationSet();
+
+        void setCurrentAnimationSet(int animationSet);
+
+        void setResource(int resourceid, Object resource);
+
+        Object getResource(int resourceid);
+
+        bool isFinished(string actionName);
     }
 
     public class InvalidActionSetException : System.ApplicationException
@@ -60,5 +81,29 @@ namespace Commando.graphics
         {
         }
 */
+    }
+
+    public struct ActionParameters
+    {
+        public ActionParameters(Vector2 v1, Vector2 v2, Object o1, Object o2)
+        {
+            vector1 = v1;
+            vector2 = v2;
+            object1 = o1;
+            object2 = o2;
+        }
+
+        public ActionParameters(Vector2 v1)
+            : this(v1, Vector2.Zero, null, null)
+        { }
+
+        public ActionParameters(Object o1)
+            : this(Vector2.Zero, Vector2.Zero, o1, null)
+        { }
+
+        public Vector2 vector1;
+        public Vector2 vector2;
+        public Object object1;
+        public Object object2;
     }
 }

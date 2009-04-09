@@ -28,11 +28,13 @@ using Commando.levels;
 
 namespace Commando.graphics
 {
-    public class AttachToCoverAction : CoverActionInterface
+    public class AttachToCoverAction : CharacterActionInterface
     {
         private const int PRIORITY = 15;
 
         private const float TURNSPEED = 0.8f;
+
+        private static readonly int COVERKEY;
 
         protected CharacterAbstract character_;
 
@@ -52,7 +54,19 @@ namespace Commando.graphics
 
         protected Height nextHeight_;
 
-        public AttachToCoverAction(CharacterAbstract character, AnimationInterface animation, String nextActionSet, Height nextHeight, float speed)
+        protected string actionLevel_;
+
+        static AttachToCoverAction()
+        {
+            COVERKEY = "cover".GetHashCode();
+        }
+
+        public AttachToCoverAction(CharacterAbstract character, 
+                                    AnimationInterface animation, 
+                                    String nextActionSet, 
+                                    Height nextHeight, 
+                                    float speed,
+                                    string actionLevel)
         {
             character_ = character;
             animation_ = animation;
@@ -63,11 +77,7 @@ namespace Commando.graphics
             speed_ = speed;
             nextActionSet_ = nextActionSet;
             nextHeight_ = nextHeight;
-        }
-   
-        public void setCover(CoverObject coverObject)
-        {
-            coverObject_ = coverObject;
+            actionLevel_ = actionLevel;
         }
 
         public void update()
@@ -87,17 +97,7 @@ namespace Commando.graphics
             }
 
             Vector2 newPosition = position;
-            //newPosition.X += moving.X;
-            //newPosition.Y += moving.Y;
-
-            /*
-            // TODO: Implement slower movement backwards
-            float moveDiff = (float)Math.Atan2(moving.Y, moving.X) - getRotationAngle();
-            moveDiff = MathHelper.WrapAngle(moveDiff);
-            moveVector *= (MathHelper.TwoPi - Math.Abs(moveDiff)) / MathHelper.Pi;
-            */
-
-            //newPosition = character_.getCollisionDetector().checkCollisions(character_, newPosition);
+            
             character_.getCollisionDetector().checkCollisions(character_, ref moving, ref direction);
 
             newPosition.X += moving.X;
@@ -106,8 +106,8 @@ namespace Commando.graphics
             if (newPosition == positionToMoveTo_)
             {
                 finished_ = true;
-                (character_.getActuator() as DefaultActuator).setCoverObject(coverObject_);
-                (character_.getActuator() as DefaultActuator).setCurrentActionSet(nextActionSet_);
+                character_.getActuator().setResource(COVERKEY, coverObject_);
+                character_.getActuator().setCurrentActionSet(nextActionSet_);
                 character_.setHeight(nextHeight_);
             }
 
@@ -163,6 +163,21 @@ namespace Commando.graphics
             animation_.reset();
             animation_.setPosition(position);
             animation_.setRotation(character_.getDirection());
+        }
+
+        public string getActionLevel()
+        {
+            return actionLevel_;
+        }
+
+        public void setParameters(ActionParameters parameters)
+        {
+            coverObject_ = (CoverObject)parameters.object1;
+        }
+
+        public ConvexPolygonInterface getBounds(HeightEnum height)
+        {
+            return animation_.getBounds();
         }
     }
 }

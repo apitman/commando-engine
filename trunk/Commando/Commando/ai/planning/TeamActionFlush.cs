@@ -83,13 +83,14 @@ namespace Commando.ai.planning
                 return false;
             }
 
-            (character_.getActuator() as DefaultActuator).throwGrenade(
-                new FragGrenade(character_.pipeline_,
+            //(character_.getActuator() as DefaultActuator).throwGrenade(
+            character_.getActuator().perform("throw", new ActionParameters(
+                            new FragGrenade(character_.pipeline_,
                     character_.getCollisionDetector(),
                     belief.position_ - character_.getPosition(),
                     character_.getPosition(),
                     character_.getDirection())
-            );
+            ));
 
             return true;
         }
@@ -97,7 +98,8 @@ namespace Commando.ai.planning
         internal override ActionStatus update()
         {
             bool done =
-                (character_.getActuator() as DefaultActuator).isFinished();
+                //(character_.getActuator() as DefaultActuator).isFinished();
+                character_.getActuator().isFinished("throw");
 
             if (done)
             {

@@ -370,8 +370,20 @@
     <Compile Include="..\Commando\graphics\CharacterCoverMoveAction.cs">
       <Link>graphics\CharacterCoverMoveAction.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\CharacterCoverMoveToAction.cs">
+      <Link>graphics\CharacterCoverMoveToAction.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\CharacterCoverShootAction.cs">
       <Link>graphics\CharacterCoverShootAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterLookAction.cs">
+      <Link>graphics\CharacterLookAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterLookAtAction.cs">
+      <Link>graphics\CharacterLookAtAction.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\CharacterReloadAction.cs">
+      <Link>graphics\CharacterReloadAction.cs</Link>
     </Compile>
     <Compile Include="..\Commando\graphics\CharacterRunAction.cs">
       <Link>graphics\CharacterRunAction.cs</Link>
@@ -408,6 +420,12 @@
     </Compile>
     <Compile Include="..\Commando\graphics\MoveToActionInterface.cs">
       <Link>graphics\MoveToActionInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\MultiLevelActuator.cs">
+      <Link>graphics\MultiLevelActuator.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\NoAction.cs">
+      <Link>graphics\NoAction.cs</Link>
     </Compile>
     <Compile Include="..\Commando\graphics\NonLoopAnimation.cs">
       <Link>graphics\NonLoopAnimation.cs</Link>

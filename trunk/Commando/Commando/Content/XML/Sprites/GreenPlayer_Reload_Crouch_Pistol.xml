@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
+    <ImageDefinition>
+      <Key>GreenPlayer_Reload_Crouch_Pistol</Key>
+      <ImageFilename>Sprites\GreenPlayer_Throw_Crouch_Pistol</ImageFilename>
+      <ImageDimensions>
+        <NumberOfImages>9</NumberOfImages>
+        <Image>
+          <x>0</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>86</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>86</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>86</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>172</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>172</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>172</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>86</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>86</x>
+          <y>0</y>
+          <w>85</w>
+          <h>75</h>
+        </Image>
+      </ImageDimensions>
+    </ImageDefinition>
+  </Asset>
+</XnaContent>

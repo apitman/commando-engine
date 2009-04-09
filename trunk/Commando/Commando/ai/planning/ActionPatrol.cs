@@ -74,12 +74,14 @@ namespace Commando.ai.planning
             if (counter >= THRESHOLD)
             {
                 counter = 0;
-                (character_.getActuator() as DefaultActuator).lookAt(-character_.getDirection());
+                //(character_.getActuator() as DefaultActuator).lookAt(-character_.getDirection());
+                character_.getActuator().perform("lookAt", new ActionParameters(-(character_.getDirection() + character_.getPosition())));
             }
             Vector2 direction = character_.getDirection();
             direction.Normalize();
             Vector2 target = character_.getPosition() + direction * 5;
-            (character_.getActuator() as DefaultActuator).moveTo(target);
+            //(character_.getActuator() as DefaultActuator).moveTo(target);
+            character_.getActuator().perform("moveTo", new ActionParameters(target));
             return ActionStatus.IN_PROGRESS;
         }
 

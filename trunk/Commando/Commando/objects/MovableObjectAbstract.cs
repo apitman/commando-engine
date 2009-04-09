@@ -79,7 +79,7 @@ namespace Commando
         /// Set the object's current velocity.
         /// </summary>
         /// <param name="velocity">Vector of velocity, representing both direction of movement and magnitude</param>
-        public void setVelocity(Vector2 velocity)
+        public virtual void setVelocity(Vector2 velocity)
         {
             velocity_ = velocity;
         }

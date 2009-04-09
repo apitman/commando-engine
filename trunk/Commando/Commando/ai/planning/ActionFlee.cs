@@ -93,7 +93,8 @@ namespace Commando.ai.planning
             opposite = -opposite;
             opposite.Normalize();
 
-            (character_.getActuator() as DefaultActuator).moveTo(character_.getPosition() + opposite * 5);
+            //(character_.getActuator() as DefaultActuator).moveTo(character_.getPosition() + opposite * 5);
+            character_.getActuator().perform("moveTo", new ActionParameters(character_.getPosition() + opposite * 5));
 
             return ActionStatus.IN_PROGRESS;
         }

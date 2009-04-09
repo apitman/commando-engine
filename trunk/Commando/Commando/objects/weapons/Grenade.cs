@@ -33,6 +33,13 @@ namespace Commando.objects.weapons
         protected const float SPEED = 5.0f;
         protected const float DEPTH = 0.5f;
         private static readonly List<Vector2> BOUNDS_POINTS;
+        protected const int FUSE = 90;
+
+        protected int fuseTime_;
+
+        protected bool started_;
+
+        protected int airTime_;
 
         static Grenade()
         {
@@ -47,11 +54,34 @@ namespace Commando.objects.weapons
             : base(pipeline, texture, detector, null, RADIUS, HEIGHT, CommonFunctions.normalizeNonmutating(direction) * SPEED, position, directionFacing, DEPTH)
         {
             boundsPolygon_ = new ConvexPolygon(BOUNDS_POINTS, Vector2.Zero);
+            fuseTime_ = FUSE;
+            started_ = false;
         }
 
         public override void update(GameTime gameTime)
         {
-            base.update(gameTime);
+            if (!started_)
+            {
+                return;
+            }
+            if (fuseTime_ == 0)
+            {
+                handleCollision();
+                return;
+            }
+            Vector2 velocity = velocity_;
+            bool colHappened = collisionDetector_.checkCollisions(this, ref velocity, ref direction_);
+            position_.X += velocity_.X;
+            position_.Y += velocity_.Y;
+            fuseTime_--;
+        }
+
+        public override void draw(GameTime gameTime)
+        {
+            if (started_)
+            {
+                base.draw(gameTime);
+            }
         }
 
         public override void handleCollision()
@@ -64,6 +94,26 @@ namespace Commando.objects.weapons
         public override bool objectChangesHeight(CollisionObjectInterface obj)
         {
             return !((obj is Projectile) || (obj is CharacterAbstract) || (obj is ItemAbstract) || (obj is LevelTransitionObject));
+        }
+
+        public override Vector2 checkCollisionInto(CollisionObjectInterface obj, CollisionDetectorInterface detector, Height height, float radDistance, Vector2 translate)
+        {
+            Vector2 normal = translate;
+            //normal.Normalize();
+            //velocity_ = velocity_ - velocity_.Length() * (CommonFunctions.dotProduct(velocity_, normal)) * normal;
+            velocity_ /= 2f;
+            velocity_ = velocity_ - 2 * (CommonFunctions.dotProduct(velocity_, normal) / normal.LengthSquared()) * normal;
+            return 2 * translate;
+        }
+
+        public void start()
+        {
+            started_ = true;
+        }
+
+        public override void setVelocity(Vector2 velocity)
+        {
+            velocity_ = CommonFunctions.normalizeNonmutating(velocity) * SPEED;
         }
     }
 }

@@ -88,11 +88,14 @@ namespace Commando.ai.planning
                 character_.reload();
 
                 // remove from cover, then go after target's last known location
-                DefaultActuator da = (character_.getActuator() as DefaultActuator);
-                CoverObject cover = da.getCoverObject();
+                //DefaultActuator da = (character_.getActuator() as DefaultActuator);
+                //CoverObject cover = da.getCoverObject();
+                ActuatorInterface actuator = character_.getActuator();
+                CoverObject cover = (CoverObject)actuator.getResource("cover".GetHashCode());
                 if (cover != null)
                 {
-                    da.cover(da.getCoverObject());
+                    //da.cover(da.getCoverObject());
+                    actuator.perform("cover", new ActionParameters(cover));
                     if (ReservationTable.isReservedBy(cover, character_))
                     {
                         ReservationTable.freeResource(cover, character_);
