@@ -64,7 +64,7 @@ namespace Commando.objects.weapons
             {
                 return;
             }
-            if (fuseTime_ == 0)
+            if (fuseTime_ == 0 || collidedInto_ is CharacterAbstract)
             {
                 handleCollision();
                 return;
