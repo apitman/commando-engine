@@ -45,5 +45,41 @@ namespace Commando.objects
             Ammo_.Add(AmmoTypeEnum.ROUNDS, 0);
             Weapons_ = new Queue<RangedWeaponAbstract>();
         }
+
+        /// <summary>
+        /// Places a weapon into the inventory
+        /// </summary>
+        /// <param name="weapon">The weapon to place in the inventory</param>
+        public void addWeapon(RangedWeaponAbstract weapon)
+        {
+            Weapons_.Enqueue(weapon);
+        }
+
+        /// <summary>
+        /// Switches currently active weapons by returning the next weapon to use
+        /// </summary>
+        /// <param name="weaponInHand">Pass in the current weapon to the inventory</param>
+        /// <returns>The next weapon that will become the current weapon</returns>
+        public RangedWeaponAbstract switchWeapon(RangedWeaponAbstract weaponInHand)
+        {
+            Weapons_.Enqueue(weaponInHand);
+            return Weapons_.Dequeue();
+        }
+
+        /// <summary>
+        /// Adds ammo to the inventory
+        /// </summary>
+        /// <param name="type">The type of ammo to add to the inventory</param>
+        /// <param name="amount">The number of rounds to add</param>
+        public void addAmmo(AmmoTypeEnum type, int amount)
+        {
+            Ammo_[type] += amount;
+        }
+
+        public void reload(RangedWeaponAbstract weaponToReload)
+        {
+            // TODO
+        }
+
     }
 }

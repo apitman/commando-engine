@@ -197,7 +197,7 @@ namespace Commando
             selectedIndex_ = 0;
             myObjects_ = new List<objectRepresentation>(MAX_NUM_ENEMIES);
 
-            myLevel_ = Level.getLevelFromFile(filepath);
+            myLevel_ = Level.getLevelFromFile(filepath, engine);
             drawPipeline_ = myLevel_.Pipeline_;
 
             maxCursorX = numTilesWide_ - 3;

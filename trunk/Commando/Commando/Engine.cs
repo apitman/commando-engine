@@ -38,7 +38,7 @@ namespace Commando
     public class Engine : Microsoft.Xna.Framework.Game
     {
         public GraphicsDeviceManager graphics_;
-        SpriteBatch spriteBatch_;
+        public SpriteBatch spriteBatch_;
         EngineStateInterface engineState_;
         public ControllerInputInterface Controls_ { get; set; }
 

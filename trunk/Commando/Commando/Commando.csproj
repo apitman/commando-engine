@@ -15,11 +15,12 @@
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ManifestCertificateThumbprint>1DDBDFE3771A4814A96019FCFE38491BAE7A694F</ManifestCertificateThumbprint>
-    <ManifestKeyFile>Commando_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestCertificateThumbprint>B5C2EB8B8F59FAFD534C587E146A371E0CC4A5CB</ManifestCertificateThumbprint>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>false</SignManifests>
-    <PublishUrl>C:\Documents and Settings\pitmanam\Desktop\Publish\</PublishUrl>
+    <SignManifests>true</SignManifests>
+    <PublishUrl>C:\Documents and Settings\pitmanam\Desktop\COMMANDOreleaseV0.51\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -29,7 +30,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -62,10 +63,6 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="C5, Version=1.1.0.0, Culture=neutral, PublicKeyToken=06a1b38866503b69, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\C5.bin\C5.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
       <Private>False</Private>
       <SpecificVersion>True</SpecificVersion>
@@ -276,7 +273,6 @@
     <Compile Include="objects\weapons\RangedWeaponAbstract.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="C5.dll" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>

@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using System.Xml;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.levels
 {
@@ -31,11 +33,56 @@ namespace Commando.levels
     public class Tileset
     {
         protected Dictionary<int, Height> heights_ { get; private set;}
-        protected Dictionary<int, string> textures_{ get; private set;}
+        protected Dictionary<int, GameTexture> textures_{ get; private set;}
+
+        public Tileset()
+        {
+            heights_ = new Dictionary<int, Height>();
+            textures_ = new Dictionary<int, GameTexture>();
+        }
 
         public static Tileset constructTileset(string filepath)
         {
             throw new NotImplementedException("Tileset class not ready");
+        }
+
+        public static Tileset getTilesetFromContent(string tilesetName, Engine e)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(tilesetName);
+            return Tileset.getTilesetFromXML(doc, e.spriteBatch_, e.GraphicsDevice);
+        }
+
+        protected static Tileset getTilesetFromXML(XmlDocument doc, SpriteBatch spriteBatch, GraphicsDevice graphics)
+        {
+            Tileset returnTileset = new Tileset();
+            XmlElement ele = (XmlElement)doc.GetElementsByTagName("image-file")[0];
+            string image_file = ele.InnerText;
+            ele = (XmlElement)doc.GetElementsByTagName("tile-size")[0];
+            int tile_size_x = Convert.ToInt32(ele.GetAttribute("x"));
+            int tile_size_y = Convert.ToInt32(ele.GetAttribute("y"));
+            ele = (XmlElement)doc.GetElementsByTagName("total-tiles")[0];
+            int total_tiles = Convert.ToInt32(ele.InnerText);
+            ele = (XmlElement)doc.GetElementsByTagName("tiles-high")[0];
+            int tiles_high = Convert.ToInt32(ele.InnerText);
+            ele = (XmlElement)doc.GetElementsByTagName("tiles-wide")[0];
+            int tiles_wide = Convert.ToInt32(ele.InnerText);
+            XmlNodeList heightNodes = doc.GetElementsByTagName("tile-heights");
+            for (int i = 0; i < heightNodes.Count; i++)
+            {
+                XmlElement e = (XmlElement)heightNodes[i];
+                bool lowH = e.GetAttribute("l").ToLower() == "true";
+                bool highH = e.GetAttribute("h").ToLower() == "true";
+                Height h = new Height(lowH, highH);
+                returnTileset.heights_.Add(i, h);
+                int xStart = (i * (tile_size_x + 1)) % (tiles_wide * (tile_size_x + 1));
+                int yStart = (tile_size_y + 1) * ((i * (tile_size_x + 1)) / (tiles_wide * (tile_size_x + 1))); // I want integer division here AMP
+                Rectangle r = new Rectangle(xStart, yStart, tile_size_x, tile_size_y);
+                //GameTexture gT = new GameTexture(image_file, SpriteBatch, GraphicsDevice, r);
+                //returnTileset.textures_.Add(i, gT);
+            }
+
+            return returnTileset;
         }
 
         internal void test()
