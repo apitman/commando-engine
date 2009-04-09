@@ -141,6 +141,10 @@ namespace Commando.objects
                         height_.blocksLow_ = false;
                     }
                 }
+                if (obj is CharacterAbstract)
+                {
+                    height_ = new Height(false, false);
+                }
             }
             return Vector2.Zero;
         }
@@ -157,6 +161,10 @@ namespace Commando.objects
                 {
                     height_.blocksLow_ = false;
                 }
+            }
+            if (obj is CharacterAbstract)
+            {
+                height_ = new Height(false, false);
             }
             if (height_.blocksHigh_ || height_.blocksLow_)
             {
