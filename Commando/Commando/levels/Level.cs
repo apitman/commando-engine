@@ -192,7 +192,11 @@ namespace Commando.levels
             {
                 parseItem(tList[i]);
             }
-
+            tList = doc.GetElementsByTagName("overlay");
+            for (int i = 0; i < tList.Count; i++)
+            {
+                parseOverlay(tList[i]);
+            }
             // Load player location from file
             if (doc.GetElementsByTagName("playerLocation").Count > 0)
             {
@@ -498,6 +502,18 @@ namespace Commando.levels
                     mytype = WeaponBox.WeaponType.Shotgun;
                 items_.Add(new WeaponBox(null, Pipeline_, pos, Vector2.Zero, Constants.DEPTH_LOW, mytype));
             }
+        }
+        protected void parseOverlay(XmlNode overlayNode)
+        {
+            XmlElement overlayElement = (XmlElement)overlayNode;
+
+            GameTexture myimage = TextureMap.fetchTexture(overlayElement.GetAttribute("texture"));            
+            float posX = (float)Convert.ToInt32(overlayElement.GetAttribute("posX"));
+            float posY = (float)Convert.ToInt32(overlayElement.GetAttribute("posY"));
+            float depth = (float)Convert.ToDouble(overlayElement.GetAttribute("depth"));
+            LevelOverlay myOverlay = new LevelOverlay(Pipeline_, myimage,new Vector2(posX, posY), Vector2.Zero, depth );
+            Pipeline_.Add(myOverlay);
+
         }
 
         /// <summary>
