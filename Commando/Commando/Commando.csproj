@@ -175,6 +175,7 @@
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />
     <Compile Include="EngineStateStart.cs" />
+    <Compile Include="EngineStateStorySegment.cs" />
     <Compile Include="FontEnum.cs" />
     <Compile Include="GlobalHelper.cs" />
     <Compile Include="graphics\ActionSetValidator.cs" />
