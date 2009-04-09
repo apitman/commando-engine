@@ -836,6 +836,8 @@ namespace Commando
             InputSet inputs = InputSet.getInstance();
             engine_.GraphicsDevice.Clear(Color.Firebrick);
 
+            myLevel_.draw();
+
             // Draw the cursor
 #if !XBOX
             if (Settings.getInstance().IsUsingMouse_)

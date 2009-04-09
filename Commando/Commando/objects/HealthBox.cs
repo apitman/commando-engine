@@ -41,7 +41,7 @@ namespace Commando.objects
 
         protected bool toDie_ = false;
 
-        //List<Vector2> points, Vector2 center, float radius, Height height, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth
+        //List<Vector2> points, Vector2 center, float radius, Height tileHeight, List<DrawableObjectAbstract> pipeline, GameTexture image, Vector2 position, Vector2 direction, float depth
         static HealthBox()
         {
             BOUNDSPOINTS = new List<Vector2>();

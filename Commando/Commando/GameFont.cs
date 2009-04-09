@@ -131,7 +131,7 @@ namespace Commando
         /// <param name="pos">The position to start drawing the top-left corner of the text</param>
         /// <param name="color">The color of the drawn text</param>
         /// <param name="rotation">How far to rotate the text</param>
-        /// <param name="origin">The width and height of the text</param>
+        /// <param name="origin">The tileWidth and tileHeight of the text</param>
         /// <param name="scale">How big or small to scale the text</param>
         /// <param name="effects">Which SpriteEffects to add to the text</param>
         /// <param name="layerDepth">The depth at which to draw the text</param>

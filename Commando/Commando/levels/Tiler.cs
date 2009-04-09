@@ -40,7 +40,7 @@ namespace Commando.levels
         /// <param name="pipeline">Drawing pipeline in which to register the object</param>
         /// <param name="tiles">Array of ints representing types of tiles</param>
         /// <returns>List of TileObjects</returns>
-        public static List<TileObject> getTiles(List<DrawableObjectAbstract> pipeline, int[,] tiles)
+/*        public static List<TileObject> getTiles(List<DrawableObjectAbstract> pipeline, int[,] tiles)
         {
             List<TileObject> retList = new List<TileObject>();
             for (int y = 0; y < tiles.GetLength(0); y++)
@@ -52,6 +52,7 @@ namespace Commando.levels
             }
             return retList;
         }
+ */
 
         public static List<BoxObject> mergeBoxes(Tile[,] boxes)
         {

@@ -16,7 +16,6 @@
 ***************************************************************************
 */
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +29,9 @@ using Commando.ai;
 
 namespace Commando.levels
 {
+    /// <summary>
+    /// Encapsulates all of the components which make up a level of the game.
+    /// </summary>
     public class Level
     {
         // Drawing pipeline containing all drawable entities in the level
@@ -46,9 +48,13 @@ namespace Commando.levels
 
         protected int width_;
 
-        protected TileObject[,] tiles_;
+        protected int[,] tiles_;
 
-        protected List<NonPlayableCharacterAbstract> enemies_;
+        protected List<NonPlayableCharacterAbstract> enemies_ =
+            new List<NonPlayableCharacterAbstract>();
+
+        protected List<LevelObjectAbstract> items_ =
+            new List<LevelObjectAbstract>();
 
         /// <summary>
         /// Right now, we're not gonna use this.
@@ -57,27 +63,24 @@ namespace Commando.levels
 
         protected Vector2 playerStartLocation_;
 
-        protected List<LevelObjectAbstract> items_;
-
         /// <summary>
         /// True if this level was loaded from Content, false if it was
-        /// loaded from the file system.
+        /// loaded from the file system.  It is used to set LevelTransitionObjects
+        /// appropriately with this flag.
         /// </summary>
         protected bool isPackagedLevel_;
 
-        private Level(Tileset tileSet, TileObject[,] tiles, bool isPackaged)
+        /// <summary>
+        /// Private constructor; use factory methods to create.
+        /// </summary>
+        /// <param name="isPackaged">True if this level is being loaded from
+        /// packaged Content, false if it is being loaded from the file system.
+        /// </param>
+        private Level(bool isPackaged)
         {
-            //tileSet_ = tileSet;
-            //tiles_ = tiles;
-            //height_ = tiles_.GetLength(0);
-            //width_ = tiles_.GetLength(1);
-            height_ = 22;
-            width_ = 25;
-            player_ = null;
-            //playerStartLocation_ = null;
-            enemies_ = new List<NonPlayableCharacterAbstract>();
-            items_ = new List<LevelObjectAbstract>();
+            isPackagedLevel_ = isPackaged;
         }
+
         public void setPlayerStartLocation(Vector2 pos)
         {
             playerStartLocation_ = pos;
@@ -96,7 +99,7 @@ namespace Commando.levels
             return width_;
         }
 
-        public TileObject[,] getTiles()
+        public int[,] getTiles()
         {
             return tiles_;
         }
@@ -131,30 +134,49 @@ namespace Commando.levels
             player_ = player;
         }
 
+        /// <summary>
+        /// Factory method to load a level from the file system.
+        /// </summary>
+        /// <param name="filepath">Complete path to the level Xml.</param>
+        /// <param name="engine">Game engine.</param>
+        /// <returns>An initialized level.</returns>
         public static Level getLevelFromFile(string filepath, Engine engine)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(filepath);
-            Level level = new Level(new Tileset(), null, false);
-            return level.getLevelFromXml(doc, engine);
+            Level level = new Level(false);
+            level.initializeLevelFromXml(doc, engine);
+            return level;
         }
 
+        /// <summary>
+        /// Factory method to load a level from packaged Content.
+        /// </summary>
+        /// <param name="levelname">Content-based path to the level.</param>
+        /// <param name="engine">Game engine.</param>
+        /// <returns>An initialized level.</returns>
         public static Level getLevelFromContent(string levelname, Engine engine)
         {
             XmlDocument doc = engine.Content.Load<XmlDocument>(levelname);
-            Level level = new Level(new Tileset(), null, true);
-            return level.getLevelFromXml(doc, engine);
+            Level level = new Level(true);
+            level.initializeLevelFromXml(doc, engine);
+            return level;
         }
 
-        protected Level getLevelFromXml(XmlDocument doc, Engine engine)
+        /// <summary>
+        /// Parses Xml to populate the level with enemies, objects, etc.
+        /// </summary>
+        /// <param name="doc">XmlDocument containing level data.</param>
+        /// <param name="engine">Game engine.</param>
+        /// <returns></returns>
+        protected void initializeLevelFromXml(XmlDocument doc, Engine engine)
         {
             // First load the tiles
             XmlElement ele = (XmlElement)doc.GetElementsByTagName("level")[0];
             width_ = Convert.ToInt32(ele.GetAttribute("numTilesWide"));
             height_ = Convert.ToInt32(ele.GetAttribute("numTilesTall"));
 
-            int[,] loadedTiles = new int[height_, width_];
-            tiles_ = new TileObject[height_, width_];
+            tiles_ = new int[height_, width_];
 
             XmlNodeList tList = doc.GetElementsByTagName("tile");
             for (int i = 0; i < height_; i++)
@@ -163,22 +185,20 @@ namespace Commando.levels
                 {
                     XmlElement ele2 = (XmlElement)tList[j + i * width_];
                     int tempInt = Convert.ToInt32(ele2.GetAttribute("index"));
-                    loadedTiles[i, j] = tempInt;
-                }
-            }
-
-            List<TileObject> tileList = Tiler.getTiles(Pipeline_, loadedTiles);
-            for (int i = 0; i < height_; i++)
-            {
-                for (int j = 0; j < width_; j++)
-                {
-                    tiles_[i, j] = tileList[i * width_ + j];
+                    tiles_[i, j] = tempInt;
                 }
             }
 
             // Load the tileset similar to this
-            //XmlElement tilesetEle = (XmlElement)doc.GetElementsByTagName("tileset")[0];
-            //Tileset tileSet_ = Tileset.getTilesetFromContent(tilesetEle.InnerText, engine);
+            XmlElement tilesetEle = (XmlElement)doc.GetElementsByTagName("tileset")[0];
+            if (tilesetEle == null)
+            {
+                tileSet_ = Tileset.getTilesetFromContent(@"XML\defaultTileset", engine);
+            }
+            else
+            {
+                tileSet_ = Tileset.getTilesetFromContent(tilesetEle.InnerText, engine);
+            }
 
             // Now load the enemies
             tList = doc.GetElementsByTagName("enemy");
@@ -208,10 +228,12 @@ namespace Commando.levels
             //player_ = new ActuatedMainPlayer(pipeline, null, new Vector2(100f, 200f), new Vector2(1.0f, 0.0f));
             //
             player_ = null;
-            
-            return this;
         }
         
+        /// <summary>
+        /// Push this level into an Xml document.
+        /// </summary>
+        /// <param name="filepath">Location to store the Xml.</param>
         public void writeLevelToFile(string filepath)
         {
             // Create the document
@@ -231,7 +253,7 @@ namespace Commando.levels
                 for (int j = 0; j < width_; j++)
                 {
                     XmlElement tileElement = doc.CreateElement("tile");
-                    tileElement.SetAttribute("index", tiles_[i, j].getTileNumber().ToString());
+                    tileElement.SetAttribute("index", tiles_[i, j].ToString());
                     tilesElement.AppendChild(tileElement);
                 }
             }
@@ -311,8 +333,6 @@ namespace Commando.levels
                         wpnType = "shotgun";
                         aWpnBoxElement.SetAttribute("weaponType", wpnType);
                         itemsElement.AppendChild(aWpnBoxElement);
-
-
                 }
                 levelElement.AppendChild(itemsElement);
             }
@@ -337,6 +357,7 @@ namespace Commando.levels
         /// <param name="pipeline">The draw pipeline for the new tile</param>
         public void changeTile(int newTileIndex, int newTilePosX, int newTilePosY, List<DrawableObjectAbstract> pipeline)
         {
+            
             // First, check to see if we need to expand our level
             if (newTilePosX >= width_)
             {
@@ -344,7 +365,7 @@ namespace Commando.levels
                 int newNumTilesWide = newTilePosX + 1;
                 int newNumTilesTall = Math.Max(height_, newTilePosY + 1);
 
-                TileObject[,] newTiles = new TileObject[newNumTilesTall, newNumTilesWide];
+                int[,] newTiles = new int[newNumTilesTall, newNumTilesWide];
 
                 for (int i = 0; i < newNumTilesTall; i++)
                 {
@@ -359,13 +380,13 @@ namespace Commando.levels
                         {
                             // New tile we are planting
                             Vector2 pos = new Vector2((float)Tiler.tileSideLength_ * j, (float)Tiler.tileSideLength_ * i);
-                            newTiles[i, j] = new TileObject(newTileIndex, pipeline, TextureMap.fetchTexture("Tile_" + newTileIndex.ToString()), pos, 0.0f);
+                            newTiles[i, j] = newTileIndex;
                         }
                         else
                         {
                             // Default (black) tile
                             Vector2 pos = new Vector2((float)Tiler.tileSideLength_ * j, (float)Tiler.tileSideLength_ * i);
-                            newTiles[i, j] = new TileObject(0, pipeline, TextureMap.fetchTexture("Tile_0"), pos, 0.0f);
+                            newTiles[i, j] = 0; // TODO Cannot make assumption that tileId=0 in tileset is "empty"
                         }
                     }
                 }
@@ -379,7 +400,7 @@ namespace Commando.levels
                 int newNumTilesWide = width_;
                 int newNumTilesTall = newTilePosY + 1;
 
-                TileObject[,] newTiles = new TileObject[newNumTilesTall, newNumTilesWide];
+                int[,] newTiles = new int[newNumTilesTall, newNumTilesWide];
 
                 for (int i = 0; i < newNumTilesTall; i++)
                 {
@@ -394,13 +415,13 @@ namespace Commando.levels
                         {
                             // New tile we are planting
                             Vector2 pos = new Vector2((float)Tiler.tileSideLength_ * j, (float)Tiler.tileSideLength_ * i);
-                            newTiles[i, j] = new TileObject(newTileIndex, pipeline, TextureMap.fetchTexture("Tile_" + newTileIndex.ToString()), pos, 0.0f);
+                            newTiles[i, j] = newTileIndex;
                         }
                         else
                         {
                             // Default (black) tile
                             Vector2 pos = new Vector2((float)Tiler.tileSideLength_ * j, (float)Tiler.tileSideLength_ * i);
-                            newTiles[i, j] = new TileObject(0, pipeline, TextureMap.fetchTexture("Tile_0"), pos, 0.0f);
+                            newTiles[i, j] = 0; // TODO Cannot make assumption that tileId=0 in tileset is "empty"
                         }
                     }
                 }
@@ -411,10 +432,16 @@ namespace Commando.levels
             else
             {
                 // No expansion, replace a TileObject in tiles_
-                tiles_[newTilePosY, newTilePosX].setTileNumber(newTileIndex);
+                tiles_[newTilePosY, newTilePosX] = newTileIndex;
             }
+            
         }
 
+        /// <summary>
+        /// Parse a node for an enemy and add it to the drawing pipeline as well
+        /// as the enemies list.
+        /// </summary>
+        /// <param name="enemyNode">Node containing Xml data for the enemy.</param>
         protected void parseEnemy(XmlNode enemyNode)
         {
             NonPlayableCharacterAbstract enemy;
@@ -470,6 +497,11 @@ namespace Commando.levels
             enemies_.Add(enemy);
         }
 
+        /// <summary>
+        /// Parse a node for an item and add it to the drawing pipeline
+        /// as well as the image list.
+        /// </summary>
+        /// <param name="itemNode">Node containing Xml data for the item.</param>
         protected void parseItem(XmlNode itemNode)
         {
             XmlElement itemElement = (XmlElement)itemNode;
@@ -510,6 +542,11 @@ namespace Commando.levels
                 items_.Add(new WeaponBox(null, Pipeline_, pos, Vector2.Zero, Constants.DEPTH_LOW, mytype));
             }
         }
+
+        /// <summary>
+        /// Parse a node for an overlay graphic and add it to the drawing pipeline.
+        /// </summary>
+        /// <param name="overlayNode">Node containing Xml data for the overlay.</param>
         protected void parseOverlay(XmlNode overlayNode)
         {
             XmlElement overlayElement = (XmlElement)overlayNode;
@@ -535,19 +572,23 @@ namespace Commando.levels
             {
                 for (int j = 0; j < getWidth(); j++)
                 {
-                    if (getTiles()[i, j].getTileNumber() >= 10 && getTiles()[i, j].getTileNumber() <= 18)
-                    {
-                        tilesForCollisionGeneration[i, j].highDistance_ = 1f;
-                        tilesForCollisionGeneration[i, j].lowDistance_ = 0f;
-                    }
-                    else if (getTiles()[i, j].getTileNumber() != 1)
+                    Height h = tileSet_.getHeight(tiles_[i, j]);
+
+                    if (h.blocksHigh_)
                     {
                         tilesForCollisionGeneration[i, j].highDistance_ = 0f;
-                        tilesForCollisionGeneration[i, j].lowDistance_ = 0f;
                     }
                     else
                     {
                         tilesForCollisionGeneration[i, j].highDistance_ = 1f;
+                    }
+
+                    if (h.blocksLow_)
+                    {
+                        tilesForCollisionGeneration[i, j].lowDistance_ = 0f;
+                    }
+                    else
+                    {
                         tilesForCollisionGeneration[i, j].lowDistance_ = 1f;
                     }
                 }
@@ -603,6 +644,24 @@ namespace Commando.levels
                 characterList.Add(player_);
             }
             WorldState.CharacterList_ = characterList;
+        }
+
+        /// <summary>
+        /// Draws all of the tiles which compose the level, and nothing else.
+        /// </summary>
+        public void draw()
+        {
+            // TODO
+            // Might be easy to make an optimization that only tries to
+            //  draw the tiles which are within the view of the camera
+            for (int i = 0; i < height_; i++)
+            {
+                for (int j = 0; j < width_; j++)
+                {
+                    Vector2 v = new Vector2(j * tileSet_.TILE_SIZE_X, i * tileSet_.TILE_SIZE_Y);
+                    tileSet_.draw(v, tiles_[i, j]);
+                }
+            }
         }
     }
 }

@@ -186,7 +186,7 @@ namespace Commando.collisiondetection
                 if (cObj != obj && objectHeight.collides(otherObjectHeight) && dist < radius + cObj.getRadius())
                 {
                     dist = radius + cObj.getRadius() - dist;
-                    //translate = checkCollision(movingObjectPolygon, cObj.getBounds(height), dist, Vector2.Zero);
+                    //translate = checkCollision(movingObjectPolygon, cObj.getBounds(tileHeight), dist, Vector2.Zero);
                     translateHigh = Vector2.Zero;
                     translateLow = Vector2.Zero;
                     translationHeight = new Height(false, false);
@@ -277,7 +277,7 @@ namespace Commando.collisiondetection
                 if (cObj != obj && objectHeight.collides(cObj.getHeight()) && dist < radius + cObj.getRadius())
                 {
                     dist = radius + cObj.getRadius() - dist;
-                    //translate = checkCollision(movingObjectPolygon, cObj.getBounds(height), dist, Vector2.Zero);
+                    //translate = checkCollision(movingObjectPolygon, cObj.getBounds(tileHeight), dist, Vector2.Zero);
                     translate = cObj.checkCollisionWith(obj, this, height, dist, Vector2.Zero);
                     if (translate != Vector2.Zero)
                     {
@@ -360,8 +360,8 @@ namespace Commando.collisiondetection
                 if (cObj != obj && objectHeight.collides(otherObjectHeight) && dist < radius + cObj.getRadius())
                 {
                     dist = radius + cObj.getRadius() - dist;
-                    //translate = checkCollision(movingObjectPolygon, cObj.getBounds(height), dist, velocity);
-                    //translate = cObj.checkCollisionWith(obj, this, height, dist, velocity);
+                    //translate = checkCollision(movingObjectPolygon, cObj.getBounds(tileHeight), dist, velocity);
+                    //translate = cObj.checkCollisionWith(obj, this, tileHeight, dist, velocity);
                     translateHigh = Vector2.Zero;
                     translateLow = Vector2.Zero;
                     translationHeight = new Height(false, false);
@@ -459,7 +459,7 @@ namespace Commando.collisiondetection
                 if (cObj != obj && objectHeight.collides(cObj.getHeight()) && dist < radius + cObj.getRadius())
                 {
                     dist = radius + cObj.getRadius() - dist;
-                    //translate = checkCollision(movingObjectPolygon, cObj.getBounds(height), dist, velocity);
+                    //translate = checkCollision(movingObjectPolygon, cObj.getBounds(tileHeight), dist, velocity);
                     translate = cObj.checkCollisionWith(obj, this, height, dist, tempVelocity);
                     if (translate != Vector2.Zero)
                     {
