@@ -18,4 +18,4 @@ _Note:_ This page is expected to be updated frequently, so check back often to s
 
 = How to play the game =
 
-After double-clicking the .exe file, look at the following wiki page to find out how to play the game. http://code.google.com/p/commando-engine/wiki/How_To_Control
+  * After double-clicking the .exe file, look at the following wiki page to find out how to play the game. http://code.google.com/p/commando-engine/wiki/How_To_Control
