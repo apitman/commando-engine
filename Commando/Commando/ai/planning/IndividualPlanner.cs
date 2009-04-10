@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace Commando.ai.planning
 {
@@ -62,6 +63,11 @@ namespace Commando.ai.planning
         /// <param name="goal">Desired state of the world.</param>
         public void execute(SearchNode initial, SearchNode goal)
         {
+#if DEBUG
+            Stopwatch clock = new Stopwatch();
+            clock.Start();
+#endif
+
             List<SearchNode> openlist = new List<SearchNode>();
             List<int> failedConditions = new List<int>();
             SearchNode current = goal; // BACKWARDS, START WITH GOAL
@@ -130,6 +136,16 @@ namespace Commando.ai.planning
             //  where the initial state fulfills the goal state
 
             plan_ = plan;
+
+#if DEBUG
+                clock.Stop();
+                Console.WriteLine(
+                    "Planner " +
+                    Convert.ToString(plan_.Count) +
+                    ": " +
+                    Convert.ToString(clock.ElapsedMilliseconds)
+                );
+#endif
         }
 
         /// <summary>

@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Commando.levels;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 // TODO
 //
@@ -54,6 +55,10 @@ namespace Commando.ai
         /// being passed around, as well as keeping allocated memory so that it is
         /// not reallocated with each use of the algorithm.
         /// 
+
+#if DEBUG
+        public static Stopwatch clock = new Stopwatch();
+#endif
 
         const short SEARCH_SPACE_HEIGHT = 60;
         const short SEARCH_SPACE_WIDTH = 60;
@@ -270,6 +275,10 @@ namespace Commando.ai
         public static List<TileIndex>
             calculateExactPath(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height)
         {
+#if DEBUG
+            clock.Start();
+#endif
+
             setupSearch(grid, start, destination, radius, height);
 
             //Console.WriteLine("Pathfind Start: " + start_.x_ + "," + start_.y_);
@@ -291,6 +300,9 @@ namespace Commando.ai
                 // If we are out of nodes to check, no path exists
                 if (openlist_.Count == 0)
                 {
+#if DEBUG
+                    clock.Stop();
+#endif
                     return null;
                 }
                 else
@@ -298,7 +310,9 @@ namespace Commando.ai
                     cur = getNext();
                 }
             }
-
+#if DEBUG
+            clock.Stop();
+#endif
             return recreatePath();
         }
 

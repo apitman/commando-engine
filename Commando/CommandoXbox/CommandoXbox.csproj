@@ -340,6 +340,9 @@
     <Compile Include="..\Commando\FontMap.cs">
       <Link>FontMap.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\FPSMonitor.cs">
+      <Link>FPSMonitor.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\GameFont.cs">
       <Link>GameFont.cs</Link>
     </Compile>
@@ -582,6 +585,9 @@
     </Compile>
     <Compile Include="..\Commando\objects\weapons\SmallBullet.cs">
       <Link>objects\weapons\SmallBullet.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\PerformanceLogger.cs">
+      <Link>PerformanceLogger.cs</Link>
     </Compile>
     <Compile Include="..\Commando\Program.cs">
       <Link>Program.cs</Link>

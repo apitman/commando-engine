@@ -29,6 +29,8 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
+using System.Diagnostics;
+using Commando.ai;
 
 namespace Commando
 {
@@ -171,6 +173,11 @@ namespace Commando
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+#if DEBUG
+            Stopwatch clock = new Stopwatch();
+            clock.Start();
+#endif
+
             // TODO: Add your update logic here
             if (!IsActive && !(engineState_ is EngineStateOutofFocus)
 #if !XBOX
@@ -187,6 +194,19 @@ namespace Commando
             engineState_ = engineState_.update(gameTime);
 
             base.Update(gameTime);
+
+#if DEBUG
+            FPSMonitor.getInstance().update(gameTime);
+
+            clock.Stop();
+            PerformanceLogger.addValue(MetricType.UPDATE, clock.ElapsedMilliseconds);
+
+            PerformanceLogger.addValue(MetricType.RAYCAST, Raycaster.clock.ElapsedMilliseconds);
+            Raycaster.clock.Reset();
+
+            PerformanceLogger.addValue(MetricType.PATHFIND, AStarPathfinder.clock.ElapsedMilliseconds);
+            AStarPathfinder.clock.Reset();
+#endif
         }
 
         /// <summary>
@@ -195,19 +215,48 @@ namespace Commando
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+#if DEBUG
+            Stopwatch clock = new Stopwatch();
+            clock.Start();
+#endif
 
             // TODO: Add your drawing code here
             spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
             engineState_.draw();
+#if DEBUG
+            FPSMonitor.getInstance().draw(gameTime);
+#endif
             spriteBatch_.End();
 
             base.Draw(gameTime);
+
+#if DEBUG
+            clock.Stop();
+            PerformanceLogger.addValue(MetricType.DRAW, clock.ElapsedMilliseconds);
+#endif
         }
 
+        /// <summary>
+        /// Event handler for when the game tries to close.  Overridden to push
+        /// settings to a file and clean up audio resources.
+        /// </summary>
+        /// <param name="sender">Object initiating the event.</param>
+        /// <param name="args">Arguments.</param>
         protected override void OnExiting(object sender, EventArgs args)
         {
             base.OnExiting(sender, args);
+            SoundEngine.cleanup();
             Settings.getInstance().saveSettingsToFile();
+#if DEBUG
+            //PerformanceLogger.printMetric(MetricType.RAYCAST);
+            //PerformanceLogger.printMetric(MetricType.PATHFIND);
+            //PerformanceLogger.printMetric(MetricType.DRAW);
+#if XBOX
+            throw new PerformanceMonitorException(PerformanceLogger.printMetric(MetricType.UPDATE));
+#else
+            System.Console.WriteLine(PerformanceLogger.printMetric(MetricType.UPDATE));
+#endif
+#endif
         }
 
 #if !XBOX

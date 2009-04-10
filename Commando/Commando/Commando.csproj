@@ -177,6 +177,7 @@
     <Compile Include="EngineStateStart.cs" />
     <Compile Include="EngineStateStorySegment.cs" />
     <Compile Include="FontEnum.cs" />
+    <Compile Include="FPSMonitor.cs" />
     <Compile Include="GlobalHelper.cs" />
     <Compile Include="graphics\ActionSetValidator.cs" />
     <Compile Include="graphics\ActuatorInterface.cs" />
@@ -263,6 +264,7 @@
     <Compile Include="objects\weapons\MachineGun.cs" />
     <Compile Include="objects\weapons\PlayerWeapon.cs" />
     <Compile Include="objects\weapons\Projectile.cs" />
+    <Compile Include="PerformanceLogger.cs" />
     <Compile Include="RandomManager.cs" />
     <Compile Include="TileObject.cs" />
     <Compile Include="objects\weapons\DroneGun.cs" />

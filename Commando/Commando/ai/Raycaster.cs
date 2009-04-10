@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Commando.levels;
+using System.Diagnostics;
 
 namespace Commando.ai
 {
@@ -32,6 +33,11 @@ namespace Commando.ai
     /// </summary>
     static internal class Raycaster
     {
+#if DEBUG
+        public static Stopwatch clock = new Stopwatch();
+        public static int frameCount = 0;
+#endif
+
         /// <summary>
         /// Number of samples points per tile to check for obstruction
         /// </summary>
@@ -54,6 +60,11 @@ namespace Commando.ai
         /// <returns>True if the source entity can see the target, false otherwise</returns>
         static internal bool canSeePoint(Vector2 start, Vector2 dest, Height visionHeight, Height targetHeight)
         {
+#if DEBUG
+            clock.Start();
+            frameCount++;
+#endif
+
             TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
 
             Vector2 direction = dest - start;
@@ -71,9 +82,17 @@ namespace Commando.ai
                 if (tile.lowDistance_ == 0)
                     currentVisionHeight.blocksLow_ = false;
                 if (!currentVisionHeight.collides(visionHeight))
+                {
+#if DEBUG
+                    clock.Stop();
+#endif
                     return false;
+                }
                 current += sampleInterval;
             }
+#if DEBUG
+            clock.Stop();
+#endif
             return currentVisionHeight.collides(targetHeight);
         }
 
