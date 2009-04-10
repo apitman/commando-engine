@@ -25,7 +25,11 @@ using Microsoft.Xna.Framework;
 
 namespace Commando
 {
-    internal class ContainerManager
+    /// <summary>
+    /// Manages access to Containers to prevent opening the same container
+    /// more than once; one Container per player allowed.
+    /// </summary>
+    internal static class ContainerManager
     {
 
 #if !XBOX
@@ -34,14 +38,23 @@ namespace Commando
         internal const string CONTAINER_NAME = "CommandoXbox";
 #endif
 
-        protected static StorageContainer[] container_
+        private static StorageContainer[] container_
             = new StorageContainer[4];
 
+        /// <summary>
+        /// Opens and returns the container for the current player.
+        /// </summary>
+        /// <returns>An opened container where data can be saved.</returns>
         internal static StorageContainer getOpenContainer()
         {
             return getOpenContainer(Settings.getInstance().CurrentPlayer_);
         }
 
+        /// <summary>
+        /// Opens and returns the container for the specified player.
+        /// </summary>
+        /// <param name="player">Player whose data will be saved.</param>
+        /// <returns>An opened container where data can be saved.</returns>
         internal static StorageContainer getOpenContainer(PlayerIndex player)
         {
             int index = (int)player;
@@ -60,11 +73,18 @@ namespace Commando
             return container_[index];
         }
 
+        /// <summary>
+        /// Disposes of the container owned by the current player.
+        /// </summary>
         internal static void cleanupContainer()
         {
             cleanupContainer(Settings.getInstance().CurrentPlayer_);
         }
 
+        /// <summary>
+        /// Disposes of the container owned by the specified player.
+        /// </summary>
+        /// <param name="player">Player whose container should be disposed.</param>
         internal static void cleanupContainer(PlayerIndex player)
         {
             int index = (int)player;

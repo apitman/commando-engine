@@ -14,9 +14,16 @@ namespace Commando
 {
     public class CrashDebugGame : Game
     {
+        private readonly List<PlayerIndex> ALL_PLAYERS = new List<PlayerIndex> { PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
+
         private SpriteBatch spriteBatch;
         private SpriteFont font;
         private readonly Exception exception;
+
+        private float adjX = 0f;
+        private float adjY = 0f;
+
+        private float speed = 1f;
 
         public CrashDebugGame(Exception exception)
         {
@@ -33,14 +40,24 @@ namespace Commando
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                Exit();
-            if (GamePad.GetState(PlayerIndex.Two).Buttons.Back == ButtonState.Pressed)
-                Exit();
-            if (GamePad.GetState(PlayerIndex.Three).Buttons.Back == ButtonState.Pressed)
-                Exit();
-            if (GamePad.GetState(PlayerIndex.Four).Buttons.Back == ButtonState.Pressed)
-                Exit();
+            foreach (PlayerIndex pi in ALL_PLAYERS)
+            {
+                GamePadState gps = GamePad.GetState(pi);
+                if (gps.Buttons.Back == ButtonState.Pressed)
+                    Exit();
+                if (gps.DPad.Left == ButtonState.Pressed)
+                    adjX += 1f * speed;
+                if (gps.DPad.Right == ButtonState.Pressed)
+                    adjX -= 1f * speed;
+                if (gps.DPad.Up == ButtonState.Pressed)
+                    adjY += 1f * speed;
+                if (gps.DPad.Down == ButtonState.Pressed)
+                    adjY -= 1f * speed;
+                if (gps.Buttons.LeftShoulder == ButtonState.Pressed)
+                    speed -= .1f;
+                if (gps.Buttons.RightShoulder == ButtonState.Pressed)
+                    speed += .1f;
+            }
 
             base.Update(gameTime);
         }
@@ -53,21 +70,21 @@ namespace Commando
             spriteBatch.DrawString(
                font,
                "**** CRASH LOG ****",
-               new Vector2(100f, 100f),
+               new Vector2(100f + adjX, 100f + adjY),
                Color.White);
             spriteBatch.DrawString(
                font,
                "Press Back to Exit",
-               new Vector2(100f, 120f),
+               new Vector2(100f + adjX, 120f + adjY),
                Color.White);
             spriteBatch.DrawString(
                font,
                string.Format("Exception: {0}", exception.Message),
-               new Vector2(100f, 140f),
+               new Vector2(100f + adjX, 140f + adjY),
                Color.White);
             spriteBatch.DrawString(
                font, string.Format("Stack Trace:\n{0}", exception.StackTrace),
-               new Vector2(100f, 160f),
+               new Vector2(100f + adjX, 160f + adjY),
                Color.White);
             spriteBatch.End();
 

@@ -248,6 +248,7 @@ namespace Commando
             //  container
             else
             {
+                ContainerManager.cleanupContainer();
                 StorageContainer sc = ContainerManager.getOpenContainer();
                 string folderpath = Path.Combine(sc.Path, SETTINGS_FOLDER);
                 Directory.CreateDirectory(folderpath);
