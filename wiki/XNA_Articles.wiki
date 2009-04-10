@@ -73,6 +73,12 @@ Example of using a Variable to Change Sound Pitch
 Fading out a Sound in XACT
   * http://forums.xna.com/forums/t/12660.aspx
 
+How To: Immediately Play a Sound when Another Sound Ends
+  * http://stackoverflow.com/questions/113977/how-can-i-immediately-play-a-sound-when-another-sound-ends-using-xna-xact
+
+Building XACT Sound Banks
+  * http://msdn.microsoft.com/en-us/library/bb172309.aspx
+
 == PC Specific ==
 
 Pressing Multiple Keys at once on the Keyboard
