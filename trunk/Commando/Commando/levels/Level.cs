@@ -165,7 +165,6 @@ namespace Commando.levels
             {
                 level = new Level(true);
                 level.initializeLevelFromXml(doc, engine);
-                XmlHelper.cleanupNode(doc);
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
