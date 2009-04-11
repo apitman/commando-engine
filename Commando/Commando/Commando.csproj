@@ -211,6 +211,7 @@
     <Compile Include="levels\CoverGenerator.cs" />
     <Compile Include="levels\TileGrid.cs" />
     <Compile Include="levels\Tileset.cs" />
+    <Compile Include="ManagedXml.cs" />
     <Compile Include="MenuList.cs" />
     <Compile Include="FontMap.cs" />
     <Compile Include="GameFont.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="SoundEngine.cs" />
     <Compile Include="TextureMap.cs" />
     <Compile Include="objects\weapons\RangedWeaponAbstract.cs" />
+    <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
