@@ -39,7 +39,11 @@ namespace Commando
 
         public void Dispose()
         {
-            XmlHelper.cleanupNode(this);
+            // TODO
+            // Figure out how to make it so that this line doesn't actually
+            // mess up the cached content.
+
+            //XmlHelper.cleanupNode(this);
         }
     }
 }
