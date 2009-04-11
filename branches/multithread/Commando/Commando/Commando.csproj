@@ -198,12 +198,16 @@
     <Compile Include="graphics\CrouchAction.cs" />
     <Compile Include="graphics\DefaultActuator.cs" />
     <Compile Include="graphics\DetachFromCoverAction.cs" />
+    <Compile Include="graphics\multithreading\DrawBuffer.cs" />
     <Compile Include="graphics\Illustrator.cs" />
     <Compile Include="graphics\LoopAnimation.cs" />
     <Compile Include="graphics\MoveActionInterface.cs" />
     <Compile Include="graphics\MoveToActionInterface.cs" />
     <Compile Include="graphics\CharacterRunAction.cs" />
     <Compile Include="graphics\MultiLevelActuator.cs" />
+    <Compile Include="graphics\multithreading\DrawStack.cs" />
+    <Compile Include="graphics\multithreading\RenderThread.cs" />
+    <Compile Include="graphics\multithreading\UpdateThread.cs" />
     <Compile Include="graphics\NoAction.cs" />
     <Compile Include="graphics\NonLoopAnimation.cs" />
     <Compile Include="graphics\ShootActionInterface.cs" />

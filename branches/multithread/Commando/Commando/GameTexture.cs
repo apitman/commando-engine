@@ -452,8 +452,8 @@ namespace Commando
         internal TextureDrawer getDrawer(Vector2 position, float depth)
         {
             TextureDrawer def = new TextureDrawer(this, position, depth);
-            def.Origin =
-                new Vector2(((float)imageDimensions_[def.ImageIndex].Width) / 2.0f, ((float)imageDimensions_[def.ImageIndex].Height) / 2.0f);
+            //def.Origin =
+            //    new Vector2(((float)imageDimensions_[def.ImageIndex].Width) / 2.0f, ((float)imageDimensions_[def.ImageIndex].Height) / 2.0f);
             return def;
         }
     }
@@ -466,8 +466,10 @@ namespace Commando
 
     internal class TextureDrawer
     {
-        internal GameTexture Texture { get; private set; }
-        internal Vector2 Position { get; private set; }
+        internal GameTexture Texture { get; set; }
+        internal Vector2 Position { get; set; }
+        internal Rectangle Destination { get; set; }
+        internal bool Dest { get; set; }
         internal float Rotation { get; set; }
         internal Vector2 Direction
         {
@@ -482,14 +484,28 @@ namespace Commando
             }
         }
         internal CoordinateTypeEnum CoordinateType { get; set; }
-        internal float Depth { get; private set; }
+        internal float Depth { get; set; }
         internal Color Color { get; set; }
         internal int ImageIndex { get; set; }
         internal SpriteEffects Effects { get; set; }
-        internal Vector2 Origin { get; set; }
+        internal bool Centered { get; set; }
         internal float Scale { get; set; }
 
-        private TextureDrawer() { }
+        internal TextureDrawer() 
+        {
+            Texture = null;
+            Position = Vector2.Zero;
+            Destination = Rectangle.Empty;
+            Dest = false;
+            Rotation = 0.0f;
+            CoordinateType = CoordinateTypeEnum.RELATIVE;
+            Depth = 0.0f;
+            Color = Color.White;
+            ImageIndex = 0;
+            Effects = SpriteEffects.None;
+            Centered = false;
+            Scale = 0.0f;
+        }
 
         internal TextureDrawer(GameTexture texture, Vector2 position, float depth)
         {
@@ -502,6 +518,7 @@ namespace Commando
             ImageIndex = 0;
             Effects = SpriteEffects.None;
             Scale = 1.0f;
+            Centered = true;
         }
 
         internal void draw()
@@ -511,16 +528,37 @@ namespace Commando
                 GlobalHelper helper = GlobalHelper.getInstance();
                 this.Position -= helper.getCurrentCamera().getPosition();
             }
-            this.Texture.spriteBatch_.Draw(
+            Vector2 origin = Vector2.Zero;
+            if (Centered)
+            {
+                origin.X = (float)Texture.imageDimensions_[ImageIndex].Width / 2.0f;
+                origin.Y = (float)Texture.imageDimensions_[ImageIndex].Height / 2.0f;
+            }
+            if(Dest)
+            {
+                this.Texture.spriteBatch_.Draw(
+                                this.Texture.texture_,
+                                this.Destination,
+                                this.Texture.imageDimensions_[ImageIndex],
+                                this.Color,
+                                this.Rotation,
+                                origin,
+                                this.Effects,
+                                this.Depth);
+            }
+            else
+            {
+                this.Texture.spriteBatch_.Draw(
                               this.Texture.texture_,
                               this.Position,
                               this.Texture.imageDimensions_[this.ImageIndex],
                               this.Color,
                               this.Rotation,
-                              this.Origin,
+                              origin,
                               this.Scale,
                               this.Effects,
                               this.Depth);
+            }
         }
     }
 }
