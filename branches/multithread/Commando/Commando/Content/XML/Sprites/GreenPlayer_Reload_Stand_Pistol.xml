@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
+    <ImageDefinition>
+      <Key>GreenPlayer_Reload_Stand_Pistol</Key>
+      <ImageFilename>Sprites\GreenPlayer_Throw_Stand_Pistol</ImageFilename>
+      <ImageDimensions>
+        <NumberOfImages>9</NumberOfImages>
+        <Image>
+          <x>0</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>76</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>76</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>76</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>152</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>152</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>152</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>76</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+        <Image>
+          <x>76</x>
+          <y>0</y>
+          <w>75</w>
+          <h>75</h>
+        </Image>
+      </ImageDimensions>
+    </ImageDefinition>
+  </Asset>
+</XnaContent>

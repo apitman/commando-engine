@@ -1,0 +1,973 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectGuid>b87b80b3-4b26-44e4-b537-86d63f0e053f</ProjectGuid>
+    <ProjectTypeGuids>{96E2B04D-8817-42c6-938A-82C39BA4D311};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <XnaFrameworkVersion>v3.0</XnaFrameworkVersion>
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\$(Platform)\$(Configuration)</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Xbox 360' ">
+    <XnaPlatform>Xbox 360</XnaPlatform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Xbox 360' ">
+    <XnaPlatform>Xbox 360</XnaPlatform>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.EffectImporter, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.FBXImporter, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.TextureImporter, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.XImporter, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.AudioImporters, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Giant_A.png">
+      <Link>Giant_A.png</Link>
+      <Name>Giant_A</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\healthBarFiller.png">
+      <Link>healthBarFiller.png</Link>
+      <Name>healthBarFiller</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\healthBarOutline.png">
+      <Link>healthBarOutline.png</Link>
+      <Name>healthBarOutline</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\pistol.png">
+      <Link>pistol.png</Link>
+      <Name>pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Tiles\Blank.bmp">
+      <Link>Tiles\Blank.bmp</Link>
+      <Name>Blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_0_0.bmp">
+      <Link>Tiles\Crate_0_0.bmp</Link>
+      <Name>Crate_0_0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_0_1.bmp">
+      <Link>Tiles\Crate_0_1.bmp</Link>
+      <Name>Crate_0_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_0_2.bmp">
+      <Link>Tiles\Crate_0_2.bmp</Link>
+      <Name>Crate_0_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_1_0.bmp">
+      <Link>Tiles\Crate_1_0.bmp</Link>
+      <Name>Crate_1_0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_1_1.bmp">
+      <Link>Tiles\Crate_1_1.bmp</Link>
+      <Name>Crate_1_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_1_2.bmp">
+      <Link>Tiles\Crate_1_2.bmp</Link>
+      <Name>Crate_1_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_2_0.bmp">
+      <Link>Tiles\Crate_2_0.bmp</Link>
+      <Name>Crate_2_0</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_2_1.bmp">
+      <Link>Tiles\Crate_2_1.bmp</Link>
+      <Name>Crate_2_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Crate_2_2.bmp">
+      <Link>Tiles\Crate_2_2.bmp</Link>
+      <Name>Crate_2_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Floor_Tile.bmp">
+      <Link>Tiles\Floor_Tile.bmp</Link>
+      <Name>Floor_Tile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Bottom.bmp">
+      <Link>Tiles\Wall_Bottom.bmp</Link>
+      <Name>Wall_Bottom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Corner_Bottom_Left.bmp">
+      <Link>Tiles\Wall_Corner_Bottom_Left.bmp</Link>
+      <Name>Wall_Corner_Bottom_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Corner_Bottom_Right.bmp">
+      <Link>Tiles\Wall_Corner_Bottom_Right.bmp</Link>
+      <Name>Wall_Corner_Bottom_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Corner_I_Bottom_Left.bmp">
+      <Link>Tiles\Wall_Corner_I_Bottom_Left.bmp</Link>
+      <Name>Wall_Corner_I_Bottom_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Corner_I_Bottom_Right.bmp">
+      <Link>Tiles\Wall_Corner_I_Bottom_Right.bmp</Link>
+      <Name>Wall_Corner_I_Bottom_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Corner_I_Top_Left.bmp">
+      <Link>Tiles\Wall_Corner_I_Top_Left.bmp</Link>
+      <Name>Wall_Corner_I_Top_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Corner_I_Top_Right.bmp">
+      <Link>Tiles\Wall_Corner_I_Top_Right.bmp</Link>
+      <Name>Wall_Corner_I_Top_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Corner_Top_Left.bmp">
+      <Link>Tiles\Wall_Corner_Top_Left.bmp</Link>
+      <Name>Wall_Corner_Top_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Corner_Top_Right.bmp">
+      <Link>Tiles\Wall_Corner_Top_Right.bmp</Link>
+      <Name>Wall_Corner_Top_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Left.bmp">
+      <Link>Tiles\Wall_Left.bmp</Link>
+      <Name>Wall_Left</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Right.bmp">
+      <Link>Tiles\Wall_Right.bmp</Link>
+      <Name>Wall_Right</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\Wall_Top.bmp">
+      <Link>Tiles\Wall_Top.bmp</Link>
+      <Name>Wall_Top</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\menuStartDown.png">
+      <Link>Sprites\menuStartDown.png</Link>
+      <Name>menuStartDown</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\menuStartReg.png">
+      <Link>Sprites\menuStartReg.png</Link>
+      <Name>menuStartReg</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\testmenu.PNG">
+      <Link>Sprites\testmenu.PNG</Link>
+      <Name>testmenu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\Kootenay.spritefont">
+      <Link>SpriteFonts\Kootenay.spritefont</Link>
+      <Name>Kootenay</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\Kootenay48.spritefont">
+      <Link>SpriteFonts\Kootenay48.spritefont</Link>
+      <Name>Kootenay48</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\Lindsey.spritefont">
+      <Link>SpriteFonts\Lindsey.spritefont</Link>
+      <Name>Lindsey</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\Miramonte.spritefont">
+      <Link>SpriteFonts\Miramonte.spritefont</Link>
+      <Name>Miramonte</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\MiramonteBold.spritefont">
+      <Link>SpriteFonts\MiramonteBold.spritefont</Link>
+      <Name>MiramonteBold</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\Pericles.spritefont">
+      <Link>SpriteFonts\Pericles.spritefont</Link>
+      <Name>Pericles</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\PericlesLight.spritefont">
+      <Link>SpriteFonts\PericlesLight.spritefont</Link>
+      <Name>PericlesLight</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\Pescadero.spritefont">
+      <Link>SpriteFonts\Pescadero.spritefont</Link>
+      <Name>Pescadero</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\PescaderoBold.spritefont">
+      <Link>SpriteFonts\PescaderoBold.spritefont</Link>
+      <Name>PescaderoBold</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\basic_enemy_walk.png">
+      <Link>Sprites\basic_enemy_walk.png</Link>
+      <Name>basic_enemy_walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Commando\Content\XML\Sprites\basic_enemy_walk.xml">
+      <Link>XML\Sprites\basic_enemy_walk.xml</Link>
+      <Name>basic_enemy_walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Commando\Content\XML\Sprites\Bullet.xml">
+      <Link>XML\Sprites\Bullet.xml</Link>
+      <Name>Bullet</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Commando\Content\XML\Sprites\Pistol.xml">
+      <Link>XML\Sprites\Pistol.xml</Link>
+      <Name>Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Commando\Content\XML\Sprites\PlayerWalk.xml">
+      <Link>XML\Sprites\PlayerWalk.xml</Link>
+      <Name>PlayerWalk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Commando\Content\XML\Sprites\PlayerWalkNoPistol.xml">
+      <Link>XML\Sprites\PlayerWalkNoPistol.xml</Link>
+      <Name>PlayerWalkNoPistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\overlay.png">
+      <Link>overlay.png</Link>
+      <Name>overlay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Commando\Content\XML\LoadScripts\TextureLoader.xml">
+      <Link>XML\LoadScripts\TextureLoader.xml</Link>
+      <Name>TextureLoader</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Commando\Content\XML\Characters\MainPlayer.xml">
+      <Link>XML\Characters\MainPlayer.xml</Link>
+      <Name>MainPlayer</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\Bullet.png">
+      <Link>Sprites\Bullet.png</Link>
+      <Name>Bullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PistolAnimation.png">
+      <Link>Sprites\PistolAnimation.png</Link>
+      <Name>PistolAnimation</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerWalk.png">
+      <Link>Sprites\PlayerWalk.png</Link>
+      <Name>PlayerWalk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerWalkNoPistol.png">
+      <Link>Sprites\PlayerWalkNoPistol.png</Link>
+      <Name>PlayerWalkNoPistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\TitleScreen.png">
+      <Link>TitleScreen.png</Link>
+      <Name>TitleScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\blank_white_tile.bmp">
+      <Link>blank_white_tile.bmp</Link>
+      <Name>blank_white_tile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Tiles\TileHighlight.png">
+      <Link>Tiles\TileHighlight.png</Link>
+      <Name>TileHighlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\laserpointer.png">
+      <Link>Sprites\laserpointer.png</Link>
+      <Name>laserpointer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\Pixel.png">
+      <Link>Sprites\Pixel.png</Link>
+      <Name>Pixel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Audio\sounds.xap">
+      <Link>Audio\sounds.xap</Link>
+      <Name>sounds</Name>
+      <Importer>XactImporter</Importer>
+      <Processor>XactProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\SpriteFonts\Kootenay8.spritefont">
+      <Link>SpriteFonts\Kootenay8.spritefont</Link>
+      <Name>Kootenay8</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+    <None Include="..\..\Commando\Content\XML\Sprites\Pixel.xml">
+      <Link>XML\Sprites\Pixel.xml</Link>
+      <Name>Pixel</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\mouse.png">
+      <Link>Sprites\mouse.png</Link>
+      <Name>mouse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBox.bmp">
+      <Link>Sprites\AmmoBox.bmp</Link>
+      <Name>AmmoBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBoxPistol.png">
+      <Link>Sprites\AmmoBoxPistol.png</Link>
+      <Name>AmmoBoxPistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBoxRifle.png">
+      <Link>Sprites\AmmoBoxRifle.png</Link>
+      <Name>AmmoBoxRifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBoxShotgun.png">
+      <Link>Sprites\AmmoBoxShotgun.png</Link>
+      <Name>AmmoBoxShotgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\AmmoBoxSmall.png">
+      <Link>Sprites\AmmoBoxSmall.png</Link>
+      <Name>AmmoBoxSmall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\BulletMedium.png">
+      <Link>Sprites\BulletMedium.png</Link>
+      <Name>BulletMedium</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\BulletSmall.png">
+      <Link>Sprites\BulletSmall.png</Link>
+      <Name>BulletSmall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\HealthBox.bmp">
+      <Link>Sprites\HealthBox.bmp</Link>
+      <Name>HealthBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerStartPos.png">
+      <Link>Sprites\PlayerStartPos.png</Link>
+      <Name>PlayerStartPos</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Tiles\LevelExit.bmp">
+      <Link>Tiles\LevelExit.bmp</Link>
+      <Name>LevelExit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_Walk.png">
+      <Link>Sprites\PlayerTemp_Walk.png</Link>
+      <Name>PlayerTemp_Walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\MachineGun.png">
+      <Link>Sprites\MachineGun.png</Link>
+      <Name>MachineGun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_Walk_Red.png">
+      <Link>Sprites\PlayerTemp_Walk_Red.png</Link>
+      <Name>PlayerTemp_Walk_Red</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_Walk_Green.png">
+      <Link>Sprites\PlayerTemp_Walk_Green.png</Link>
+      <Name>PlayerTemp_Walk_Green</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Grenade.png">
+      <Link>Sprites\Grenade.png</Link>
+      <Name>Grenade</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Shotgun.png">
+      <Link>Sprites\Shotgun.png</Link>
+      <Name>Shotgun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_StandToShoot.png">
+      <Link>Sprites\PlayerTemp_StandToShoot.png</Link>
+      <Name>PlayerTemp_StandToShoot</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_Walk_Pistol.png">
+      <Link>Sprites\PlayerTemp_Walk_Pistol.png</Link>
+      <Name>PlayerTemp_Walk_Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\MachineGunIcon.png">
+      <Link>Sprites\MachineGunIcon.png</Link>
+      <Name>MachineGunIcon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\PistolIcon.png">
+      <Link>Sprites\PistolIcon.png</Link>
+      <Name>PistolIcon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\ShotgunIcon.png">
+      <Link>Sprites\ShotgunIcon.png</Link>
+      <Name>ShotgunIcon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\PlayerTemp_2_Crouch_Walk.png">
+      <Link>Sprites\PlayerTemp_2_Crouch_Walk.png</Link>
+      <Name>PlayerTemp_2_Crouch_Walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_StandToShoot_Pistol.png">
+      <Link>Sprites\GreenPlayer_StandToShoot_Pistol.png</Link>
+      <Name>GreenPlayer_StandToShoot_Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_StandToShoot_Rifle.png">
+      <Link>Sprites\GreenPlayer_StandToShoot_Rifle.png</Link>
+      <Name>GreenPlayer_StandToShoot_Rifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\levelTransition.png">
+      <Link>Sprites\levelTransition.png</Link>
+      <Name>levelTransition</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\tileset01.png">
+      <Link>Tiles\tileset01.png</Link>
+      <Name>tileset01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Tiles\tileset02.png">
+      <Link>Tiles\tileset02.png</Link>
+      <Name>tileset02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\overlayLogo.png">
+      <Link>Sprites\overlayLogo.png</Link>
+      <Name>overlayLogo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_UpperBody_Pistol_Stand.png">
+      <Link>Sprites\GreenPlayer_UpperBody_Pistol_Stand.png</Link>
+      <Name>GreenPlayer_UpperBody_Pistol_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_UpperBody_Rifle_Stand.png">
+      <Link>Sprites\GreenPlayer_UpperBody_Rifle_Stand.png</Link>
+      <Name>GreenPlayer_UpperBody_Rifle_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Walk_Stand.png">
+      <Link>Sprites\GreenPlayer_Walk_Stand.png</Link>
+      <Name>GreenPlayer_Walk_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Blank.png">
+      <Link>Sprites\GreenPlayer_Blank.png</Link>
+      <Name>GreenPlayer_Blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Crouch_Stationary.png">
+      <Link>Sprites\GreenPlayer_Crouch_Stationary.png</Link>
+      <Name>GreenPlayer_Crouch_Stationary</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Pistol_Crouch.png">
+      <Link>Sprites\GreenPlayer_Pistol_Crouch.png</Link>
+      <Name>GreenPlayer_Pistol_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Rifle_Crouch.png">
+      <Link>Sprites\GreenPlayer_Rifle_Crouch.png</Link>
+      <Name>GreenPlayer_Rifle_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Walk_Crouch.png">
+      <Link>Sprites\GreenPlayer_Walk_Crouch.png</Link>
+      <Name>GreenPlayer_Walk_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\RedPlayer_Pistol_Crouch.png">
+      <Link>Sprites\RedPlayer_Pistol_Crouch.png</Link>
+      <Name>RedPlayer_Pistol_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\RedPlayer_Pistol_Stand.png">
+      <Link>Sprites\RedPlayer_Pistol_Stand.png</Link>
+      <Name>RedPlayer_Pistol_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\RedPlayer_Rifle_Crouch.png">
+      <Link>Sprites\RedPlayer_Rifle_Crouch.png</Link>
+      <Name>RedPlayer_Rifle_Crouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\RedPlayer_Rifle_Stand.png">
+      <Link>Sprites\RedPlayer_Rifle_Stand.png</Link>
+      <Name>RedPlayer_Rifle_Stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Throw_Crouch_Pistol.png">
+      <Link>Sprites\GreenPlayer_Throw_Crouch_Pistol.png</Link>
+      <Name>GreenPlayer_Throw_Crouch_Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Throw_Crouch_Rifle.png">
+      <Link>Sprites\GreenPlayer_Throw_Crouch_Rifle.png</Link>
+      <Name>GreenPlayer_Throw_Crouch_Rifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Throw_Stand_Pistol.png">
+      <Link>Sprites\GreenPlayer_Throw_Stand_Pistol.png</Link>
+      <Name>GreenPlayer_Throw_Stand_Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\GreenPlayer_Throw_Stand_Rifle.png">
+      <Link>Sprites\GreenPlayer_Throw_Stand_Rifle.png</Link>
+      <Name>GreenPlayer_Throw_Stand_Rifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
+      <Link>XML\defaultlevel.xml</Link>
+      <Name>defaultlevel</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="..\..\Commando\Content\XML\defaultsettings.xml">
+      <Link>XML\defaultsettings.xml</Link>
+      <Name>defaultsettings</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\level1.xml">
+      <Link>XML\Levels\level1.xml</Link>
+      <Name>level1</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\defaultTileset.xml">
+      <Link>XML\defaultTileset.xml</Link>
+      <Name>defaultTileset</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\level2.xml">
+      <Link>XML\Levels\level2.xml</Link>
+      <Name>level2</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\level3.xml">
+      <Link>XML\Levels\level3.xml</Link>
+      <Name>level3</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\level4.xml">
+      <Link>XML\Levels\level4.xml</Link>
+      <Name>level4</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml">
+      <Link>XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml</Link>
+      <Name>GreenPlayer_Crouch_Pistol_Walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Crouch_Rifle_Walk.xml">
+      <Link>XML\Sprites\GreenPlayer_Crouch_Rifle_Walk.xml</Link>
+      <Name>GreenPlayer_Crouch_Rifle_Walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Reload_Crouch_Pistol.xml">
+      <Link>XML\Sprites\GreenPlayer_Reload_Crouch_Pistol.xml</Link>
+      <Name>GreenPlayer_Reload_Crouch_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Reload_Crouch_Rifle.xml">
+      <Link>XML\Sprites\GreenPlayer_Reload_Crouch_Rifle.xml</Link>
+      <Name>GreenPlayer_Reload_Crouch_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Reload_Stand_Pistol.xml">
+      <Link>XML\Sprites\GreenPlayer_Reload_Stand_Pistol.xml</Link>
+      <Name>GreenPlayer_Reload_Stand_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Reload_Stand_Rifle.xml">
+      <Link>XML\Sprites\GreenPlayer_Reload_Stand_Rifle.xml</Link>
+      <Name>GreenPlayer_Reload_Stand_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_StandToShoot_Pistol.xml">
+      <Link>XML\Sprites\GreenPlayer_StandToShoot_Pistol.xml</Link>
+      <Name>GreenPlayer_StandToShoot_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_StandToShoot_Rifle.xml">
+      <Link>XML\Sprites\GreenPlayer_StandToShoot_Rifle.xml</Link>
+      <Name>GreenPlayer_StandToShoot_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Stand_Pistol_Walk.xml">
+      <Link>XML\Sprites\GreenPlayer_Stand_Pistol_Walk.xml</Link>
+      <Name>GreenPlayer_Stand_Pistol_Walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Stand_Rifle_Walk.xml">
+      <Link>XML\Sprites\GreenPlayer_Stand_Rifle_Walk.xml</Link>
+      <Name>GreenPlayer_Stand_Rifle_Walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Throw_Crouch_Pistol.xml">
+      <Link>XML\Sprites\GreenPlayer_Throw_Crouch_Pistol.xml</Link>
+      <Name>GreenPlayer_Throw_Crouch_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Throw_Crouch_Rifle.xml">
+      <Link>XML\Sprites\GreenPlayer_Throw_Crouch_Rifle.xml</Link>
+      <Name>GreenPlayer_Throw_Crouch_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Throw_Stand_Pistol.xml">
+      <Link>XML\Sprites\GreenPlayer_Throw_Stand_Pistol.xml</Link>
+      <Name>GreenPlayer_Throw_Stand_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Throw_Stand_Rifle.xml">
+      <Link>XML\Sprites\GreenPlayer_Throw_Stand_Rifle.xml</Link>
+      <Name>GreenPlayer_Throw_Stand_Rifle</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Walk_Crouch.xml">
+      <Link>XML\Sprites\GreenPlayer_Walk_Crouch.xml</Link>
+      <Name>GreenPlayer_Walk_Crouch</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Walk_Stand.xml">
+      <Link>XML\Sprites\GreenPlayer_Walk_Stand.xml</Link>
+      <Name>GreenPlayer_Walk_Stand</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_2_Crouch_Walk.xml">
+      <Link>XML\Sprites\PlayerTemp_2_Crouch_Walk.xml</Link>
+      <Name>PlayerTemp_2_Crouch_Walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_StandToShoot.xml">
+      <Link>XML\Sprites\PlayerTemp_StandToShoot.xml</Link>
+      <Name>PlayerTemp_StandToShoot</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk.xml">
+      <Link>XML\Sprites\PlayerTemp_Walk.xml</Link>
+      <Name>PlayerTemp_Walk</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk_Green.xml">
+      <Link>XML\Sprites\PlayerTemp_Walk_Green.xml</Link>
+      <Name>PlayerTemp_Walk_Green</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk_Pistol.xml">
+      <Link>XML\Sprites\PlayerTemp_Walk_Pistol.xml</Link>
+      <Name>PlayerTemp_Walk_Pistol</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Commando\Content\XML\Sprites\PlayerTemp_Walk_Red.xml">
+      <Link>XML\Sprites\PlayerTemp_Walk_Red.xml</Link>
+      <Name>PlayerTemp_Walk_Red</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="..\..\Commando\Content\XML\tileset2.xml">
+      <Link>XML\tileset2.xml</Link>
+      <Name>tileset2</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Crouch_Pistol.png">
+      <Name>GreenPlayer_Crouch_Pistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Crouch_Pistol_Walk.png">
+      <Name>GreenPlayer_Crouch_Pistol_Walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Crouch_Rifle.png">
+      <Name>GreenPlayer_Crouch_Rifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Crouch_Rifle_Walk.png">
+      <Name>GreenPlayer_Crouch_Rifle_Walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Stand_Pistol_Walk.png">
+      <Name>GreenPlayer_Stand_Pistol_Walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\GreenPlayer_Stand_Rifle_Walk.png">
+      <Name>GreenPlayer_Stand_Rifle_Walk</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PlainXMLProcessor\PlainXMLProcessor.csproj">
+      <Project>{4F0C779F-B18C-434E-A47B-3B369A44E7B6}</Project>
+      <Name>PlainXMLProcessor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Audio\effects\" />
+    <Folder Include="Audio\music\" />
+    <Folder Include="XML\Animations\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

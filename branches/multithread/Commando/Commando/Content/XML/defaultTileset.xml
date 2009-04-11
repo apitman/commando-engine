@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<tileset>
+	<name>Default Tileset</name>
+	<image-file>Tiles\\tileset01</image-file>
+	<tile-size x="15" y="15" />
+	<total-tiles>23</total-tiles>
+	<tiles-high>2</tiles-high>
+	<tiles-wide>12</tiles-wide>
+	<tile-heights>
+		<height l="true" h="true" />
+		<height l="false" h="false" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="false" />
+		<height l="true" h="false" />
+		<height l="true" h="false" />
+		<height l="true" h="false" />
+		<height l="true" h="false" />
+		<height l="true" h="false" />
+		<height l="true" h="false" />
+		<height l="true" h="false" />
+		<height l="true" h="false" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+		<height l="true" h="true" />
+	</tile-heights>
+</tileset>
