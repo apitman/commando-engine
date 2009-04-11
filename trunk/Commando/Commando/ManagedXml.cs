@@ -20,35 +20,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework.Content;
 using System.Xml;
-using System.IO;
-using Commando;
 
-namespace PlainXMLProcessor
+namespace Commando
 {
     /// <summary>
-    /// Used at runtime when Content.Load[ManagedXml]() is called (but with carrots,
-    /// not square brackets); responsible for converting the compiled .xnb file into
-    /// a ManagedXml.
+    /// An XmlDocument with the IDisposable interface which removes all
+    /// of its children's links to one another, making it easier for the
+    /// garbage collector to detect and remove this garbage.
     /// </summary>
-    class Binary2XMLReader : ContentTypeReader<ManagedXml>
+    public class ManagedXml : XmlDocument, IDisposable
     {
-        protected override ManagedXml Read(ContentReader input, ManagedXml existingInstance)
+        public ManagedXml()
+            : base()
         {
-            int count = input.ReadInt32();
-            char[] chars = input.ReadChars(count);
-            string s = new string(chars);
-            ManagedXml xmldoc = new ManagedXml();
-            try
-            {
-                xmldoc.Load(new StringReader(s));
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Could not load resource file as XML", e);
-            }
-            return xmldoc;
+
+        }
+
+        public void Dispose()
+        {
+            XmlHelper.cleanupNode(this);
         }
     }
 }

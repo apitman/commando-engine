@@ -97,41 +97,46 @@ namespace Commando
         /// <param name="graphics">GraphicsDevice for the game</param>
         public void loadTextures(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
-            XmlTextReader reader = new XmlTextReader(filename);
-            XmlDocument document = new XmlDocument();
-            try
+            //XmlTextReader reader = new XmlTextReader(filename);
+            using (ManagedXml document = new ManagedXml())
             {
-                document.Load(filename);
-                XmlNodeList textureXMLs = document.GetElementsByTagName("texture");
-                foreach (XmlNode node in textureXMLs)
+                try
                 {
-                    KeyValuePair<string, GameTexture> tempPair = GameTexture.loadTextureFromFile(node.InnerText, spriteBatch, graphics);
-                    textures_.Add(tempPair.Key, tempPair.Value);
-                }
-                XmlNodeList images = document.GetElementsByTagName("image");
-                foreach (XmlNode node in images)
-                {
-                    string key = "", image = "";
-                    XmlNodeList children = node.ChildNodes;
-                    foreach (XmlNode child in children)
+                    document.Load(filename);
+                    XmlNodeList textureXMLs = document.GetElementsByTagName("texture");
+                    foreach (XmlNode node in textureXMLs)
                     {
-                        if (child.LocalName == "key")
-                        {
-                            key = child.InnerText;
-                        }
-                        else if (child.LocalName == "handle")
-                        {
-                            image = child.InnerText;
-                        }
+                        KeyValuePair<string, GameTexture> tempPair = GameTexture.loadTextureFromFile(node.InnerText, spriteBatch, graphics);
+                        textures_.Add(tempPair.Key, tempPair.Value);
                     }
-                    textures_.Add(key, new GameTexture(image, spriteBatch, graphics));
+                    XmlNodeList images = document.GetElementsByTagName("image");
+                    foreach (XmlNode node in images)
+                    {
+                        string key = "", image = "";
+                        XmlNodeList children = node.ChildNodes;
+                        foreach (XmlNode child in children)
+                        {
+                            if (child.LocalName == "key")
+                            {
+                                key = child.InnerText;
+                            }
+                            else if (child.LocalName == "handle")
+                            {
+                                image = child.InnerText;
+                            }
+                        }
+                        textures_.Add(key, new GameTexture(image, spriteBatch, graphics));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.Out.WriteLine("FATAL ERROR: Texture Map failed to load!");
+                    throw e;
                 }
             }
-            catch (Exception e)
-            {
-                Console.Out.WriteLine("FATAL ERROR: Texture Map failed to load!");
-                throw e;
-            }
+            // Don't collect here, because we will be reading in a lot of these XML docs
+            //GC.Collect();
+            //GC.WaitForPendingFinalizers();
         }
 
         /// <summary>

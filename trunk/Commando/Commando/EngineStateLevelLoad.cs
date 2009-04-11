@@ -127,10 +127,17 @@ namespace Commando
             // if there are no levels found, store the default level
             if (filepaths_.Count == 0)
             {
+                // TODO
+                // Change this to load the default level from Content
                 XmlTextReader reader = new XmlTextReader(PATH_TO_DEFAULT_LEVEL);
-                XmlDocument document = new XmlDocument();
-                document.Load(reader);
-                document.Save(Path.Combine(directory, "defaultlevel" + EngineStateLevelSave.LEVEL_EXTENSION));
+                using (ManagedXml document = new ManagedXml())
+                {
+                    document.Load(reader);
+                    document.Save(Path.Combine(directory, "defaultlevel" + EngineStateLevelSave.LEVEL_EXTENSION));
+                }
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
                 files = Directory.GetFiles(directory);
 
                 // TODO Extract this C&P'd code into function

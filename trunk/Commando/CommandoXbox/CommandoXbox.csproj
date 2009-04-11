@@ -460,6 +460,9 @@
     <Compile Include="..\Commando\levels\Tileset.cs">
       <Link>levels\Tileset.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ManagedXml.cs">
+      <Link>ManagedXml.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\MenuList.cs">
       <Link>MenuList.cs</Link>
     </Compile>
@@ -606,6 +609,9 @@
     </Compile>
     <Compile Include="..\Commando\TileObject.cs">
       <Link>objects\TileObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\XmlHelper.cs">
+      <Link>XmlHelper.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
