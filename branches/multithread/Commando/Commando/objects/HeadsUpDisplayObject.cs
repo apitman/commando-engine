@@ -22,6 +22,8 @@ using System.Linq;
 using System.Text;
 using Commando.objects;
 using Microsoft.Xna.Framework;
+using Commando.graphics.multithreading;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.objects
 {
@@ -59,7 +61,21 @@ namespace Commando.objects
         /// <param name="gameTime"></param>
         public override void draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            texture_.drawImageWithDimAbsolute(0, new Rectangle((int)position_.X - (texture_.getTexture().Width / 2), (int)position_.Y - (texture_.getTexture().Height / 2), texture_.getTexture().Width * newValue_ / 100, texture_.getTexture().Height), depth_);
+            //texture_.drawImageWithDimAbsolute(0, new Rectangle((int)position_.X - (texture_.getTexture().Width / 2), (int)position_.Y - (texture_.getTexture().Height / 2), texture_.getTexture().Width * newValue_ / 100, texture_.getTexture().Height), depth_);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.Texture = texture_;
+            td.ImageIndex = 0;
+            td.Destination = new Rectangle((int)position_.X - (texture_.getTexture().Width / 2), (int)position_.Y - (texture_.getTexture().Height / 2), texture_.getTexture().Width * newValue_ / 100, texture_.getTexture().Height);
+            td.Dest = true;
+            td.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
+            td.Depth = depth_;
+            td.Centered = false;
+            td.Color = Color.White;
+            td.Effects = SpriteEffects.None;
+            td.Rotation = 0.0f;
+            td.Scale = 1.0f;
+            stack.push();
         }
     }
 }

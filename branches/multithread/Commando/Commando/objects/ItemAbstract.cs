@@ -24,6 +24,8 @@ using System.Text;
 using Commando.collisiondetection;
 using Microsoft.Xna.Framework;
 using Commando.levels;
+using Commando.graphics.multithreading;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.objects
 {
@@ -105,7 +107,20 @@ namespace Commando.objects
 
         public override void draw(GameTime gameTime)
         {
-            image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
+            //image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.Texture = image_;
+            td.ImageIndex = 0;
+            td.Position = position_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = depth_;
+            td.Centered = true;
+            td.Color = Color.White;
+            td.Effects = SpriteEffects.None;
+            td.Direction = direction_;
+            stack.push();
         }
 
         public override void setCollisionDetector(CollisionDetectorInterface collisionDetector)

@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.graphics.multithreading;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.objects
 {
@@ -79,7 +81,21 @@ namespace Commando.objects
         /// <param name="gameTime"></param>
         public override void draw(GameTime gameTime)
         {
-            image_.drawImage(0, position_, depth_);
+            //image_.drawImage(0, position_, depth_);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.Texture = image_;
+            td.ImageIndex = 0;
+            td.Position = position_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = depth_;
+            td.Centered = false;
+            td.Color = Color.White;
+            td.Effects = SpriteEffects.None;
+            td.Rotation = 0.0f;
+            td.Scale = 1.0f;
+            stack.push();
         }
 
         /// <summary>

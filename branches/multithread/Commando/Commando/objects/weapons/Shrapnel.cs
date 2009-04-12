@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Commando.graphics.multithreading;
 
 namespace Commando.objects.weapons
 {
@@ -49,7 +50,21 @@ namespace Commando.objects.weapons
 
         public override void draw(GameTime gameTime)
         {
-            texture_.drawImageWithColor(0, position_, direction_, depth_, color_);
+            //texture_.drawImageWithColor(0, position_, direction_, depth_, color_);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.Texture = texture_;
+            td.ImageIndex = 0;
+            td.Position = position_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = depth_;
+            td.Centered = true;
+            td.Color = color_;
+            td.Effects = SpriteEffects.None;
+            td.Direction = direction_;
+            td.Scale = 1.0f;
+            stack.push();
         }
     }
 

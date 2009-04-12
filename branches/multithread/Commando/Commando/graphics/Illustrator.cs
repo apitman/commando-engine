@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.graphics.multithreading;
 
 namespace Commando.graphics
 {
@@ -45,8 +46,19 @@ namespace Commando.graphics
             center.X /= 2.0f;
             center.Y /= 2.0f;
             Vector2 rotation = point2 - point1;
-            float rotationAngle = (float)Math.Atan2((double)rotation.Y, (double)rotation.X);
-            blank_.drawImageWithDim(0, new Rectangle((int)point1.X, (int)point1.Y, (int)rotation.Length(), 2), rotationAngle, LINE_DEPTH, Vector2.Zero, LINE_COLOR);
+            //float rotationAngle = (float)Math.Atan2((double)rotation.Y, (double)rotation.X);
+            //blank_.drawImageWithDim(0, new Rectangle((int)point1.X, (int)point1.Y, (int)rotation.Length(), 2), rotationAngle, LINE_DEPTH, Vector2.Zero, LINE_COLOR);
+            TextureDrawer drawer = DrawBuffer.getInstance().getUpdateStack().getNext();
+            drawer.Texture = blank_;
+            drawer.ImageIndex = 0;
+            drawer.Direction = rotation;
+            drawer.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            drawer.Dest = true;
+            drawer.Destination = new Rectangle((int)point1.X, (int)point1.Y, (int)rotation.Length(), 2);
+            drawer.Depth = LINE_DEPTH;
+            drawer.Centered = false;
+            drawer.Color = LINE_COLOR;
+            DrawBuffer.getInstance().getUpdateStack().push();
         }
 
         public static void init()
