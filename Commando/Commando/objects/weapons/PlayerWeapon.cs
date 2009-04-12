@@ -24,6 +24,7 @@ using Microsoft.Xna.Framework;
 using Commando.ai;
 using Commando.levels;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.graphics.multithreading;
 
 namespace Commando.objects.weapons
 {
@@ -72,10 +73,24 @@ namespace Commando.objects.weapons
         {
             base.draw();
             //if (!Settings.getInstance().UsingMouse_)
-            TextureDrawer td =
-                laserImage_.getDrawer(laserTarget_, Constants.DEPTH_LASER);
+            //TextureDrawer td =
+            //    laserImage_.getDrawer(laserTarget_, Constants.DEPTH_LASER);
+            //td.Color = Color.Red;
+            //td.draw();
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.Texture = laserImage_;
+            td.ImageIndex = 0;
+            td.Position = laserTarget_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = Constants.DEPTH_LASER;
+            td.Centered = true;
             td.Color = Color.Red;
-            td.draw();
+            td.Effects = SpriteEffects.None;
+            td.Rotation = 0.0f;
+            td.Scale = 1.0f;
+            stack.push();
         }
     }
 }

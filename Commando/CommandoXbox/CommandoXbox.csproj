@@ -427,6 +427,18 @@
     <Compile Include="..\Commando\graphics\MultiLevelActuator.cs">
       <Link>graphics\MultiLevelActuator.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\multithreading\DrawBuffer.cs">
+      <Link>graphics\multithreading\DrawBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\multithreading\DrawStack.cs">
+      <Link>graphics\multithreading\DrawStack.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\multithreading\RenderThread.cs">
+      <Link>graphics\multithreading\RenderThread.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\graphics\multithreading\UpdateThread.cs">
+      <Link>graphics\multithreading\UpdateThread.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\NoAction.cs">
       <Link>graphics\NoAction.cs</Link>
     </Compile>
