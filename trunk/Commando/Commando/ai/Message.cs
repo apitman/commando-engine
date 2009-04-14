@@ -16,6 +16,10 @@ namespace Commando.ai
         /// </summary>
         private const int TIME_MULTIPLIER = 30 / 5;
 
+        protected static int NextId = 0;
+
+        internal int Id_ { get; private set; }
+
         /// <summary>
         /// The belief (data) passed in the message (if there is any).
         /// </summary>
@@ -33,6 +37,7 @@ namespace Commando.ai
         internal Message(MessageType mT)
         {
             MessageType_ = mT;
+            Id_ = NextId++;
         }
 
         /// <summary>

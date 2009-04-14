@@ -67,7 +67,10 @@ namespace Commando.graphics
                 character_.setDirection(newDirection_);
                 character_.setPosition(character_.getPosition() + temp);
             }
-            finished_ = true;
+            if (newDirection_ == direction_)
+            {
+                finished_ = true;
+            }
         }
 
         public void draw()

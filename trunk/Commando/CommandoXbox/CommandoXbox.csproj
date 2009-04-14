@@ -262,6 +262,9 @@
     <Compile Include="..\Commando\collisiondetection\SeparatingAxisCollisionDetector.cs">
       <Link>collisiondetection\SeparatingAxisCollisionDetector.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\CommLogger.cs">
+      <Link>CommLogger.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\CommonFunctions.cs">
       <Link>CommonFunctions.cs</Link>
     </Compile>

@@ -483,7 +483,11 @@ namespace Commando.levels
             if (commLevel != string.Empty)
             {
                 Commando.ai.SystemCommunication.CommunicationLevel cL;
-                if (commLevel == "Low")
+                if (commLevel == "None")
+                {
+                    cL = Commando.ai.SystemCommunication.CommunicationLevel.None;
+                }
+                else if (commLevel == "Low")
                 {
                     cL = Commando.ai.SystemCommunication.CommunicationLevel.Low;
                 }

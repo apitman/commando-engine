@@ -170,7 +170,11 @@ namespace Commando.ai
 
             WorldState.Audial_.Remove(key_);
             WorldState.Audial_.Add(key_,
-                new Stimulus(StimulusSource.CharacterAbstract, AI_.Character_.Allegiance_, StimulusType.Message, broadcastRadius_, AI_.Character_.getPosition(), this, message));
+                new Stimulus(StimulusSource.CharacterAbstract, AI_.Character_.Allegiance_, StimulusType.Message, broadcastRadius_, AI_.Character_.getPosition(), AI_.Character_, message));
+            if (communicationLevel_ == CommunicationLevel.High && message.MessageType_ == Message.MessageType.Data)
+            {
+                CommLogger.sentMsg();
+            }
         }
 
         /// <summary>
@@ -181,6 +185,9 @@ namespace Commando.ai
             List<BeliefType> bTList = new List<BeliefType>();
             switch (communicationLevel_)
             {
+                case CommunicationLevel.None:
+                    // Don't communicate at all
+                    break;
                 case CommunicationLevel.Low:
                     // Only broadcast EnemyLoc beliefs.
                     // Periodically request communication.
@@ -200,8 +207,8 @@ namespace Commando.ai
                     // Broadcast nearly any BeliefType.
                     // Request communication very frequently.
                     bTList.Add(BeliefType.EnemyLoc);
-                    bTList.Add(BeliefType.SuspiciousNoise);
                     bTList.Add(BeliefType.AmmoLoc);
+                    bTList.Add(BeliefType.SuspiciousNoise);
                     bTList.Add(BeliefType.EnemyHealth);
                     //bTList.Add(BeliefType.CoverLoc);
                     broadcastHelper(bTList, 2);
@@ -276,6 +283,7 @@ namespace Commando.ai
 
         public enum CommunicationLevel
         {
+            None,
             Low,
             Medium,
             High
