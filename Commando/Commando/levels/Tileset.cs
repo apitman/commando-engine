@@ -133,7 +133,7 @@ namespace Commando.levels
         /// <param name="tileID">ID of the tile to be drawn</param>
         public void draw(Vector2 position, int tileID)
         {
-            texture_.drawImage(tileID, position, lookupDepth(tileID));
+            //texture_.drawImage(tileID, position, lookupDepth(tileID));
             DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
             TextureDrawer td = stack.getNext();
             td.set(texture_,

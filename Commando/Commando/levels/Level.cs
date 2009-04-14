@@ -26,6 +26,7 @@ using Microsoft.Xna.Framework;
 using Commando.objects.enemies;
 using Commando.collisiondetection;
 using Commando.ai;
+using Commando.graphics;
 
 namespace Commando.levels
 {
@@ -665,9 +666,19 @@ namespace Commando.levels
             // TODO
             // Might be easy to make an optimization that only tries to
             //  draw the tiles which are within the view of the camera
-            for (int i = 0; i < height_; i++)
+            Camera cam = GlobalHelper.getInstance().getCurrentCamera();
+            float sHeight = cam.getScreenHeight();
+            float sWidth = cam.getScreenWidth();
+            TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
+            TileIndex lowBound = grid.getTileIndex(cam.getPosition());
+            TileIndex highBound = grid.getTileIndex(cam.getPosition() + new Vector2(sWidth, sHeight));
+            int lowY = (lowBound.y_ - 1 >= 0) ? lowBound.y_ - 1: 0;
+            int highY = (highBound.y_ + 1 < height_) ? highBound.y_ + 1 : height_;
+            int lowX = (lowBound.x_ - 1>= 0) ? lowBound.x_ - 1: 0;
+            int highX = (highBound.x_ + 1 < width_) ? highBound.x_ + 1: width_;
+            for (int i = lowY; i < highY; i++)
             {
-                for (int j = 0; j < width_; j++)
+                for (int j = lowX; j < highX; j++)
                 {
                     Vector2 v = new Vector2(j * tileSet_.TILE_SIZE_X, i * tileSet_.TILE_SIZE_Y);
                     tileSet_.draw(v, tiles_[i, j]);

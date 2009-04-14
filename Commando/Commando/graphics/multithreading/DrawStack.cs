@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.graphics.multithreading
 {
@@ -34,6 +35,8 @@ namespace Commando.graphics.multithreading
 
         protected Camera stackCamera_;
 
+        public Color ScreenClearColor_ { get; set; }
+
         public DrawStack(int size)
         {
             stack_ = new TextureDrawer[size];
@@ -41,6 +44,7 @@ namespace Commando.graphics.multithreading
             top_ = -1;
             stackCamera_ = new Camera();
             initializeStack();
+            ScreenClearColor_ = Color.Black;
         }
 
         public Camera getCamera()

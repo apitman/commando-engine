@@ -29,6 +29,7 @@ using Commando.ai;
 using Microsoft.Xna.Framework.Storage;
 using Commando.objects.enemies;
 using Commando.ai.planning;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -320,7 +321,8 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
             // Draw Debug Lines
             if (Settings.getInstance().IsInDebugMode_)
