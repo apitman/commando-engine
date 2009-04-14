@@ -58,6 +58,7 @@ namespace Commando.graphics.multithreading
             renderFrameStart_ = new AutoResetEvent(false);
             renderFrameEnd_ = new AutoResetEvent(false);
             updateFrameStart_ = new AutoResetEvent(false);
+            updateFrameEnd_ = new AutoResetEvent(false);
         }
 
         public static DrawBuffer getInstance()

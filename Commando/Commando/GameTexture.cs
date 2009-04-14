@@ -520,6 +520,111 @@ namespace Commando
             Scale = 1.0f;
             Centered = true;
         }
+        /*
+         * td.Texture = sprites_;
+            td.ImageIndex = currentFrame_;
+            td.Position = position_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = depth_;
+            td.Centered = true;
+            td.Color = Color.White;
+            td.Effects = SpriteEffects.None;
+            td.Direction = rotation_;
+            td.Scale = 1.0f;
+         */
+
+        internal void set(GameTexture texture,
+                            int imageIndex,
+                            Vector2 position,
+                            CoordinateTypeEnum coordType,
+                            float depth,
+                            bool centered,
+                            Color color,
+                            float rotation,
+                            float scale)
+        {
+            Texture = texture;
+            Position = position;
+            Dest = false;
+            ImageIndex = imageIndex;
+            CoordinateType = coordType;
+            Depth = depth;
+            Centered = centered;
+            Effects = SpriteEffects.None;
+            Color = color;
+            Rotation = rotation;
+            Scale = scale;
+        }
+
+        internal void set(GameTexture texture,
+                            int imageIndex,
+                            Rectangle destination,
+                            CoordinateTypeEnum coordType,
+                            float depth,
+                            bool centered,
+                            Color color,
+                            float rotation,
+                            float scale)
+        {
+            Texture = texture;
+            Destination = destination;
+            Dest = true;
+            ImageIndex = imageIndex;
+            CoordinateType = coordType;
+            Depth = depth;
+            Centered = centered;
+            Effects = SpriteEffects.None;
+            Color = color;
+            Rotation = rotation;
+            Scale = scale;
+        }
+
+        internal void set(GameTexture texture,
+                            int imageIndex,
+                            Vector2 position,
+                            CoordinateTypeEnum coordType,
+                            float depth,
+                            bool centered,
+                            Color color,
+                            Vector2 direction,
+                            float scale)
+        {
+            Texture = texture;
+            Position = position;
+            Dest = false;
+            ImageIndex = imageIndex;
+            CoordinateType = coordType;
+            Depth = depth;
+            Centered = centered;
+            Effects = SpriteEffects.None;
+            Color = color;
+            Direction = direction;
+            Scale = scale;
+        }
+
+        internal void set(GameTexture texture,
+                            int imageIndex,
+                            Rectangle destination,
+                            CoordinateTypeEnum coordType,
+                            float depth,
+                            bool centered,
+                            Color color,
+                            Vector2 direction,
+                            float scale)
+        {
+            Texture = texture;
+            Destination = destination;
+            Dest = true;
+            ImageIndex = imageIndex;
+            CoordinateType = coordType;
+            Depth = depth;
+            Centered = centered;
+            Effects = SpriteEffects.None;
+            Color = color;
+            Direction = direction;
+            Scale = scale;
+        }
 
         internal void draw()
         {

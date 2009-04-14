@@ -23,6 +23,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.Xml;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.graphics.multithreading;
 
 namespace Commando.levels
 {
@@ -133,6 +134,18 @@ namespace Commando.levels
         public void draw(Vector2 position, int tileID)
         {
             texture_.drawImage(tileID, position, lookupDepth(tileID));
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.set(texture_,
+                    tileID,
+                    position,
+                    CoordinateTypeEnum.RELATIVE,
+                    lookupDepth(tileID),
+                    false,
+                    Color.White,
+                    0.0f,
+                    1.0f);
+            stack.push();
         }
 
         /// <summary>

@@ -23,6 +23,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Commando.graphics;
 using System;
 using Commando.levels;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -200,6 +201,19 @@ namespace Commando
             engine_.GraphicsDevice.Clear(Color.Black);
 
             logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.set(logo_,
+                    0,
+                    LOGO_POSITION,
+                    CoordinateTypeEnum.ABSOLUTE,
+                    LOGO_DEPTH,
+                    false,
+                    Color.White,
+                    0.0f,
+                    1.0f);
+            stack.push();
+
 
             //print control Tips for main menu
             GameFont myFont = FontMap.getInstance().getFont(CONTROL_TIPS_FONT);

@@ -31,6 +31,7 @@ using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
 using System.Diagnostics;
 using Commando.ai;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -42,7 +43,25 @@ namespace Commando
         public GraphicsDeviceManager graphics_;
         public SpriteBatch spriteBatch_;
         EngineStateInterface engineState_;
-        public ControllerInputInterface Controls_ { get; set; }
+        protected ControllerInputInterface controls_;
+        public ControllerInputInterface Controls_ 
+        {
+            get
+            {
+                return controls_;
+            }
+            set
+            {
+                controls_ = value;
+                if (UpdateThread_ != null)
+                {
+                    UpdateThread_.Controls_ = controls_;
+                }
+            }
+        }
+        public UpdateThread UpdateThread_ { get; set; }
+        public RenderThread RenderThread_ { get; set; }
+        public DrawBuffer DrawBuffer_ { get; set; }
 
         const float GLOBALSPEEDMULTIPLIER = 2.5F;
         const int FRAMERATE = 30;
@@ -140,6 +159,16 @@ namespace Commando
             // creating EngineStateStart must come AFTER setting the
             //  IsGamerServicesAllowed_ member of Settings
             this.engineState_ = new EngineStateStart(this);
+
+            int tiles = (GraphicsDevice.Viewport.Height / 15) * (GraphicsDevice.Viewport.Width / 15);
+            tiles += 350;
+
+            DrawBuffer.initialize(tiles);
+            DrawBuffer_ = DrawBuffer.getInstance();
+            UpdateThread_ = new UpdateThread(this, engineState_);
+            RenderThread_ = new RenderThread();
+            UpdateThread_.Controls_ = Controls_;
+            UpdateThread_.startThread();
         }
 
         /// <summary>
@@ -173,6 +202,7 @@ namespace Commando
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            /*
 #if DEBUG
             Stopwatch clock = new Stopwatch();
             clock.Start();
@@ -206,7 +236,9 @@ namespace Commando
 
             PerformanceLogger.addValue(MetricType.PATHFIND, AStarPathfinder.clock.ElapsedMilliseconds);
             AStarPathfinder.clock.Reset();
-#endif
+            */
+            base.Update(gameTime);
+//#endif
         }
 
         /// <summary>
@@ -215,6 +247,7 @@ namespace Commando
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            /*
 #if DEBUG
             Stopwatch clock = new Stopwatch();
             clock.Start();
@@ -234,6 +267,18 @@ namespace Commando
             clock.Stop();
             PerformanceLogger.addValue(MetricType.DRAW, clock.ElapsedMilliseconds);
 #endif
+             */
+            spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
+
+            DrawBuffer_.globalStartFrame(gameTime);
+
+            graphics_.GraphicsDevice.Clear(Color.Black);
+            RenderThread_.tick();
+            base.Draw(gameTime);
+
+            DrawBuffer_.globalSynchronize();
+            spriteBatch_.End();
+
         }
 
         /// <summary>
@@ -244,6 +289,12 @@ namespace Commando
         /// <param name="args">Arguments.</param>
         protected override void OnExiting(object sender, EventArgs args)
         {
+            DrawBuffer_.cleanUp();
+            if (UpdateThread_.RunningThread != null)
+            {
+                UpdateThread_.RunningThread.Abort();
+            }
+
             base.OnExiting(sender, args);
             SoundEngine.cleanup();
             Settings.getInstance().saveSettingsToFile();

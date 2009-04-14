@@ -36,7 +36,8 @@ namespace Commando.graphics.multithreading
         {
             stack_ = new TextureDrawer[size];
             size_ = size;
-            top_ = 0;
+            top_ = -1;
+            initializeStack();
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Commando.graphics.multithreading
             {
                 int nextSize = (newSize > size_ * 2) ? newSize : size_ * 2;
                 TextureDrawer[] tempStack = new TextureDrawer[nextSize];
-                tempStack.Initialize();
+                initializeStack();
                 for (int i = 0; i < top_; i++)
                 {
                     tempStack[i] = stack_[i];
@@ -121,8 +122,16 @@ namespace Commando.graphics.multithreading
         public void resizeDestructively(int newSize)
         {
             stack_ = new TextureDrawer[newSize];
-            stack_.Initialize();
+            initializeStack();
             top_ = 0;
+        }
+
+        protected void initializeStack()
+        {
+            for (int i = 0; i < size_; i++)
+            {
+                stack_[i] = new TextureDrawer();
+            }
         }
     }
 }
