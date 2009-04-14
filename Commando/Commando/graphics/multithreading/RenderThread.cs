@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Commando.graphics.multithreading
 {
@@ -37,7 +38,9 @@ namespace Commando.graphics.multithreading
         protected DrawBuffer drawBuffer_;
 
         protected SpriteBatch spriteBatch_;
-    
+
+        protected GameTime gameTime_;
+
         public RenderThread()
         {
             drawBuffer_ = DrawBuffer.getInstance();
@@ -45,7 +48,7 @@ namespace Commando.graphics.multithreading
 
         public void tick()
         {
-            drawBuffer_.startRenderProcessing();
+            drawBuffer_.startRenderProcessing(out gameTime_);
             draw();
             drawBuffer_.submitRender();
         }
@@ -53,12 +56,13 @@ namespace Commando.graphics.multithreading
         public void draw()
         {
             DrawStack renderStack = drawBuffer_.getRenderStack();
+            Vector2 camPos = renderStack.getCamera().getPosition();
 
             //spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
             
             while (renderStack.hasMoreItems())
             {
-                renderStack.pop().draw();
+                renderStack.pop().draw(camPos);
             }
 
             //spriteBatch_.End();

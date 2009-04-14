@@ -32,12 +32,20 @@ namespace Commando.graphics.multithreading
 
         protected int size_;
 
+        protected Camera stackCamera_;
+
         public DrawStack(int size)
         {
             stack_ = new TextureDrawer[size];
             size_ = size;
             top_ = -1;
+            stackCamera_ = new Camera();
             initializeStack();
+        }
+
+        public Camera getCamera()
+        {
+            return stackCamera_;
         }
 
         /// <summary>

@@ -30,6 +30,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using System.Xml;
+using Commando.graphics;
 
 namespace Commando
 {
@@ -628,10 +629,16 @@ namespace Commando
 
         internal void draw()
         {
+
+        }
+
+        internal void draw(Vector2 camPosition)
+        {
             if (this.CoordinateType == CoordinateTypeEnum.RELATIVE)
             {
-                GlobalHelper helper = GlobalHelper.getInstance();
-                this.Position -= helper.getCurrentCamera().getPosition();
+                //GlobalHelper helper = GlobalHelper.getInstance();
+                //this.Position -= helper.getCurrentCamera().getPosition();
+                this.Position -= camPosition;
             }
             Vector2 origin = Vector2.Zero;
             if (Centered)

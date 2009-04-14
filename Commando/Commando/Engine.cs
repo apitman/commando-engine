@@ -237,6 +237,10 @@ namespace Commando
             PerformanceLogger.addValue(MetricType.PATHFIND, AStarPathfinder.clock.ElapsedMilliseconds);
             AStarPathfinder.clock.Reset();
             */
+
+            if (Controls_ != null)
+                Controls_.updateInputSet();
+
             base.Update(gameTime);
 //#endif
         }

@@ -31,6 +31,7 @@ using System.Text;
 using System.Threading;
 using Commando.controls;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 
 namespace Commando.graphics.multithreading
 {
@@ -46,6 +47,8 @@ namespace Commando.graphics.multithreading
 
         protected DrawBuffer drawBuffer_;
 
+        protected GameTime gameTime_;
+
         public UpdateThread(Engine engine, EngineStateInterface engineState)
         {
             currentEngineState_ = engineState;
@@ -55,7 +58,7 @@ namespace Commando.graphics.multithreading
 
         public void tick()
         {
-            drawBuffer_.startUpdateProcessing();
+            drawBuffer_.startUpdateProcessing(out gameTime_);
             update();
             drawBuffer_.submitUpdate();
         }
@@ -91,12 +94,18 @@ namespace Commando.graphics.multithreading
                 currentEngineState_ = new EngineStateOutofFocus(engine_, currentEngineState_);
             }
 
-            if (Controls_ != null)
-                Controls_.updateInputSet();
+            //if (Controls_ != null)
+            //    Controls_.updateInputSet();
+            //drawBuffer_.globalSynchronizeControlInput();
 
-            currentEngineState_ = currentEngineState_.update(null);
+            currentEngineState_ = currentEngineState_.update(gameTime_);
 
             currentEngineState_.draw();
+            Camera cam = GlobalHelper.getInstance().getCurrentCamera();
+            if (cam != null)
+            {
+                drawBuffer_.getUpdateStack().getCamera().setPosition(cam.getX(), cam.getY());
+            }
         }
 
 #if !XBOX
