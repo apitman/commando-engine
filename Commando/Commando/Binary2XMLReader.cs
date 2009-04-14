@@ -32,14 +32,14 @@ namespace PlainXMLProcessor
     /// not square brackets); responsible for converting the compiled .xnb file into
     /// a ManagedXml.
     /// </summary>
-    class Binary2XMLReader : ContentTypeReader<ManagedXml>
+    class Binary2XMLReader : ContentTypeReader<XmlDocument>
     {
-        protected override ManagedXml Read(ContentReader input, ManagedXml existingInstance)
+        protected override XmlDocument Read(ContentReader input, XmlDocument existingInstance)
         {
             int count = input.ReadInt32();
             char[] chars = input.ReadChars(count);
             string s = new string(chars);
-            ManagedXml xmldoc = new ManagedXml();
+            XmlDocument xmldoc = new XmlDocument();
             try
             {
                 xmldoc.Load(new StringReader(s));

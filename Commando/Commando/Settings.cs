@@ -164,10 +164,10 @@ namespace Commando
         }
 
         /// <summary>
-        /// Pulls settings from a ManagedXml
+        /// Pulls settings from an XmlDocument
         /// </summary>
-        /// <param name="doc">ManagedXml containing the appropriate commando-settings tag</param>
-        protected void pullSettings(ManagedXml doc)
+        /// <param name="doc">XmlDocument containing the appropriate commando-settings tag</param>
+        protected void pullSettings(XmlDocument doc)
         {
             XmlNode root = doc.ChildNodes[1]; // index 0 is XML declaration
             if (root.Name != "commando-settings")
@@ -198,12 +198,12 @@ namespace Commando
         }
 
         /// <summary>
-        /// Pushes current settings to an ManagedXml
+        /// Pushes current settings to an XmlDocument
         /// </summary>
-        /// <returns>An ManagedXml containing the current settings</returns>
-        protected ManagedXml pushSettings()
+        /// <returns>An XmlDocument containing the current settings</returns>
+        protected XmlDocument pushSettings()
         {
-            ManagedXml doc = new ManagedXml();
+            XmlDocument doc = new XmlDocument();
 
             XmlNode declaration = doc.CreateNode(XmlNodeType.XmlDeclaration, "", "");
             doc.AppendChild(declaration);
@@ -232,33 +232,30 @@ namespace Commando
         /// </summary>
         internal void saveSettingsToFile()
         {
-            using (ManagedXml doc = pushSettings())
+            XmlDocument doc = pushSettings();
+        
+            // No storage device, so we'll store/load the settings in a directory
+            //  with the executable
+            if (storageDevice_ == null)
             {
-
-                // No storage device, so we'll store/load the settings in a directory
-                //  with the executable
-                if (storageDevice_ == null)
-                {
-                    const string folderpath = @".\" + SETTINGS_FOLDER;
-                    Directory.CreateDirectory(folderpath);
-                    const string filepath = folderpath + @"\" + SETTINGS_FILE;
-                    doc.Save(filepath);
-                }
-
-                // We have a storage device, so we'll store the settings in the associated
-                //  container
-                else
-                {
-                    ContainerManager.cleanupContainer();
-                    StorageContainer sc = ContainerManager.getOpenContainer();
-                    string folderpath = Path.Combine(sc.Path, SETTINGS_FOLDER);
-                    Directory.CreateDirectory(folderpath);
-                    string filepath = Path.Combine(folderpath, SETTINGS_FILE);
-                    doc.Save(filepath);
-                }
+                const string folderpath = @".\" + SETTINGS_FOLDER;
+                Directory.CreateDirectory(folderpath);
+                const string filepath = folderpath + @"\" + SETTINGS_FILE;
+                doc.Save(filepath);
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+
+            // We have a storage device, so we'll store the settings in the associated
+            //  container
+            else
+            {
+                ContainerManager.cleanupContainer();
+                StorageContainer sc = ContainerManager.getOpenContainer();
+                string folderpath = Path.Combine(sc.Path, SETTINGS_FOLDER);
+                Directory.CreateDirectory(folderpath);
+                string filepath = Path.Combine(folderpath, SETTINGS_FILE);
+                doc.Save(filepath);
+            }
+        
         }
 
         internal void loadSettingsFromFile()
@@ -270,13 +267,11 @@ namespace Commando
                 if (storageDevice_ == null)
                 {
                     const string filepath = @".\" + SETTINGS_FOLDER + @"\" + SETTINGS_FILE;
-                    using (ManagedXml doc = new ManagedXml())
+                    using (ManagedXml manager = new ManagedXml(EngineHandle_))
                     {
-                        doc.Load(filepath);
+                        XmlDocument doc = manager.loadFromFile(filepath);
                         pullSettings(doc);
                     }
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
                 }
 
                 // We have a storage device, so we'll store the settings in the associated
@@ -286,23 +281,20 @@ namespace Commando
                     StorageContainer sc = ContainerManager.getOpenContainer();
                     string folderpath = Path.Combine(sc.Path, SETTINGS_FOLDER);
                     string filepath = Path.Combine(folderpath, SETTINGS_FILE);
-                    using (ManagedXml doc = new ManagedXml())
+                    using (ManagedXml manager = new ManagedXml(EngineHandle_))
                     {
-                        doc.Load(filepath);
+                        XmlDocument doc = manager.loadFromFile(filepath);
                         pullSettings(doc);
                     }
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
                 }
             }
             catch
             {
-                using (ManagedXml doc = EngineHandle_.Content.Load<ManagedXml>(DEFAULT_SETTINGS))
+                using (ManagedXml manager = new ManagedXml(EngineHandle_))
                 {
+                    XmlDocument doc = manager.load(DEFAULT_SETTINGS);
                     pullSettings(doc);
                 }
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
             }
         }
     }
