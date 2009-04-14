@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using Commando.controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.graphics.multithreading;
 
 
 namespace Commando
@@ -123,7 +124,9 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
+
             GameFont myFont = FontMap.getInstance().getFont(HEADER_FONT);
             //print title of controls screen
             Vector2 headerPos =

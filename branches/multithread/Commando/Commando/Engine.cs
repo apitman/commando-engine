@@ -160,7 +160,7 @@ namespace Commando
             //  IsGamerServicesAllowed_ member of Settings
             this.engineState_ = new EngineStateStart(this);
 
-            int tiles = (GraphicsDevice.Viewport.Height / 15) * (GraphicsDevice.Viewport.Width / 15);
+            int tiles = (int)((GraphicsDevice.Viewport.Height / 15) * (GraphicsDevice.Viewport.Width / 15) * 1.2);
             tiles += 350;
 
             DrawBuffer.initialize(tiles);

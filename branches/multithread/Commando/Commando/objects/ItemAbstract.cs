@@ -110,16 +110,15 @@ namespace Commando.objects
             //image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
             DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
             TextureDrawer td = stack.getNext();
-            td.Texture = image_;
-            td.ImageIndex = 0;
-            td.Position = position_;
-            td.Dest = false;
-            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
-            td.Depth = depth_;
-            td.Centered = true;
-            td.Color = Color.White;
-            td.Effects = SpriteEffects.None;
-            td.Direction = direction_;
+            td.set(image_,
+                    0,
+                    position_,
+                    CoordinateTypeEnum.RELATIVE,
+                    depth_,
+                    true,
+                    Color.White,
+                    direction_,
+                    1.0f);
             stack.push();
         }
 
