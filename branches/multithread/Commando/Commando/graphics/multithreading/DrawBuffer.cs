@@ -47,6 +47,9 @@ namespace Commando.graphics.multithreading
         protected AutoResetEvent updateFrameStart_;
         protected AutoResetEvent updateFrameEnd_;
 
+        protected AutoResetEvent controlsUpdatedStart_;
+        protected AutoResetEvent controlsUpdatedEnd_;
+
         protected volatile GameTime gameTime_;
 
         private DrawBuffer(int size)
@@ -59,6 +62,8 @@ namespace Commando.graphics.multithreading
             renderFrameEnd_ = new AutoResetEvent(false);
             updateFrameStart_ = new AutoResetEvent(false);
             updateFrameEnd_ = new AutoResetEvent(false);
+            controlsUpdatedStart_ = new AutoResetEvent(false);
+            controlsUpdatedEnd_ = new AutoResetEvent(false);
         }
 
         public static DrawBuffer getInstance()
@@ -96,6 +101,8 @@ namespace Commando.graphics.multithreading
             renderFrameEnd_.Reset();
             updateFrameStart_.Reset();
             updateFrameEnd_.Reset();
+            controlsUpdatedEnd_.Reset();
+            controlsUpdatedStart_.Reset();
         }
 
         public void cleanUp()
@@ -105,12 +112,36 @@ namespace Commando.graphics.multithreading
             renderFrameEnd_.Close();
             updateFrameStart_.Close();
             updateFrameEnd_.Close();
+            controlsUpdatedEnd_.Close();
+            controlsUpdatedStart_.Close();
         }
 
         private void swapBuffers()
         {
             currentRenderBuffer_ = currentUpdateBuffer_;
             currentUpdateBuffer_ = (currentUpdateBuffer_ + 1) % 2;
+        }
+
+        public void globalStartControlInput(GameTime gameTime)
+        {
+            controlsUpdatedStart_.Set();
+        }
+
+        public void globalSynchronizeControlInput()
+        {
+            controlsUpdatedEnd_.WaitOne();
+            Thread.MemoryBarrier();
+        }
+
+        public void startControlsProcessing()
+        {
+            controlsUpdatedStart_.WaitOne();
+        }
+
+        public void submitControls()
+        {
+            controlsUpdatedEnd_.Set();
+            Thread.MemoryBarrier();
         }
 
         public void globalStartFrame(GameTime gameTime)
@@ -120,6 +151,8 @@ namespace Commando.graphics.multithreading
             //signal the render and update threads to start processing
             renderFrameStart_.Set();
             updateFrameStart_.Set();
+
+            this.gameTime_ = gameTime;
         }
         public void globalSynchronize()
         {
@@ -128,20 +161,22 @@ namespace Commando.graphics.multithreading
             updateFrameEnd_.WaitOne();
         }
 
-        public void startUpdateProcessing()
+        public void startUpdateProcessing(out GameTime gameTime)
         {
             //wait for start signal
             updateFrameStart_.WaitOne();
             //ensure cache coherency
             Thread.MemoryBarrier();
+            gameTime = gameTime_;
         }
 
-        public void startRenderProcessing()
+        public void startRenderProcessing(out GameTime gameTime)
         {
             //wait for start signal
             renderFrameStart_.WaitOne();
             //ensure cache coherency
             Thread.MemoryBarrier();
+            gameTime = gameTime_;
         }
 
         public void submitUpdate()
