@@ -30,6 +30,7 @@ using Microsoft.Xna.Framework.Storage;
 using System.IO;
 using Commando.objects.enemies;
 using Microsoft.Xna.Framework.Input;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -177,6 +178,7 @@ namespace Commando
         protected string transLevel_;
         public Level myLevel_;
         public string currentFilepath_;
+        protected GameTexture laserPointer_;
         
         protected bool placeTransition_;
         protected Vector2 transitionPos_;
@@ -214,7 +216,8 @@ namespace Commando
             displayTile_ = new TileObject(curTileIndex_, drawPipeline_, TextureMap.getInstance().getTexture("Tile_" + curTileIndex_), new Vector2((float)cursorPosX_ * Tiler.tileSideLength_, (float)cursorPosY_ * Tiler.tileSideLength_), Vector2.Zero, DISP_TILE_DEPTH);
             placeTransition_ = false;
             transitionPos_ = new Vector2(0,0);
-            
+
+            laserPointer_ = TextureMap.fetchTexture("laserpointer");
         }
 
         /// <summary>
@@ -843,11 +846,30 @@ namespace Commando
             {
                 MouseState ms = Mouse.GetState();
                 Vector2 mpos = new Vector2(ms.X, ms.Y) - new Vector2(2.5f, 2.5f);
+                /*
                 TextureDrawer td = TextureMap.fetchTexture("laserpointer")
                     .getDrawer(mpos, Constants.DEPTH_LASER);
                 td.Color = Color.Green;
                 td.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
                 td.draw();
+                */
+                DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+                TextureDrawer td = stack.getNext();
+                td.set(laserPointer_,
+                        0,
+                        mpos,
+                        CoordinateTypeEnum.ABSOLUTE,
+                        Constants.DEPTH_LASER,
+                        true,
+                        Color.Green,
+                        0.0f,
+                        1.0f);
+                stack.push();
+
+                //I
+                //STOPPED
+                //HERE
+                //---------------
             }
 #endif
 

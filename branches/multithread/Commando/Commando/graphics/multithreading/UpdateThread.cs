@@ -50,6 +50,7 @@ namespace Commando.graphics.multithreading
         {
             currentEngineState_ = engineState;
             engine_ = engine;
+            drawBuffer_ = DrawBuffer.getInstance();
         }
 
         public void tick()

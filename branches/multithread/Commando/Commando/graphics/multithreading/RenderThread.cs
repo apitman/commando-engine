@@ -54,14 +54,14 @@ namespace Commando.graphics.multithreading
         {
             DrawStack renderStack = drawBuffer_.getRenderStack();
 
-            spriteBatch_.Begin();
+            //spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
             
             while (renderStack.hasMoreItems())
             {
                 renderStack.pop().draw();
             }
 
-            spriteBatch_.End();
+            //spriteBatch_.End();
         }
     }
 }
