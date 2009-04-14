@@ -198,7 +198,8 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
             logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
             DrawStack stack = DrawBuffer.getInstance().getUpdateStack();

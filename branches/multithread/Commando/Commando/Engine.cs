@@ -275,8 +275,8 @@ namespace Commando
             spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
 
             DrawBuffer_.globalStartFrame(gameTime);
+            graphics_.GraphicsDevice.Clear(DrawBuffer_.getRenderStack().ScreenClearColor_);
 
-            graphics_.GraphicsDevice.Clear(Color.Black);
             RenderThread_.tick();
             base.Draw(gameTime);
 

@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using System.Xml;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -152,7 +153,8 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
             logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
 
