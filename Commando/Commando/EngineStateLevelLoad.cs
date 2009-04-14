@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.controls;
 using System.Xml;
+using Commando.graphics.multithreading;
 #if !XBOX
 using System.Windows.Forms;
 #endif
@@ -236,7 +237,8 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
             if (menuList_ != null)
                 menuList_.draw();

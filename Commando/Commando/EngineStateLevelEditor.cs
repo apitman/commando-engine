@@ -836,7 +836,8 @@ namespace Commando
         public void draw()
         {
             InputSet inputs = InputSet.getInstance();
-            engine_.GraphicsDevice.Clear(Color.Firebrick);
+            //engine_.GraphicsDevice.Clear(Color.Firebrick);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Firebrick;
 
             myLevel_.draw();
 

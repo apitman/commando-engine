@@ -30,6 +30,7 @@ using Microsoft.Xna.Framework.Storage;
 using System.IO;
 using Commando.objects.enemies;
 using Microsoft.Xna.Framework.Input;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -109,7 +110,9 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.GhostWhite);
+            //engine_.GraphicsDevice.Clear(Color.GhostWhite);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.GhostWhite;
+
             Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
             Vector2 pos = new Vector2(r.Left + r.Width/2, r.Top + r.Height/2);
             FontMap.getInstance().getFont(FontEnum.Kootenay14).drawStringCentered(storyText_, pos, Color.Black, 0.0f, Constants.DEPTH_HUD_TEXT);
