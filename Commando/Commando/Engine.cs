@@ -255,6 +255,7 @@ namespace Commando
             throw new PerformanceMonitorException(PerformanceLogger.printMetric(MetricType.UPDATE));
 #else
             System.Console.WriteLine(PerformanceLogger.printMetric(MetricType.UPDATE));
+            System.Console.WriteLine(CommLogger.printOutput());
 #endif
 #endif
         }

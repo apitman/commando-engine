@@ -75,7 +75,8 @@ namespace Commando.ai.planning
             {
                 counter = 0;
                 //(character_.getActuator() as DefaultActuator).lookAt(-character_.getDirection());
-                character_.getActuator().perform("lookAt", new ActionParameters(-(character_.getDirection() + character_.getPosition())));
+                //character_.getActuator().perform("look", new ActionParameters(-(character_.getDirection() + character_.getPosition())));
+                character_.getActuator().perform("look", new ActionParameters(-(character_.getDirection())));
             }
             Vector2 direction = character_.getDirection();
             direction.Normalize();

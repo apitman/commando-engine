@@ -100,21 +100,30 @@ namespace Commando.ai
                     retVal = "I have TeamInfo";
                     break;
                 case BeliefType.EnemyLoc:
-                    retVal = "He's over there!";
+                    retVal = "He's over there! ";
+                    retVal += Convert.ToInt32(position_.X).ToString();
+                    retVal += ", ";
+                    retVal += Convert.ToInt32(position_.Y).ToString();
                     break;
                 case BeliefType.EnemyHealth:
-                    retVal = "His health is";
+                    retVal = "His health is  ";
                     retVal += data_.int1;
                     break;
                 case BeliefType.AllyLoc:
-                    retVal = "You're right here";
+                    retVal = "You're right here ";
+                    retVal += Convert.ToInt32(position_.X).ToString();
+                    retVal += ", ";
+                    retVal += Convert.ToInt32(position_.Y).ToString();
                     break;
                 case BeliefType.AllyHealth:
-                    retVal = "Your health is";
+                    retVal = "Your health is ";
                     retVal += data_.int1;
                     break;
                 case BeliefType.SuspiciousNoise:
-                    retVal = "I heard something!";
+                    retVal = "I heard something! ";
+                    retVal += Convert.ToInt32(position_.X).ToString();
+                    retVal += ", ";
+                    retVal += Convert.ToInt32(position_.Y).ToString();
                     break;
                 case BeliefType.CoverLoc:
                     retVal = "There's cover here";

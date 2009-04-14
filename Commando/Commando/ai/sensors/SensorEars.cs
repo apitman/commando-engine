@@ -26,6 +26,8 @@ namespace Commando.ai.sensors
 {
     class SensorEars : Sensor
     {
+        protected List<int> idsHeardBefore = new List<int>();
+
         public SensorEars(AI ai) : base(ai) { }
 
         public override void collect()
@@ -61,13 +63,22 @@ namespace Commando.ai.sensors
                     b.position_ = stim.position_;
                     AI_.Memory_.setBelief(b);
                 }
-                else if (stim.type_ == StimulusType.Message && stim.sourceAllegiance_ == AI_.Character_.Allegiance_)
+                else if (stim.type_ == StimulusType.Message && stim.sourceAllegiance_ == AI_.Character_.Allegiance_ && stim.handle_ != AI_.Character_ && !idsHeardBefore.Contains(stim.message_.Id_))
                 {
+                    if (AI_.CommunicationSystem_.communicationLevel_ == SystemCommunication.CommunicationLevel.High && stim.message_.MessageType_ == Message.MessageType.Data)
+                    {
+                        CommLogger.addOutput("Heard " + stim.message_.ToString());
+                    }
+                    idsHeardBefore.Add(stim.message_.Id_);
+                    bool isRedundant = false;
+                    
                     AI_.CommunicationSystem_.IsListening_ = true;
+
                     if (stim.message_.MessageType_ == Message.MessageType.Data)
                     {
+                        isRedundant = AI_.Memory_.getAllBeliefs().Contains(stim.message_.Belief_);
                         // For now, we believe messages that we receive with 100% certainty
-                        AI_.Memory_.setBelief(stim.message_.Belief_);                        
+                        AI_.Memory_.setBelief(stim.message_.Belief_);
                     }
                     else if (stim.message_.MessageType_ == Message.MessageType.Hi)
                     {
@@ -78,6 +89,11 @@ namespace Commando.ai.sensors
                     {
                         // End of communication.
                         // Now that I think of it, there's really no reason for a Bye.
+                    }
+
+                    if (AI_.CommunicationSystem_.communicationLevel_ == SystemCommunication.CommunicationLevel.High && stim.message_.MessageType_ == Message.MessageType.Data)
+                    {
+                        CommLogger.recvdMsg(isRedundant);
                     }
                 }
             }
