@@ -56,23 +56,22 @@ namespace Commando.levels
         public static Tileset getTilesetFromContent(string tilesetName, Engine engine)
         {
             Tileset tileset;
-            using (ManagedXml doc = engine.Content.Load<ManagedXml>(tilesetName))
+            using (ManagedXml manager = new ManagedXml(engine))
             {
+                XmlDocument doc = manager.load(tilesetName);
                 tileset = Tileset.getTilesetFromXML(doc, engine.spriteBatch_, engine.GraphicsDevice);
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
             return tileset;
         }
 
         /// <summary>
-        /// Constructs a TileSet from an ManagedXml.
+        /// Constructs a TileSet from an XmlDocument.
         /// </summary>
         /// <param name="doc">XML data containing Tileset related tags.</param>
         /// <param name="spriteBatch">Sprite batch which will draw the tiles.</param>
         /// <param name="graphics">Graphics device which will draw the tiles.</param>
         /// <returns>The constructed TileSet.</returns>
-        protected static Tileset getTilesetFromXML(ManagedXml doc, SpriteBatch spriteBatch, GraphicsDevice graphics)
+        protected static Tileset getTilesetFromXML(XmlDocument doc, SpriteBatch spriteBatch, GraphicsDevice graphics)
         {
             Tileset returnTileset = new Tileset();
             XmlElement ele = (XmlElement)doc.GetElementsByTagName("image-file")[0];

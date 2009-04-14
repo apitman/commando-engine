@@ -144,9 +144,9 @@ namespace Commando.levels
         public static Level getLevelFromFile(string filepath, Engine engine)
         {
             Level level;
-            using (ManagedXml doc = new ManagedXml())
+            using (ManagedXml manager = new ManagedXml(engine))
             {
-                doc.Load(filepath);
+                XmlDocument doc = manager.loadFromFile(filepath);
                 level = new Level(false);
                 level.initializeLevelFromXml(doc, engine);
             }
@@ -162,23 +162,22 @@ namespace Commando.levels
         public static Level getLevelFromContent(string levelname, Engine engine)
         {
             Level level;
-            using (ManagedXml doc = engine.Content.Load<ManagedXml>(levelname))
+            using (ManagedXml manager = new ManagedXml(engine))
             {
+                XmlDocument doc = manager.load(levelname);
                 level = new Level(true);
                 level.initializeLevelFromXml(doc, engine);
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
             return level;
         }
 
         /// <summary>
         /// Parses Xml to populate the level with enemies, objects, etc.
         /// </summary>
-        /// <param name="doc">ManagedXml containing level data.</param>
+        /// <param name="doc">XmlDocument containing level data.</param>
         /// <param name="engine">Game engine.</param>
         /// <returns></returns>
-        protected void initializeLevelFromXml(ManagedXml doc, Engine engine)
+        protected void initializeLevelFromXml(XmlDocument doc, Engine engine)
         {
             // First load the tiles
             XmlElement ele = (XmlElement)doc.GetElementsByTagName("level")[0];
@@ -246,115 +245,116 @@ namespace Commando.levels
         public void writeLevelToFile(string filepath)
         {
             // Create the document
-            using (ManagedXml doc = new ManagedXml())
+            XmlDocument doc = new XmlDocument();
+
+            // Add level attributes
+            XmlElement levelElement = doc.CreateElement("level");
+            levelElement.SetAttribute("numTilesWide", width_.ToString());
+            levelElement.SetAttribute("numTilesTall", height_.ToString());
+            levelElement.SetAttribute("screenSizeX", "375");
+            levelElement.SetAttribute("screenSizeY", "375");
+
+            // Add the tiles
+            XmlElement tilesElement = doc.CreateElement("tiles");
+            for (int i = 0; i < height_; i++)
             {
-                // Add level attributes
-                XmlElement levelElement = doc.CreateElement("level");
-                levelElement.SetAttribute("numTilesWide", width_.ToString());
-                levelElement.SetAttribute("numTilesTall", height_.ToString());
-                levelElement.SetAttribute("screenSizeX", "375");
-                levelElement.SetAttribute("screenSizeY", "375");
-
-                // Add the tiles
-                XmlElement tilesElement = doc.CreateElement("tiles");
-                for (int i = 0; i < height_; i++)
+                for (int j = 0; j < width_; j++)
                 {
-                    for (int j = 0; j < width_; j++)
-                    {
-                        XmlElement tileElement = doc.CreateElement("tile");
-                        tileElement.SetAttribute("index", tiles_[i, j].ToString());
-                        tilesElement.AppendChild(tileElement);
-                    }
+                    XmlElement tileElement = doc.CreateElement("tile");
+                    tileElement.SetAttribute("index", tiles_[i, j].ToString());
+                    tilesElement.AppendChild(tileElement);
                 }
-                levelElement.AppendChild(tilesElement);
-
-                // Add the enemies
-                XmlElement enemiesElement = doc.CreateElement("enemies");
-                for (int i = 0; i < enemies_.Count; i++)
-                {
-
-                    XmlElement enemyElement = doc.CreateElement("enemy");
-
-                    if (enemies_[i] is DummyEnemy)
-                        enemyElement.SetAttribute("name", "dummy");
-
-                    else if (enemies_[i] is HumanEnemy)
-                        enemyElement.SetAttribute("name", "human");
-                    enemyElement.SetAttribute("posX", Convert.ToInt32(enemies_[i].getPosition().X).ToString());
-                    enemyElement.SetAttribute("posY", Convert.ToInt32(enemies_[i].getPosition().Y).ToString());
-                    //int rotationDegrees = Convert.ToInt32(CommonFunctions.getAngle(enemies_[i].getDirection()) * 180 / Math.PI);
-                    //enemyElement.SetAttribute("rotation", rotationDegrees.ToString());
-                    enemyElement.SetAttribute("rotationX", Convert.ToInt32(enemies_[i].getDirection().X * 100).ToString());
-                    enemyElement.SetAttribute("rotationY", Convert.ToInt32(enemies_[i].getDirection().Y * 100).ToString());
-                    enemyElement.SetAttribute("allegiance", enemies_[i].Allegiance_.ToString());
-                    enemiesElement.AppendChild(enemyElement);
-                }
-                levelElement.AppendChild(enemiesElement);
-
-                // Add HealthBoxes
-                // Add AmmoBoxes
-                XmlElement itemsElement = doc.CreateElement("items");
-                for (int i = 0; i < items_.Count; i++)
-                {
-                    if (items_[i] is HealthBox)
-                    {
-                        // HealthBox
-                        XmlElement hBoxElement = doc.CreateElement("item");
-                        hBoxElement.SetAttribute("type", "hBox");
-                        hBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
-                        hBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
-                        itemsElement.AppendChild(hBoxElement);
-                    }
-                    else if (items_[i] is AmmoBox)
-                    {
-                        // AmmoBox
-                        XmlElement aBoxElement = doc.CreateElement("item");
-                        aBoxElement.SetAttribute("type", "aBox");
-                        aBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
-                        aBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
-                        itemsElement.AppendChild(aBoxElement);
-                    }
-                    else if (items_[i] is LevelTransitionObject)
-                    {
-
-                        LevelTransitionObject myTrans = items_[i] as LevelTransitionObject;
-                        XmlElement aTransElement = doc.CreateElement("item");
-                        aTransElement.SetAttribute("type", "aTrans");
-                        aTransElement.SetAttribute("posX", myTrans.getPosition().X.ToString());
-                        aTransElement.SetAttribute("posY", myTrans.getPosition().Y.ToString());
-                        aTransElement.SetAttribute("nextLevel", myTrans.getNextLevel());
-
-                        itemsElement.AppendChild(aTransElement);
-                    }
-                    else if (items_[i] is WeaponBox)
-                    {
-                        WeaponBox myWpnBox = items_[i] as WeaponBox;
-                        XmlElement aWpnBoxElement = doc.CreateElement("item");
-                        aWpnBoxElement.SetAttribute("type", "aWpnBox");
-                        aWpnBoxElement.SetAttribute("posX", myWpnBox.getPosition().X.ToString());
-                        aWpnBoxElement.SetAttribute("posY", myWpnBox.getPosition().Y.ToString());
-                        string wpnType;
-                        if (myWpnBox.WeapnType == WeaponBox.WeaponType.MachineGun)
-                            wpnType = "machineGun";
-                        else if (myWpnBox.WeapnType == WeaponBox.WeaponType.Pistol)
-                            wpnType = "pistol";
-                        else
-                            wpnType = "shotgun";
-                        aWpnBoxElement.SetAttribute("weaponType", wpnType);
-                        itemsElement.AppendChild(aWpnBoxElement);
-                    }
-                    levelElement.AppendChild(itemsElement);
-                }
-                // Add playerLocation
-                XmlElement playerLocElement = doc.CreateElement("playerLocation");
-                playerLocElement.SetAttribute("x", playerStartLocation_.X.ToString());
-                playerLocElement.SetAttribute("y", playerStartLocation_.Y.ToString());
-                levelElement.AppendChild(playerLocElement);
-
-                // Finish up and save the document
-                doc.AppendChild(levelElement);
-                doc.Save(filepath);
             }
+            levelElement.AppendChild(tilesElement);
+
+            // Add the enemies
+            XmlElement enemiesElement = doc.CreateElement("enemies");
+            for (int i = 0; i < enemies_.Count; i++)
+            {
+
+                XmlElement enemyElement = doc.CreateElement("enemy");
+
+                if (enemies_[i] is DummyEnemy)
+                    enemyElement.SetAttribute("name", "dummy");
+
+                else if (enemies_[i] is HumanEnemy)
+                    enemyElement.SetAttribute("name", "human");
+                enemyElement.SetAttribute("posX", Convert.ToInt32(enemies_[i].getPosition().X).ToString());
+                enemyElement.SetAttribute("posY", Convert.ToInt32(enemies_[i].getPosition().Y).ToString());
+                //int rotationDegrees = Convert.ToInt32(CommonFunctions.getAngle(enemies_[i].getDirection()) * 180 / Math.PI);
+                //enemyElement.SetAttribute("rotation", rotationDegrees.ToString());
+                enemyElement.SetAttribute("rotationX", Convert.ToInt32(enemies_[i].getDirection().X * 100).ToString());
+                enemyElement.SetAttribute("rotationY", Convert.ToInt32(enemies_[i].getDirection().Y * 100).ToString());
+                enemyElement.SetAttribute("allegiance", enemies_[i].Allegiance_.ToString());
+                enemiesElement.AppendChild(enemyElement);
+            }
+            levelElement.AppendChild(enemiesElement);
+
+            // Add HealthBoxes
+            // Add AmmoBoxes
+            XmlElement itemsElement = doc.CreateElement("items");
+            for (int i = 0; i < items_.Count; i++)
+            {
+                if (items_[i] is HealthBox)
+                {
+                    // HealthBox
+                    XmlElement hBoxElement = doc.CreateElement("item");
+                    hBoxElement.SetAttribute("type", "hBox");
+                    hBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
+                    hBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
+                    itemsElement.AppendChild(hBoxElement);
+                }
+                else if (items_[i] is AmmoBox)
+                {
+                    // AmmoBox
+                    XmlElement aBoxElement = doc.CreateElement("item");
+                    aBoxElement.SetAttribute("type", "aBox");
+                    aBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
+                    aBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
+                    itemsElement.AppendChild(aBoxElement);
+                }
+                else if (items_[i] is LevelTransitionObject)
+                {
+
+                    LevelTransitionObject myTrans = items_[i] as LevelTransitionObject;
+                    XmlElement aTransElement = doc.CreateElement("item");
+                    aTransElement.SetAttribute("type", "aTrans");
+                    aTransElement.SetAttribute("posX", myTrans.getPosition().X.ToString());
+                    aTransElement.SetAttribute("posY", myTrans.getPosition().Y.ToString());
+                    aTransElement.SetAttribute("nextLevel", myTrans.getNextLevel());
+
+                    itemsElement.AppendChild(aTransElement);
+                }
+                else if (items_[i] is WeaponBox)
+                {
+                    WeaponBox myWpnBox = items_[i] as WeaponBox;
+                    XmlElement aWpnBoxElement = doc.CreateElement("item");
+                    aWpnBoxElement.SetAttribute("type", "aWpnBox");
+                    aWpnBoxElement.SetAttribute("posX", myWpnBox.getPosition().X.ToString());
+                    aWpnBoxElement.SetAttribute("posY", myWpnBox.getPosition().Y.ToString());
+                    string wpnType;
+                    if (myWpnBox.WeapnType == WeaponBox.WeaponType.MachineGun)
+                        wpnType = "machineGun";
+                    else if (myWpnBox.WeapnType == WeaponBox.WeaponType.Pistol)
+                        wpnType = "pistol";
+                    else
+                        wpnType = "shotgun";
+                    aWpnBoxElement.SetAttribute("weaponType", wpnType);
+                    itemsElement.AppendChild(aWpnBoxElement);
+                }
+                levelElement.AppendChild(itemsElement);
+            }
+            // Add playerLocation
+            XmlElement playerLocElement = doc.CreateElement("playerLocation");
+            playerLocElement.SetAttribute("x", playerStartLocation_.X.ToString());
+            playerLocElement.SetAttribute("y", playerStartLocation_.Y.ToString());
+            levelElement.AppendChild(playerLocElement);
+
+            // Finish up and save the document
+            doc.AppendChild(levelElement);
+            doc.Save(filepath);
+
+            doc = null;
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }

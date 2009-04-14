@@ -285,7 +285,6 @@
     <Compile Include="SoundEngine.cs" />
     <Compile Include="TextureMap.cs" />
     <Compile Include="objects\weapons\RangedWeaponAbstract.cs" />
-    <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

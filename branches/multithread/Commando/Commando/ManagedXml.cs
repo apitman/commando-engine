@@ -21,29 +21,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Microsoft.Xna.Framework.Content;
 
 namespace Commando
 {
     /// <summary>
-    /// An XmlDocument with the IDisposable interface which removes all
-    /// of its children's links to one another, making it easier for the
-    /// garbage collector to detect and remove this garbage.
+    /// ManagedXml creates a new ContentManager so that Xml data is not cached
+    /// in the main ContentManager.  This allows the GC to cleanup this data after
+    /// it is no longer needed, because ManagedXml will unload the data.
     /// </summary>
-    public class ManagedXml : XmlDocument, IDisposable
+    public class ManagedXml : IDisposable
     {
-        public ManagedXml()
+        protected ContentManager content_;
+
+        public ManagedXml(Engine engine)
             : base()
         {
+            content_ = new ContentManager(engine.Services);
+            content_.RootDirectory = "Content";
+        }
 
+        public XmlDocument load(string asset)
+        {
+            return content_.Load<XmlDocument>(asset);
+        }
+
+        public XmlDocument loadFromFile(string filepath)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filepath);
+            return doc;
         }
 
         public void Dispose()
         {
-            // TODO
-            // Figure out how to make it so that this line doesn't actually
-            // mess up the cached content.
-
-            //XmlHelper.cleanupNode(this);
+            content_.Unload();
+            content_.Dispose();
+            content_ = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }

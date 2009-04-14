@@ -190,8 +190,6 @@ namespace Commando
             currentFilepath_ = filepath;
 
             engine_ = engine;
-            //engine_.setScreenSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
-            //engine_.IsMouseVisible = true;
             returnState_ = returnState;
             enemyIndex_ = 0;
             isObjSelected_ = false;
@@ -308,8 +306,7 @@ namespace Commando
             }
             else if (inputs.getButton(InputsEnum.BUTTON_4))
             {
-                engine_.initializeScreen();
-                return new EngineStateEditorControls(engine_, this, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+                return new EngineStateEditorControls(engine_, this);
             }
             else if (inputs.getButton(InputsEnum.LEFT_BUMPER) && isObjSelected_ == false)
             {
