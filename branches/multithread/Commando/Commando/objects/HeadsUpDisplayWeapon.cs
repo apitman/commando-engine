@@ -36,7 +36,8 @@ namespace Commando.objects
         /// Hidden default constructor.
         /// </summary>
         protected HeadsUpDisplayWeapon() { }
-
+        protected List<GameTexture> texList_;
+        public int texIndex_;
         /// <summary>
         /// Create a HeadsUpDisplayObject with the specified texture, position, direction, and depth.
         /// </summary>
@@ -45,9 +46,11 @@ namespace Commando.objects
         /// <param name="pos">Position as a Vector relative to the top left corner</param>
         /// <param name="dir">Direction of the HeadsUpDisplayObject as a Vector</param>
         /// <param name="depth">Drawing depth of the object</param>
-        public HeadsUpDisplayWeapon(List<DrawableObjectAbstract> pipeline, GameTexture tex, Vector2 pos, Vector2 dir, float depth)
-            : base(pipeline, tex, pos, dir, depth)
+        public HeadsUpDisplayWeapon(List<DrawableObjectAbstract> pipeline, GameTexture tex, List<GameTexture> texList, Vector2 pos, Vector2 dir, float depth)
+            : base(pipeline,tex,pos, dir, depth)
         {
+            texList_ = texList;
+            texIndex_ = 0;
         }
 
         public override void updateImage()
@@ -67,7 +70,7 @@ namespace Commando.objects
             //texture_.drawImageAbsolute(0, position_, 0.0f, depth_);
             DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
             TextureDrawer td = stack.getNext();
-            td.Texture = texture_;
+            td.Texture = texList_[texIndex_];
             td.ImageIndex = 0;
             td.Position = position_;
             td.Dest = false;
