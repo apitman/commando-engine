@@ -76,6 +76,25 @@ namespace Commando
         }
 
         /// <summary>
+        /// Create a GameTexture from the specified name, with the specified SpriteBatch and
+        /// GraphicsDevice, without requiring TextureMap.
+        /// </summary>
+        /// <param name="filepath">Path to the image file</param>
+        /// <param name="spriteBatch">SpriteBatch for the game</param>
+        /// <param name="graphics">GraphicsDevice for the game</param>
+        /// <param name="content">ContentManager containing the image</param>
+        public GameTexture(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics, ContentManager content)
+        {
+            spriteBatch_ = spriteBatch;
+
+            texture_ = content.Load<Texture2D>(filename);
+
+            imageDimensions_ = new Rectangle[1];
+            imageDimensions_[0] = new Rectangle(0, 0, texture_.Width, texture_.Height);
+            helper_ = GlobalHelper.getInstance();
+        }
+
+        /// <summary>
         /// Create a GameTexture with the specified imageDimensions.
         /// </summary>
         /// <param name="filepath">Name of the image file</param>

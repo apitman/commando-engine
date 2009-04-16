@@ -63,6 +63,8 @@ namespace Commando
         public RenderThread RenderThread_ { get; set; }
         public DrawBuffer DrawBuffer_ { get; set; }
 
+        internal bool UpdateGraphicsFlag_ { get; set; }
+
         const float GLOBALSPEEDMULTIPLIER = 2.5F;
         const int FRAMERATE = 30;
         const string TEXTUREMAPXML = ".\\Content\\XML\\LoadScripts\\TextureLoader.xml";
@@ -106,7 +108,7 @@ namespace Commando
 
             graphics_.PreferredBackBufferHeight = y;
             graphics_.PreferredBackBufferWidth = x;
-            graphics_.ApplyChanges();
+            UpdateGraphicsFlag_ = true;
         }
 
         /// <summary>
@@ -158,7 +160,7 @@ namespace Commando
 
             // creating EngineStateStart must come AFTER setting the
             //  IsGamerServicesAllowed_ member of Settings
-            this.engineState_ = new EngineStateStart(this);
+            this.engineState_ = new EngineStateSplash(this);
 
             int tiles = (int)((GraphicsDevice.Viewport.Height / 15) * (GraphicsDevice.Viewport.Width / 15) * 1.2);
             tiles += 350;
@@ -180,10 +182,9 @@ namespace Commando
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch_ = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            TextureMap.getInstance().setContent(Content);
-            TextureMap.getInstance().loadTextures(TEXTUREMAPXML, this);
-            FontMap.getInstance().loadFonts("", spriteBatch_, this);
+            //TextureMap.getInstance().setContent(Content);
+            //TextureMap.getInstance().loadTextures(TEXTUREMAPXML, this);
+            //FontMap.getInstance().loadFonts("", spriteBatch_, this);
         }
 
         /// <summary>
@@ -237,6 +238,9 @@ namespace Commando
             PerformanceLogger.addValue(MetricType.PATHFIND, AStarPathfinder.clock.ElapsedMilliseconds);
             AStarPathfinder.clock.Reset();
             */
+
+            if (UpdateGraphicsFlag_)
+                graphics_.ApplyChanges();
 
             if (Controls_ != null)
                 Controls_.updateInputSet();

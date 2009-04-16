@@ -337,8 +337,10 @@ namespace Commando.levels
                         wpnType = "machineGun";
                     else if (myWpnBox.WeapnType == WeaponBox.WeaponType.Pistol)
                         wpnType = "pistol";
-                    else
+                    else if (myWpnBox.WeapnType == WeaponBox.WeaponType.Shotgun)
                         wpnType = "shotgun";
+                    else
+                        throw new NotImplementedException("Don't know how to save this weapon!");
                     aWpnBoxElement.SetAttribute("weaponType", wpnType);
                     itemsElement.AppendChild(aWpnBoxElement);
                 }
