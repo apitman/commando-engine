@@ -20,6 +20,7 @@
 using Microsoft.Xna.Framework;
 using Commando.graphics;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -90,19 +91,23 @@ namespace Commando
                     engine_.GraphicsDevice.Viewport.Width,
                     engine_.GraphicsDevice.Viewport.Height);
 
-            TextureMap tm = TextureMap.getInstance();
-            tm.getTexture("overlay").drawImageWithDimAbsolute(0, screen, OVERLAY_DEPTH);
-
+            GameTexture texture = new GameTexture("overlay", engine_.spriteBatch_, engine_.GraphicsDevice, engine_.Content);
+            TextureDrawer td = DrawBuffer.getInstance().getUpdateStack().getNext();
+            td.set(texture, 0, screen, CoordinateTypeEnum.ABSOLUTE, Constants.DEPTH_OUT_OF_FOCUS_OVERLAY, false, Color.White, 0f, 1f);
+            DrawBuffer.getInstance().getUpdateStack().push();
+            
             Vector2 fontpos = new Vector2(
                 engine_.GraphicsDevice.Viewport.Width / 2,
                 engine_.GraphicsDevice.Viewport.Height / 2);
 
+            /*
             GameFont gf = FontMap.getInstance().getFont(MESSAGE_FONT);
             gf.drawStringCentered(MESSAGE,
                 fontpos,
                 MESSAGE_COLOR,
                 MESSAGE_ROTATION,
                 MESSAGE_DEPTH);
+             */
         }
 
         #endregion
