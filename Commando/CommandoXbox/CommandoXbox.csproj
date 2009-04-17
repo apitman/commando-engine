@@ -328,6 +328,9 @@
     <Compile Include="..\Commando\EngineStatePause.cs">
       <Link>EngineStatePause.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\EngineStateSplash.cs">
+      <Link>EngineStateSplash.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\EngineStateStart.cs">
       <Link>EngineStateStart.cs</Link>
     </Compile>

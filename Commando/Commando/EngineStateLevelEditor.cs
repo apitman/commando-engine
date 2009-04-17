@@ -832,10 +832,13 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            InputSet inputs = InputSet.getInstance();
-            //engine_.GraphicsDevice.Clear(Color.Firebrick);
-            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Firebrick;
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
 
+            InputSet inputs = InputSet.getInstance();
+            stack.ScreenClearColor_ = Color.Firebrick;
+
+            // AMP TODO Fix Level.draw()
             myLevel_.draw();
 
             // Draw the cursor
@@ -844,15 +847,6 @@ namespace Commando
             {
                 MouseState ms = Mouse.GetState();
                 Vector2 mpos = new Vector2(ms.X, ms.Y) - new Vector2(2.5f, 2.5f);
-                /*
-                TextureDrawer td = TextureMap.fetchTexture("laserpointer")
-                    .getDrawer(mpos, Constants.DEPTH_LASER);
-                td.Color = Color.Green;
-                td.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
-                td.draw();
-                */
-                DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
-                TextureDrawer td = stack.getNext();
                 td.set(laserPointer_,
                         0,
                         mpos,
@@ -863,11 +857,6 @@ namespace Commando
                         0.0f,
                         1.0f);
                 stack.push();
-
-                //I
-                //STOPPED
-                //HERE
-                //---------------
             }
 #endif
 
@@ -881,13 +870,34 @@ namespace Commando
                 HELP_TEXT_POSITION,
                 HELP_TEXT_COLOR);
 
+            // AMP TODO get rid of all TileObjects
             displayTile_.draw(new GameTime());
 
-            TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, new Vector2((cursorPosX_ *Tiler.tileSideLength_ - 1 ), (cursorPosY_ * Tiler.tileSideLength_ - 1)), 0.2f);
+            td = stack.getNext();
+            td.set(TextureMap.fetchTexture("TileHighlight"),
+                0,
+                new Vector2((cursorPosX_ * Tiler.tileSideLength_ - 1), (cursorPosY_ * Tiler.tileSideLength_ - 1)),
+                CoordinateTypeEnum.RELATIVE,
+                0.2f,
+                false,
+                Color.White,
+                0.0f,
+                1.0f);
+            stack.push();
 
             if (myLevel_.getPlayerStartLocation() != null && myLevel_.getPlayerStartLocation() != Vector2.Zero)
             {
-                TextureMap.fetchTexture("PlayerStartPos").drawImage(0, myLevel_.getPlayerStartLocation(), 0.3f);
+                td = stack.getNext();
+                td.set(TextureMap.fetchTexture("PlayerStartPos"),
+                    0,
+                    myLevel_.getPlayerStartLocation(),
+                    CoordinateTypeEnum.RELATIVE,
+                    0.3f,
+                    false,
+                    Color.White,
+                    0.0f,
+                    1.0f);
+                stack.push();
             }
             
             if (isObjSelected_)
@@ -906,7 +916,17 @@ namespace Commando
                             break;
                         }
                 }  
-                        TextureMap.getInstance().getTexture("TileHighlight").drawImage(0, highlightPos, 0.2f);
+                td = stack.getNext();
+                td.set(TextureMap.fetchTexture("TileHighlight"),
+                    0,
+                    highlightPos,
+                    CoordinateTypeEnum.RELATIVE,
+                    0.2f,
+                    false,
+                    Color.White,
+                    0.0f,
+                    1.0f);
+                stack.push();
             }
             
             
@@ -915,8 +935,17 @@ namespace Commando
 
             Vector2 camOffset = new Vector2(GlobalHelper.getInstance().getCurrentCamera().getPosition().X, GlobalHelper.getInstance().getCurrentCamera().getPosition().Y);
 
-            TextureMap.getInstance().getTexture("blank").drawImageWithDimAbsolute(0, new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, HUD_BAR_WIDTH, HUD_BAR_HEIGHT), Constants.DEPTH_HUD - 0.01f, Color.Azure);
-
+            td = stack.getNext();
+            td.set(TextureMap.fetchTexture("blank"),
+                0,
+                new Rectangle(HUD_BAR_DRAW_X, HUD_BAR_DRAW_Y, HUD_BAR_WIDTH, HUD_BAR_HEIGHT),
+                CoordinateTypeEnum.ABSOLUTE,
+                Constants.DEPTH_HUD - 0.01f,
+                false,
+                Color.Azure,
+                0.0f,
+                1.0f);
+            stack.push();
 
             
             switch (curPallette_)
@@ -927,11 +956,31 @@ namespace Commando
                         for (int i = 0; i < NUM_TILES; i++)
                         {
                             {
-                                TextureMap.getInstance().getTexture("Tile_" + i).drawImageAbsolute(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15)), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f))), Constants.DEPTH_HUD);
+                                td = stack.getNext();
+                                td.set(TextureMap.fetchTexture("Tile_" + i),
+                                    0,
+                                    new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15)), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f))),
+                                    CoordinateTypeEnum.ABSOLUTE,
+                                    Constants.DEPTH_HUD,
+                                    false,
+                                    Color.White,
+                                    0.0f,
+                                    1.0f);
+                                stack.push();
 
                                 if (i == curTileIndex_)
                                 {
-                                    TextureMap.getInstance().getTexture("TileHighlight").drawImageAbsolute(0, new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) - 1), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) - 1)), Constants.DEPTH_HUD + 0.01f);
+                                    td = stack.getNext();
+                                    td.set(TextureMap.fetchTexture("TileHighlight"),
+                                        0,
+                                        new Vector2((HUD_BAR_DRAW_X + (10.0f + i * 20.0f) % (HUD_BAR_WIDTH - 15) - 1), (HUD_BAR_DRAW_Y + 5.0f + (((HUD_BAR_DRAW_X + 10 + i * 20) / (HUD_BAR_WIDTH - 15)) * 20.0f) - 1)),
+                                        CoordinateTypeEnum.ABSOLUTE,
+                                        Constants.DEPTH_HUD + 0.01f,
+                                        false,
+                                        Color.White,
+                                        0.0f,
+                                        1.0f);
+                                    stack.push();
                                 }
                             }
                         }
@@ -940,45 +989,153 @@ namespace Commando
                 case (int)pallette_.enemy:
                     {
                         int i = 0;
-                        TextureMap.getInstance().getTexture("basic_enemy_walk").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        i++;
-                        TextureMap.getInstance().getTexture("GreenPlayer_Crouch_Pistol").drawImageAbsolute(0, new Vector2((HUD_BAR_DRAW_X + 10.0f + 35.0f * i), HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
 
-                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD + 0.01f);
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("basic_enemy_walk"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            1.0f);
+                        stack.push();
+                        i++;
+
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("GreenPlayer_Crouch_Pistol"),
+                            0,
+                            new Vector2((HUD_BAR_DRAW_X + 10.0f + 35.0f * i), HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            1.0f);
+                        stack.push();
+
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("TileHighlight"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD + 0.01f,
+                            false,
+                            Color.White,
+                            0.0f,
+                            1.0f);
+                        stack.push();
                         break;
                     }
                 case (int)pallette_.misc:
                     {
                         int i = 0;
-                        TextureMap.fetchTexture("AmmoBox").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i , (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        i++;
-                        TextureMap.fetchTexture("HealthBox").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        i++;
-                        TextureMap.fetchTexture("PlayerStartPos").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        i++;
-                        TextureMap.fetchTexture("levelTransition").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        i++;
-    
-                        TextureDrawer rifTex = new TextureDrawer(TextureMap.fetchTexture("MachineGunIcon"), new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        rifTex.Scale = 0.18f;
-                        rifTex.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
-                        rifTex.draw();
+
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("AmmoBox"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            1.0f);
+                        stack.push();
                         i++;
 
-                        
-                        TextureDrawer pistolTex = new TextureDrawer(TextureMap.fetchTexture("PistolIcon"), new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        pistolTex.Scale = 0.18f;
-                        pistolTex.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
-                        pistolTex.draw();
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("HealthBox"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            1.0f);
+                        stack.push();
                         i++;
 
-                        TextureDrawer shotTex = new TextureDrawer(TextureMap.fetchTexture("ShotgunIcon"), new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD);
-                        shotTex.Scale = 0.18f;
-                        shotTex.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
-                        shotTex.draw();
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("PlayerStartPos"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            1.0f);
+                        stack.push();
+                        i++;
+
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("levelTransition"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            1.0f);
+                        stack.push();
+                        i++;
+
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("MachineGunIcon"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            0.18f);
+                        stack.push();
+                        i++;
+
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("PistolIcon"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            0.18f);
+                        stack.push();
+                        i++;
+
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("ShotgunIcon"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * i, (((HUD_BAR_DRAW_X + 10 + 35 * i) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD,
+                            false,
+                            Color.White,
+                            0.0f,
+                            0.18f);
+                        stack.push();
+                        i++;
                         
                         // If you add more stuff here, be sure to add "i++;", and change the const value NUM_MISC at the top of the file
-                        TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD + 0.01f);
+                        //TextureMap.fetchTexture("TileHighlight").drawImageAbsolute(0, new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5), Constants.DEPTH_HUD + 0.01f);
+                        td = stack.getNext();
+                        td.set(TextureMap.fetchTexture("TileHighlight"),
+                            0,
+                            new Vector2(HUD_BAR_DRAW_X + 10.0f + 35.0f * curTileIndex_, (((HUD_BAR_DRAW_X + 10 + 35 * curTileIndex_) / (HUD_BAR_DRAW_Y - 10)) * 20.0f) + HUD_BAR_DRAW_Y + 5),
+                            CoordinateTypeEnum.ABSOLUTE,
+                            Constants.DEPTH_HUD + 0.01f,
+                            false,
+                            Color.White,
+                            0.0f,
+                            1.0f);
+                        stack.push();
                         
                         break;
                     }
