@@ -36,9 +36,11 @@ namespace Commando.graphics.multithreading
 {
     public class DrawBuffer
     {
+        private const int FONT_STACK_SIZE = 20;
         private static DrawBuffer instance_;
 
         protected DrawStack[] stacks_;
+        protected FontStack[] fontStacks_;
         protected volatile int currentUpdateBuffer_;
         protected volatile int currentRenderBuffer_;
 
@@ -52,11 +54,14 @@ namespace Commando.graphics.multithreading
 
         protected volatile GameTime gameTime_;
 
-        private DrawBuffer(int size)
+        private DrawBuffer(int size, SpriteBatch spriteBatch)
         {
             stacks_ = new DrawStack[2];
             stacks_[0] = new DrawStack(size);
             stacks_[1] = new DrawStack(size);
+            fontStacks_ = new FontStack[2];
+            fontStacks_[0] = new FontStack(FONT_STACK_SIZE, spriteBatch);
+            fontStacks_[1] = new FontStack(FONT_STACK_SIZE, spriteBatch);
 
             renderFrameStart_ = new AutoResetEvent(false);
             renderFrameEnd_ = new AutoResetEvent(false);
@@ -75,9 +80,9 @@ namespace Commando.graphics.multithreading
             return instance_;
         }
 
-        public static void initialize(int size)
+        public static void initialize(int size, SpriteBatch spriteBatch)
         {
-            instance_ = new DrawBuffer(size);
+            instance_ = new DrawBuffer(size, spriteBatch);
         }
 
         /// <summary>
@@ -203,6 +208,16 @@ namespace Commando.graphics.multithreading
         public DrawStack getRenderStack()
         {
             return stacks_[currentRenderBuffer_];
+        }
+
+        public FontStack getUpdateFontStack()
+        {
+            return fontStacks_[currentUpdateBuffer_];
+        }
+
+        public FontStack getRenderFontStack()
+        {
+            return fontStacks_[currentRenderBuffer_];
         }
     }
 }

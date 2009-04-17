@@ -433,6 +433,9 @@
     <Compile Include="..\Commando\graphics\multithreading\DrawStack.cs">
       <Link>graphics\multithreading\DrawStack.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\graphics\multithreading\FontStack.cs">
+      <Link>graphics\multithreading\FontStack.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\graphics\multithreading\RenderThread.cs">
       <Link>graphics\multithreading\RenderThread.cs</Link>
     </Compile>

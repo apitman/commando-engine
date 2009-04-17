@@ -29,6 +29,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -121,7 +122,19 @@ namespace Commando
         /// <param name="color">The color of the drawn text</param>
         public void drawString(string text, Vector2 pos, Color color)
         {
-            spriteBatch_.DrawString(font_, text, pos, color);
+            //spriteBatch_.DrawString(font_, text, pos, color);
+            FontStack stack = DrawBuffer.getInstance().getUpdateFontStack();
+            FontDrawer fd = stack.getNext();
+            fd.set(font_,
+                    text,
+                    pos,
+                    color,
+                    0.0f,
+                    Vector2.Zero,
+                    1.0f,
+                    SpriteEffects.None,
+                    1.0f);
+            stack.push();
         }
 
         /// <summary>
@@ -137,7 +150,19 @@ namespace Commando
         /// <param name="layerDepth">The depth at which to draw the text</param>
         public void drawString(string text, Vector2 pos, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
-            spriteBatch_.DrawString(font_, text, pos, color, rotation, origin, scale, effects, layerDepth);
+            //spriteBatch_.DrawString(font_, text, pos, color, rotation, origin, scale, effects, layerDepth);
+            FontStack stack = DrawBuffer.getInstance().getUpdateFontStack();
+            FontDrawer fd = stack.getNext();
+            fd.set(font_,
+                    text,
+                    pos,
+                    color,
+                    rotation,
+                    origin,
+                    scale,
+                    effects,
+                    layerDepth);
+            stack.push();
         }
 
         /// <summary>
@@ -151,7 +176,21 @@ namespace Commando
         public void drawStringCentered(string text, Vector2 pos, Color color, float rotation, float layerDepth)
         {
             Vector2 origin = font_.MeasureString(text);
-            spriteBatch_.DrawString(font_, text, pos, color, rotation, new Vector2(origin.X / 2, origin.Y / 2), 1.0f, SpriteEffects.None, layerDepth);
+            origin.X /= 2f;
+            origin.Y /= 2f;
+            //spriteBatch_.DrawString(font_, text, pos, color, rotation, new Vector2(origin.X / 2, origin.Y / 2), 1.0f, SpriteEffects.None, layerDepth);
+            FontStack stack = DrawBuffer.getInstance().getUpdateFontStack();
+            FontDrawer fd = stack.getNext();
+            fd.set(font_,
+                    text,
+                    pos,
+                    color,
+                    rotation,
+                    origin,
+                    1.0f,
+                    SpriteEffects.None,
+                    layerDepth);
+            stack.push();
         }
 
         /// <summary>
@@ -167,7 +206,74 @@ namespace Commando
         public void drawStringCentered(string text, Vector2 pos, Color color, float rotation, float scale, SpriteEffects effects, float layerDepth)
         {
             Vector2 origin = font_.MeasureString(text);
-            spriteBatch_.DrawString(font_, text, pos, color, rotation, new Vector2(origin.X / 2, origin.Y / 2), scale, effects, layerDepth);
+            origin.X /= 2f;
+            origin.Y /= 2f;
+            //spriteBatch_.DrawString(font_, text, pos, color, rotation, new Vector2(origin.X / 2, origin.Y / 2), scale, effects, layerDepth);
+            FontStack stack = DrawBuffer.getInstance().getUpdateFontStack();
+            FontDrawer fd = stack.getNext();
+            fd.set(font_,
+                    text,
+                    pos,
+                    color,
+                    rotation,
+                    origin,
+                    scale,
+                    effects,
+                    layerDepth);
+            stack.push();
+        }
+    }
+    /*font_, text, pos, color, rotation, new Vector2(origin.X / 2, origin.Y / 2), 1.0f, SpriteEffects.None, layerDepth);*/
+    internal class FontDrawer
+    {
+        public SpriteFont SpriteFont_ { get; set; }
+        public String Text_ { get; set; }
+        public Vector2 Position_ { get; set; }
+        public Color Color_ { get; set; }
+        public float Rotation_ { get; set; }
+        public Vector2 Origin_ { get; set; }
+        public float Scale_ { get; set; }
+        public SpriteEffects Effects_ { get; set; }
+        public float Depth_ { get; set; }
+        protected SpriteBatch spriteBatch_;
+
+        public FontDrawer(SpriteBatch spriteBatch)
+        {
+            spriteBatch_ = spriteBatch;
+        }
+
+        public void set(SpriteFont font,
+                        String text,
+                        Vector2 position,
+                        Color color,
+                        float rotation,
+                        Vector2 origin,
+                        float scale,
+                        SpriteEffects effects,
+                        float depth)
+        {
+            SpriteFont_ = font;
+            Text_ = text;
+            Position_ = position;
+            Color_ = color;
+            Rotation_ = rotation;
+            Origin_ = origin;
+            Scale_ = scale;
+            Effects_ = effects;
+            Depth_ = depth;
+        }
+
+        public void draw()
+        {
+            spriteBatch_.DrawString(SpriteFont_,
+                                    Text_,
+                                    Position_,
+                                    Color_,
+                                    Rotation_,
+                                    Origin_,
+                                    Scale_,
+                                    Effects_,
+                                    Depth_);
         }
     }
 }

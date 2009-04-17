@@ -165,7 +165,7 @@ namespace Commando
             int tiles = (int)((GraphicsDevice.Viewport.Height / 15) * (GraphicsDevice.Viewport.Width / 15) * 1.2);
             tiles += 350;
 
-            DrawBuffer.initialize(tiles);
+            DrawBuffer.initialize(tiles, spriteBatch_);
             DrawBuffer_ = DrawBuffer.getInstance();
             UpdateThread_ = new UpdateThread(this, engineState_);
             RenderThread_ = new RenderThread();
