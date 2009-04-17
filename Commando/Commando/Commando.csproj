@@ -207,6 +207,7 @@
     <Compile Include="graphics\CharacterRunAction.cs" />
     <Compile Include="graphics\MultiLevelActuator.cs" />
     <Compile Include="graphics\multithreading\DrawStack.cs" />
+    <Compile Include="graphics\multithreading\FontStack.cs" />
     <Compile Include="graphics\multithreading\RenderThread.cs" />
     <Compile Include="graphics\multithreading\UpdateThread.cs" />
     <Compile Include="graphics\NoAction.cs" />

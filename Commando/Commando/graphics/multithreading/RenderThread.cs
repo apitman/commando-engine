@@ -56,6 +56,7 @@ namespace Commando.graphics.multithreading
         public void draw()
         {
             DrawStack renderStack = drawBuffer_.getRenderStack();
+            FontStack fontStack = drawBuffer_.getRenderFontStack();
             Vector2 camPos = renderStack.getCamera().getPosition();
 
             //spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
@@ -63,6 +64,11 @@ namespace Commando.graphics.multithreading
             while (renderStack.hasMoreItems())
             {
                 renderStack.pop().draw(camPos);
+            }
+
+            while (fontStack.hasMoreItems())
+            {
+                fontStack.pop().draw();
             }
 
             //spriteBatch_.End();

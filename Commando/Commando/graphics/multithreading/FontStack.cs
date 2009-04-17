@@ -25,38 +25,30 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.graphics.multithreading
 {
-    public class DrawStack
+    public class FontStack
     {
-        private TextureDrawer[] stack_;
+        private FontDrawer[] stack_;
 
         protected int top_;
 
         protected int size_;
 
-        protected Camera stackCamera_;
+        protected SpriteBatch spriteBatch_;
 
-        public Color ScreenClearColor_ { get; set; }
-
-        public DrawStack(int size)
+        public FontStack(int size, SpriteBatch spriteBatch)
         {
-            stack_ = new TextureDrawer[size];
+            stack_ = new FontDrawer[size];
             size_ = size;
             top_ = -1;
-            stackCamera_ = new Camera();
+            spriteBatch_ = spriteBatch;
             initializeStack();
-            ScreenClearColor_ = Color.Black;
-        }
-
-        public Camera getCamera()
-        {
-            return stackCamera_;
         }
 
         /// <summary>
-        /// Pops the top TextureDrawer off the stack and returns it
+        /// Pops the top FontDrawer off the stack and returns it
         /// </summary>
-        /// <returns>A reference to the TextureDrawer popped off</returns>
-        internal TextureDrawer pop()
+        /// <returns>A reference to the FontDrawer popped off</returns>
+        internal FontDrawer pop()
         {
             if (top_ >= 0)
             {
@@ -69,14 +61,14 @@ namespace Commando.graphics.multithreading
         /// <summary>
         /// Get a reference to the top of the stack
         /// </summary>
-        /// <returns>reference to the TextureDrawer at the top of the stack</returns>
-        internal TextureDrawer top()
+        /// <returns>reference to the FontDrawer at the top of the stack</returns>
+        internal FontDrawer top()
         {
             return stack_[top_];
         }
 
         /// <summary>
-        /// Puts the next TextureDrawer (whose values are set using getNext()) at the
+        /// Puts the next FontDrawer (whose values are set using getNext()) at the
         /// top of the stack
         /// </summary>
         internal void push()
@@ -89,10 +81,10 @@ namespace Commando.graphics.multithreading
         }
 
         /// <summary>
-        /// Get a reference to the next TextureDrawer in order to set its variables
+        /// Get a reference to the next FontDrawer in order to set its variables
         /// </summary>
-        /// <returns>Next TextureDrawer, which is pushed on to the stack with push()</returns>
-        internal TextureDrawer getNext()
+        /// <returns>Next FontDrawer, which is pushed on to the stack with push()</returns>
+        internal FontDrawer getNext()
         {
             if (top_ == size_ - 1)
             {
@@ -115,7 +107,7 @@ namespace Commando.graphics.multithreading
             if (newSize > size_)
             {
                 int nextSize = (newSize > size_ * 2) ? newSize : size_ * 2;
-                TextureDrawer[] tempStack = new TextureDrawer[nextSize];
+                FontDrawer[] tempStack = new FontDrawer[nextSize];
                 for (int i = 0; i < top_; i++)
                 {
                     tempStack[i] = stack_[i];
@@ -133,7 +125,7 @@ namespace Commando.graphics.multithreading
         /// <param name="newSize">The new size of stack</param>
         public void resizeDestructively(int newSize)
         {
-            stack_ = new TextureDrawer[newSize];
+            stack_ = new FontDrawer[newSize];
             initializeStack();
             top_ = 0;
         }
@@ -142,7 +134,7 @@ namespace Commando.graphics.multithreading
         {
             for (int i = 0; i < size_; i++)
             {
-                stack_[i] = new TextureDrawer();
+                stack_[i] = new FontDrawer(spriteBatch_);
             }
         }
     }
