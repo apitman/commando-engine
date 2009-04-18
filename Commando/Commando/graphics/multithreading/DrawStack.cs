@@ -121,9 +121,8 @@ namespace Commando.graphics.multithreading
                     tempStack[i] = stack_[i];
                 }
                 stack_ = tempStack;
-                initializeStack();
-                tempStack = null;
                 size_ = nextSize;
+                initializeStack();
             }
         }
 
@@ -134,6 +133,7 @@ namespace Commando.graphics.multithreading
         public void resizeDestructively(int newSize)
         {
             stack_ = new TextureDrawer[newSize];
+            size_ = newSize;
             initializeStack();
             top_ = 0;
         }
