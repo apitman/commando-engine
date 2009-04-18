@@ -127,6 +127,7 @@ namespace Commando
             mainMenuList_.Spacing_ = MENU_SPACING;
             mainMenuList_.LayerDepth_ = MENU_DEPTH;
 
+            SoundEngine.getInstance().playCue("go_commando");
             SoundEngine.getInstance().playMusic("epic");
         }
 
@@ -201,7 +202,7 @@ namespace Commando
             //engine_.GraphicsDevice.Clear(Color.Black);
             DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
-            logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
+            //logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
             DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
             TextureDrawer td = stack.getNext();
             td.set(logo_,

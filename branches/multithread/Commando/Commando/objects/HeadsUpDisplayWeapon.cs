@@ -80,7 +80,7 @@ namespace Commando.objects
             td.Color = Color.White;
             td.Effects = SpriteEffects.None;
             td.Rotation = 0.0f;
-            td.Scale = 1.0f;
+            td.Scale = 0.5f;
             stack.push();
         }
     }

@@ -102,10 +102,6 @@ namespace Commando.objects
             actions["default"].Add("throw", new NoAction("lower"));
             actuator_ = new MultiLevelActuator(actions, levels, this, "default", "rest", "lower", "lower");
             
-
-
-            
-
             currentDrawColor_ = Color.White;
             health_.update(15);
 
