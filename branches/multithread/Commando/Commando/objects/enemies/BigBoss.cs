@@ -25,6 +25,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.levels;
 using Commando.ai.brains;
+using System;
 
 namespace Commando.objects.enemies
 {
@@ -61,6 +62,8 @@ namespace Commando.objects.enemies
         protected bool alt_ = false;
 
         protected static readonly List<Vector2> BOUNDS;
+
+        protected int countDown = 10;
 
         static BigBoss()
         {
@@ -134,7 +137,7 @@ namespace Commando.objects.enemies
             actuator_ = new MultiLevelActuator(actions, levels, this, "default", "rest", "lower", "upper");
             
             currentDrawColor_ = Color.White;
-            health_.update(300);
+            health_.update(100);
 
             Weapon_ = new BigBossGatlingGuns(pipeline_, this, getGunHandle(true));
         }
@@ -151,6 +154,22 @@ namespace Commando.objects.enemies
 
             actuator_.update();
             Weapon_.update();
+
+            //TEMP
+            /*
+            Commando.ai.Belief enemy = AI_.Memory_.getFirstBelief(Commando.ai.BeliefType.EnemyLoc);
+            if (countDown <= 0 &&  enemy != null && enemy.handle_ != null && enemy.handle_ is CharacterAbstract)
+            {
+                Missile mis = new Missile(pipeline_, collisionDetector_, (CharacterAbstract)(enemy.handle_));
+                ActionParameters param = new ActionParameters(mis);
+                actuator_.perform("throw", param);
+                countDown = 10;
+            }
+            else
+            {
+                countDown--;
+            }
+            */
 
             if (drawColorCount_ > 0)
             {
@@ -218,18 +237,30 @@ namespace Commando.objects.enemies
             {
                 if (pistol)
                 {
-                    return new Vector2(31f, -38f);
+                    return new Vector2(29f, -36f);
                 }
-                return new Vector2(17f, -44f);
+                return getMissilePosition(new Vector2(45f, -44f));
             }
             else
             {
                 if (pistol)
                 {
-                    return new Vector2(106f - 75f, 113f - 75f);
+                    return new Vector2(29f, 38f);
                 }
-                return new Vector2(92f - 75f, 119f - 75f);
+                return getMissilePosition(new Vector2(45f, 119f - 75f));
             }
+        }
+
+        protected Vector2 getMissilePosition(Vector2 handle)
+        {
+            Vector2 charPos = position_;
+            Vector2 newPos = Vector2.Zero;
+            float angle = CommonFunctions.getAngle(direction_);
+            float cosA = (float)Math.Cos(angle);
+            float sinA = (float)Math.Sin(angle);
+            newPos.X = (handle.X) * cosA - (handle.Y) * sinA + charPos.X;
+            newPos.Y = (handle.X) * sinA + (handle.Y) * cosA + charPos.Y;
+            return newPos;
         }
     }
 }

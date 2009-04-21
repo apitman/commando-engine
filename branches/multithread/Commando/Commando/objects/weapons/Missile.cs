@@ -31,14 +31,15 @@ namespace Commando.objects.weapons
     {
         protected const string TEXTURE_NAME = "missile";
         protected const float RADIUS = 12f;
-        protected const float SPEED = 12.0f;
+        protected const float SPEED = 4.0f;
         protected const float DEPTH = 0.5f;
         protected const int DAMAGE = 20;
         protected static readonly Height HEIGHT = new Height(true, false);
-        protected const float TURNSPEED = .4f;
+        protected const float TURNSPEED = .1f;
 
         private static readonly List<Vector2> BOUNDS_POINTS;
 
+        protected CharacterAbstract target_;
 
         protected int damage_;
 
@@ -52,15 +53,17 @@ namespace Commando.objects.weapons
             BOUNDS_POINTS.Add(new Vector2(-8f, 4f));
         }
 
-        public Missile(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, Vector2 position, Vector2 direction)
-            : base(pipeline, TextureMap.fetchTexture(TEXTURE_NAME), detector, null, RADIUS, HEIGHT, direction * SPEED, position, direction, DEPTH)
+        public Missile(List<DrawableObjectAbstract> pipeline, CollisionDetectorInterface detector, CharacterAbstract target)
+            : base(pipeline, TextureMap.fetchTexture(TEXTURE_NAME), detector, null, RADIUS, HEIGHT, Vector2.Zero, Vector2.Zero, Vector2.Zero, DEPTH)
         {
             damage_ = DAMAGE;
             boundsPolygon_ = new ConvexPolygon(BOUNDS_POINTS, Vector2.Zero);
+            target_ = target;
         }
 
         public override void update(GameTime gameTime)
         {
+            setTargetPosition(target_.getPosition());
             base.update(gameTime);
             // nothing needed here, Projectile works fine and will pass
             //  collisions to our handleCollision() method
