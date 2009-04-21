@@ -36,6 +36,10 @@
     <handle>Sprites\\Boss</handle>
   </image>
   <image>
+    <key>flyingenemy</key>
+    <handle>Sprites\\flyingenemy</handle>
+  </image>
+  <image>
     <key>missile</key>
     <handle>Sprites\\missile</handle>
   </image>
