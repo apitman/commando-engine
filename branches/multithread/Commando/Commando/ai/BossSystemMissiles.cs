@@ -33,7 +33,7 @@ namespace Commando.ai
 
         internal override void update()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

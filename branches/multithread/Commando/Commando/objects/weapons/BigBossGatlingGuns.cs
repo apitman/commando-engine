@@ -27,6 +27,7 @@ namespace Commando.objects.weapons
 {
     class BigBossGatlingGuns : MachineGun
     {
+        protected const int TIME_TO_REFIRE = 0;
 
         public BigBossGatlingGuns(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, gunHandle)

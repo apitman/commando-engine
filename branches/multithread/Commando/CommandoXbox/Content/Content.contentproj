@@ -832,6 +832,12 @@
       <Importer>XMLImporter</Importer>
       <Processor>XMLProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\bosstest.xml">
+      <Link>XML\Levels\bosstest.xml</Link>
+      <Name>bosstest</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml">
       <Link>XML\Sprites\GreenPlayer_Crouch_Pistol_Walk.xml</Link>
       <Name>GreenPlayer_Crouch_Pistol_Walk</Name>
