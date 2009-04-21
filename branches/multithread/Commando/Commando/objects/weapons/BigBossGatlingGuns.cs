@@ -22,12 +22,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.controls;
+using Commando.graphics;
 
 namespace Commando.objects.weapons
 {
     class BigBossGatlingGuns : MachineGun
     {
-        protected const int TIME_TO_REFIRE = 0;
+        new protected const int TIME_TO_REFIRE = 0;
+
+        internal const float MAX_BASE_INACCURACY = 0.03f;
+        internal const float INACCURACY_PER_RECOIL = 0.002f;
+        internal const int RECOIL_PER_SHOT_FIRED = 12;
+        internal const int MAX_RECOIL = 50;
 
         public BigBossGatlingGuns(List<DrawableObjectAbstract> pipeline, CharacterAbstract character, Vector2 gunHandle)
             : base(pipeline, character, gunHandle)
@@ -36,6 +43,45 @@ namespace Commando.objects.weapons
             ClipSize_ = 100;
             CurrentAmmo_ = ClipSize_;
             pistol_ = true;
+            
+        }
+
+        public override void update()
+        {
+            base.update();
+        }
+
+        public override void shoot()
+        {
+            if (refireCounter_ == 0 && CurrentAmmo_ > 0)
+            {
+                rotation_.Normalize();
+                Vector2 bulletPos = position_ + rotation_ * gunTip_;
+                float inaccuracy = MAX_BASE_INACCURACY + INACCURACY_PER_RECOIL * recoil_;
+                Bullet bullet = new SmallBullet(drawPipeline_, collisionDetector_, bulletPos, adjustForInaccuracy(rotation_, inaccuracy));
+                refireCounter_ = TIME_TO_REFIRE;
+                CurrentAmmo_--;
+                character_.getAmmo().update(CurrentAmmo_);
+
+                weaponFired_ = true;
+                recoil_ += RECOIL_PER_SHOT_FIRED;
+                if (recoil_ > MAX_RECOIL)
+                    recoil_ = MAX_RECOIL;
+
+                SoundEngine.getInstance().playCue("gunshot");
+            }
+            else if (refireCounter_ == 0)
+            {
+                InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
+                if (character_ is ActuatedMainPlayer)
+                {
+                    character_.getActuator().perform("reload", new ActionParameters());
+                }
+                else
+                {
+                    character_.reload();
+                }
+            }
         }
 
         public override void draw()

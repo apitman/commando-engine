@@ -126,10 +126,10 @@ namespace Commando.graphics
 
         public void setParameters(ActionParameters parameters)
         {
-            if (parameters.object1 is Grenade)
+            if (parameters.object1 != null && parameters.object1 is Missile)
             {
-                (parameters.object1 as Grenade).setDirection(character_.getDirection());
-                (parameters.object1 as Grenade).setPosition(character_.getGunHandle(false));
+                (parameters.object1 as Missile).setDirection(character_.getDirection());
+                (parameters.object1 as Missile).setPosition(character_.getGunHandle(false));
             }
             else
             {
