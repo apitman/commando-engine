@@ -35,6 +35,7 @@ namespace Commando.objects.weapons
         protected const float DEPTH = 0.5f;
         protected const int DAMAGE = 20;
         protected static readonly Height HEIGHT = new Height(true, false);
+        protected const float TURNSPEED = .4f;
 
         private static readonly List<Vector2> BOUNDS_POINTS;
 
@@ -91,6 +92,33 @@ namespace Commando.objects.weapons
         {
             //return false;
             return !((obj is CharacterAbstract) || (obj is ItemAbstract) || (obj is LevelTransitionObject));
+        }
+
+        public void setTargetPosition(Vector2 position)
+        {
+            Vector2 newDirection = position - position_;
+            float rotationDirectional = (float)Math.Atan2(newDirection.Y, newDirection.X);
+            float rotAngle = CommonFunctions.getAngle(direction_);
+
+            float rotDiff = MathHelper.WrapAngle(rotAngle - rotationDirectional);
+            if (Math.Abs(rotDiff) <= TURNSPEED || Math.Abs(rotDiff) >= MathHelper.TwoPi - TURNSPEED)
+            {
+                direction_ = newDirection;
+            }
+            else if (rotDiff < 0f && rotDiff > -MathHelper.Pi)
+            {
+                rotAngle += TURNSPEED;
+                direction_.X = (float)Math.Cos((double)rotAngle);
+                direction_.Y = (float)Math.Sin((double)rotAngle);
+            }
+            else
+            {
+                rotAngle -= TURNSPEED;
+                direction_.X = (float)Math.Cos((double)rotAngle);
+                direction_.Y = (float)Math.Sin((double)rotAngle);
+            }
+            direction_.Normalize();
+            velocity_ = direction_ * SPEED;
         }
     }
 }
