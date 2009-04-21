@@ -145,7 +145,7 @@ namespace Commando
             td.Position = position_ + rotation_;
             td.Dest = false;
             td.CoordinateType = CoordinateTypeEnum.RELATIVE;
-            td.Depth = character_.getDepth() - 0.01f;
+            td.Depth = character_.getDepth() - 0.005f;
             td.Centered = true;
             td.Color = Color.White;
             td.Effects = SpriteEffects.None;
