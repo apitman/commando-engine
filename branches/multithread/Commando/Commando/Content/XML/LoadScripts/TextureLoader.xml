@@ -309,31 +309,31 @@
   </image>
   <image>
     <key>ambushRoom</key>
-    <handle>Sprites\\ambushRoomtxt</handle>
+    <handle>Sprites\\Overlays\\ambushRoomtxt</handle>
   </image>
   <image>
     <key>bay57</key>
-    <handle>Sprites\\bay57txt</handle>
+    <handle>Sprites\\Overlays\\bay57txt</handle>
   </image>
   <image>
     <key>deadRobot1</key>
-    <handle>Sprites\\deadRobot1</handle>  
+    <handle>Sprites\\Overlays\\deadRobot1</handle>  
   </image>
   <image>
     <key>intensiveCare</key>
-    <handle>Sprites\\intensiveCaretxt</handle>
+    <handle>Sprites\\Overlays\\intensiveCaretxt</handle>
   </image>
   <image>
     <key>stain1</key>
-    <handle>Sprites\\stain1</handle>  
+    <handle>Sprites\\Overlays\\stain1</handle>  
   </image>
   <image>
     <key>stain2</key>
-    <handle>Sprites\\stain2</handle>    
+    <handle>Sprites\\Overlays\\stain2</handle>    
   </image>
   <image>
     <key>unfinishedRobot</key>
-    <handle>Sprites\\unfinishedRobot</handle>
+    <handle>Sprites\\Overlays\\unfinishedRobot</handle>
   </image>
 </textures>
   </Asset>

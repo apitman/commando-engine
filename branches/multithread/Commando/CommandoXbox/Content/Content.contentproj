@@ -735,57 +735,57 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\ambushRoomtxt.png">
-      <Link>Sprites\ambushRoomtxt.png</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\flyingenemy.png">
+      <Link>Sprites\flyingenemy.png</Link>
+      <Name>flyingenemy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\ambushRoomtxt.png">
+      <Link>Sprites\Overlays\ambushRoomtxt.png</Link>
       <Name>ambushRoomtxt</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\armorytxt.png">
-      <Link>Sprites\armorytxt.png</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\armorytxt.png">
+      <Link>Sprites\Overlays\armorytxt.png</Link>
       <Name>armorytxt</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\bay57txt.png">
-      <Link>Sprites\bay57txt.png</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\bay57txt.png">
+      <Link>Sprites\Overlays\bay57txt.png</Link>
       <Name>bay57txt</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\deadRobot1.png">
-      <Link>Sprites\deadRobot1.png</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\deadRobot1.png">
+      <Link>Sprites\Overlays\deadRobot1.png</Link>
       <Name>deadRobot1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\intensiveCaretxt.png">
-      <Link>Sprites\intensiveCaretxt.png</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\intensiveCaretxt.png">
+      <Link>Sprites\Overlays\intensiveCaretxt.png</Link>
       <Name>intensiveCaretxt</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\stain1.png">
-      <Link>Sprites\stain1.png</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\stain1.png">
+      <Link>Sprites\Overlays\stain1.png</Link>
       <Name>stain1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\stain2.png">
-      <Link>Sprites\stain2.png</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\stain2.png">
+      <Link>Sprites\Overlays\stain2.png</Link>
       <Name>stain2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\unfinishedRobot.png">
-      <Link>Sprites\unfinishedRobot.png</Link>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\unfinishedRobot.png">
+      <Link>Sprites\Overlays\unfinishedRobot.png</Link>
       <Name>unfinishedRobot</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="..\..\Commando\Content\Sprites\flyingenemy.png">
-      <Link>Sprites\flyingenemy.png</Link>
-      <Name>flyingenemy</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
