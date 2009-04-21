@@ -1747,7 +1747,8 @@
     <item type="hBox" posX="550" posY="130" />
     <item type="hBox" posX="553" posY="163" />
     <item type="aBox" posX="581" posY="138" />
-    <item type="aTrans" posX="283" posY="83" nextLevel="demolevel3" />
+    <item type="aTrans" posX="283" posY="83" nextLevel="demolevel3" story="true" storyDuration="5" storyImage="Sprites\\Stories\\storyboard2" storyText="The robots' logic is so sound that they were able to
+convince some of the security guards to join them"/>
   </items>
   <playerLocation x="681" y="137" />
   <overlay texture="stain1" posX="681" posY="387" depth="0.11" />
