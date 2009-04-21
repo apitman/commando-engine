@@ -583,6 +583,9 @@
     <Compile Include="..\Commando\objects\weapons\BigBossGatlingGuns.cs">
       <Link>objects\weapons\BigBossGatlingGuns.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\weapons\Buckshot.cs">
+      <Link>objects\weapons\Buckshot.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\Bullet.cs">
       <Link>objects\weapons\Bullet.cs</Link>
     </Compile>
