@@ -29,15 +29,16 @@ namespace Commando.objects.weapons
     internal class Shrapnel : NonAnimatedMovableObjectAbstract
     {
         protected Color color_;
-        //protected float depth_;
+        protected float size_;
 
         protected int lifeLeft_;
 
-        public Shrapnel(List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 velocity, float depth, Color color, int lifeLeft)
+        public Shrapnel(List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 velocity, float depth, Color color, int lifeLeft, int size)
             : base(pipeline, TextureMap.fetchTexture("Pixel"), 0, velocity, position, Vector2.Zero, depth)
         {
             color_ = color;
             lifeLeft_ = lifeLeft;
+            size_ = size;
         }
 
         public override void update(GameTime gameTime)
@@ -63,7 +64,7 @@ namespace Commando.objects.weapons
             td.Color = color_;
             td.Effects = SpriteEffects.None;
             td.Direction = direction_;
-            td.Scale = 1.0f;
+            td.Scale = size_;
             stack.push();
         }
     }
@@ -74,35 +75,77 @@ namespace Commando.objects.weapons
     /// </summary>
     static class ShrapnelGenerator
     {
-        const int DEFAULT_COUNT_MIN = 3;
-        const int DEFAULT_COUNT_MAX = 7;
-        const int DEFAULT_COUNT_RANGE = DEFAULT_COUNT_MAX - DEFAULT_COUNT_MIN;
+        static ShrapnelInfo DEFAULT_SHRAPNEL_INFO;
 
-        const int DEFAULT_VELOCITY_MIN = -3;
-        const int DEFAULT_VELOCITY_MAX = 3;
-        const int DEFAULT_VELOCITY_RANGE = DEFAULT_VELOCITY_MAX - DEFAULT_VELOCITY_MIN;
-
-        const int DEFAULT_LIFE_MIN = 4;
-        const int DEFAULT_LIFE_MAX = 10;
-        const int DEFAULT_LIFE_RANGE = DEFAULT_LIFE_MAX - DEFAULT_LIFE_MIN;
+        static ShrapnelGenerator()
+        {
+            DEFAULT_SHRAPNEL_INFO = new ShrapnelInfo();
+            DEFAULT_SHRAPNEL_INFO.COUNT_MIN = 3;
+            DEFAULT_SHRAPNEL_INFO.COUNT_MAX = 7;
+            DEFAULT_SHRAPNEL_INFO.VELOCITY_MIN = -3;
+            DEFAULT_SHRAPNEL_INFO.VELOCITY_MAX = 3;
+            DEFAULT_SHRAPNEL_INFO.LIFE_MIN = 4;
+            DEFAULT_SHRAPNEL_INFO.LIFE_MAX = 10;
+            DEFAULT_SHRAPNEL_INFO.SIZE = 1;
+        }
 
         internal static void createShrapnel(List<DrawableObjectAbstract> pipeline, Vector2 pos, Color color, float depth)
+        {
+            createShrapnel(pipeline, pos, color, depth, ref DEFAULT_SHRAPNEL_INFO);
+        }
+
+        internal static void createShrapnel(List<DrawableObjectAbstract> pipeline, Vector2 pos, Color color, float depth, ref ShrapnelInfo info)
         {
             GameTexture image = TextureMap.fetchTexture("Pixel");
 
             // use a random seed based on position, not time, otherwise all the bullets
             //  in a frame will have the same shrapnel generated (or so it seems)
             Random r = RandomManager.get();
-            int count = r.Next(DEFAULT_COUNT_RANGE) + DEFAULT_COUNT_MIN;
+            int count = r.Next(info.COUNT_RANGE) + info.COUNT_MIN;
             for (int i = 0; i < count; i++)
             {
                 Vector2 v =
-                    new Vector2(r.Next(DEFAULT_VELOCITY_RANGE) + DEFAULT_VELOCITY_MIN,
-                                r.Next(DEFAULT_VELOCITY_RANGE) + DEFAULT_VELOCITY_MIN);
-                int life = r.Next(DEFAULT_LIFE_RANGE) + DEFAULT_LIFE_MIN;
+                    new Vector2(r.Next(info.VELOCITY_RANGE) + info.VELOCITY_MIN,
+                                r.Next(info.VELOCITY_RANGE) + info.VELOCITY_MIN);
+                int life = r.Next(info.LIFE_RANGE) + info.LIFE_MIN;
                 
-                Shrapnel s = new Shrapnel(pipeline, pos, v, depth, color, life);
+                Shrapnel s = new Shrapnel(pipeline, pos, v, depth, color, life, info.SIZE);
             }
         }
+    }
+
+    struct ShrapnelInfo
+    {
+        internal int COUNT_MIN;
+        internal int COUNT_MAX;
+        internal int COUNT_RANGE
+        {
+            get
+            {
+                return COUNT_MAX - COUNT_MIN;
+            }
+        }
+
+        internal int VELOCITY_MIN;
+        internal int VELOCITY_MAX;
+        internal int VELOCITY_RANGE
+        {
+            get
+            {
+                return VELOCITY_MAX - VELOCITY_MIN;
+            }
+        }
+
+        internal int LIFE_MIN;
+        internal int LIFE_MAX;
+        internal int LIFE_RANGE
+        {
+            get
+            {
+                return LIFE_MAX - LIFE_MIN;
+            }
+        }
+
+        internal int SIZE;
     }
 }

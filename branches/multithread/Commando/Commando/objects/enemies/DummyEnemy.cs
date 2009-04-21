@@ -173,5 +173,19 @@ namespace Commando.objects
                 drawColorCount_ = 2;
             }
         }
+
+        public override void die()
+        {
+            base.die();
+            ShrapnelInfo info = new ShrapnelInfo();
+            info.COUNT_MIN = 30;
+            info.COUNT_MAX = 40;
+            info.VELOCITY_MIN = -3;
+            info.VELOCITY_MAX = 3;
+            info.LIFE_MIN = 3;
+            info.LIFE_MAX = 12;
+            info.SIZE = 2;
+            ShrapnelGenerator.createShrapnel(pipeline_, position_, Color.Yellow, Constants.DEPTH_DEBUG_LINES, ref info);
+        }
     }
 }
