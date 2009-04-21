@@ -41,6 +41,7 @@ namespace Commando.objects.weapons
         internal const float INACCURACY_PER_RECOIL = 0.002f;
         internal const int RECOIL_PER_SHOT_FIRED = 12;
         internal const int MAX_RECOIL = 50;
+        protected int timeToRefire;
 
         static MachineGun()
         {
@@ -54,6 +55,7 @@ namespace Commando.objects.weapons
             drawOffset_ = DRAW_OFFSET;
             gunTip_ = gunLength_ / 2f + DRAW_OFFSET;
             CurrentAmmo_ = CLIP_SIZE;
+            timeToRefire = 0;
         }
 
         public override void shoot()
@@ -64,7 +66,7 @@ namespace Commando.objects.weapons
                 Vector2 bulletPos = position_ + rotation_ * gunTip_;
                 float inaccuracy = MAX_BASE_INACCURACY + INACCURACY_PER_RECOIL * recoil_;
                 Bullet bullet = new Bullet(drawPipeline_, collisionDetector_, bulletPos, adjustForInaccuracy(rotation_,inaccuracy));
-                refireCounter_ = TIME_TO_REFIRE;
+                refireCounter_ = timeToRefire;
                 CurrentAmmo_--;
                 character_.getAmmo().update(CurrentAmmo_);
 

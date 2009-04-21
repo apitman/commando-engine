@@ -32,6 +32,14 @@
   <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Reload_Crouch_Pistol.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Reload_Crouch_Rifle.xml</texture>
   <image>
+    <key>Boss</key>
+    <handle>Sprites\\Boss</handle>
+  </image>
+  <image>
+    <key>missile</key>
+    <handle>Sprites\\missile</handle>
+  </image>
+  <image>
     <key>GreenPlayer_Crouch_Stationary</key>
     <handle>Sprites\\GreenPlayer_Crouch_Stationary</handle>
   </image>
