@@ -523,6 +523,9 @@
     <Compile Include="..\Commando\objects\enemies\DummyEnemy.cs">
       <Link>objects\enemies\DummyEnemy.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\enemies\FlyingEnemy.cs">
+      <Link>objects\enemies\FlyingEnemy.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\enemies\HumanEnemy.cs">
       <Link>objects\enemies\HumanEnemy.cs</Link>
     </Compile>

@@ -32,7 +32,7 @@ namespace Commando.objects.enemies
     {
         private const float FRAMELENGTHMODIFIER = 4.0f;
 
-        private const float GUNHANDLEX = 11.0f;
+        private const float GUNHANDLEX = 40.0f - 22.5f;
 
         private const float GUNHANDLEY = 0.0f;
 
@@ -72,7 +72,7 @@ namespace Commando.objects.enemies
             collisionDetector_ = null;
             radius_ = RADIUS;
             Allegiance_ = 2; 
-            height_ = new Height(true, true);
+            height_ = new Height(false, true);
             boundsPolygon_ = new CircularConvexPolygon(radius_, position_);
 
             

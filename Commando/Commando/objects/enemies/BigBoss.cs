@@ -103,9 +103,9 @@ namespace Commando.objects.enemies
             boundsPolygon_ = new CircularConvexPolygon(20, position_);
 
             
-            AnimationInterface run = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, boundsPolygon_);
-            AnimationInterface runTo = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, boundsPolygon_);
-            AnimationInterface rest = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, boundsPolygon_);
+            AnimationInterface run = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, bounds);
+            AnimationInterface runTo = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, bounds);
+            AnimationInterface rest = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, bounds);
             AnimationInterface top = new LoopAnimation(TextureMap.fetchTexture("Boss"), frameLengthModifier_, depth_, bounds);
             AnimationInterface[] restAnims = new AnimationInterface[3];
             restAnims[0] = rest;
@@ -136,7 +136,7 @@ namespace Commando.objects.enemies
             currentDrawColor_ = Color.White;
             health_.update(300);
 
-            Weapon_ = new MachineGun(pipeline_, this, getGunHandle(true));
+            Weapon_ = new BigBossGatlingGuns(pipeline_, this, getGunHandle(true));
         }
 
         public override float getRadius()
@@ -147,6 +147,7 @@ namespace Commando.objects.enemies
         public override void update(GameTime gameTime)
         {
             AI_.update();
+            alt_ = !alt_;
 
             actuator_.update();
             Weapon_.update();
@@ -177,11 +178,7 @@ namespace Commando.objects.enemies
 
         public override ConvexPolygonInterface getBounds(HeightEnum height)
         {
-            if (Height.getHeight(height).collides(height_))
-            {
-                return boundsPolygon_;
-            }
-            return null;
+            return actuator_.getBounds(height);
         }
 
         public override ActuatorInterface getActuator()
@@ -189,8 +186,18 @@ namespace Commando.objects.enemies
             return actuator_;
         }
 
+        public override void reload()
+        {
+            Weapon_.CurrentAmmo_ += Weapon_.ClipSize_;
+            ammo_.update(Weapon_.CurrentAmmo_);
+        }
+
         public override void damage(int amount, CollisionObjectInterface obj)
         {
+            if (!(obj is Missile))
+            {
+                return;
+            }
             health_.update(health_.getValue() - amount);
             if (health_.getValue() <= 0)
             {
@@ -211,19 +218,17 @@ namespace Commando.objects.enemies
             {
                 if (pistol)
                 {
-                    alt_ = false;
-                    return new Vector2(-38f, -31f);
+                    return new Vector2(31f, -38f);
                 }
-                return new Vector2(-44f, -17f);
+                return new Vector2(17f, -44f);
             }
             else
             {
                 if (pistol)
                 {
-                    alt_ = true;
-                    return new Vector2(113f, 106f);
+                    return new Vector2(106f - 75f, 113f - 75f);
                 }
-                return new Vector2(119f, 92f);
+                return new Vector2(92f - 75f, 119f - 75f);
             }
         }
     }
