@@ -335,6 +335,14 @@
     <key>unfinishedRobot</key>
     <handle>Sprites\\Overlays\\unfinishedRobot</handle>
   </image>
+ <image>
+    <key>instructoverlay</key>
+    <handle>Sprites\\Overlays\\instructoverlay</handle>
+  </image>
+  <image>
+    <key>armory</key>
+    <handle>Sprites\\Overlays\\armorytxt</handle>
+  </image>
 </textures>
   </Asset>
 </XnaContent>

@@ -154,7 +154,7 @@ namespace Commando
                 {
                     case 0:
                         SoundEngine.getInstance().playMusic("alarm");
-                        Level firstLevel = Level.getLevelFromContent(@"XML\Levels\bosstest", engine_);
+                        Level firstLevel = Level.getLevelFromContent(@"XML\Levels\demolevel1", engine_);
                         return new EngineStateGameplay(engine_, firstLevel);
                     case 1:
                         SoundEngine.getInstance().playMusic("epic");
