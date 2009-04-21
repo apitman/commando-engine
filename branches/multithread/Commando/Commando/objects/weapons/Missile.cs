@@ -31,7 +31,7 @@ namespace Commando.objects.weapons
     {
         protected const string TEXTURE_NAME = "missile";
         protected const float RADIUS = 12f;
-        protected const float SPEED = 4.0f;
+        protected const float SPEED = 2.0f;
         protected const float DEPTH = 0.5f;
         protected const int DAMAGE = 20;
         protected static readonly Height HEIGHT = new Height(true, false);

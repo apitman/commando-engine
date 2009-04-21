@@ -136,6 +136,9 @@
     <Compile Include="..\Commando\ai\planning\GoalInvestigate.cs">
       <Link>ai\planning\GoalInvestigate.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\GoalKeepDistance.cs">
+      <Link>ai\planning\GoalKeepDistance.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\GoalKill.cs">
       <Link>ai\planning\GoalKill.cs</Link>
     </Compile>

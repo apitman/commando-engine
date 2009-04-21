@@ -48,6 +48,7 @@ namespace Commando.ai.planning
             parent.action = new ActionFlee(character_);
             parent.cost += COST;
             parent.setInt(Variable.TargetHealth, node.values[Variable.TargetHealth].i + 1);
+            parent.setBool(Variable.FarFromTarget, false);
 
             return parent;
         }
@@ -55,6 +56,7 @@ namespace Commando.ai.planning
         internal override void register(Dictionary<int, List<ActionType>> actionMap)
         {
             actionMap[Variable.TargetHealth].Add(this);
+            actionMap[Variable.FarFromTarget].Add(this);
         }
     }
 

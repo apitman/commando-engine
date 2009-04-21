@@ -71,7 +71,14 @@ namespace Commando.graphics.multithreading
 
             while (true)
             {
-                tick();
+                try
+                {
+                    tick();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
         }
 

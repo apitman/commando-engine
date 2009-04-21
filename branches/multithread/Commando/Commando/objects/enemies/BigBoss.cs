@@ -37,7 +37,9 @@ namespace Commando.objects.enemies
 
         private const float GUNHANDLEY = 0.0f;
 
-        const float SPEED = 5.0f;
+        const float SPEED = 4.0f;
+
+        const int MAX_HEALTH = 100;
 
         protected Vector2 movingToward_;
 
@@ -51,7 +53,7 @@ namespace Commando.objects.enemies
 
         protected ActuatorInterface actuator_;
 
-        protected  static readonly float RADIUS;
+        protected static readonly float RADIUS;
 
         protected float radius_;
 
@@ -88,7 +90,7 @@ namespace Commando.objects.enemies
         }
 
         public BigBoss(List<DrawableObjectAbstract> pipeline, Vector2 pos) :
-            base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
+            base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "bigboss", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
         {
             AI_ = new BossAI(this);
 
@@ -137,7 +139,7 @@ namespace Commando.objects.enemies
             actuator_ = new MultiLevelActuator(actions, levels, this, "default", "rest", "lower", "upper");
             
             currentDrawColor_ = Color.White;
-            health_.update(100);
+            health_.update(MAX_HEALTH);
 
             Weapon_ = new BigBossGatlingGuns(pipeline_, this, getGunHandle(true));
         }

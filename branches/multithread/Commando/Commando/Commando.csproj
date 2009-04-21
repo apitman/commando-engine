@@ -117,6 +117,7 @@
     <Compile Include="ai\planning\Goal.cs" />
     <Compile Include="ai\planning\GoalIdle.cs" />
     <Compile Include="ai\planning\GoalInvestigate.cs" />
+    <Compile Include="ai\planning\GoalKeepDistance.cs" />
     <Compile Include="ai\planning\GoalKill.cs" />
     <Compile Include="ai\planning\GoalManager.cs" />
     <Compile Include="ai\planning\GoalPatrol.cs" />

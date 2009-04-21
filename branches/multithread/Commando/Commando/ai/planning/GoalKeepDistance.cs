@@ -20,32 +20,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
-using Commando.ai.planning;
-using Commando.ai.sensors;
 
-namespace Commando.ai.brains
+namespace Commando.ai.planning
 {
-    class BossAI : AI
+    class GoalKeepDistance : Goal
     {
-        const float FIELD_OF_VIEW = (float)Math.PI;
-
-        public BossAI(NonPlayableCharacterAbstract npc)
-            : base(npc)
+        internal GoalKeepDistance(AI ai)
+            : base(ai)
         {
-            GoalManager_.addGoal(new GoalIdle(this));
-            GoalManager_.addGoal(new GoalInvestigate(this));
-            GoalManager_.addGoal(new GoalKill(this));
-            GoalManager_.addGoal(new GoalKeepDistance(this));
+            node_ = new SearchNode();
+            node_.setBool(Variable.FarFromTarget, true);
+        }
 
-            PlanManager_.addAction(new ActionTypeGoto(npc));
-            PlanManager_.addAction(new ActionTypeInvestigate(npc));
-            PlanManager_.addAction(new ActionTypeAggressiveFire(npc));
-            PlanManager_.addAction(new ActionTypeFlee(npc));
-
-            sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));
-
-            systems_.Add(new BossSystemMissiles(this));
+        internal override void refresh()
+        {
+            Belief b = AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
+            if (b == null)
+            {
+                this.handle_ = null;
+                Relevance_ = 0.0f;
+            }
+            else
+            {
+                this.handle_ = b.handle_;
+                float distRelevance = (200 - CommonFunctions.distance(AI_.Character_.getPosition(), b.position_));
+                float healthRelevance = (100 - AI_.Character_.getHealth().getValue());
+                if (distRelevance < 0) distRelevance = 0;
+                if (healthRelevance < 0) healthRelevance = 0;
+                Relevance_ = distRelevance + healthRelevance;
+            }
         }
     }
 }
