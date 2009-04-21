@@ -44,7 +44,9 @@ namespace Commando.objects
 
         protected bool usesStory_;
 
-        protected string storyText_;
+        protected string storyImgFilepath_;
+
+        protected string storyAltText_;
 
         protected int storyDuration_;
 
@@ -60,7 +62,7 @@ namespace Commando.objects
             BOUND_POINTS.Add(new Vector2(-15.0f, 15.0f));
         }
 
-        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction, bool isPackaged, bool usesStory, int storyDuration, string storyText)
+        public LevelTransitionObject(string nextLevel, CollisionDetectorInterface detector, Vector2 center, List<DrawableObjectAbstract> pipeline, Vector2 position, Vector2 direction, bool isPackaged, bool usesStory, int storyDuration, string storyImgFilepath, string storyAltText)
             : base(pipeline, detector, TextureMap.fetchTexture("levelTransition"), position, direction, DRAW_DEPTH, RADIUS, HEIGHT)
         {
             bounds_ = new ConvexPolygon(BOUND_POINTS, center);
@@ -70,7 +72,8 @@ namespace Commando.objects
             isPackaged_ = isPackaged;
             usesStory_ = usesStory;
             storyDuration_ = storyDuration;
-            storyText_ = storyText;
+            storyImgFilepath_ = storyImgFilepath;
+            storyAltText_ = storyAltText;
             //transitionType_ = transitionType;
         }
 
@@ -105,7 +108,7 @@ namespace Commando.objects
             
             if (usesStory_)
             {
-                return new EngineStateStorySegment(engine, new EngineStateGameplay(engine, level), storyDuration_, storyText_);
+                return new EngineStateStorySegment(engine, new EngineStateGameplay(engine, level), storyDuration_, storyImgFilepath_, storyAltText_);
             }
             else
             {

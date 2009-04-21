@@ -214,7 +214,7 @@ namespace Commando.levels
             {
                 parseEnemy(tList[i]);
             }
-            // Now load the healthBoxes and ammoBoxes
+            // Now load the healthBoxes, ammoBoxes, weapon pickups, and level transitions
             tList = doc.GetElementsByTagName("item");
             for (int i = 0; i < tList.Count; i++)
             {
@@ -300,8 +300,8 @@ namespace Commando.levels
                     // HealthBox
                     XmlElement hBoxElement = doc.CreateElement("item");
                     hBoxElement.SetAttribute("type", "hBox");
-                    hBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
-                    hBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
+                    hBoxElement.SetAttribute("posX", Convert.ToInt32(items_[i].getPosition().X).ToString());
+                    hBoxElement.SetAttribute("posY", Convert.ToInt32(items_[i].getPosition().Y).ToString());
                     itemsElement.AppendChild(hBoxElement);
                 }
                 else if (items_[i] is AmmoBox)
@@ -309,8 +309,8 @@ namespace Commando.levels
                     // AmmoBox
                     XmlElement aBoxElement = doc.CreateElement("item");
                     aBoxElement.SetAttribute("type", "aBox");
-                    aBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
-                    aBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
+                    aBoxElement.SetAttribute("posX", Convert.ToInt32(items_[i].getPosition().X).ToString());
+                    aBoxElement.SetAttribute("posY", Convert.ToInt32(items_[i].getPosition().Y).ToString());
                     itemsElement.AppendChild(aBoxElement);
                 }
                 else if (items_[i] is LevelTransitionObject)
@@ -319,8 +319,8 @@ namespace Commando.levels
                     LevelTransitionObject myTrans = items_[i] as LevelTransitionObject;
                     XmlElement aTransElement = doc.CreateElement("item");
                     aTransElement.SetAttribute("type", "aTrans");
-                    aTransElement.SetAttribute("posX", myTrans.getPosition().X.ToString());
-                    aTransElement.SetAttribute("posY", myTrans.getPosition().Y.ToString());
+                    aTransElement.SetAttribute("posX", Convert.ToInt32(myTrans.getPosition().X).ToString());
+                    aTransElement.SetAttribute("posY", Convert.ToInt32(myTrans.getPosition().Y).ToString());
                     aTransElement.SetAttribute("nextLevel", myTrans.getNextLevel());
 
                     itemsElement.AppendChild(aTransElement);
@@ -330,8 +330,8 @@ namespace Commando.levels
                     WeaponBox myWpnBox = items_[i] as WeaponBox;
                     XmlElement aWpnBoxElement = doc.CreateElement("item");
                     aWpnBoxElement.SetAttribute("type", "aWpnBox");
-                    aWpnBoxElement.SetAttribute("posX", myWpnBox.getPosition().X.ToString());
-                    aWpnBoxElement.SetAttribute("posY", myWpnBox.getPosition().Y.ToString());
+                    aWpnBoxElement.SetAttribute("posX", Convert.ToInt32(myWpnBox.getPosition().X).ToString());
+                    aWpnBoxElement.SetAttribute("posY", Convert.ToInt32(myWpnBox.getPosition().Y).ToString());
                     string wpnType;
                     if (myWpnBox.WeapnType == WeaponBox.WeaponType.MachineGun)
                         wpnType = "machineGun";
@@ -348,8 +348,8 @@ namespace Commando.levels
             }
             // Add playerLocation
             XmlElement playerLocElement = doc.CreateElement("playerLocation");
-            playerLocElement.SetAttribute("x", playerStartLocation_.X.ToString());
-            playerLocElement.SetAttribute("y", playerStartLocation_.Y.ToString());
+            playerLocElement.SetAttribute("x", Convert.ToInt32(playerStartLocation_.X).ToString());
+            playerLocElement.SetAttribute("y", Convert.ToInt32(playerStartLocation_.Y).ToString());
             levelElement.AppendChild(playerLocElement);
 
             // Finish up and save the document
@@ -537,14 +537,15 @@ namespace Commando.levels
                 Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
                 string nextLevel;
                 nextLevel = itemElement.GetAttribute("nextLevel");
-                bool usesStory = itemElement.GetAttribute("story") == "true";
+                bool usesStory = itemElement.GetAttribute("story").ToLower() == "true";
                 int storyDuration = 0;
                 if (usesStory)
                 {
                     storyDuration = Convert.ToInt32(itemElement.GetAttribute("storyDuration"));
                 }
                 string storyText = itemElement.GetAttribute("storyText");
-                items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, Pipeline_, new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), this.isPackagedLevel_, usesStory, storyDuration, storyText));
+                string storyImgPath = itemElement.GetAttribute("storyImage"); // AMP: TODO Resume here
+                items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, Pipeline_, new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), this.isPackagedLevel_, usesStory, storyDuration, storyImgPath, storyText));
             }
             else if (itemElement.GetAttribute("type") == "aWpnBox")
             {
