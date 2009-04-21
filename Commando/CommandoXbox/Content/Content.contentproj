@@ -795,6 +795,36 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard1.png">
+      <Link>Sprites\Stories\storyboard1.png</Link>
+      <Name>storyboard1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard2.png">
+      <Link>Sprites\Stories\storyboard2.png</Link>
+      <Name>storyboard2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard3.png">
+      <Link>Sprites\Stories\storyboard3.png</Link>
+      <Name>storyboard3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard4.png">
+      <Link>Sprites\Stories\storyboard4.png</Link>
+      <Name>storyboard4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard5.png">
+      <Link>Sprites\Stories\storyboard5.png</Link>
+      <Name>storyboard5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
       <Link>XML\defaultlevel.xml</Link>
       <Name>defaultlevel</Name>

@@ -103,7 +103,7 @@ namespace Commando.ai
                     retVal = "He's over there!";
                     break;
                 case BeliefType.EnemyHealth:
-                    retVal = "His health is";
+                    retVal = "His health is ";
                     retVal += data_.int1;
                     break;
                 case BeliefType.AllyLoc:
