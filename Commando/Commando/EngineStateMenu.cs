@@ -24,6 +24,7 @@ using Commando.graphics;
 using System;
 using Commando.levels;
 using Commando.graphics.multithreading;
+using System.IO;
 
 namespace Commando
 {
@@ -154,7 +155,7 @@ namespace Commando
                 {
                     case 0:
                         SoundEngine.getInstance().playMusic("alarm");
-                        Level firstLevel = Level.getLevelFromContent(@"XML\Levels\demolevel1", engine_);
+                        Level firstLevel = Level.getLevelFromContent("demolevel1", engine_);
                         return new EngineStateGameplay(engine_, firstLevel);
                     case 1:
                         SoundEngine.getInstance().playMusic("epic");

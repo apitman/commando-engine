@@ -1762,6 +1762,7 @@
   <playerLocation x="71" y="187" />
   <overlay texture="unfinishedRobot" posX ="71" posY ="57" depth="0.51"/>
    <overlay texture="unfinishedRobot" posX ="91" posY = "67" depth="0.51"/>
+  <item type="aTrans" posX="430" posY="645" nextLevel="bosstest" />
 <overlay texture="deadRobot1" posX ="370" posY = "170" depth="0.11"/>
 <overlay texture="stain1" posX ="140" posY = "600" depth="0.11"/>
 </level>
