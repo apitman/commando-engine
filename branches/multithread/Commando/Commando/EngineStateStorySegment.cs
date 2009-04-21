@@ -55,31 +55,67 @@ namespace Commando
 
         protected string storyText_;
 
+        protected bool isUsingImage_;
+
+        protected GameTexture storyImg_;
+
+        /// <summary>
+        /// This is not the recommended ctor
+        /// </summary>
+        /// <param name="engine"></param>
+        /// <param name="nextState"></param>
         public EngineStateStorySegment(Engine engine, EngineStateInterface nextState)
         {
             engine_ = engine;
             nextState_ = nextState;
             framesSpentInStory_ = 0;
             DurationOfStory_ = 1;
-            storyText_ = "You hear the cold, metallic clunks of robot feet walking\n toward you, but you must keep moving forward.";
+            storyText_ = "You hear the cold, metallic clanks of robot feet pacing\n the room ahead, but you must keep moving forward.";
+            isUsingImage_ = false;
         }
 
+        /// <summary>
+        /// This is not the recommended ctor, either
+        /// </summary>
+        /// <param name="engine"></param>
+        /// <param name="nextState"></param>
+        /// <param name="durationOfStorySegment"></param>
         public EngineStateStorySegment(Engine engine, EngineStateInterface nextState, int durationOfStorySegment)
         {
             engine_ = engine;
             nextState_ = nextState;
             framesSpentInStory_ = 0;
             DurationOfStory_ = durationOfStorySegment;
-            storyText_ = "You have many questions. The answers lie just around the corner.";
+            storyText_ = "You have many questions. The next room could provide the answers you seek.";
+            isUsingImage_ = false;
         }
 
-        public EngineStateStorySegment(Engine engine, EngineStateInterface nextState, int durationOfStorySegment, string storyText)
+        /// <summary>
+        /// Use this ctor
+        /// </summary>
+        /// <param name="engine">A handle to the main Engine class</param>
+        /// <param name="nextState">A handle to the EngineState to return when the story segment is done</param>
+        /// <param name="durationOfStorySegment">How long, in seconds, you want the story segment to last.
+        /// The player can always skip the story segment by pressing B, Start, or Back.</param>
+        /// <param name="storyImgFilepath"></param>
+        /// <param name="altText"></param>
+        public EngineStateStorySegment(Engine engine, EngineStateInterface nextState, int durationOfStorySegment, string storyImgFilepath, string altText)
         {
             engine_ = engine;
             nextState_ = nextState;
             framesSpentInStory_ = 0;
             DurationOfStory_ = durationOfStorySegment;
-            storyText_ = storyText;
+            storyText_ = altText;
+            try
+            {
+                isUsingImage_ = true;
+                storyImg_ = new GameTexture(storyImgFilepath, engine.spriteBatch_, engine.GraphicsDevice);
+            }
+            catch
+            {
+                // That's okay, we will just use the altText.
+                isUsingImage_ = false;
+            }
         }
 
         public EngineStateInterface update(GameTime gameTime)
@@ -110,14 +146,32 @@ namespace Commando
 
         public void draw()
         {
-            //engine_.GraphicsDevice.Clear(Color.GhostWhite);
-            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.GhostWhite;
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            stack.ScreenClearColor_ = Color.GhostWhite;
 
-            Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
-            Vector2 pos = new Vector2(r.Left + r.Width/2, r.Top + r.Height/2);
-            FontMap.getInstance().getFont(FontEnum.Kootenay14).drawStringCentered(storyText_, pos, Color.Black, 0.0f, Constants.DEPTH_HUD_TEXT);
-            pos += new Vector2(0.0f, (r.Bottom - pos.Y) / 2);
-            FontMap.getInstance().getFont(FontEnum.Pericles).drawStringCentered((framesSpentInStory_ / FRAMERATE).ToString() + "/" + DurationOfStory_.ToString(), pos, Color.Black, 0.0f, Constants.DEPTH_HUD_TEXT);
+            if (isUsingImage_)
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                TextureDrawer td = stack.getNext();
+                td.set(storyImg_,
+                    0,
+                    new Vector2((float)r.Center.X, (float)r.Center.Y),
+                    CoordinateTypeEnum.ABSOLUTE,
+                    Constants.DEPTH_HUD,
+                    true,
+                    Color.White,
+                    0.0f,
+                    1.0f);
+                stack.push();
+            }
+            else
+            {
+                Rectangle r = engine_.GraphicsDevice.Viewport.TitleSafeArea;
+                Vector2 pos = new Vector2(r.Left + r.Width / 2, r.Top + r.Height / 2);
+                FontMap.getInstance().getFont(FontEnum.Kootenay14).drawStringCentered(storyText_, pos, Color.Black, 0.0f, Constants.DEPTH_HUD_TEXT);
+                //pos += new Vector2(0.0f, (r.Bottom - pos.Y) / 2);
+                //FontMap.getInstance().getFont(FontEnum.Pericles).drawStringCentered((framesSpentInStory_ / FRAMERATE).ToString() + "/" + DurationOfStory_.ToString(), pos, Color.Black, 0.0f, Constants.DEPTH_HUD_TEXT);
+            }
         }
     }
 }
