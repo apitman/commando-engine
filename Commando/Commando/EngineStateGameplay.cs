@@ -352,12 +352,19 @@ namespace Commando
             if (Settings.getInstance().IsUsingMouse_)
             {
                 MouseState ms = Mouse.GetState();
-                Vector2 mpos = new Vector2(ms.X, ms.Y) - new Vector2(2.5f,2.5f);
-                TextureDrawer td = TextureMap.fetchTexture("laserpointer")
-                    .getDrawer(mpos, Constants.DEPTH_LASER);
-                td.Color = Color.Green;
-                td.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
-                td.draw();
+                Vector2 mpos = new Vector2(ms.X, ms.Y);
+                TextureDrawer td = DrawBuffer.getInstance().getUpdateStack().getNext();
+                td.set(TextureMap.fetchTexture("laserpointer"),
+                    0,
+                    mpos,
+                    CoordinateTypeEnum.ABSOLUTE,
+                    Constants.DEPTH_LASER,
+                    true,
+                    Color.Green,
+                    0,
+                    1.0f
+                );
+                DrawBuffer.getInstance().getUpdateStack().push();
             }
             #endif
 
