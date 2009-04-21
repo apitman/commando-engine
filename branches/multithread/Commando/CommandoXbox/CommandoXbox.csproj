@@ -73,6 +73,12 @@
     <Compile Include="..\Commando\ai\Belief.cs">
       <Link>ai\Belief.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\BossSystemMissiles.cs">
+      <Link>ai\BossSystemMissiles.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\ai\brains\BossAI.cs">
+      <Link>ai\brains\BossAI.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\brains\DummyAI.cs">
       <Link>ai\brains\DummyAI.cs</Link>
     </Compile>
@@ -511,6 +517,9 @@
     <Compile Include="..\Commando\objects\DrawableObjectAbstract.cs">
       <Link>objects\DrawableObjectAbstract.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\enemies\BigBoss.cs">
+      <Link>objects\enemies\BigBoss.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\enemies\DummyEnemy.cs">
       <Link>objects\enemies\DummyEnemy.cs</Link>
     </Compile>
@@ -571,6 +580,9 @@
     <Compile Include="..\Commando\objects\weapons\AmmoTypeEnum.cs">
       <Link>objects\weapons\AmmoTypeEnum.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\objects\weapons\BigBossGatlingGuns.cs">
+      <Link>objects\weapons\BigBossGatlingGuns.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\objects\weapons\Bullet.cs">
       <Link>objects\weapons\Bullet.cs</Link>
     </Compile>
@@ -588,6 +600,9 @@
     </Compile>
     <Compile Include="..\Commando\objects\weapons\MachineGun.cs">
       <Link>objects\weapons\MachineGun.cs</Link>
+    </Compile>
+    <Compile Include="..\Commando\objects\weapons\Missile.cs">
+      <Link>objects\weapons\Missile.cs</Link>
     </Compile>
     <Compile Include="..\Commando\objects\weapons\Pistol.cs">
       <Link>objects\weapons\Pistol.cs</Link>
