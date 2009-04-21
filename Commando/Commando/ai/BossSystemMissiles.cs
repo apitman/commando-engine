@@ -20,32 +20,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Commando.objects;
-using Commando.ai.planning;
-using Commando.ai.sensors;
 
-namespace Commando.ai.brains
+namespace Commando.ai
 {
-    public class DummyAI : AI
+    class BossSystemMissiles : System
     {
-        const float FIELD_OF_VIEW = (float)Math.PI;
-
-        public DummyAI(NonPlayableCharacterAbstract npc)
-            : base(npc)
+        internal BossSystemMissiles(AI ai)
+            : base(ai)
         {
-            GoalManager_.addGoal(new GoalPatrol(this));
-            GoalManager_.addGoal(new GoalInvestigate(this));
-            GoalManager_.addGoal(new GoalKill(this));
 
-            PlanManager_.addAction(new ActionTypeInvestigate(npc));
-            PlanManager_.addAction(new ActionTypeGoto(npc));
-            PlanManager_.addAction(new ActionTypePatrol(npc));
-            PlanManager_.addAction(new ActionTypeFlee(npc));
-            PlanManager_.addAction(new ActionTypeAggressiveFire(npc));
+        }
 
-            sensors_.Add(new SensorEars(this));
-            sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));
-
+        internal override void update()
+        {
+            throw new NotImplementedException();
         }
     }
 }

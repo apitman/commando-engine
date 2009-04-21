@@ -26,26 +26,21 @@ using Commando.ai.sensors;
 
 namespace Commando.ai.brains
 {
-    public class DummyAI : AI
+    class BossAI : AI
     {
-        const float FIELD_OF_VIEW = (float)Math.PI;
+        const float FIELD_OF_VIEW = (float)Math.PI * 2;
 
-        public DummyAI(NonPlayableCharacterAbstract npc)
+        public BossAI(NonPlayableCharacterAbstract npc)
             : base(npc)
         {
-            GoalManager_.addGoal(new GoalPatrol(this));
-            GoalManager_.addGoal(new GoalInvestigate(this));
             GoalManager_.addGoal(new GoalKill(this));
 
-            PlanManager_.addAction(new ActionTypeInvestigate(npc));
             PlanManager_.addAction(new ActionTypeGoto(npc));
-            PlanManager_.addAction(new ActionTypePatrol(npc));
-            PlanManager_.addAction(new ActionTypeFlee(npc));
-            PlanManager_.addAction(new ActionTypeAggressiveFire(npc));
+            PlanManager_.addAction(new ActionTypeAttackRanged(npc));
 
-            sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));
 
+            systems_.Add(new BossSystemMissiles(this));
         }
     }
 }

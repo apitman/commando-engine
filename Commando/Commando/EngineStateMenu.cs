@@ -128,7 +128,7 @@ namespace Commando
             mainMenuList_.LayerDepth_ = MENU_DEPTH;
 
             SoundEngine.getInstance().playCue("go_commando");
-            SoundEngine.getInstance().playMusic("epic");
+            SoundEngine.getInstance().playMusic("menu");
         }
 
         #region EngineStateInterface Members
@@ -157,11 +157,12 @@ namespace Commando
                         Level firstLevel = Level.getLevelFromContent(@"XML\Levels\level1", engine_);
                         return new EngineStateGameplay(engine_, firstLevel);
                     case 1:
-                        SoundEngine.getInstance().playMusic("sneak");
+                        SoundEngine.getInstance().playMusic("epic");
                         return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.GAMEPLAY, this);
                     case 2:
                         return new EngineStateControls(engine_);
                     case 3:
+                        SoundEngine.getInstance().playMusic("sneak");
                         return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_EDITOR, this);
                     case 4:
                         engine_.Exit();

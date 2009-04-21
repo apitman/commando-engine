@@ -311,7 +311,7 @@ namespace Commando
             //PerformanceLogger.printMetric(MetricType.PATHFIND);
             //PerformanceLogger.printMetric(MetricType.DRAW);
 #if XBOX
-            throw new PerformanceMonitorException(PerformanceLogger.printMetric(MetricType.UPDATE));
+            //throw new PerformanceMonitorException(PerformanceLogger.printMetric(MetricType.UPDATE));
 #else
             System.Console.WriteLine(PerformanceLogger.printMetric(MetricType.UPDATE));
 #endif
