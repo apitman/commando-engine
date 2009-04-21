@@ -1741,12 +1741,12 @@
     <tile index="0" />
   </tiles>
   <enemies>
-    <enemy name="dummy" posX="498" posY="484" rotationX="100" rotationY="0" allegiance="2" />
-    <enemy name="dummy" posX="500" posY="214" rotationX="100" rotationY="0" allegiance="2" />
+    <enemy name="flying" posX="498" posY="484" rotationX="100" rotationY="0" allegiance="2" />
+    <enemy name="flying" posX="500" posY="214" rotationX="100" rotationY="0" allegiance="2" />
     <enemy name="dummy" posX="408" posY="176" rotationX="100" rotationY="0" allegiance="2" />
-    <enemy name="dummy" posX="134" posY="410" rotationX="100" rotationY="0" allegiance="2" />
+    <enemy name="flying" posX="134" posY="410" rotationX="100" rotationY="0" allegiance="2" />
     <enemy name="dummy" posX="146" posY="610" rotationX="100" rotationY="0" allegiance="2" />
-    <enemy name="dummy" posX="410" posY="646" rotationX="100" rotationY="0" allegiance="2" />
+    <enemy name="flying" posX="410" posY="646" rotationX="100" rotationY="0" allegiance="2" />
     <enemy name="human" posX="490" posY="346" rotationX="100" rotationY="0" allegiance="2" />
     <enemy name="dummy" posX="230" posY="522" rotationX="100" rotationY="0" allegiance="2" />
     <enemy name="dummy" posX="378" posY="448" rotationX="100" rotationY="0" allegiance="2" />

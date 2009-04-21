@@ -84,7 +84,7 @@ namespace Commando.objects.weapons
 
         public override void collidedInto(CollisionObjectInterface obj)
         {
-            if (obj is ItemAbstract || obj is CoverObject)
+            if (obj is Bullet || obj is ItemAbstract || obj is CoverObject)
             {
                 return;
             }
@@ -94,7 +94,7 @@ namespace Commando.objects.weapons
         public override bool objectChangesHeight(CollisionObjectInterface obj)
         {
             //return false;
-            return !((obj is CharacterAbstract) || (obj is ItemAbstract) || (obj is LevelTransitionObject));
+            return !((obj is Bullet) || (obj is CharacterAbstract) || (obj is ItemAbstract) || (obj is LevelTransitionObject));
         }
 
         public void setTargetPosition(Vector2 position)
