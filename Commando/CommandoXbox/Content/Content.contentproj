@@ -789,6 +789,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\instructoverlay.png">
+      <Link>Sprites\Overlays\instructoverlay.png</Link>
+      <Name>instructoverlay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
       <Link>XML\defaultlevel.xml</Link>
       <Name>defaultlevel</Name>
@@ -835,6 +841,30 @@
     <Compile Include="..\..\Commando\Content\XML\Levels\bosstest.xml">
       <Link>XML\Levels\bosstest.xml</Link>
       <Name>bosstest</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\demolevel1.xml">
+      <Link>XML\Levels\demolevel1.xml</Link>
+      <Name>demolevel1</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\demolevel2.xml">
+      <Link>XML\Levels\demolevel2.xml</Link>
+      <Name>demolevel2</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\demolevel3.xml">
+      <Link>XML\Levels\demolevel3.xml</Link>
+      <Name>demolevel3</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\demolevel4.xml">
+      <Link>XML\Levels\demolevel4.xml</Link>
+      <Name>demolevel4</Name>
       <Importer>XMLImporter</Importer>
       <Processor>XMLProcessor</Processor>
     </Compile>
