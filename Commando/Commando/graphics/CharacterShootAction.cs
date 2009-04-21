@@ -113,7 +113,7 @@ namespace Commando.graphics
 
         public void start()
         {
-            if (shootFrame_ == 0)
+            if (weapon_ != null && shootFrame_ == 0)
             {
                 weapon_.shoot();
             }

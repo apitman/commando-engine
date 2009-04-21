@@ -57,7 +57,7 @@ namespace Commando.graphics
             finished_ = true;
             if (character_ is BigBoss)
             {
-                turnSpeed = TURNSPEED / 15f;
+                turnSpeed = TURNSPEED / 20f;
             }
             else
             {
