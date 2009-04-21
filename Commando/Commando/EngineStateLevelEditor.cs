@@ -67,7 +67,6 @@ namespace Commando
         const int MIN_CURSOR_X = 2;
         const int MIN_CURSOR_Y = 2;
         const int MAX_NUM_ENEMIES = 3;
-        const string DUMMY_ENEMY = "dummyEnemy";
 
         const FontEnum HELP_TEXT_FONT = FontEnum.PescaderoBold;
         const float HELP_TEXT_DEPTH = Constants.DEPTH_HUD_TEXT;

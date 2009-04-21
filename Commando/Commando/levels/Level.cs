@@ -470,6 +470,9 @@ namespace Commando.levels
                 case "human":
                     enemy = new HumanEnemy(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
                     break;
+                case "bigboss":
+                    enemy = new BigBoss(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
+                    break;
                 default:
                     throw new NotImplementedException("Unknown enemy name in level file");
             }

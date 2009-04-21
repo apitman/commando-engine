@@ -107,7 +107,7 @@ namespace Commando.objects.enemies
             AnimationInterface runTo = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, boundsPolygon_);
             AnimationInterface rest = new LoopAnimation(TextureMap.fetchTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, boundsPolygon_);
             AnimationInterface top = new LoopAnimation(TextureMap.fetchTexture("Boss"), frameLengthModifier_, depth_, bounds);
-            AnimationInterface[] restAnims = new AnimationInterface[2];
+            AnimationInterface[] restAnims = new AnimationInterface[3];
             restAnims[0] = rest;
             restAnims[1] = rest;
             restAnims[2] = top;

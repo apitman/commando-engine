@@ -33,10 +33,11 @@ namespace Commando.ai.brains
         public BossAI(NonPlayableCharacterAbstract npc)
             : base(npc)
         {
+            GoalManager_.addGoal(new GoalIdle(this));
             GoalManager_.addGoal(new GoalKill(this));
 
             PlanManager_.addAction(new ActionTypeGoto(npc));
-            PlanManager_.addAction(new ActionTypeAttackRanged(npc));
+            PlanManager_.addAction(new ActionTypeAggressiveFire(npc));
 
             sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));
 

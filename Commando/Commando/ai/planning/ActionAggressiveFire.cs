@@ -50,9 +50,7 @@ namespace Commando.ai.planning
             parent.action = new ActionAggressiveFire(character_, target.handle_);
             parent.cost += COST;
             parent.setInt(Variable.TargetHealth, node.values[Variable.TargetHealth].i + 1);
-
-            // Bosses don't need ammo to fire!
-            // parent.setBool(Variable.Ammo, true);
+            parent.setBool(Variable.Ammo, true);
 
             return parent;
         }

@@ -799,6 +799,11 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="XML\Levels\bosstest.xml">
+      <Name>bosstest</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
     <Content Include="XML\Sprites\GreenPlayer_Throw_Crouch_Pistol.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>GreenPlayer_Throw_Crouch_Pistol</Name>
