@@ -234,6 +234,7 @@
     <Compile Include="objects\CoverObject.cs" />
     <Compile Include="objects\enemies\BigBoss.cs" />
     <Compile Include="objects\enemies\DummyEnemy.cs" />
+    <Compile Include="objects\enemies\FlyingEnemy.cs" />
     <Compile Include="objects\enemies\HumanEnemy.cs" />
     <Compile Include="objects\HeadsUpDisplayObject.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />

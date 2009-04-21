@@ -116,13 +116,13 @@ namespace Commando.graphics.multithreading
             {
                 int nextSize = (newSize > size_ * 2) ? newSize : size_ * 2;
                 TextureDrawer[] tempStack = new TextureDrawer[nextSize];
+                stack_ = tempStack;
+                size_ = nextSize;
+                initializeStack();
                 for (int i = 0; i < top_; i++)
                 {
                     tempStack[i] = stack_[i];
                 }
-                stack_ = tempStack;
-                size_ = nextSize;
-                initializeStack();
             }
         }
 
