@@ -545,8 +545,8 @@ namespace Commando.levels
                 {
                     storyDuration = Convert.ToInt32(itemElement.GetAttribute("storyDuration"));
                 }
-                string storyText = itemElement.GetAttribute("storyText");
-                string storyImgPath = itemElement.GetAttribute("storyImage"); // AMP: TODO Resume here
+                string storyText = itemElement.GetAttribute("storyText"); // Alt text
+                string storyImgPath = itemElement.GetAttribute("storyImage");
                 items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, Pipeline_, new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), this.isPackagedLevel_, usesStory, storyDuration, storyImgPath, storyText));
             }
             else if (itemElement.GetAttribute("type") == "aWpnBox")

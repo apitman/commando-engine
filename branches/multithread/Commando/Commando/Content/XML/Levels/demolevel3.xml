@@ -3463,7 +3463,8 @@
     <item type="aBox" posX="135" posY="120" />
     <item type="aBox" posX="45" posY="465" />
     <item type="aBox" posX="75" posY="465" />
-    <item type="aTrans" posX="674" posY="435" nextLevel="demolevel4" />
+    <item type="aTrans" posX="674" posY="435" nextLevel="demolevel4" story="true" storyDuration="5" storyImage="Sprites\\Stories\\storyboard4" storyText="Use cover to your advantage.
+It could save your life."/>
     <item type="hBox" posX="79" posY="487" />
     <item type="hBox" posX="53" posY="487" />
     <item type="hBox" posX="27" posY="487" />

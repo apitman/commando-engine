@@ -120,10 +120,10 @@ namespace Commando
 
         public EngineStateInterface update(GameTime gameTime)
         {
-            framesSpentInStory_++;
+            //framesSpentInStory_++;
             if (framesSpentInStory_ > DurationOfStory_ * FRAMERATE)
             {
-                return nextState_;
+                //return nextState_;
             }
             else if (InputSet.getInstance().getButton(InputsEnum.BUTTON_2))
             {

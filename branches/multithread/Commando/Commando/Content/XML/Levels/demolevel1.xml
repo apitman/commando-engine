@@ -1061,7 +1061,12 @@
     <item type="hBox" posX="65" posY="338" />
     <item type="hBox" posX="306" posY="201" />
     <item type="hBox" posX="75" posY="100" />
-    <item type="aTrans" posX="62" posY="58" nextLevel="demolevel2" />
+    <item type="aTrans" posX="62" posY="58" nextLevel="demolevel2" story="true" storyDuration="5" storyImage="Sprites\\Stories\\storyboard1" storyText="The COMMANDO research group was developing
+advanced combat AI for military robots, but
+one day their tests went horribly wrong and
+the robots started attacking the scientists.
+
+          You must escape!"/>
   </items>
   <playerLocation x="173" y="563" />
   <overlay texture="instructoverlay" posX="130" posY="500" depth="0.11" />
