@@ -303,6 +303,34 @@
     <key>overlayLogo</key>
     <handle>Sprites\\overlayLogo</handle>
   </image>
+  <image>
+    <key>ambushRoom</key>
+    <handle>Sprites\\ambushRoomtxt</handle>
+  </image>
+  <image>
+    <key>bay57</key>
+    <handle>Sprites\\bay57txt</handle>
+  </image>
+  <image>
+    <key>deadRobot1</key>
+    <handle>Sprites\\deadRobot1</handle>  
+  </image>
+  <image>
+    <key>intensiveCare</key>
+    <handle>Sprites\\intensiveCaretxt</handle>
+  </image>
+  <image>
+    <key>stain1</key>
+    <handle>Sprites\\stain1</handle>  
+  </image>
+  <image>
+    <key>stain2</key>
+    <handle>Sprites\\stain2</handle>    
+  </image>
+  <image>
+    <key>unfinishedRobot</key>
+    <handle>Sprites\\unfinishedRobot</handle>
+  </image>
 </textures>
   </Asset>
 </XnaContent>
