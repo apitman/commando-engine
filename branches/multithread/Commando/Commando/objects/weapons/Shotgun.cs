@@ -56,7 +56,7 @@ namespace Commando.objects.weapons
                     Vector2 tempPos = bulletPos;
                     tempPos.X += ((float)rand.NextDouble() - 1f) * 2f;
                     tempPos.Y += ((float)rand.NextDouble() - 1f) * 2f;
-                    Bullet bullet = new SmallBullet(drawPipeline_, 
+                    Bullet bullet = new Buckshot(drawPipeline_, 
                                                     collisionDetector_, 
                                                     tempPos, 
                                                     CommonFunctions.rotate(rotation_, ((float)rand.NextDouble() - 0.5f) * 20f * Math.PI / 180f));

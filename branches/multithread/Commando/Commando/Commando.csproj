@@ -270,6 +270,7 @@
     <Compile Include="objects\WeaponBox.cs" />
     <Compile Include="objects\weapons\AmmoTypeEnum.cs" />
     <Compile Include="objects\weapons\BigBossGatlingGuns.cs" />
+    <Compile Include="objects\weapons\Buckshot.cs" />
     <Compile Include="objects\weapons\Bullet.cs" />
     <Compile Include="objects\weapons\BulletLimitedRange.cs" />
     <Compile Include="objects\weapons\FragGrenade.cs" />
