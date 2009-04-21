@@ -108,7 +108,7 @@ namespace Commando.graphics.multithreading
             {
                 int nextSize = (newSize > size_ * 2) ? newSize : size_ * 2;
                 FontDrawer[] tempStack = new FontDrawer[nextSize];
-                for (int i = 0; i < top_; i++)
+                for (int i = 0; i <= top_; i++)
                 {
                     tempStack[i] = stack_[i];
                 }
@@ -126,13 +126,14 @@ namespace Commando.graphics.multithreading
         public void resizeDestructively(int newSize)
         {
             stack_ = new FontDrawer[newSize];
-            top_ = 0;
+            size_ = newSize;
+            top_ = -1;
             initializeStack();
         }
 
         protected void initializeStack()
         {
-            for (int i = 0; i < size_; i++)
+            for (int i = top_ + 1; i < size_; i++)
             {
                 stack_[i] = new FontDrawer(spriteBatch_);
             }

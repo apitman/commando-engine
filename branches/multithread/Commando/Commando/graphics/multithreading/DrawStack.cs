@@ -116,13 +116,13 @@ namespace Commando.graphics.multithreading
             {
                 int nextSize = (newSize > size_ * 2) ? newSize : size_ * 2;
                 TextureDrawer[] tempStack = new TextureDrawer[nextSize];
-                stack_ = tempStack;
-                size_ = nextSize;
-                initializeStack();
-                for (int i = 0; i < top_; i++)
+                for (int i = 0; i <= top_; i++)
                 {
                     tempStack[i] = stack_[i];
                 }
+                stack_ = tempStack;
+                size_ = nextSize;
+                initializeStack();
             }
         }
 
@@ -134,13 +134,13 @@ namespace Commando.graphics.multithreading
         {
             stack_ = new TextureDrawer[newSize];
             size_ = newSize;
+            top_ = -1;
             initializeStack();
-            top_ = 0;
         }
 
         protected void initializeStack()
         {
-            for (int i = 0; i < size_; i++)
+            for (int i = top_ + 1; i < size_; i++)
             {
                 stack_[i] = new TextureDrawer();
             }
