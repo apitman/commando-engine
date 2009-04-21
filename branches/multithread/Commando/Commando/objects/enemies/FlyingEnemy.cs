@@ -78,10 +78,11 @@ namespace Commando.objects.enemies
             
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("flyingenemy"), frameLengthModifier_, depth_, boundsPolygon_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("flyingenemy"), frameLengthModifier_, depth_, boundsPolygon_);
-            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("flyingenemy"), frameLengthModifier_, depth_, boundsPolygon_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, boundsPolygon_);
+            AnimationInterface rest2 = new LoopAnimation(TextureMap.getInstance().getTexture("flyingenemy"), frameLengthModifier_, depth_, boundsPolygon_);
             AnimationInterface[] restAnims = new AnimationInterface[2];
             restAnims[0] = rest;
-            restAnims[1] = rest;
+            restAnims[1] = rest2;
             AnimationInterface[] shoot = new AnimationInterface[1];
             shoot[0] = rest;
 
