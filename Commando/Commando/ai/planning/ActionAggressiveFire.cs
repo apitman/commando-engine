@@ -102,16 +102,20 @@ namespace Commando.ai.planning
             {
                 Belief b = character_.AI_.Memory_.getBelief(BeliefType.EnemyLoc, target);
                 if (b == null)
-                    return ActionStatus.FAILED;
+                    return ActionStatus.SUCCESS;
 
                 gotoAction = new ActionGoto(character_, GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(b.position_));
                 gotoAction.initialize();
 
-                return gotoAction.update();
+                gotoAction.update();
+
+                return ActionStatus.IN_PROGRESS;
             }
             else
             {
-                return gotoAction.update();
+                gotoAction.update();
+
+                return ActionStatus.IN_PROGRESS;
             }
         }
     }

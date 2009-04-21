@@ -274,11 +274,7 @@ namespace Commando.levels
 
                 XmlElement enemyElement = doc.CreateElement("enemy");
 
-                if (enemies_[i] is DummyEnemy)
-                    enemyElement.SetAttribute("name", "dummy");
-
-                else if (enemies_[i] is HumanEnemy)
-                    enemyElement.SetAttribute("name", "human");
+                enemyElement.SetAttribute("name", enemies_[i].getName());
                 enemyElement.SetAttribute("posX", Convert.ToInt32(enemies_[i].getPosition().X).ToString());
                 enemyElement.SetAttribute("posY", Convert.ToInt32(enemies_[i].getPosition().Y).ToString());
                 //int rotationDegrees = Convert.ToInt32(CommonFunctions.getAngle(enemies_[i].getDirection()) * 180 / Math.PI);
@@ -472,6 +468,9 @@ namespace Commando.levels
                     break;
                 case "bigboss":
                     enemy = new BigBoss(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
+                    break;
+                case "flying":
+                    enemy = new FlyingEnemy(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
                     break;
                 default:
                     throw new NotImplementedException("Unknown enemy name in level file");

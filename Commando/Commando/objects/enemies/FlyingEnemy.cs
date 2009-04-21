@@ -59,7 +59,7 @@ namespace Commando.objects.enemies
         protected int drawColorCount_ = 0;
 
         public FlyingEnemy(List<DrawableObjectAbstract> pipeline, Vector2 pos) :
-            base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "dummy", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
+            base(pipeline, new CharacterHealth(), new CharacterAmmo(), new CharacterWeapon(), "flying", null, null, FRAMELENGTHMODIFIER, Vector2.Zero, pos, new Vector2(1.0f, 0.0f), 0.49f)
         {
             AI_ = new DummyAI(this);
 

@@ -163,6 +163,7 @@ namespace Commando.ai.planning
             initial.setBool(Variable.HasInvestigated, false);
             initial.setBool(Variable.HasPatrolled, false);
             initial.setPosition(Variable.Location, ref myLoc);
+            initial.setBool(Variable.FarFromTarget, false);
             initial.setTask(TeamTask.CLEAR);
             return initial;
         }

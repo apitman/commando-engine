@@ -239,9 +239,10 @@ namespace Commando.ai.planning
         internal const int Weapon = 5;
         internal const int HasInvestigated = 6;
         internal const int HasPatrolled = 7;
-        internal const int TeamTask = 8;
+        internal const int FarFromTarget = 8;
+        internal const int TeamTask = 9;
 
-        internal const int LENGTH = 9;
+        internal const int LENGTH = 10;
     }
 
     /// <summary>
