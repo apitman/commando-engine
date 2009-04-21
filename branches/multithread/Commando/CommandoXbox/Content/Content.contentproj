@@ -735,6 +735,54 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\ambushRoomtxt.png">
+      <Link>Sprites\ambushRoomtxt.png</Link>
+      <Name>ambushRoomtxt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\armorytxt.png">
+      <Link>Sprites\armorytxt.png</Link>
+      <Name>armorytxt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\bay57txt.png">
+      <Link>Sprites\bay57txt.png</Link>
+      <Name>bay57txt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\deadRobot1.png">
+      <Link>Sprites\deadRobot1.png</Link>
+      <Name>deadRobot1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\intensiveCaretxt.png">
+      <Link>Sprites\intensiveCaretxt.png</Link>
+      <Name>intensiveCaretxt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\stain1.png">
+      <Link>Sprites\stain1.png</Link>
+      <Name>stain1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\stain2.png">
+      <Link>Sprites\stain2.png</Link>
+      <Name>stain2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\unfinishedRobot.png">
+      <Link>Sprites\unfinishedRobot.png</Link>
+      <Name>unfinishedRobot</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
       <Link>XML\defaultlevel.xml</Link>
       <Name>defaultlevel</Name>

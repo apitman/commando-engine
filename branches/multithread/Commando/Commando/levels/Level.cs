@@ -659,7 +659,56 @@ namespace Commando.levels
             }
             WorldState.CharacterList_ = characterList;
         }
+        public void initializeForEditor()
+        {
+            
+            Tile[,] tilesForCollisionGeneration = new Tile[getHeight(), getWidth()];
+            for (int i = 0; i < getHeight(); i++)
+            {
+                for (int j = 0; j < getWidth(); j++)
+                {
+                    Height h = tileSet_.getHeight(tiles_[i, j]);
 
+                    if (h.blocksHigh_)
+                    {
+                        tilesForCollisionGeneration[i, j].highDistance_ = 0f;
+                    }
+                    else
+                    {
+                        tilesForCollisionGeneration[i, j].highDistance_ = 1f;
+                    }
+
+                    if (h.blocksLow_)
+                    {
+                        tilesForCollisionGeneration[i, j].lowDistance_ = 0f;
+                    }
+                    else
+                    {
+                        tilesForCollisionGeneration[i, j].lowDistance_ = 1f;
+                    }
+                }
+            }
+            List<BoxObject> boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForCollisionGeneration);
+
+            // Calculate distances from walls to each tile
+            Tile[,] tilesForGrid = CoverGenerator.generateRealTileDistances(tilesForCollisionGeneration);
+            if (Settings.getInstance().IsInDebugMode_)
+            {
+                for (int i = 0; i < tilesForGrid.GetLength(0); i++)
+                {
+                    for (int j = 0; j < tilesForGrid.GetLength(1); j++)
+                    {
+                        Console.Write(tilesForGrid[i, j].highDistance_.ToString("F1"));
+                        Console.Write(" ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
+
+            // Generate cover objects and add them to collision detection
+           
+        }
         /// <summary>
         /// Draws all of the tiles which compose the level, and nothing else.
         /// </summary>

@@ -31,6 +31,7 @@ using System.IO;
 using Commando.objects.enemies;
 using Microsoft.Xna.Framework.Input;
 using Commando.graphics.multithreading;
+using Commando.graphics;
 
 namespace Commando
 {
@@ -200,14 +201,21 @@ namespace Commando
             myLevel_ = Level.getLevelFromFile(filepath, engine);
             drawPipeline_ = myLevel_.Pipeline_;
 
+            myLevel_.initializeForEditor();
+
             maxCursorX = numTilesWide_ - 3;
             maxCursorY = numTilesTall_ - 3;
             cursorPosX_ = SCREEN_SIZE_X / 30;
             cursorPosY_ = SCREEN_SIZE_Y / 30;
 
             // Initialize the camera
-            GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)SCREEN_SIZE_X);
-            GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)SCREEN_SIZE_Y);
+            //if (GlobalHelper.getInstance().getCurrentCamera() == null)
+            //{
+            //    Camera Cam = new Camera(
+            //}
+
+            GlobalHelper.getInstance().getCurrentCamera().setScreenWidth((float)engine.GraphicsDevice.Viewport.Width);
+            GlobalHelper.getInstance().getCurrentCamera().setScreenHeight((float)engine.GraphicsDevice.Viewport.Height);
             GlobalHelper.getInstance().getCurrentCamera().setCenter((float)cursorPosX_ * Tiler.tileSideLength_ - 7.5f, (float)cursorPosY_ * Tiler.tileSideLength_ - 7.5f);
 
             curTileIndex_ = 0;
@@ -529,6 +537,7 @@ namespace Commando
                                     case 1:
                                         HumanEnemy humEnemy = new HumanEnemy(drawPipeline_, mousePos);
 
+                                        humEnemy.getActuator().update();
                                         myLevel_.getEnemies().Add(humEnemy);
                                         break;
                                 }
@@ -833,11 +842,11 @@ namespace Commando
         public void draw()
         {
             DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
-            TextureDrawer td = stack.getNext();
+            
 
             InputSet inputs = InputSet.getInstance();
             stack.ScreenClearColor_ = Color.Firebrick;
-
+            TextureDrawer td;
             // AMP TODO Fix Level.draw()
             myLevel_.draw();
 
@@ -847,6 +856,7 @@ namespace Commando
             {
                 MouseState ms = Mouse.GetState();
                 Vector2 mpos = new Vector2(ms.X, ms.Y) - new Vector2(2.5f, 2.5f);
+                td = stack.getNext();
                 td.set(laserPointer_,
                         0,
                         mpos,
