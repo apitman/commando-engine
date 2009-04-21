@@ -3455,11 +3455,7 @@
     <enemy name="human" posX="418" posY="610" rotationX="100" rotationY="0" allegiance="2" />
     <enemy name="human" posX="265" posY="611" rotationX="100" rotationY="0" allegiance="2" />
     <enemy name="human" posX="265" posY="611" rotationX="100" rotationY="0" allegiance="2" />
-    <enemy name="human" posX="664" posY="506" rotationX="100" rotationY="0" allegiance="2" />
-    <enemy name="human" posX="402" posY="494" rotationX="100" rotationY="0" allegiance="2" />
-    <enemy name="dummy" posX="40" posY="438" rotationX="100" rotationY="0" allegiance="2" />
-    <enemy name="dummy" posX="90" posY="438" rotationX="100" rotationY="0" allegiance="2" />
-  </enemies>
+     </enemies>
   <items>
     <item type="aWpnBox" posX="60" posY="405" weaponType="machineGun" />
     <item type="hBox" posX="75" posY="120" />

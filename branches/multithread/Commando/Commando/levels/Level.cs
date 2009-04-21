@@ -27,6 +27,7 @@ using Commando.objects.enemies;
 using Commando.collisiondetection;
 using Commando.ai;
 using Commando.graphics;
+using System.IO;
 
 namespace Commando.levels
 {
@@ -35,6 +36,8 @@ namespace Commando.levels
     /// </summary>
     public class Level
     {
+        public const string LEVELS_FOLDER = @"XML\Levels";
+
         // Drawing pipeline containing all drawable entities in the level
         public List<DrawableObjectAbstract> Pipeline_ =
             new List<DrawableObjectAbstract>();
@@ -164,7 +167,7 @@ namespace Commando.levels
             Level level;
             using (ManagedXml manager = new ManagedXml(engine))
             {
-                XmlDocument doc = manager.load(levelname);
+                XmlDocument doc = manager.load(Path.Combine(LEVELS_FOLDER, levelname));
                 level = new Level(true);
                 level.initializeLevelFromXml(doc, engine);
             }

@@ -91,7 +91,7 @@ namespace Commando.ai.planning
             if (character_.Weapon_.CurrentAmmo_ <= 0)
             {
                 character_.reload();
-                return ActionStatus.IN_PROGRESS;
+                return ActionStatus.SUCCESS;
             }
 
             if (!aiming.lossFlag)
