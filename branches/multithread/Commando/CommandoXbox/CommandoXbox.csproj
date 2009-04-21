@@ -88,6 +88,9 @@
     <Compile Include="..\Commando\ai\planning\Action.cs">
       <Link>ai\planning\Action.cs</Link>
     </Compile>
+    <Compile Include="..\Commando\ai\planning\ActionAggressiveFire.cs">
+      <Link>ai\planning\ActionAggressiveFire.cs</Link>
+    </Compile>
     <Compile Include="..\Commando\ai\planning\ActionAttackRanged.cs">
       <Link>ai\planning\ActionAttackRanged.cs</Link>
     </Compile>

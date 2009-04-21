@@ -96,6 +96,8 @@
     <Compile Include="ai\AI.cs" />
     <Compile Include="ai\AStarPathfinder.cs" />
     <Compile Include="ai\Belief.cs" />
+    <Compile Include="ai\BossSystemMissiles.cs" />
+    <Compile Include="ai\brains\BossAI.cs" />
     <Compile Include="ai\brains\DummyAI.cs" />
     <Compile Include="ai\brains\HumanAI.cs" />
     <Compile Include="ai\Memory.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="ai\planning\ActionReload.cs" />
     <Compile Include="ai\planning\ActionTakeCover.cs" />
     <Compile Include="ai\planning\ActionThrowGrenade.cs" />
+    <Compile Include="ai\planning\ActionAggressiveFire.cs" />
     <Compile Include="ai\planning\Goal.cs" />
     <Compile Include="ai\planning\GoalIdle.cs" />
     <Compile Include="ai\planning\GoalInvestigate.cs" />

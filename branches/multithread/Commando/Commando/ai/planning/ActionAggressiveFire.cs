@@ -21,15 +21,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Commando.objects;
-using Commando.graphics;
 
 namespace Commando.ai.planning
 {
-    internal class ActionTypeAttackRanged : ActionType
+    class ActionTypeAggressiveFire : ActionType
     {
-        protected internal const int COST = 4;
+        protected internal const int COST = 3;
 
-        internal ActionTypeAttackRanged(NonPlayableCharacterAbstract character)
+        internal ActionTypeAggressiveFire(NonPlayableCharacterAbstract character)
             : base(character)
         {
 
@@ -48,10 +47,13 @@ namespace Commando.ai.planning
             Belief target = character_.AI_.Memory_.getFirstBelief(BeliefType.BestTarget);
 
             SearchNode parent = node.getPredecessor();
-            parent.action = new ActionAttackRanged(character_, target.handle_);
+            parent.action = new ActionAggressiveFire(character_, target.handle_);
             parent.cost += COST;
             parent.setInt(Variable.TargetHealth, node.values[Variable.TargetHealth].i + 1);
-            parent.setBool(Variable.Ammo, true);
+
+            // Bosses don't need ammo to fire!
+            // parent.setBool(Variable.Ammo, true);
+
             return parent;
         }
 
@@ -61,16 +63,25 @@ namespace Commando.ai.planning
         }
     }
 
-    internal class ActionAttackRanged : Action
+    class ActionAggressiveFire : Action
     {
         protected CharacterAbstract target;
         protected Object handle_;
         protected SystemAiming aiming;
 
-        internal ActionAttackRanged(NonPlayableCharacterAbstract character, Object handle)
+        protected ActionGoto gotoAction;
+
+        internal ActionAggressiveFire(NonPlayableCharacterAbstract character, Object handle)
             : base(character)
         {
             handle_ = handle;
+        }
+
+        internal override bool initialize()
+        {
+            target = (handle_ as CharacterAbstract);
+            aiming = new SystemAiming(character_.AI_, target);
+            return true;
         }
 
         internal override ActionStatus update()
@@ -79,20 +90,31 @@ namespace Commando.ai.planning
 
             // TODO
             // Move this into checkIsStillValid
-            if (character_.Weapon_.CurrentAmmo_ <= 0 || aiming.lossFlag)
+            if (character_.Weapon_.CurrentAmmo_ <= 0)
             {
                 character_.reload();
-                return ActionStatus.SUCCESS;
+                return ActionStatus.IN_PROGRESS;
             }
 
-            return ActionStatus.IN_PROGRESS;
-        }
+            if (!aiming.lossFlag)
+            {
+                return ActionStatus.IN_PROGRESS;
+            }
+            else if (aiming.lossFlag && gotoAction == null)
+            {
+                Belief b = character_.AI_.Memory_.getBelief(BeliefType.EnemyLoc, target);
+                if (b == null)
+                    return ActionStatus.FAILED;
 
-        internal override bool initialize()
-        {
-            target = (handle_ as CharacterAbstract);
-            aiming = new SystemAiming(character_.AI_, target);
-            return true;
+                gotoAction = new ActionGoto(character_, GlobalHelper.getInstance().getCurrentLevelTileGrid().getTileIndex(b.position_));
+                gotoAction.initialize();
+
+                return gotoAction.update();
+            }
+            else
+            {
+                return gotoAction.update();
+            }
         }
     }
 }

@@ -123,7 +123,7 @@ namespace Commando.ai.planning
             }
             else
             {
-                path_ = AStarPathfinder.calculateExactPath(grid, curIndex, target_, character_.getRadius(), character_.getHeight());
+                path_ = AStarPathfinder.calculateNearbyPath(grid, curIndex, target_, character_.getRadius(), character_.getHeight());
                 if (path_ == null) // no path could be found
                 {
                     //(character_.getActuator() as DefaultActuator).moveTo(grid.getTileCenter(target_));
