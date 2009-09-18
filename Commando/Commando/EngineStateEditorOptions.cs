@@ -25,6 +25,7 @@ using Commando.controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -180,13 +181,10 @@ namespace Commando
                         break;
 
                     case STR_SAVE_CONTINUE:
-                        engine_.initializeScreen();
                         return new EngineStateLevelSave(engine_, savedState_, savedState_, this);
                     case STR_SAVE_QUIT:
-                        engine_.initializeScreen();
                         return new EngineStateLevelSave(engine_, savedState_,new EngineStateMenu(engine_), this);
                     case STR_QUIT_NOSAVE:
-                        engine_.initializeScreen();
                         return new EngineStateMenu(engine_);
                     case STR_RETURN:
                         return savedState_;
@@ -217,7 +215,9 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(BACKGROUND_COLOR);
+            //engine_.GraphicsDevice.Clear(BACKGROUND_COLOR);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = BACKGROUND_COLOR;
+
             menuList_.draw();
         }
 

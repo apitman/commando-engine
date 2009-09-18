@@ -95,14 +95,16 @@ namespace Commando
         /// <param name="filepath">Filename of the texture document</param>
         /// <param name="spriteBatch">SpriteBatch for the game</param>
         /// <param name="graphics">GraphicsDevice for the game</param>
-        public void loadTextures(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics)
+        public void loadTextures(string filename, Engine engine)
         {
-            //XmlTextReader reader = new XmlTextReader(filename);
-            using (ManagedXml document = new ManagedXml())
+            SpriteBatch spriteBatch = engine.spriteBatch_;
+            GraphicsDevice graphics = engine.GraphicsDevice;
+
+            using (ManagedXml manager = new ManagedXml(engine))
             {
                 try
                 {
-                    document.Load(filename);
+                    XmlDocument document = manager.loadFromFile(filename);
                     XmlNodeList textureXMLs = document.GetElementsByTagName("texture");
                     foreach (XmlNode node in textureXMLs)
                     {

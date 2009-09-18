@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Commando.objects.weapons;
 
 namespace Commando.graphics
 {
@@ -112,7 +113,10 @@ namespace Commando.graphics
 
         public void start()
         {
-            
+            if (weapon_ != null && shootFrame_ == 0)
+            {
+                weapon_.shoot();
+            }
         }
 
         public string getActionLevel()
@@ -122,10 +126,14 @@ namespace Commando.graphics
 
         public void setParameters(ActionParameters parameters)
         {
-            weapon_ = character_.Weapon_;
-            if (shootFrame_ == 0)
+            if (parameters.object1 != null && parameters.object1 is Missile)
             {
-                weapon_.shoot();
+                (parameters.object1 as Missile).setDirection(character_.getDirection());
+                (parameters.object1 as Missile).setPosition(character_.getGunHandle(false));
+            }
+            else
+            {
+                weapon_ = character_.Weapon_;
             }
         }
 

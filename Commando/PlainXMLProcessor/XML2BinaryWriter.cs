@@ -56,6 +56,5 @@ namespace PlainXMLProcessor
             }
             throw new NotImplementedException("Only PC and Xbox360 supported for XML2BinaryWriter");
         }
-
     }
 }

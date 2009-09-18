@@ -30,6 +30,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using System.Xml;
+using Commando.graphics;
 
 namespace Commando
 {
@@ -68,6 +69,25 @@ namespace Commando
             spriteBatch_ = spriteBatch;
 
             texture_ = TextureMap.getInstance().getContent().Load<Texture2D>(filename);
+
+            imageDimensions_ = new Rectangle[1];
+            imageDimensions_[0] = new Rectangle(0, 0, texture_.Width, texture_.Height);
+            helper_ = GlobalHelper.getInstance();
+        }
+
+        /// <summary>
+        /// Create a GameTexture from the specified name, with the specified SpriteBatch and
+        /// GraphicsDevice, without requiring TextureMap.
+        /// </summary>
+        /// <param name="filepath">Path to the image file</param>
+        /// <param name="spriteBatch">SpriteBatch for the game</param>
+        /// <param name="graphics">GraphicsDevice for the game</param>
+        /// <param name="content">ContentManager containing the image</param>
+        public GameTexture(string filename, SpriteBatch spriteBatch, GraphicsDevice graphics, ContentManager content)
+        {
+            spriteBatch_ = spriteBatch;
+
+            texture_ = content.Load<Texture2D>(filename);
 
             imageDimensions_ = new Rectangle[1];
             imageDimensions_[0] = new Rectangle(0, 0, texture_.Width, texture_.Height);
@@ -452,8 +472,8 @@ namespace Commando
         internal TextureDrawer getDrawer(Vector2 position, float depth)
         {
             TextureDrawer def = new TextureDrawer(this, position, depth);
-            def.Origin =
-                new Vector2(((float)imageDimensions_[def.ImageIndex].Width) / 2.0f, ((float)imageDimensions_[def.ImageIndex].Height) / 2.0f);
+            //def.Origin =
+            //    new Vector2(((float)imageDimensions_[def.ImageIndex].Width) / 2.0f, ((float)imageDimensions_[def.ImageIndex].Height) / 2.0f);
             return def;
         }
     }
@@ -466,8 +486,10 @@ namespace Commando
 
     internal class TextureDrawer
     {
-        internal GameTexture Texture { get; private set; }
-        internal Vector2 Position { get; private set; }
+        internal GameTexture Texture { get; set; }
+        internal Vector2 Position { get; set; }
+        internal Rectangle Destination { get; set; }
+        internal bool Dest { get; set; }
         internal float Rotation { get; set; }
         internal Vector2 Direction
         {
@@ -482,14 +504,28 @@ namespace Commando
             }
         }
         internal CoordinateTypeEnum CoordinateType { get; set; }
-        internal float Depth { get; private set; }
+        internal float Depth { get; set; }
         internal Color Color { get; set; }
         internal int ImageIndex { get; set; }
         internal SpriteEffects Effects { get; set; }
-        internal Vector2 Origin { get; set; }
+        internal bool Centered { get; set; }
         internal float Scale { get; set; }
 
-        private TextureDrawer() { }
+        internal TextureDrawer() 
+        {
+            Texture = null;
+            Position = Vector2.Zero;
+            Destination = Rectangle.Empty;
+            Dest = false;
+            Rotation = 0.0f;
+            CoordinateType = CoordinateTypeEnum.RELATIVE;
+            Depth = 0.0f;
+            Color = Color.White;
+            ImageIndex = 0;
+            Effects = SpriteEffects.None;
+            Centered = false;
+            Scale = 0.0f;
+        }
 
         internal TextureDrawer(GameTexture texture, Vector2 position, float depth)
         {
@@ -502,25 +538,158 @@ namespace Commando
             ImageIndex = 0;
             Effects = SpriteEffects.None;
             Scale = 1.0f;
+            Centered = true;
+        }
+        /*
+         * td.Texture = sprites_;
+            td.ImageIndex = currentFrame_;
+            td.Position = position_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = depth_;
+            td.Centered = true;
+            td.Color = Color.White;
+            td.Effects = SpriteEffects.None;
+            td.Direction = rotation_;
+            td.Scale = 1.0f;
+         */
+
+        internal void set(GameTexture texture,
+                            int imageIndex,
+                            Vector2 position,
+                            CoordinateTypeEnum coordType,
+                            float depth,
+                            bool centered,
+                            Color color,
+                            float rotation,
+                            float scale)
+        {
+            Texture = texture;
+            Position = position;
+            Dest = false;
+            ImageIndex = imageIndex;
+            CoordinateType = coordType;
+            Depth = depth;
+            Centered = centered;
+            Effects = SpriteEffects.None;
+            Color = color;
+            Rotation = rotation;
+            Scale = scale;
+        }
+
+        internal void set(GameTexture texture,
+                            int imageIndex,
+                            Rectangle destination,
+                            CoordinateTypeEnum coordType,
+                            float depth,
+                            bool centered,
+                            Color color,
+                            float rotation,
+                            float scale)
+        {
+            Texture = texture;
+            Destination = destination;
+            Dest = true;
+            ImageIndex = imageIndex;
+            CoordinateType = coordType;
+            Depth = depth;
+            Centered = centered;
+            Effects = SpriteEffects.None;
+            Color = color;
+            Rotation = rotation;
+            Scale = scale;
+        }
+
+        internal void set(GameTexture texture,
+                            int imageIndex,
+                            Vector2 position,
+                            CoordinateTypeEnum coordType,
+                            float depth,
+                            bool centered,
+                            Color color,
+                            Vector2 direction,
+                            float scale)
+        {
+            Texture = texture;
+            Position = position;
+            Dest = false;
+            ImageIndex = imageIndex;
+            CoordinateType = coordType;
+            Depth = depth;
+            Centered = centered;
+            Effects = SpriteEffects.None;
+            Color = color;
+            Direction = direction;
+            Scale = scale;
+        }
+
+        internal void set(GameTexture texture,
+                            int imageIndex,
+                            Rectangle destination,
+                            CoordinateTypeEnum coordType,
+                            float depth,
+                            bool centered,
+                            Color color,
+                            Vector2 direction,
+                            float scale)
+        {
+            Texture = texture;
+            Destination = destination;
+            Dest = true;
+            ImageIndex = imageIndex;
+            CoordinateType = coordType;
+            Depth = depth;
+            Centered = centered;
+            Effects = SpriteEffects.None;
+            Color = color;
+            Direction = direction;
+            Scale = scale;
         }
 
         internal void draw()
         {
+
+        }
+
+        internal void draw(Vector2 camPosition)
+        {
             if (this.CoordinateType == CoordinateTypeEnum.RELATIVE)
             {
-                GlobalHelper helper = GlobalHelper.getInstance();
-                this.Position -= helper.getCurrentCamera().getPosition();
+                //GlobalHelper helper = GlobalHelper.getInstance();
+                //this.Position -= helper.getCurrentCamera().getPosition();
+                this.Position -= camPosition;
             }
-            this.Texture.spriteBatch_.Draw(
+            Vector2 origin = Vector2.Zero;
+            if (Centered)
+            {
+                origin.X = (float)Texture.imageDimensions_[ImageIndex].Width / 2.0f;
+                origin.Y = (float)Texture.imageDimensions_[ImageIndex].Height / 2.0f;
+            }
+            if(Dest)
+            {
+                this.Texture.spriteBatch_.Draw(
+                                this.Texture.texture_,
+                                this.Destination,
+                                this.Texture.imageDimensions_[ImageIndex],
+                                this.Color,
+                                this.Rotation,
+                                origin,
+                                this.Effects,
+                                this.Depth);
+            }
+            else
+            {
+                this.Texture.spriteBatch_.Draw(
                               this.Texture.texture_,
                               this.Position,
                               this.Texture.imageDimensions_[this.ImageIndex],
                               this.Color,
                               this.Rotation,
-                              this.Origin,
+                              origin,
                               this.Scale,
                               this.Effects,
                               this.Depth);
+            }
         }
     }
 }

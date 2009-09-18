@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
 using System.IO;
+using Commando.graphics.multithreading;
 #if !XBOX
 using System.Windows.Forms;
 #endif
@@ -159,7 +160,8 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
             mainMessage_.drawStringCentered(MESSAGE, MESSAGE_POSITION, MESSAGE_COLOR, 0, MESSAGE_DEPTH);
 

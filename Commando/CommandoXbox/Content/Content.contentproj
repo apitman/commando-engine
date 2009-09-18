@@ -717,6 +717,114 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\splash.png">
+      <Link>Sprites\splash.png</Link>
+      <Name>splash</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Boss.png">
+      <Link>Sprites\Boss.png</Link>
+      <Name>Boss</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\missile.png">
+      <Link>Sprites\missile.png</Link>
+      <Name>missile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\flyingenemy.png">
+      <Link>Sprites\flyingenemy.png</Link>
+      <Name>flyingenemy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\ambushRoomtxt.png">
+      <Link>Sprites\Overlays\ambushRoomtxt.png</Link>
+      <Name>ambushRoomtxt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\armorytxt.png">
+      <Link>Sprites\Overlays\armorytxt.png</Link>
+      <Name>armorytxt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\bay57txt.png">
+      <Link>Sprites\Overlays\bay57txt.png</Link>
+      <Name>bay57txt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\deadRobot1.png">
+      <Link>Sprites\Overlays\deadRobot1.png</Link>
+      <Name>deadRobot1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\intensiveCaretxt.png">
+      <Link>Sprites\Overlays\intensiveCaretxt.png</Link>
+      <Name>intensiveCaretxt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\stain1.png">
+      <Link>Sprites\Overlays\stain1.png</Link>
+      <Name>stain1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\stain2.png">
+      <Link>Sprites\Overlays\stain2.png</Link>
+      <Name>stain2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\unfinishedRobot.png">
+      <Link>Sprites\Overlays\unfinishedRobot.png</Link>
+      <Name>unfinishedRobot</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Overlays\instructoverlay.png">
+      <Link>Sprites\Overlays\instructoverlay.png</Link>
+      <Name>instructoverlay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard1.png">
+      <Link>Sprites\Stories\storyboard1.png</Link>
+      <Name>storyboard1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard2.png">
+      <Link>Sprites\Stories\storyboard2.png</Link>
+      <Name>storyboard2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard3.png">
+      <Link>Sprites\Stories\storyboard3.png</Link>
+      <Name>storyboard3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard4.png">
+      <Link>Sprites\Stories\storyboard4.png</Link>
+      <Name>storyboard4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\Sprites\Stories\storyboard5.png">
+      <Link>Sprites\Stories\storyboard5.png</Link>
+      <Name>storyboard5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="..\..\Commando\Content\XML\defaultlevel.xml">
       <Link>XML\defaultlevel.xml</Link>
       <Name>defaultlevel</Name>
@@ -757,6 +865,36 @@
     <Compile Include="..\..\Commando\Content\XML\Levels\level4.xml">
       <Link>XML\Levels\level4.xml</Link>
       <Name>level4</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\bosstest.xml">
+      <Link>XML\Levels\bosstest.xml</Link>
+      <Name>bosstest</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\demolevel1.xml">
+      <Link>XML\Levels\demolevel1.xml</Link>
+      <Name>demolevel1</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\demolevel2.xml">
+      <Link>XML\Levels\demolevel2.xml</Link>
+      <Name>demolevel2</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\demolevel3.xml">
+      <Link>XML\Levels\demolevel3.xml</Link>
+      <Name>demolevel3</Name>
+      <Importer>XMLImporter</Importer>
+      <Processor>XMLProcessor</Processor>
+    </Compile>
+    <Compile Include="..\..\Commando\Content\XML\Levels\demolevel4.xml">
+      <Link>XML\Levels\demolevel4.xml</Link>
+      <Name>demolevel4</Name>
       <Importer>XMLImporter</Importer>
       <Processor>XMLProcessor</Processor>
     </Compile>

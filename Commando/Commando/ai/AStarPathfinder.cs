@@ -324,44 +324,21 @@ namespace Commando.ai
         }
 
         public static List<TileIndex>
-            calculateNearbyPath(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height, float threshold)
+            calculateNearbyPath(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height)
         {
-            setupSearch(grid, start, destination, radius, height);
-
-            //Console.WriteLine("Pathfind Start: " + start_.x_ + "," + start_.y_);
-            //Console.WriteLine("Pathfind Goal: " + goal_.x_ + "," + goal_.y_);
-
-            TileIndex cur = start_;
-            searchSpace_[cur.x_, cur.y_].g = 0;
-            searchSpace_[cur.x_, cur.y_].f = heuristicDistance(cur.x_, cur.y_);
-            searchSpace_[cur.x_, cur.y_].parent = new TileIndex(-1, -1); // stack
-            touched_[cur.x_, cur.y_] = true;
-
-            // As long as we aren't near enough to the goal, keep expanding outward and checking
-            // the next most promising node
-            while (heuristicDistance(cur.x_, cur.y_) > threshold)
+            TileIndex newdest = getNearest(grid, start, destination, radius, height);
+            if (newdest.x_ == -1 || newdest.y_ == -1)
             {
-                searchSpace_[cur.x_, cur.y_].open = false;
-                expand(ref cur, searchSpace_[cur.x_, cur.y_].g);
-
-                // If we are out of nodes to check, no path exists
-                if (openlist_.Count == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    cur = getNext();
-                }
+                //throw new Exception("AStarPathfinder failed to find a nearest tile!");
+                return null;
             }
-
-            return recreatePath();
+            return calculateExactPath(grid, start, newdest, radius, height);
         }
 
         public static List<TileIndex>
-            calculateNearbyPath(TileGrid grid, Vector2 start, Vector2 destination, float radius, Height height, float threshold)
+            calculateNearbyPath(TileGrid grid, Vector2 start, Vector2 destination, float radius, Height height)
         {
-            return calculateNearbyPath(grid, grid.getTileIndex(start), grid.getTileIndex(destination), radius, height, threshold);
+            return calculateNearbyPath(grid, grid.getTileIndex(start), grid.getTileIndex(destination), radius, height);
         }
 
         /// <summary>
@@ -430,6 +407,96 @@ namespace Commando.ai
                 (float)(radius / ((TileGrid.TILEWIDTH + TileGrid.TILEHEIGHT) / 2.0f));
             grid_ = grid;
             searchHeight_ = height;
+        }
+
+        private static TileIndex getNearest(TileGrid grid, TileIndex start, TileIndex destination, float radius, Height height)
+        {
+            radius = radius / (TileGrid.TILEHEIGHT + TileGrid.TILEWIDTH) / 2;
+
+            Tile dest = grid.getTile(destination);
+
+            if (!dest.collides(height, radius))
+            {
+                return destination;
+            }
+
+            short manhattan = 1;
+
+            // Expand outward by increasing the manhattan distance
+            // Until finding some subset of tiles which we can walk on
+            // TODO
+            // Don't use heap space here
+            List<TileIndex> closest = new List<TileIndex>();
+            while (closest.Count == 0)
+            {
+                Tile cur;
+                int newX;
+                int newY;
+
+                for (short i = 0; i < manhattan - 1; i++)
+                {
+                    // Quadrant I
+                    newX = destination.x_ + i;
+                    newY = destination.y_ + (manhattan - i);
+                    cur = grid.getTile(newX, newY);
+                    if (!cur.collides(height, radius))
+                    {
+                        closest.Add(new TileIndex((short)newX, (short)newY));
+                    }
+
+                    // Quadrant II
+                    newX = destination.x_ - i;
+                    newY = destination.y_ + (manhattan - i);
+                    cur = grid.getTile(newX, newY);
+                    if (!cur.collides(height, radius))
+                    {
+                        closest.Add(new TileIndex((short)newX, (short)newY));
+                    }
+
+                    // Quadrant III
+                    newX = destination.x_ - i;
+                    newY = destination.y_ - (manhattan - i);
+                    cur = grid.getTile(newX, newY);
+                    if (!cur.collides(height, radius))
+                    {
+                        closest.Add(new TileIndex((short)newX, (short)newY));
+                    }
+
+                    // Quadrant IV
+                    newX = destination.x_ + i;
+                    newY = destination.y_ - (manhattan - i);
+                    cur = grid.getTile(newX, newY);
+                    if (!cur.collides(height, radius))
+                    {
+                        closest.Add(new TileIndex((short)newX, (short)newY));
+                    }
+                }
+
+                manhattan++;
+                if (manhattan > 10)
+                {
+                    return new TileIndex(-1, -1);
+                }
+            }
+
+            // We've found walkable tiles, and they are all the same manhattan
+            //  distance from the destination, so pick closest to the start
+            // TODO
+            // Determine whether it's better to pick closest real distance to
+            //  destination first
+            TileIndex best = new TileIndex(-1, -1);
+            float bestScore = float.MaxValue;
+            for (int i = 0; i < closest.Count; i++)
+            {
+                float score = CommonFunctions.distance(closest[i], start);
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    best = closest[i];
+                }
+            }
+
+            return best;
         }
     }
 

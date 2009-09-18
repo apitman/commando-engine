@@ -29,6 +29,7 @@ using Commando.ai;
 using Microsoft.Xna.Framework.Storage;
 using Commando.objects.enemies;
 using Commando.ai.planning;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -41,6 +42,9 @@ namespace Commando
         const string HEALTH_BAR_OUTLINE_TEX_NAME = "healthBarOutline";
         const string HEALTH_BAR_FILL_TEX_NAME = "healthBarFiller";
         const string WEAPON_TEX_NAME = "pistol";
+        const string PISTOL_TEX_NAME = "PistolIcon";
+        const string SHOTGUN_TEX_NAME = "ShotgunIcon";
+        const string MACHINEGUN_TEX_NAME = "MachineGunIcon";
         const string HEALTH_TEXT = "Health";
         const string AMMO_TEXT = "%i/";
         const string AMMO_REPLACE_TEXT = "%i";
@@ -234,12 +238,17 @@ namespace Commando
             // Initialize player and HUD
             if (player_ != null)
             {
+                List<GameTexture> myTextures = new List<GameTexture>();
+                myTextures.Add(TextureMap.getInstance().getTexture(PISTOL_TEX_NAME));
+                myTextures.Add(TextureMap.getInstance().getTexture(SHOTGUN_TEX_NAME));
+                myTextures.Add(TextureMap.getInstance().getTexture(MACHINEGUN_TEX_NAME));
+
                 healthBarPos_ = HEALTH_BAR_POSITION;
                 weaponIconPos_ = WEAPON_ICON_POSITION;
                 healthTextPos_ = new Vector2(healthBarPos_.X + HEALTH_TEXT_OFFSET_X, healthBarPos_.Y + HEALTH_TEXT_OFFSET_Y);
                 ammoTextPos_ = AMMO_TEXT_POSITION;
                 healthBar_ = new HeadsUpDisplayObject(drawPipeline_, TextureMap.getInstance().getTexture(HEALTH_BAR_FILL_TEX_NAME), healthBarPos_, Vector2.Zero, HUD_DRAW_DEPTH);
-                weapon_ = new HeadsUpDisplayWeapon(drawPipeline_, TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
+                weapon_ = new HeadsUpDisplayWeapon(drawPipeline_, TextureMap.getInstance().getTexture(WEAPON_TEX_NAME), myTextures, weaponIconPos_, Vector2.Zero, HUD_DRAW_DEPTH);
                 ammo_ = new HeadsUpDisplayText(ammoTextPos_, FONT_DRAW_DEPTH, FontEnum.Kootenay14, player_.Weapon_.CurrentAmmo_);
                 player_.getHealth().addObserver(healthBar_);
                 player_.getWeapon().addObserver(weapon_);
@@ -260,7 +269,18 @@ namespace Commando
             {
                 return transition_.go();
             }
-
+            if (player_.Weapon_ is Commando.objects.weapons.Pistol)
+            {
+                weapon_.texIndex_ = 0;
+            }
+            if (player_.Weapon_ is Commando.objects.weapons.Shotgun)
+            {
+                weapon_.texIndex_ = 1;
+            }
+            if (player_.Weapon_ is Commando.objects.weapons.MachineGun)
+            {
+                weapon_.texIndex_ = 2;
+            }
             InputSet inputs = InputSet.getInstance();
 
             // Check whether to enter pause screen
@@ -320,7 +340,8 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
             // Draw Debug Lines
             if (Settings.getInstance().IsInDebugMode_)
@@ -331,12 +352,19 @@ namespace Commando
             if (Settings.getInstance().IsUsingMouse_)
             {
                 MouseState ms = Mouse.GetState();
-                Vector2 mpos = new Vector2(ms.X, ms.Y) - new Vector2(2.5f,2.5f);
-                TextureDrawer td = TextureMap.fetchTexture("laserpointer")
-                    .getDrawer(mpos, Constants.DEPTH_LASER);
-                td.Color = Color.Green;
-                td.CoordinateType = CoordinateTypeEnum.ABSOLUTE;
-                td.draw();
+                Vector2 mpos = new Vector2(ms.X, ms.Y);
+                TextureDrawer td = DrawBuffer.getInstance().getUpdateStack().getNext();
+                td.set(TextureMap.fetchTexture("laserpointer"),
+                    0,
+                    mpos,
+                    CoordinateTypeEnum.ABSOLUTE,
+                    Constants.DEPTH_LASER,
+                    true,
+                    Color.Green,
+                    0,
+                    1.0f
+                );
+                DrawBuffer.getInstance().getUpdateStack().push();
             }
             #endif
 

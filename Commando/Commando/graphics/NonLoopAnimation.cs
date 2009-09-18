@@ -24,6 +24,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Commando.collisiondetection;
+using Commando.graphics.multithreading;
 
 namespace Commando.graphics
 {
@@ -137,12 +138,40 @@ namespace Commando.graphics
 
         public void draw()
         {
-            sprites_.drawImage(currentFrame_, position_, rotation_, depth_);
+            //sprites_.drawImage(currentFrame_, position_, rotation_, depth_);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.Texture = sprites_;
+            td.ImageIndex = currentFrame_;
+            td.Position = position_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = depth_;
+            td.Centered = true;
+            td.Color = Color.White;
+            td.Effects = SpriteEffects.None;
+            td.Direction = rotation_;
+            td.Scale = 1.0f;
+            stack.push();
         }
 
         public void draw(Color color)
         {
-            sprites_.drawImageWithColor(currentFrame_, position_, rotation_, depth_, color);
+            //sprites_.drawImageWithColor(currentFrame_, position_, rotation_, depth_, color);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.Texture = sprites_;
+            td.ImageIndex = currentFrame_;
+            td.Position = position_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = depth_;
+            td.Centered = true;
+            td.Color = color;
+            td.Effects = SpriteEffects.None;
+            td.Direction = rotation_;
+            td.Scale = 1.0f;
+            stack.push();
         }
 
         public void reset()

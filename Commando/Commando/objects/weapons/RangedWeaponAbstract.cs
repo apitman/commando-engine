@@ -28,6 +28,8 @@ using Commando.collisiondetection;
 using Commando.ai;
 using Commando.levels;
 using Commando.objects.weapons;
+using Commando.graphics.multithreading;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando
 {
@@ -135,7 +137,21 @@ namespace Commando
             rotation_ *= drawOffset_;
 
             // TODO make this depth dependent on character depth
-            texture_.drawImage(0, position_ + rotation_, CommonFunctions.getAngle(rotation_), 0.6f);
+            //texture_.drawImage(0, position_ + rotation_, CommonFunctions.getAngle(rotation_), 0.6f);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.Texture = texture_;
+            td.ImageIndex = 0;
+            td.Position = position_ + rotation_;
+            td.Dest = false;
+            td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+            td.Depth = character_.getDepth() - 0.005f;
+            td.Centered = true;
+            td.Color = Color.White;
+            td.Effects = SpriteEffects.None;
+            td.Direction = rotation_;
+            td.Scale = 1.0f;
+            stack.push();
         }
 
         public void setCollisionDetector(CollisionDetectorInterface detector)

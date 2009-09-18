@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using System.Xml;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -152,9 +153,22 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
-            logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
+            //logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.set(logo_,
+                    0,
+                    LOGO_POSITION,
+                    CoordinateTypeEnum.ABSOLUTE,
+                    LOGO_DEPTH,
+                    false,
+                    Color.White,
+                    0.0f,
+                    1.0f);
+            stack.push();
 
             GameFont myFont = FontMap.getInstance().getFont(TEXT_FONT);
             myFont.drawStringCentered(TEXT_MESSAGE,
