@@ -414,5 +414,19 @@ namespace Commando.objects.enemies
                 }
             }
         }
+
+        public override void die()
+        {
+            base.die();
+            ShrapnelInfo info = new ShrapnelInfo();
+            info.COUNT_MIN = 20;
+            info.COUNT_MAX = 30;
+            info.VELOCITY_MIN = -3;
+            info.VELOCITY_MAX = 3;
+            info.LIFE_MIN = 3;
+            info.LIFE_MAX = 12;
+            info.SIZE = 3;
+            ShrapnelGenerator.createShrapnel(pipeline_, position_, Color.Red, Constants.DEPTH_DEBUG_LINES, ref info);
+        }
     }
 }

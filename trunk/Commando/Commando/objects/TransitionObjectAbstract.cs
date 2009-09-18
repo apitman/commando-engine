@@ -23,6 +23,8 @@ using System.Text;
 using Commando.collisiondetection;
 using Commando.levels;
 using Microsoft.Xna.Framework;
+using Commando.graphics.multithreading;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.objects
 {
@@ -114,7 +116,19 @@ namespace Commando.objects
 
         public override void draw(GameTime gameTime)
         {
-            image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
+            //image_.drawImage(0, position_, CommonFunctions.getAngle(direction_), depth_);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.set(image_,
+                    0,
+                    position_,
+                    CoordinateTypeEnum.RELATIVE,
+                    depth_,
+                    true,
+                    Color.White,
+                    direction_,
+                    1.0f);
+            stack.push();
         }
 
         public override void die()

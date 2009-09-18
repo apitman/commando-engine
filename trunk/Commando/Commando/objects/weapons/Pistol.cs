@@ -58,7 +58,7 @@ namespace Commando.objects.weapons
                 CurrentAmmo_--;
                 character_.getAmmo().update(CurrentAmmo_);
 
-                InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
+                //InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
 
                 weaponFired_ = true;
 

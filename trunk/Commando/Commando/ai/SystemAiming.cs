@@ -65,6 +65,7 @@ namespace Commando.ai
                                     AI_.Character_.getHeight(),
                                     enemy_.getHeight()))
             {
+                lossFlag = false;
                 velocities_[countUp % REACTION_TIME] = enemy_.getVelocity();
                 countUp++;
                 Vector2 target = predictTargetPosition(enemy_.getPosition());

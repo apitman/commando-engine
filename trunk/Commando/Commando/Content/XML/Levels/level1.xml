@@ -997,10 +997,10 @@
     <enemy name="human" posX="259" posY="216" rotationX="71" rotationY="71" />
   </enemies>
   <items>
-    <item type="aTrans" posX="285" posY="60" nextLevel="XML\\Levels\\level2" story="true" storyDuration="10" storyText=
+    <item type="aTrans" posX="285" posY="60" nextLevel="XML\\Levels\\level2" story="true" storyDuration="10" storyImage="Sprites\\storyboard1" storyText=
 "You are trying to fight your way out of a robot factory.
                   Welcome to COMMANDO!" />
   </items>
   <playerLocation x="71" y="187" />
-  <overlay texture="overlayLogo" posX="150" posY="150" depth="0.1" />
+  <overlay texture="overlayLogo" posX="150" posY="150" depth="0.11" />
 </level>

@@ -77,10 +77,11 @@ namespace Commando.objects
             
             AnimationInterface run = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_, boundsPolygon_);
             AnimationInterface runTo = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_, boundsPolygon_);
-            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_, boundsPolygon_);
+            AnimationInterface rest = new LoopAnimation(TextureMap.getInstance().getTexture("GreenPlayer_Blank"), frameLengthModifier_, depth_, boundsPolygon_);
+            AnimationInterface rest2 = new LoopAnimation(TextureMap.getInstance().getTexture("basic_enemy_walk"), frameLengthModifier_, depth_, boundsPolygon_);
             AnimationInterface[] restAnims = new AnimationInterface[2];
             restAnims[0] = rest;
-            restAnims[1] = rest;
+            restAnims[1] = rest2;
             AnimationInterface[] shoot = new AnimationInterface[1];
             shoot[0] = rest;
 
@@ -102,10 +103,6 @@ namespace Commando.objects
             actions["default"].Add("throw", new NoAction("lower"));
             actuator_ = new MultiLevelActuator(actions, levels, this, "default", "rest", "lower", "lower");
             
-
-
-            
-
             currentDrawColor_ = Color.White;
             health_.update(15);
 
@@ -176,6 +173,20 @@ namespace Commando.objects
                 currentDrawColor_ = Color.Salmon;
                 drawColorCount_ = 2;
             }
+        }
+
+        public override void die()
+        {
+            base.die();
+            ShrapnelInfo info = new ShrapnelInfo();
+            info.COUNT_MIN = 30;
+            info.COUNT_MAX = 40;
+            info.VELOCITY_MIN = -3;
+            info.VELOCITY_MAX = 3;
+            info.LIFE_MIN = 3;
+            info.LIFE_MAX = 12;
+            info.SIZE = 2;
+            ShrapnelGenerator.createShrapnel(pipeline_, position_, Color.Yellow, Constants.DEPTH_DEBUG_LINES, ref info);
         }
     }
 }

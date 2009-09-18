@@ -26,6 +26,8 @@ using Microsoft.Xna.Framework;
 using Commando.objects.enemies;
 using Commando.collisiondetection;
 using Commando.ai;
+using Commando.graphics;
+using System.IO;
 
 namespace Commando.levels
 {
@@ -34,6 +36,8 @@ namespace Commando.levels
     /// </summary>
     public class Level
     {
+        public const string LEVELS_FOLDER = @"XML\Levels";
+
         // Drawing pipeline containing all drawable entities in the level
         public List<DrawableObjectAbstract> Pipeline_ =
             new List<DrawableObjectAbstract>();
@@ -143,9 +147,9 @@ namespace Commando.levels
         public static Level getLevelFromFile(string filepath, Engine engine)
         {
             Level level;
-            using (ManagedXml doc = new ManagedXml())
+            using (ManagedXml manager = new ManagedXml(engine))
             {
-                doc.Load(filepath);
+                XmlDocument doc = manager.loadFromFile(filepath);
                 level = new Level(false);
                 level.initializeLevelFromXml(doc, engine);
             }
@@ -161,23 +165,22 @@ namespace Commando.levels
         public static Level getLevelFromContent(string levelname, Engine engine)
         {
             Level level;
-            using (ManagedXml doc = engine.Content.Load<ManagedXml>(levelname))
+            using (ManagedXml manager = new ManagedXml(engine))
             {
+                XmlDocument doc = manager.load(Path.Combine(LEVELS_FOLDER, levelname));
                 level = new Level(true);
                 level.initializeLevelFromXml(doc, engine);
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
             return level;
         }
 
         /// <summary>
         /// Parses Xml to populate the level with enemies, objects, etc.
         /// </summary>
-        /// <param name="doc">ManagedXml containing level data.</param>
+        /// <param name="doc">XmlDocument containing level data.</param>
         /// <param name="engine">Game engine.</param>
         /// <returns></returns>
-        protected void initializeLevelFromXml(ManagedXml doc, Engine engine)
+        protected void initializeLevelFromXml(XmlDocument doc, Engine engine)
         {
             // First load the tiles
             XmlElement ele = (XmlElement)doc.GetElementsByTagName("level")[0];
@@ -214,7 +217,7 @@ namespace Commando.levels
             {
                 parseEnemy(tList[i]);
             }
-            // Now load the healthBoxes and ammoBoxes
+            // Now load the healthBoxes, ammoBoxes, weapon pickups, and level transitions
             tList = doc.GetElementsByTagName("item");
             for (int i = 0; i < tList.Count; i++)
             {
@@ -245,115 +248,114 @@ namespace Commando.levels
         public void writeLevelToFile(string filepath)
         {
             // Create the document
-            using (ManagedXml doc = new ManagedXml())
+            XmlDocument doc = new XmlDocument();
+
+            // Add level attributes
+            XmlElement levelElement = doc.CreateElement("level");
+            levelElement.SetAttribute("numTilesWide", width_.ToString());
+            levelElement.SetAttribute("numTilesTall", height_.ToString());
+            levelElement.SetAttribute("screenSizeX", "375");
+            levelElement.SetAttribute("screenSizeY", "375");
+
+            // Add the tiles
+            XmlElement tilesElement = doc.CreateElement("tiles");
+            for (int i = 0; i < height_; i++)
             {
-                // Add level attributes
-                XmlElement levelElement = doc.CreateElement("level");
-                levelElement.SetAttribute("numTilesWide", width_.ToString());
-                levelElement.SetAttribute("numTilesTall", height_.ToString());
-                levelElement.SetAttribute("screenSizeX", "375");
-                levelElement.SetAttribute("screenSizeY", "375");
-
-                // Add the tiles
-                XmlElement tilesElement = doc.CreateElement("tiles");
-                for (int i = 0; i < height_; i++)
+                for (int j = 0; j < width_; j++)
                 {
-                    for (int j = 0; j < width_; j++)
-                    {
-                        XmlElement tileElement = doc.CreateElement("tile");
-                        tileElement.SetAttribute("index", tiles_[i, j].ToString());
-                        tilesElement.AppendChild(tileElement);
-                    }
+                    XmlElement tileElement = doc.CreateElement("tile");
+                    tileElement.SetAttribute("index", tiles_[i, j].ToString());
+                    tilesElement.AppendChild(tileElement);
                 }
-                levelElement.AppendChild(tilesElement);
-
-                // Add the enemies
-                XmlElement enemiesElement = doc.CreateElement("enemies");
-                for (int i = 0; i < enemies_.Count; i++)
-                {
-
-                    XmlElement enemyElement = doc.CreateElement("enemy");
-
-                    if (enemies_[i] is DummyEnemy)
-                        enemyElement.SetAttribute("name", "dummy");
-
-                    else if (enemies_[i] is HumanEnemy)
-                        enemyElement.SetAttribute("name", "human");
-                    enemyElement.SetAttribute("posX", Convert.ToInt32(enemies_[i].getPosition().X).ToString());
-                    enemyElement.SetAttribute("posY", Convert.ToInt32(enemies_[i].getPosition().Y).ToString());
-                    //int rotationDegrees = Convert.ToInt32(CommonFunctions.getAngle(enemies_[i].getDirection()) * 180 / Math.PI);
-                    //enemyElement.SetAttribute("rotation", rotationDegrees.ToString());
-                    enemyElement.SetAttribute("rotationX", Convert.ToInt32(enemies_[i].getDirection().X * 100).ToString());
-                    enemyElement.SetAttribute("rotationY", Convert.ToInt32(enemies_[i].getDirection().Y * 100).ToString());
-                    enemyElement.SetAttribute("allegiance", enemies_[i].Allegiance_.ToString());
-                    enemiesElement.AppendChild(enemyElement);
-                }
-                levelElement.AppendChild(enemiesElement);
-
-                // Add HealthBoxes
-                // Add AmmoBoxes
-                XmlElement itemsElement = doc.CreateElement("items");
-                for (int i = 0; i < items_.Count; i++)
-                {
-                    if (items_[i] is HealthBox)
-                    {
-                        // HealthBox
-                        XmlElement hBoxElement = doc.CreateElement("item");
-                        hBoxElement.SetAttribute("type", "hBox");
-                        hBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
-                        hBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
-                        itemsElement.AppendChild(hBoxElement);
-                    }
-                    else if (items_[i] is AmmoBox)
-                    {
-                        // AmmoBox
-                        XmlElement aBoxElement = doc.CreateElement("item");
-                        aBoxElement.SetAttribute("type", "aBox");
-                        aBoxElement.SetAttribute("posX", items_[i].getPosition().X.ToString());
-                        aBoxElement.SetAttribute("posY", items_[i].getPosition().Y.ToString());
-                        itemsElement.AppendChild(aBoxElement);
-                    }
-                    else if (items_[i] is LevelTransitionObject)
-                    {
-
-                        LevelTransitionObject myTrans = items_[i] as LevelTransitionObject;
-                        XmlElement aTransElement = doc.CreateElement("item");
-                        aTransElement.SetAttribute("type", "aTrans");
-                        aTransElement.SetAttribute("posX", myTrans.getPosition().X.ToString());
-                        aTransElement.SetAttribute("posY", myTrans.getPosition().Y.ToString());
-                        aTransElement.SetAttribute("nextLevel", myTrans.getNextLevel());
-
-                        itemsElement.AppendChild(aTransElement);
-                    }
-                    else if (items_[i] is WeaponBox)
-                    {
-                        WeaponBox myWpnBox = items_[i] as WeaponBox;
-                        XmlElement aWpnBoxElement = doc.CreateElement("item");
-                        aWpnBoxElement.SetAttribute("type", "aWpnBox");
-                        aWpnBoxElement.SetAttribute("posX", myWpnBox.getPosition().X.ToString());
-                        aWpnBoxElement.SetAttribute("posY", myWpnBox.getPosition().Y.ToString());
-                        string wpnType;
-                        if (myWpnBox.WeapnType == WeaponBox.WeaponType.MachineGun)
-                            wpnType = "machineGun";
-                        else if (myWpnBox.WeapnType == WeaponBox.WeaponType.Pistol)
-                            wpnType = "pistol";
-                        else
-                            wpnType = "shotgun";
-                        aWpnBoxElement.SetAttribute("weaponType", wpnType);
-                        itemsElement.AppendChild(aWpnBoxElement);
-                    }
-                    levelElement.AppendChild(itemsElement);
-                }
-                // Add playerLocation
-                XmlElement playerLocElement = doc.CreateElement("playerLocation");
-                playerLocElement.SetAttribute("x", playerStartLocation_.X.ToString());
-                playerLocElement.SetAttribute("y", playerStartLocation_.Y.ToString());
-                levelElement.AppendChild(playerLocElement);
-
-                // Finish up and save the document
-                doc.AppendChild(levelElement);
-                doc.Save(filepath);
             }
+            levelElement.AppendChild(tilesElement);
+
+            // Add the enemies
+            XmlElement enemiesElement = doc.CreateElement("enemies");
+            for (int i = 0; i < enemies_.Count; i++)
+            {
+
+                XmlElement enemyElement = doc.CreateElement("enemy");
+
+                enemyElement.SetAttribute("name", enemies_[i].getName());
+                enemyElement.SetAttribute("posX", Convert.ToInt32(enemies_[i].getPosition().X).ToString());
+                enemyElement.SetAttribute("posY", Convert.ToInt32(enemies_[i].getPosition().Y).ToString());
+                //int rotationDegrees = Convert.ToInt32(CommonFunctions.getAngle(enemies_[i].getDirection()) * 180 / Math.PI);
+                //enemyElement.SetAttribute("rotation", rotationDegrees.ToString());
+                enemyElement.SetAttribute("rotationX", Convert.ToInt32(enemies_[i].getDirection().X * 100).ToString());
+                enemyElement.SetAttribute("rotationY", Convert.ToInt32(enemies_[i].getDirection().Y * 100).ToString());
+                enemyElement.SetAttribute("allegiance", enemies_[i].Allegiance_.ToString());
+                enemiesElement.AppendChild(enemyElement);
+            }
+            levelElement.AppendChild(enemiesElement);
+
+            // Add HealthBoxes
+            // Add AmmoBoxes
+            XmlElement itemsElement = doc.CreateElement("items");
+            for (int i = 0; i < items_.Count; i++)
+            {
+                if (items_[i] is HealthBox)
+                {
+                    // HealthBox
+                    XmlElement hBoxElement = doc.CreateElement("item");
+                    hBoxElement.SetAttribute("type", "hBox");
+                    hBoxElement.SetAttribute("posX", Convert.ToInt32(items_[i].getPosition().X).ToString());
+                    hBoxElement.SetAttribute("posY", Convert.ToInt32(items_[i].getPosition().Y).ToString());
+                    itemsElement.AppendChild(hBoxElement);
+                }
+                else if (items_[i] is AmmoBox)
+                {
+                    // AmmoBox
+                    XmlElement aBoxElement = doc.CreateElement("item");
+                    aBoxElement.SetAttribute("type", "aBox");
+                    aBoxElement.SetAttribute("posX", Convert.ToInt32(items_[i].getPosition().X).ToString());
+                    aBoxElement.SetAttribute("posY", Convert.ToInt32(items_[i].getPosition().Y).ToString());
+                    itemsElement.AppendChild(aBoxElement);
+                }
+                else if (items_[i] is LevelTransitionObject)
+                {
+
+                    LevelTransitionObject myTrans = items_[i] as LevelTransitionObject;
+                    XmlElement aTransElement = doc.CreateElement("item");
+                    aTransElement.SetAttribute("type", "aTrans");
+                    aTransElement.SetAttribute("posX", Convert.ToInt32(myTrans.getPosition().X).ToString());
+                    aTransElement.SetAttribute("posY", Convert.ToInt32(myTrans.getPosition().Y).ToString());
+                    aTransElement.SetAttribute("nextLevel", myTrans.getNextLevel());
+
+                    itemsElement.AppendChild(aTransElement);
+                }
+                else if (items_[i] is WeaponBox)
+                {
+                    WeaponBox myWpnBox = items_[i] as WeaponBox;
+                    XmlElement aWpnBoxElement = doc.CreateElement("item");
+                    aWpnBoxElement.SetAttribute("type", "aWpnBox");
+                    aWpnBoxElement.SetAttribute("posX", Convert.ToInt32(myWpnBox.getPosition().X).ToString());
+                    aWpnBoxElement.SetAttribute("posY", Convert.ToInt32(myWpnBox.getPosition().Y).ToString());
+                    string wpnType;
+                    if (myWpnBox.WeapnType == WeaponBox.WeaponType.MachineGun)
+                        wpnType = "machineGun";
+                    else if (myWpnBox.WeapnType == WeaponBox.WeaponType.Pistol)
+                        wpnType = "pistol";
+                    else if (myWpnBox.WeapnType == WeaponBox.WeaponType.Shotgun)
+                        wpnType = "shotgun";
+                    else
+                        throw new NotImplementedException("Don't know how to save this weapon!");
+                    aWpnBoxElement.SetAttribute("weaponType", wpnType);
+                    itemsElement.AppendChild(aWpnBoxElement);
+                }
+                levelElement.AppendChild(itemsElement);
+            }
+            // Add playerLocation
+            XmlElement playerLocElement = doc.CreateElement("playerLocation");
+            playerLocElement.SetAttribute("x", Convert.ToInt32(playerStartLocation_.X).ToString());
+            playerLocElement.SetAttribute("y", Convert.ToInt32(playerStartLocation_.Y).ToString());
+            levelElement.AppendChild(playerLocElement);
+
+            // Finish up and save the document
+            doc.AppendChild(levelElement);
+            doc.Save(filepath);
+
+            doc = null;
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -467,6 +469,12 @@ namespace Commando.levels
                 case "human":
                     enemy = new HumanEnemy(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
                     break;
+                case "bigboss":
+                    enemy = new BigBoss(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
+                    break;
+                case "flying":
+                    enemy = new FlyingEnemy(Pipeline_, new Vector2((float)Convert.ToInt32(enemyEle.GetAttribute("posX")), (float)Convert.ToInt32(enemyEle.GetAttribute("posY"))));
+                    break;
                 default:
                     throw new NotImplementedException("Unknown enemy name in level file");
             }
@@ -535,14 +543,15 @@ namespace Commando.levels
                 Vector2 pos = new Vector2((float)Convert.ToInt32(itemElement.GetAttribute("posX")), (float)Convert.ToInt32(itemElement.GetAttribute("posY")));
                 string nextLevel;
                 nextLevel = itemElement.GetAttribute("nextLevel");
-                bool usesStory = itemElement.GetAttribute("story") == "true";
+                bool usesStory = itemElement.GetAttribute("story").ToLower() == "true";
                 int storyDuration = 0;
                 if (usesStory)
                 {
                     storyDuration = Convert.ToInt32(itemElement.GetAttribute("storyDuration"));
                 }
-                string storyText = itemElement.GetAttribute("storyText");
-                items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, Pipeline_, new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), this.isPackagedLevel_, usesStory, storyDuration, storyText));
+                string storyText = itemElement.GetAttribute("storyText"); // Alt text
+                string storyImgPath = itemElement.GetAttribute("storyImage");
+                items_.Add(new LevelTransitionObject(nextLevel, null, Vector2.Zero, Pipeline_, new Vector2(pos.X, pos.Y), new Vector2(1f, 0f), this.isPackagedLevel_, usesStory, storyDuration, storyImgPath, storyText));
             }
             else if (itemElement.GetAttribute("type") == "aWpnBox")
             {
@@ -660,7 +669,56 @@ namespace Commando.levels
             }
             WorldState.CharacterList_ = characterList;
         }
+        public void initializeForEditor()
+        {
+            
+            Tile[,] tilesForCollisionGeneration = new Tile[getHeight(), getWidth()];
+            for (int i = 0; i < getHeight(); i++)
+            {
+                for (int j = 0; j < getWidth(); j++)
+                {
+                    Height h = tileSet_.getHeight(tiles_[i, j]);
 
+                    if (h.blocksHigh_)
+                    {
+                        tilesForCollisionGeneration[i, j].highDistance_ = 0f;
+                    }
+                    else
+                    {
+                        tilesForCollisionGeneration[i, j].highDistance_ = 1f;
+                    }
+
+                    if (h.blocksLow_)
+                    {
+                        tilesForCollisionGeneration[i, j].lowDistance_ = 0f;
+                    }
+                    else
+                    {
+                        tilesForCollisionGeneration[i, j].lowDistance_ = 1f;
+                    }
+                }
+            }
+            List<BoxObject> boxesToBeAddedForReal = Tiler.mergeBoxes(tilesForCollisionGeneration);
+
+            // Calculate distances from walls to each tile
+            Tile[,] tilesForGrid = CoverGenerator.generateRealTileDistances(tilesForCollisionGeneration);
+            if (Settings.getInstance().IsInDebugMode_)
+            {
+                for (int i = 0; i < tilesForGrid.GetLength(0); i++)
+                {
+                    for (int j = 0; j < tilesForGrid.GetLength(1); j++)
+                    {
+                        Console.Write(tilesForGrid[i, j].highDistance_.ToString("F1"));
+                        Console.Write(" ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            GlobalHelper.getInstance().setCurrentLevelTileGrid(new TileGrid(tilesForGrid));
+
+            // Generate cover objects and add them to collision detection
+           
+        }
         /// <summary>
         /// Draws all of the tiles which compose the level, and nothing else.
         /// </summary>
@@ -669,9 +727,19 @@ namespace Commando.levels
             // TODO
             // Might be easy to make an optimization that only tries to
             //  draw the tiles which are within the view of the camera
-            for (int i = 0; i < height_; i++)
+            Camera cam = GlobalHelper.getInstance().getCurrentCamera();
+            float sHeight = cam.getScreenHeight();
+            float sWidth = cam.getScreenWidth();
+            TileGrid grid = GlobalHelper.getInstance().getCurrentLevelTileGrid();
+            TileIndex lowBound = grid.getTileIndex(cam.getPosition());
+            TileIndex highBound = grid.getTileIndex(cam.getPosition() + new Vector2(sWidth, sHeight));
+            int lowY = (lowBound.y_ - 1 >= 0) ? lowBound.y_ - 1: 0;
+            int highY = (highBound.y_ + 1 < height_) ? highBound.y_ + 1 : height_;
+            int lowX = (lowBound.x_ - 1>= 0) ? lowBound.x_ - 1: 0;
+            int highX = (highBound.x_ + 1 < width_) ? highBound.x_ + 1: width_;
+            for (int i = lowY; i < highY; i++)
             {
-                for (int j = 0; j < width_; j++)
+                for (int j = lowX; j < highX; j++)
                 {
                     Vector2 v = new Vector2(j * tileSet_.TILE_SIZE_X, i * tileSet_.TILE_SIZE_Y);
                     tileSet_.draw(v, tiles_[i, j]);

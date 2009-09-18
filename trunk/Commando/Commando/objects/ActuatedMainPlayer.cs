@@ -406,6 +406,10 @@ namespace Commando.objects
             if(inputSet_.getButton(Commando.controls.InputsEnum.RIGHT_TRIGGER))
             {
                 actuator_.perform("shoot", new ActionParameters());
+                if (!(Weapon_ is MachineGun))
+                {
+                    InputSet.getInstance().setToggle(Commando.controls.InputsEnum.RIGHT_TRIGGER);
+                }
             }
 
             if (inputSet_.getButton(Commando.controls.InputsEnum.BUTTON_1))

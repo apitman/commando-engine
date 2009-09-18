@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using Commando.controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Commando.graphics.multithreading;
 
 
 namespace Commando
@@ -46,17 +47,13 @@ namespace Commando
         protected const float HEADER_DEPTH = Constants.DEPTH_MENU_TEXT;
 
         protected EngineStateInterface returnState_;
-        protected int returnScreenSizeX_;
-        protected int returnScreenSizeY_;
-        public EngineStateEditorControls(Engine engine, EngineStateInterface returnState, int returnScreenSizeX, int returnScreenSizeY)
+        public EngineStateEditorControls(Engine engine, EngineStateInterface returnState)
         {
             InputSet inputs = InputSet.getInstance();
 
             controlTitle_ = "CONTROLS";
             engine_ = engine;
             returnState_ = returnState;
-            returnScreenSizeX_ = returnScreenSizeX;
-            returnScreenSizeY_ = returnScreenSizeY;
             List<string> selectedControlsString = new List<string>();
             selectedControlsString.Add("WITH OBJECT SELECTED");
             selectedControlsString.Add("Deslect: " + inputs.getControlName(InputsEnum.RIGHT_TRIGGER));
@@ -116,7 +113,6 @@ namespace Commando
                 inputs.getButton(InputsEnum.BUTTON_1))
             {
                 inputs.setAllToggles();
-                engine_.setScreenSize(returnScreenSizeX_, returnScreenSizeY_);
                 return returnState_;
             }
 
@@ -126,7 +122,9 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
+
             GameFont myFont = FontMap.getInstance().getFont(HEADER_FONT);
             //print title of controls screen
             Vector2 headerPos =

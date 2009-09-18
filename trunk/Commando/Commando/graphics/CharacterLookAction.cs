@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Commando.objects.enemies;
 
 namespace Commando.graphics
 {
@@ -30,6 +31,8 @@ namespace Commando.graphics
         protected const int PRIORITY = 2;
 
         protected const float TURNSPEED = 0.3f;
+
+        protected float turnSpeed;
 
         protected CharacterAbstract character_;
 
@@ -52,6 +55,14 @@ namespace Commando.graphics
             newDirection_ = Vector2.Zero;
             direction_ = Vector2.Zero;
             finished_ = true;
+            if (character_ is BigBoss)
+            {
+                turnSpeed = TURNSPEED / 20f;
+            }
+            else
+            {
+                turnSpeed = TURNSPEED;
+            }
         }
 
         public void update()
@@ -134,19 +145,19 @@ namespace Commando.graphics
             float rotAngle = character_.getRotationAngle();
 
             float rotDiff = MathHelper.WrapAngle(rotAngle - rotationDirectional);
-            if (Math.Abs(rotDiff) <= TURNSPEED || Math.Abs(rotDiff) >= MathHelper.TwoPi - TURNSPEED)
+            if (Math.Abs(rotDiff) <= turnSpeed || Math.Abs(rotDiff) >= MathHelper.TwoPi - turnSpeed)
             {
                 newDirection_ = newDirection;
             }
             else if (rotDiff < 0f && rotDiff > -MathHelper.Pi)
             {
-                rotAngle += TURNSPEED;
+                rotAngle += turnSpeed;
                 newDirection_.X = (float)Math.Cos((double)rotAngle);
                 newDirection_.Y = (float)Math.Sin((double)rotAngle);
             }
             else
             {
-                rotAngle -= TURNSPEED;
+                rotAngle -= turnSpeed;
                 newDirection_.X = (float)Math.Cos((double)rotAngle);
                 newDirection_.Y = (float)Math.Sin((double)rotAngle);
             }

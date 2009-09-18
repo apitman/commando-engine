@@ -23,6 +23,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Commando.graphics;
 using System;
 using Commando.levels;
+using Commando.graphics.multithreading;
+using System.IO;
 
 namespace Commando
 {
@@ -126,7 +128,8 @@ namespace Commando
             mainMenuList_.Spacing_ = MENU_SPACING;
             mainMenuList_.LayerDepth_ = MENU_DEPTH;
 
-            SoundEngine.getInstance().playMusic("epic");
+            SoundEngine.getInstance().playCue("go_commando");
+            SoundEngine.getInstance().playMusic("menu");
         }
 
         #region EngineStateInterface Members
@@ -152,14 +155,15 @@ namespace Commando
                 {
                     case 0:
                         SoundEngine.getInstance().playMusic("alarm");
-                        Level firstLevel = Level.getLevelFromContent(@"XML\Levels\level1", engine_);
+                        Level firstLevel = Level.getLevelFromContent("demolevel1", engine_);
                         return new EngineStateGameplay(engine_, firstLevel);
                     case 1:
-                        SoundEngine.getInstance().playMusic("sneak");
+                        SoundEngine.getInstance().playMusic("epic");
                         return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.GAMEPLAY, this);
                     case 2:
                         return new EngineStateControls(engine_);
                     case 3:
+                        SoundEngine.getInstance().playMusic("sneak");
                         return new EngineStateLevelLoad(engine_, EngineStateLevelLoad.EngineStateTarget.LEVEL_EDITOR, this);
                     case 4:
                         engine_.Exit();
@@ -197,9 +201,23 @@ namespace Commando
         /// </summary>
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(Color.Black);
+            //engine_.GraphicsDevice.Clear(Color.Black);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = Color.Black;
 
-            logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
+            //logo_.drawImageAbsolute(0, LOGO_POSITION, LOGO_DEPTH);
+            DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+            TextureDrawer td = stack.getNext();
+            td.set(logo_,
+                    0,
+                    LOGO_POSITION,
+                    CoordinateTypeEnum.ABSOLUTE,
+                    LOGO_DEPTH,
+                    false,
+                    Color.White,
+                    0.0f,
+                    1.0f);
+            stack.push();
+
 
             //print control Tips for main menu
             GameFont myFont = FontMap.getInstance().getFont(CONTROL_TIPS_FONT);

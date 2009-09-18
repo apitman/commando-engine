@@ -77,6 +77,7 @@ namespace Commando.ai.planning
         {
             aiming.update();
 
+            // TODO
             // Move this into checkIsStillValid
             if (character_.Weapon_.CurrentAmmo_ <= 0 || aiming.lossFlag)
             {

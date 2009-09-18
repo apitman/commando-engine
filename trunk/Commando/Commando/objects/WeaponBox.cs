@@ -25,6 +25,8 @@ using Commando.collisiondetection;
 using Microsoft.Xna.Framework;
 using Commando.levels;
 using Commando.objects.weapons;
+using Commando.graphics.multithreading;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Commando.objects
 {
@@ -141,10 +143,23 @@ namespace Commando.objects
         }
         public override void  draw(GameTime gameTime)
         {       
-             TextureDrawer td = new TextureDrawer(image_, position_, depth_);
-             td.Scale = 0.20f;
-             td.draw();
- 	        
+             //TextureDrawer td = new TextureDrawer(image_, position_, depth_);
+             //td.Scale = 0.20f;
+             //td.draw();
+             DrawStack stack = DrawBuffer.getInstance().getUpdateStack();
+             TextureDrawer td = stack.getNext();
+             td.Texture = image_;
+             td.ImageIndex = 0;
+             td.Position = position_;
+             td.Dest = false;
+             td.CoordinateType = CoordinateTypeEnum.RELATIVE;
+             td.Depth = depth_;
+             td.Centered = true;
+             td.Color = Color.White;
+             td.Effects = SpriteEffects.None;
+             td.Rotation = 0.0f;
+             td.Scale = 0.2f;
+             stack.push();
         }
         public enum WeaponType
         {

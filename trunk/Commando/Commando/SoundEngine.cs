@@ -56,7 +56,7 @@ namespace Commando
             AudioCategory music = audio_.GetCategory("Music");
             music.SetVolume(1f);
             AudioCategory effects = audio_.GetCategory("Effect");
-            effects.SetVolume(0.4f);
+            effects.SetVolume(1f);
         }
 
         /// <summary>

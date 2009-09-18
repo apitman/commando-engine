@@ -25,6 +25,7 @@ using Commando.controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -222,7 +223,8 @@ namespace Commando
 
         public void draw()
         {
-            engine_.GraphicsDevice.Clear(BACKGROUND_COLOR);
+            //engine_.GraphicsDevice.Clear(BACKGROUND_COLOR);
+            DrawBuffer.getInstance().getUpdateStack().ScreenClearColor_ = BACKGROUND_COLOR;
             menuList_.draw();
         }
 

@@ -41,7 +41,7 @@ namespace Commando.ai.brains
             PlanManager_.addAction(new ActionTypeGoto(npc));
             PlanManager_.addAction(new ActionTypePatrol(npc));
             PlanManager_.addAction(new ActionTypeFlee(npc));
-            PlanManager_.addAction(new ActionTypeAttackRanged(npc));
+            PlanManager_.addAction(new ActionTypeAggressiveFire(npc));
 
             sensors_.Add(new SensorEars(this));
             sensors_.Add(new SensorSeeCharacter(this, FIELD_OF_VIEW));

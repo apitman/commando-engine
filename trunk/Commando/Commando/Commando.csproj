@@ -15,12 +15,13 @@
     <ApplicationIcon>Game.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ManifestCertificateThumbprint>B5C2EB8B8F59FAFD534C587E146A371E0CC4A5CB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>D9255068BC937B7F7AB1CD3020C7459E51640F8E</ManifestCertificateThumbprint>
     <ManifestKeyFile>
     </ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
-    <PublishUrl>C:\Documents and Settings\pitmanam\Desktop\COMMANDOreleaseV0.61\</PublishUrl>
+    <SignAssembly>false</SignAssembly>
+    <PublishUrl>C:\Documents and Settings\pitmanam\Desktop\COMMANDOreleaseV0.75\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -30,7 +31,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -96,6 +97,8 @@
     <Compile Include="ai\AI.cs" />
     <Compile Include="ai\AStarPathfinder.cs" />
     <Compile Include="ai\Belief.cs" />
+    <Compile Include="ai\BossSystemMissiles.cs" />
+    <Compile Include="ai\brains\BossAI.cs" />
     <Compile Include="ai\brains\DummyAI.cs" />
     <Compile Include="ai\brains\HumanAI.cs" />
     <Compile Include="ai\Memory.cs" />
@@ -111,9 +114,11 @@
     <Compile Include="ai\planning\ActionReload.cs" />
     <Compile Include="ai\planning\ActionTakeCover.cs" />
     <Compile Include="ai\planning\ActionThrowGrenade.cs" />
+    <Compile Include="ai\planning\ActionAggressiveFire.cs" />
     <Compile Include="ai\planning\Goal.cs" />
     <Compile Include="ai\planning\GoalIdle.cs" />
     <Compile Include="ai\planning\GoalInvestigate.cs" />
+    <Compile Include="ai\planning\GoalKeepDistance.cs" />
     <Compile Include="ai\planning\GoalKill.cs" />
     <Compile Include="ai\planning\GoalManager.cs" />
     <Compile Include="ai\planning\GoalPatrol.cs" />
@@ -174,9 +179,9 @@
     <Compile Include="EngineStateOutofFocus.cs" />
     <Compile Include="EngineStatePause.cs" />
     <Compile Include="controls\InputSet.cs" />
+    <Compile Include="EngineStateSplash.cs" />
     <Compile Include="EngineStateStart.cs" />
     <Compile Include="EngineStateStorySegment.cs" />
-    <Compile Include="CommLogger.cs" />
     <Compile Include="FontEnum.cs" />
     <Compile Include="FPSMonitor.cs" />
     <Compile Include="GlobalHelper.cs" />
@@ -199,12 +204,17 @@
     <Compile Include="graphics\CrouchAction.cs" />
     <Compile Include="graphics\DefaultActuator.cs" />
     <Compile Include="graphics\DetachFromCoverAction.cs" />
+    <Compile Include="graphics\multithreading\DrawBuffer.cs" />
     <Compile Include="graphics\Illustrator.cs" />
     <Compile Include="graphics\LoopAnimation.cs" />
     <Compile Include="graphics\MoveActionInterface.cs" />
     <Compile Include="graphics\MoveToActionInterface.cs" />
     <Compile Include="graphics\CharacterRunAction.cs" />
     <Compile Include="graphics\MultiLevelActuator.cs" />
+    <Compile Include="graphics\multithreading\DrawStack.cs" />
+    <Compile Include="graphics\multithreading\FontStack.cs" />
+    <Compile Include="graphics\multithreading\RenderThread.cs" />
+    <Compile Include="graphics\multithreading\UpdateThread.cs" />
     <Compile Include="graphics\NoAction.cs" />
     <Compile Include="graphics\NonLoopAnimation.cs" />
     <Compile Include="graphics\ShootActionInterface.cs" />
@@ -224,7 +234,9 @@
     <Compile Include="objects\AmmoBox.cs" />
     <Compile Include="objects\BoxObject.cs" />
     <Compile Include="objects\CoverObject.cs" />
+    <Compile Include="objects\enemies\BigBoss.cs" />
     <Compile Include="objects\enemies\DummyEnemy.cs" />
+    <Compile Include="objects\enemies\FlyingEnemy.cs" />
     <Compile Include="objects\enemies\HumanEnemy.cs" />
     <Compile Include="objects\HeadsUpDisplayObject.cs" />
     <Compile Include="objects\AnimatedObjectAbstract.cs" />
@@ -259,11 +271,14 @@
     <Compile Include="objects\TransitionObjectAbstract.cs" />
     <Compile Include="objects\WeaponBox.cs" />
     <Compile Include="objects\weapons\AmmoTypeEnum.cs" />
+    <Compile Include="objects\weapons\BigBossGatlingGuns.cs" />
+    <Compile Include="objects\weapons\Buckshot.cs" />
     <Compile Include="objects\weapons\Bullet.cs" />
     <Compile Include="objects\weapons\BulletLimitedRange.cs" />
     <Compile Include="objects\weapons\FragGrenade.cs" />
     <Compile Include="objects\weapons\Grenade.cs" />
     <Compile Include="objects\weapons\MachineGun.cs" />
+    <Compile Include="objects\weapons\Missile.cs" />
     <Compile Include="objects\weapons\PlayerWeapon.cs" />
     <Compile Include="objects\weapons\Projectile.cs" />
     <Compile Include="PerformanceLogger.cs" />
@@ -282,7 +297,6 @@
     <Compile Include="SoundEngine.cs" />
     <Compile Include="TextureMap.cs" />
     <Compile Include="objects\weapons\RangedWeaponAbstract.cs" />
-    <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -322,10 +336,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PlainXMLProcessor\PlainXMLProcessor.csproj">
-      <Project>{4F0C779F-B18C-434E-A47B-3B369A44E7B6}</Project>
-      <Name>PlainXMLProcessor</Name>
-    </ProjectReference>
+    <None Include="Commando_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

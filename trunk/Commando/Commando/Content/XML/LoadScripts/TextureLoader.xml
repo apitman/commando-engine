@@ -32,6 +32,18 @@
   <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Reload_Crouch_Pistol.xml</texture>
   <texture>.\\Content\\XML\\Sprites\\GreenPlayer_Reload_Crouch_Rifle.xml</texture>
   <image>
+    <key>Boss</key>
+    <handle>Sprites\\Boss</handle>
+  </image>
+  <image>
+    <key>flyingenemy</key>
+    <handle>Sprites\\flyingenemy</handle>
+  </image>
+  <image>
+    <key>missile</key>
+    <handle>Sprites\\missile</handle>
+  </image>
+  <image>
     <key>GreenPlayer_Crouch_Stationary</key>
     <handle>Sprites\\GreenPlayer_Crouch_Stationary</handle>
   </image>
@@ -294,6 +306,42 @@
   <image>
     <key>overlayLogo</key>
     <handle>Sprites\\overlayLogo</handle>
+  </image>
+  <image>
+    <key>ambushRoom</key>
+    <handle>Sprites\\Overlays\\ambushRoomtxt</handle>
+  </image>
+  <image>
+    <key>bay57</key>
+    <handle>Sprites\\Overlays\\bay57txt</handle>
+  </image>
+  <image>
+    <key>deadRobot1</key>
+    <handle>Sprites\\Overlays\\deadRobot1</handle>  
+  </image>
+  <image>
+    <key>intensiveCare</key>
+    <handle>Sprites\\Overlays\\intensiveCaretxt</handle>
+  </image>
+  <image>
+    <key>stain1</key>
+    <handle>Sprites\\Overlays\\stain1</handle>  
+  </image>
+  <image>
+    <key>stain2</key>
+    <handle>Sprites\\Overlays\\stain2</handle>    
+  </image>
+  <image>
+    <key>unfinishedRobot</key>
+    <handle>Sprites\\Overlays\\unfinishedRobot</handle>
+  </image>
+ <image>
+    <key>instructoverlay</key>
+    <handle>Sprites\\Overlays\\instructoverlay</handle>
+  </image>
+  <image>
+    <key>armory</key>
+    <handle>Sprites\\Overlays\\armorytxt</handle>
   </image>
 </textures>
   </Asset>

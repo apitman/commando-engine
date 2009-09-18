@@ -30,25 +30,25 @@ namespace Commando
         /// </summary>
         static void Main(string[] args)
         {
-            try
-            {
+//            try
+//            {
                 using (Engine game = new Engine())
                 {
                     game.Run();
                 }
-            }
-            catch (Exception e)
-            {
+//            }
+//            catch (Exception e)
+//            {
 #if !XBOX
-                MessageBox.Show(e.Message);
-                MessageBox.Show(e.StackTrace);
+//                MessageBox.Show(e.Message);
+//                MessageBox.Show(e.StackTrace);
 #else
                 // See CrashDebugGame.cs for credits to Nick Gravelyn
                 // for this technique and code.
-                using (CrashDebugGame game = new CrashDebugGame(e))
-                    game.Run();
+//                using (CrashDebugGame game = new CrashDebugGame(e))
+//                    game.Run();
 #endif
-            }
+//            }
         }
     }
 }

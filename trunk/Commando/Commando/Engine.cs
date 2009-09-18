@@ -31,6 +31,7 @@ using Microsoft.Xna.Framework.Storage;
 using Commando.controls;
 using System.Diagnostics;
 using Commando.ai;
+using Commando.graphics.multithreading;
 
 namespace Commando
 {
@@ -42,7 +43,27 @@ namespace Commando
         public GraphicsDeviceManager graphics_;
         public SpriteBatch spriteBatch_;
         EngineStateInterface engineState_;
-        public ControllerInputInterface Controls_ { get; set; }
+        protected ControllerInputInterface controls_;
+        public ControllerInputInterface Controls_ 
+        {
+            get
+            {
+                return controls_;
+            }
+            set
+            {
+                controls_ = value;
+                if (UpdateThread_ != null)
+                {
+                    UpdateThread_.Controls_ = controls_;
+                }
+            }
+        }
+        public UpdateThread UpdateThread_ { get; set; }
+        public RenderThread RenderThread_ { get; set; }
+        public DrawBuffer DrawBuffer_ { get; set; }
+
+        internal bool UpdateGraphicsFlag_ { get; set; }
 
         const float GLOBALSPEEDMULTIPLIER = 2.5F;
         const int FRAMERATE = 30;
@@ -87,7 +108,7 @@ namespace Commando
 
             graphics_.PreferredBackBufferHeight = y;
             graphics_.PreferredBackBufferWidth = x;
-            graphics_.ApplyChanges();
+            UpdateGraphicsFlag_ = true;
         }
 
         /// <summary>
@@ -139,7 +160,17 @@ namespace Commando
 
             // creating EngineStateStart must come AFTER setting the
             //  IsGamerServicesAllowed_ member of Settings
-            this.engineState_ = new EngineStateStart(this);
+            this.engineState_ = new EngineStateSplash(this);
+
+            int tiles = (int)((GraphicsDevice.Viewport.Height / 15) * (GraphicsDevice.Viewport.Width / 15) * 1.2);
+            tiles += 350;
+
+            DrawBuffer.initialize(tiles, spriteBatch_);
+            DrawBuffer_ = DrawBuffer.getInstance();
+            UpdateThread_ = new UpdateThread(this, engineState_);
+            RenderThread_ = new RenderThread();
+            UpdateThread_.Controls_ = Controls_;
+            UpdateThread_.startThread();
         }
 
         /// <summary>
@@ -151,10 +182,9 @@ namespace Commando
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch_ = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            TextureMap.getInstance().setContent(Content);
-            TextureMap.getInstance().loadTextures(TEXTUREMAPXML, spriteBatch_, graphics_.GraphicsDevice);
-            FontMap.getInstance().loadFonts("", spriteBatch_, this);
+            //TextureMap.getInstance().setContent(Content);
+            //TextureMap.getInstance().loadTextures(TEXTUREMAPXML, this);
+            //FontMap.getInstance().loadFonts("", spriteBatch_, this);
         }
 
         /// <summary>
@@ -173,6 +203,7 @@ namespace Commando
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            /*
 #if DEBUG
             Stopwatch clock = new Stopwatch();
             clock.Start();
@@ -206,7 +237,16 @@ namespace Commando
 
             PerformanceLogger.addValue(MetricType.PATHFIND, AStarPathfinder.clock.ElapsedMilliseconds);
             AStarPathfinder.clock.Reset();
-#endif
+            */
+
+            if (UpdateGraphicsFlag_)
+                graphics_.ApplyChanges();
+
+            if (Controls_ != null)
+                Controls_.updateInputSet();
+
+            base.Update(gameTime);
+//#endif
         }
 
         /// <summary>
@@ -215,6 +255,7 @@ namespace Commando
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            /*
 #if DEBUG
             Stopwatch clock = new Stopwatch();
             clock.Start();
@@ -234,6 +275,18 @@ namespace Commando
             clock.Stop();
             PerformanceLogger.addValue(MetricType.DRAW, clock.ElapsedMilliseconds);
 #endif
+             */
+            spriteBatch_.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.FrontToBack, SaveStateMode.None);
+
+            DrawBuffer_.globalStartFrame(gameTime);
+            graphics_.GraphicsDevice.Clear(DrawBuffer_.getRenderStack().ScreenClearColor_);
+
+            RenderThread_.tick();
+            base.Draw(gameTime);
+
+            DrawBuffer_.globalSynchronize();
+            spriteBatch_.End();
+
         }
 
         /// <summary>
@@ -244,6 +297,12 @@ namespace Commando
         /// <param name="args">Arguments.</param>
         protected override void OnExiting(object sender, EventArgs args)
         {
+            DrawBuffer_.cleanUp();
+            if (UpdateThread_.RunningThread != null)
+            {
+                UpdateThread_.RunningThread.Abort();
+            }
+
             base.OnExiting(sender, args);
             SoundEngine.cleanup();
             Settings.getInstance().saveSettingsToFile();
@@ -252,7 +311,7 @@ namespace Commando
             //PerformanceLogger.printMetric(MetricType.PATHFIND);
             //PerformanceLogger.printMetric(MetricType.DRAW);
 #if XBOX
-            throw new PerformanceMonitorException(PerformanceLogger.printMetric(MetricType.UPDATE));
+            //throw new PerformanceMonitorException(PerformanceLogger.printMetric(MetricType.UPDATE));
 #else
             System.Console.WriteLine(PerformanceLogger.printMetric(MetricType.UPDATE));
             System.Console.WriteLine(CommLogger.printOutput());
