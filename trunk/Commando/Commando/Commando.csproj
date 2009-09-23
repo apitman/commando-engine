@@ -164,6 +164,7 @@
     <Compile Include="collisiondetection\ProjectileConvexPolygon.cs" />
     <Compile Include="collisiondetection\SeparatingAxisCollisionDetector.cs" />
     <Compile Include="collisiondetection\SolidMovableObjectAbstract.cs" />
+    <Compile Include="CommLogger.cs" />
     <Compile Include="CommonFunctions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContainerManager.cs" />
