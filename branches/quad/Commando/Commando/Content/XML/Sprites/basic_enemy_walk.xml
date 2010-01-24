@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
+<ImageDefinition>
+	<Key>basic_enemy_walk</Key>
+	<ImageFilename>Sprites\basic_enemy_walk</ImageFilename>
+	<ImageDimensions>
+		<NumberOfImages>4</NumberOfImages>
+		<Image>
+			<x>0</x>
+			<y>0</y>
+			<w>32</w>
+			<h>32</h>
+		</Image>
+		<Image>
+			<x>32</x>
+			<y>0</y>
+			<w>32</w>
+			<h>32</h>
+		</Image>
+		<Image>
+			<x>64</x>
+			<y>0</y>
+			<w>32</w>
+			<h>32</h>
+		</Image>
+		<Image>
+			<x>96</x>
+			<y>0</y>
+			<w>32</w>
+			<h>32</h>
+		</Image>
+	</ImageDimensions>
+</ImageDefinition>
+  </Asset>
+</XnaContent>

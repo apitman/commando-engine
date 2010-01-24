@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commando-settings>
+  <resolution>0</resolution>
+  <movement>1</movement>
+  <sound>true</sound>
+  <debug>false</debug>
+</commando-settings>

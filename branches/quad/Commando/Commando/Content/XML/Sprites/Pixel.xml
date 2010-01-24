@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
+    <ImageDefinition>
+      <Key>Pixel</Key>
+      <ImageFilename>Sprites\Pixel</ImageFilename>
+      <ImageDimensions>
+        <NumberOfImages>1</NumberOfImages>
+        <Image>
+          <x>0</x>
+          <y>0</y>
+          <w>1</w>
+          <h>1</h>
+        </Image>
+      </ImageDimensions>
+    </ImageDefinition>
+  </Asset>
+</XnaContent>

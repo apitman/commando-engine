@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.String">
+<ImageDefinition>
+  <Key>Pistol</Key>
+  <ImageFilename>Sprites\PistolAnimation</ImageFilename>
+  <ImageDimensions>
+    <NumberOfImages>3</NumberOfImages>
+    <Image>
+      <x>0</x>
+      <y>0</y>
+      <w>32</w>
+      <h>18</h>
+    </Image>
+    <Image>
+      <x>33</x>
+      <y>0</y>
+      <w>32</w>
+      <h>18</h>
+    </Image>
+    <Image>
+      <x>66</x>
+      <y>0</y>
+      <w>32</w>
+      <h>18</h>
+    </Image>
+  </ImageDimensions>
+</ImageDefinition>
+  </Asset>
+</XnaContent>
